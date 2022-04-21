@@ -8,7 +8,6 @@
 import UIKit;
 
 
-// TODO: move to sep. library (e.g. `react-native-ios-utilities`)
 class RNIContainerViewController: UIViewController {
   
   weak var parentVC: UIViewController?;
@@ -70,7 +69,7 @@ class RNIContainerViewController: UIViewController {
   
   func attachToParentVC() throws {
     guard !self.isAttachedToParentVC else {
-      throw RNIPopoverGenericError(
+      throw RNIGenericError(
         code: .runtimeError,
         message: "view controller already has a parent view controller"
       );
@@ -80,7 +79,7 @@ class RNIContainerViewController: UIViewController {
     guard let parentVC = RNIUtilities
       .getParent(responder: self, type: UIViewController.self)
     else {
-      throw RNIPopoverGenericError(
+      throw RNIGenericError(
         code: .nilValue,
         message: "Could not find any view controllers to attach to"
       );
