@@ -15,6 +15,13 @@
 
 <br><br>
 
+## Version `next`
+
+- [x] (Commit: `d5fcf6d`) **Fix**: Move `RNIError` To Correct Directory
+	* Move `RNIError` folder from project root to `/ios/Src`
+
+<br><br>
+
 ## Version `0.0.1`
 
 - [x]  (Commit: `6aaa909`) **Implement**: Import native code from `react-native-ios-popover`
