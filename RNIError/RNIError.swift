@@ -8,13 +8,13 @@
 import Foundation
 
 
-class RNIBaseError<E: RawRepresentable>: Error where E.RawValue == String  {
+open class RNIBaseError<E: RawRepresentable>: Error where E.RawValue == String  {
   
-  var code: E;
-  let domain: String;
+  public var code: E;
+  public let domain: String;
   
-  let message: String?;
-  let debug: String?;
+  public let message: String?;
+  public let debug: String?;
   
   init(
     code: E,
@@ -28,7 +28,7 @@ class RNIBaseError<E: RawRepresentable>: Error where E.RawValue == String  {
     self.debug = debug;
   };
   
-  func createJSONString() -> String? {
+  public func createJSONString() -> String? {
     let encoder = JSONEncoder();
     
     guard let data = try? encoder.encode(self),
@@ -48,7 +48,7 @@ extension RNIBaseError: Encodable {
     case code, domain, message, debug;
   };
   
-  func encode(to encoder: Encoder) throws {
+  public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self);
         
     try container.encode(self.code.rawValue, forKey: .code);

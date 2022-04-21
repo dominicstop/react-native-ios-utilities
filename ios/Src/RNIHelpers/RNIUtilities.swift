@@ -8,7 +8,7 @@
 import Foundation;
 
 
-internal class RNIUtilities {
+public class RNIUtilities {
   
   /// If you remove a "react view" from the view hierarchy (e.g. via
   /// `removeFromSuperview`), it won't be released, because it's being retained
@@ -22,7 +22,7 @@ internal class RNIUtilities {
   /// If you are **absolutely sure** that a particular `reactView` is no longer
   /// being used, this helper func. will remove `reactView` (and all of it's
   /// subviews) in the `_viewRegistry`.
-  static func recursivelyRemoveFromViewRegistry(bridge: RCTBridge, reactView: UIView) {
+  public static func recursivelyRemoveFromViewRegistry(bridge: RCTBridge, reactView: UIView) {
     
     func getRegistry(forKey key: String) -> NSMutableDictionary? {
       return bridge.uiManager?.value(forKey: key) as? NSMutableDictionary;
@@ -87,7 +87,7 @@ internal class RNIUtilities {
   
   /// Recursive climb the responder chain until `T` is found.
   /// Useful for finding the corresponding view controller of a view.
-  static func getParent<T>(responder: UIResponder, type: T.Type) -> T? {
+  public static func getParent<T>(responder: UIResponder, type: T.Type) -> T? {
     var parentResponder: UIResponder? = responder;
     
     while parentResponder != nil {
@@ -101,7 +101,7 @@ internal class RNIUtilities {
     return nil;
   };
   
-  static func getView<T>(
+  public static func getView<T>(
     forNode node: NSNumber,
     type: T.Type,
     bridge: RCTBridge?
@@ -113,7 +113,7 @@ internal class RNIUtilities {
     return view as? T;
   };
   
-  static func recursivelyGetAllSubviews(for view: UIView) -> [UIView] {
+  public static func recursivelyGetAllSubviews(for view: UIView) -> [UIView] {
     var views: [UIView] = [];
     
     for subview in view.subviews {
@@ -124,7 +124,7 @@ internal class RNIUtilities {
     return views;
   };
   
-  static func compareImages(_ a: UIImage?, _ b: UIImage?) -> Bool {
+  public static func compareImages(_ a: UIImage?, _ b: UIImage?) -> Bool {
     if (a == nil && b == nil){
       // both are nil, equal
       return true;

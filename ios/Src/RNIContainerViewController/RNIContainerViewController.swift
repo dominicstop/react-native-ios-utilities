@@ -8,13 +8,13 @@
 import UIKit;
 
 
-class RNIContainerViewController: UIViewController {
+public class RNIContainerViewController: UIViewController {
   
-  weak var parentVC: UIViewController?;
-  weak var eventsDelegate: RNIContainerViewControllerEventsDelegate?;
+  public weak var parentVC: UIViewController?;
+  public weak var eventsDelegate: RNIContainerViewControllerEventsDelegate?;
   
-  var isAttachedToParentVC = false;
-  var isBeingPopped = false;
+  public var isAttachedToParentVC = false;
+  public var isBeingPopped = false;
   
   // MARK: - Init
   // ------------
@@ -32,7 +32,7 @@ class RNIContainerViewController: UIViewController {
   // MARK: - Lifecycle
   // -----------------
   
-  override func viewWillDisappear(_ animated: Bool) {
+  public override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated);
     
     self.isBeingPopped = {
@@ -53,7 +53,7 @@ class RNIContainerViewController: UIViewController {
     );
   };
   
-  override func viewDidDisappear(_ animated: Bool) {
+  public override func viewDidDisappear(_ animated: Bool) {
     self.eventsDelegate?.onViewControllerWillDisappear?(
       sender: self,
       parentVC: parentVC,
@@ -67,7 +67,7 @@ class RNIContainerViewController: UIViewController {
   // MARK: - Public Methods
   // ----------------------
   
-  func attachToParentVC() throws {
+  public func attachToParentVC() throws {
     guard !self.isAttachedToParentVC else {
       throw RNIGenericError(
         code: .runtimeError,
@@ -92,7 +92,7 @@ class RNIContainerViewController: UIViewController {
     self.didMove(toParent: parentVC);
   };
   
-  func detachFromParentVC(){
+  public func detachFromParentVC(){
     guard self.parentVC != nil,
           !self.isAttachedToParentVC
     else { return };

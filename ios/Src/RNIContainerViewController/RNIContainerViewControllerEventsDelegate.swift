@@ -8,7 +8,7 @@
 import Foundation
 
 
-@objc protocol RNIContainerViewControllerEventsDelegate {
+@objc public protocol RNIContainerViewControllerEventsDelegate {
 
   @objc optional func onViewControllerWillDisappear(
     sender: RNIContainerViewController,
