@@ -17,6 +17,12 @@
 
 ## Version `next`
 
+<br><br>
+
+
+
+## Version ``0.0.2`
+
 - [x] (Commit: `d5fcf6d`) **Fix**: Move `RNIError` To Correct Directory
 	* Move `RNIError` folder from project root to `/ios/Src`
 
