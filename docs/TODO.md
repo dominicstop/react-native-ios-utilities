@@ -12,6 +12,7 @@
 			* Re-implementation of `RNIPopoverError` to fix build errors.
 		- [x] (Commit: `4a57264`) **Refactor**: Replace Usage w/ `RNIGenericError` 
 			* Refactor to replace imported code from `react-native-ios-popover` to use `RNIGenericError` instead of `RNIPopoverError`
+		- [x] (Commit: `9fea397`) **Refactor**: Make Classes/Protocols Public
 
 <br>
 
