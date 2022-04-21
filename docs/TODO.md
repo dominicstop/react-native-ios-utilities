@@ -6,6 +6,12 @@
 
 - [x]  (Commit: `6aaa909`) **Implement**: Import native code from `react-native-ios-popover`
 	- [ ] **Implement**: Update/refactor imported code from `react-native-ios-popover`.
+		- [x] (Commit: `331bc37`) **Implement**: Refactor: `RNIError` 
+			* Move `RNIError` to own folder, and extract `RNIGenericError` to its own file.
+		- [ ] **Implement**: `RNIGenericError`
+			* Re-implementation of `RNIPopoverError` to fix build errors.
+		- [ ] **Refactor**: Replace Usage w/ `RNIGenericError` 
+			* Refactor to replace imported code from `react-native-ios-popover` to use `RNIGenericError` instead of 
 
 <br>
 
