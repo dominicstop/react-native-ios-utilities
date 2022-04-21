@@ -19,7 +19,11 @@
 
 <br><br>
 
+## Version ``0.0.3`
 
+- [x]  (Commit: `55e9c59`) **Fix**: Make Initializers Public
+
+<br><br>
 
 ## Version ``0.0.2`
 
