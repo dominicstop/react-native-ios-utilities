@@ -1,7 +1,7 @@
 {
   "name": "react-native-ios-utilities",
   "version": "0.1.0",
-  "description": "placeholder",
+  "description": "Utilities for react-native + iOS",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -33,7 +33,8 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "utilities",
+    "utility"
   ],
   "repository": "https://github.com/dominicstop/react-native-ios-utilities",
   "author": "Dominic Go <18517029+dominicstop@users.noreply.github.com> (https://github.com/dominicstop)",
