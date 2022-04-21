@@ -1,20 +1,8 @@
-
-
 # TODO (react-native-ios-utilities)
 
+<br><br>
 
-
-- [x]  (Commit: `6aaa909`) **Implement**: Import native code from `react-native-ios-popover`
-	- [ ] **Implement**: Update/refactor imported code from `react-native-ios-popover`.
-		- [x] (Commit: `331bc37`) **Implement**: Refactor: `RNIError` 
-			* Move `RNIError` to own folder, and extract `RNIGenericError` to its own file.
-		- [x] (Commit: `2e247aa`) **Implement**: `RNIGenericError`
-			* Re-implementation of `RNIPopoverError` to fix build errors.
-		- [x] (Commit: `4a57264`) **Refactor**: Replace Usage w/ `RNIGenericError` 
-			* Refactor to replace imported code from `react-native-ios-popover` to use `RNIGenericError` instead of `RNIPopoverError`
-		- [x] (Commit: `9fea397`) **Refactor**: Make Classes/Protocols Public
-
-<br>
+## TBA
 
 - [ ] **Task**: Set initial version number for library.
 	* E.g. If `react-native-ios-utilities` starts with version `2.x`, then all other libraries that use must also start with `2.x`.
@@ -25,3 +13,16 @@
 
 
 
+<br><br>
+
+## Version `0.0.1`
+
+- [x]  (Commit: `6aaa909`) **Implement**: Import native code from `react-native-ios-popover`
+	- [x] **Implement**: Update/refactor imported code from `react-native-ios-popover`.
+		- [x] (Commit: `331bc37`) **Implement**: Refactor: `RNIError` 
+			* Move `RNIError` to own folder, and extract `RNIGenericError` to its own file.
+		- [x] (Commit: `2e247aa`) **Implement**: `RNIGenericError`
+			* Re-implementation of `RNIPopoverError` to fix build errors.
+		- [x] (Commit: `4a57264`) **Refactor**: Replace Usage w/ `RNIGenericError` 
+			* Refactor to replace imported code from `react-native-ios-popover` to use `RNIGenericError` instead of `RNIPopoverError`
+		- [x] (Commit: `9fea397`) **Refactor**: Make Classes/Protocols Public
