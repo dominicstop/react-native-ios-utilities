@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-		5E555C0D2413F4C50049A1A2 /* IosUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* IosUtilities.m */; };
-		F4FF95D7245B92E800C19C63 /*  IosUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  IosUtilities.swift */; };
-
+		886416A728114B460070B803 /* RNIContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886416A128114B460070B803 /* RNIContainerViewController.swift */; };
+		886416A828114B460070B803 /* RNIContainerViewControllerEventsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886416A228114B460070B803 /* RNIContainerViewControllerEventsDelegate.swift */; };
+		886416A928114B460070B803 /* RNIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886416A428114B460070B803 /* RNIUtilities.swift */; };
+		886416AA28114B460070B803 /* RNICleanable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886416A528114B460070B803 /* RNICleanable.swift */; };
+		886416AB28114B460070B803 /* RNIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886416A628114B460070B803 /* RNIError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,11 +28,12 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libIosUtilities.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIosUtilities.a; sourceTree = BUILT_PRODUCTS_DIR; };
-
-		B3E7B5891CC2AC0600A0062D /* IosUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IosUtilities.m; sourceTree = "<group>"; };
-		F4FF95D5245B92E700C19C63 /* IosUtilities-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IosUtilities-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4FF95D6245B92E800C19C63 /* IosUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosUtilities.swift; sourceTree = "<group>"; };
-
+		8864169F28114B460070B803 /* IosUtilities-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IosUtilities-Bridging-Header.h"; sourceTree = "<group>"; };
+		886416A128114B460070B803 /* RNIContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIContainerViewController.swift; sourceTree = "<group>"; };
+		886416A228114B460070B803 /* RNIContainerViewControllerEventsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIContainerViewControllerEventsDelegate.swift; sourceTree = "<group>"; };
+		886416A428114B460070B803 /* RNIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIUtilities.swift; sourceTree = "<group>"; };
+		886416A528114B460070B803 /* RNICleanable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNICleanable.swift; sourceTree = "<group>"; };
+		886416A628114B460070B803 /* RNIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,13 +58,38 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-
-				F4FF95D6245B92E800C19C63 /* IosUtilities.swift */,
-				B3E7B5891CC2AC0600A0062D /* IosUtilities.m */,
-				F4FF95D5245B92E700C19C63 /* IosUtilities-Bridging-Header.h */,
-
+				8864169E28114B460070B803 /* Src */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		8864169E28114B460070B803 /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				8864169F28114B460070B803 /* IosUtilities-Bridging-Header.h */,
+				886416A028114B460070B803 /* RNIContainerViewController */,
+				886416A328114B460070B803 /* RNIHelpers */,
+			);
+			path = Src;
+			sourceTree = "<group>";
+		};
+		886416A028114B460070B803 /* RNIContainerViewController */ = {
+			isa = PBXGroup;
+			children = (
+				886416A128114B460070B803 /* RNIContainerViewController.swift */,
+				886416A228114B460070B803 /* RNIContainerViewControllerEventsDelegate.swift */,
+			);
+			path = RNIContainerViewController;
+			sourceTree = "<group>";
+		};
+		886416A328114B460070B803 /* RNIHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				886416A428114B460070B803 /* RNIUtilities.swift */,
+				886416A528114B460070B803 /* RNICleanable.swift */,
+				886416A628114B460070B803 /* RNIError.swift */,
+			);
+			path = RNIHelpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,10 +149,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
-				F4FF95D7245B92E800C19C63 /* IosUtilities.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* IosUtilities.m in Sources */,
-
+				886416A928114B460070B803 /* RNIUtilities.swift in Sources */,
+				886416AA28114B460070B803 /* RNICleanable.swift in Sources */,
+				886416A828114B460070B803 /* RNIContainerViewControllerEventsDelegate.swift in Sources */,
+				886416A728114B460070B803 /* RNIContainerViewController.swift in Sources */,
+				886416AB28114B460070B803 /* RNIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,11 +266,9 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = IosUtilities;
 				SKIP_INSTALL = YES;
-
-				SWIFT_OBJC_BRIDGING_HEADER = "IosUtilities-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Src/IosUtilities-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Debug;
 		};
@@ -259,10 +285,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = IosUtilities;
 				SKIP_INSTALL = YES;
-
-				SWIFT_OBJC_BRIDGING_HEADER = "IosUtilities-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Src/IosUtilities-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Release;
 		};
