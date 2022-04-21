@@ -10,7 +10,7 @@
 			* Move `RNIError` to own folder, and extract `RNIGenericError` to its own file.
 		- [x] (Commit: `2e247aa`) **Implement**: `RNIGenericError`
 			* Re-implementation of `RNIPopoverError` to fix build errors.
-		- [x] (Commit: `920692d`) **Refactor**: Replace Usage w/ `RNIGenericError` 
+		- [x] (Commit: `4a57264`) **Refactor**: Replace Usage w/ `RNIGenericError` 
 			* Refactor to replace imported code from `react-native-ios-popover` to use `RNIGenericError` instead of `RNIPopoverError`
 
 <br>
