@@ -39,6 +39,10 @@ class RNIBaseError<E: RawRepresentable>: Error where E.RawValue == String  {
   };
 };
 
+// ----------------
+// MARK:- Encodable
+// ----------------
+
 extension RNIBaseError: Encodable {
   enum CodingKeys: String, CodingKey {
     case code, domain, message, debug;
@@ -53,10 +57,3 @@ extension RNIBaseError: Encodable {
     try container.encode(self.debug, forKey: .debug);
   };
 };
-
-enum RNIGenericErrorCodes: String, Codable, CaseIterable {
-  case runtimeError, libraryError, reactError, unknownError,
-       invalidArgument, outOfBounds, invalidReactTag, nilValue;
-};
-
-typealias RNIGenericErrorCode = RNIBaseError<RNIGenericErrorCodes>;
