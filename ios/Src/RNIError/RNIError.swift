@@ -16,7 +16,7 @@ open class RNIBaseError<E: RawRepresentable>: Error where E.RawValue == String  
   public let message: String?;
   public let debug: String?;
   
-  init(
+  public init(
     code: E,
     domain: String,
     message: String? = nil,

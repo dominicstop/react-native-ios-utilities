@@ -19,13 +19,13 @@ public class RNIContainerViewController: UIViewController {
   // MARK: - Init
   // ------------
   
-  init(view: UIView) {
+  public init(view: UIView) {
     super.init(nibName: nil, bundle: nil);
     self.view = view;
   };
   
   // loaded from a storyboard
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder);
   };
   
