@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct JSON {
+public struct JSON {
   static let encoder = JSONEncoder();
 };
 
-extension Encodable {
+public extension Encodable {
   subscript(key: String) -> Any? {
     return dictionary[key];
   };

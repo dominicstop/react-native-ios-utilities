@@ -5,16 +5,15 @@
 //  Created by Dominic Go on 1/29/21.
 //
 
-import Foundation
 import UIKit
 
-internal struct RNIImageMaker {
+public struct RNIImageMaker {
 
-  let size        : CGSize;
-  let fillColor   : UIColor;
-  let borderRadius: CGFloat;
+  public let size        : CGSize;
+  public let fillColor   : UIColor;
+  public let borderRadius: CGFloat;
   
-  init?(dict: NSDictionary) {
+  public init?(dict: NSDictionary) {
     guard let width  = dict["width" ] as? CGFloat,
           let height = dict["height"] as? CGFloat
     else { return nil };
@@ -30,7 +29,7 @@ internal struct RNIImageMaker {
     self.borderRadius = dict["borderRadius"] as? CGFloat ?? 0;
   };
 
-  func makeImage() -> UIImage {
+  public func makeImage() -> UIImage {
     return UIGraphicsImageRenderer(size: self.size).image { context in
       let rect = CGRect(origin: .zero, size: self.size);
       
@@ -47,8 +46,8 @@ internal struct RNIImageMaker {
   };
 };
 
-internal struct RNIImageGradientMaker {
-  enum PointPresets: String {
+public struct RNIImageGradientMaker {
+  public enum PointPresets: String {
     case top, bottom, left, right;
     case bottomLeft, bottomRight, topLeft, topRight;
     
@@ -69,7 +68,7 @@ internal struct RNIImageGradientMaker {
     };
   };
   
-  enum DirectionPresets: String {
+  public enum DirectionPresets: String {
     // horizontal
     case leftToRight, rightToLeft;
     // vertical
@@ -131,17 +130,17 @@ internal struct RNIImageGradientMaker {
     };
   }
   
-  let type: CAGradientLayerType;
+  public let type: CAGradientLayerType;
   
-  let colors    : [CGColor];
-  let locations : [NSNumber]?;
-  let startPoint: CGPoint;
-  let endPoint  : CGPoint;
+  public let colors    : [CGColor];
+  public let locations : [NSNumber]?;
+  public let startPoint: CGPoint;
+  public let endPoint  : CGPoint;
   
-  var size: CGSize;
-  let borderRadius: CGFloat;
+  public var size: CGSize;
+  public let borderRadius: CGFloat;
   
-  var gradientLayer: CALayer {
+  public var gradientLayer: CALayer {
     let layer = CAGradientLayer();
     
     layer.type         = self.type;
@@ -154,7 +153,7 @@ internal struct RNIImageGradientMaker {
     return layer;
   };
   
-  init?(dict: NSDictionary) {
+  public init?(dict: NSDictionary) {
     guard let colors = dict["colors"] as? NSArray
     else { return nil };
     
@@ -193,14 +192,14 @@ internal struct RNIImageGradientMaker {
     self.borderRadius = dict["borderRadius"] as? CGFloat ?? 0;
   };
   
-  mutating func setSizeIfNotSet(_ newSize: CGSize){
+  public mutating func setSizeIfNotSet(_ newSize: CGSize){
     self.size = CGSize(
       width : self.size.width  <= 0 ? newSize.width  : self.size.width,
       height: self.size.height <= 0 ? newSize.height : self.size.height
     );
   };
   
-  func makeImage() -> UIImage {
+  public func makeImage() -> UIImage {
     return UIGraphicsImageRenderer(size: self.size).image { context in
       let rect = CGRect(origin: .zero, size: self.size);
       
@@ -218,18 +217,18 @@ internal struct RNIImageGradientMaker {
   };
 };
 
-internal struct RNIImageSystemMaker {
-  let systemName: String;
+public struct RNIImageSystemMaker {
+  public let systemName: String;
   
-  let pointSize: CGFloat?;
-  let weight: String?;
-  let scale: String?;
+  public let pointSize: CGFloat?;
+  public let weight: String?;
+  public let scale: String?;
   
-  let hierarchicalColor: UIColor?;
-  let paletteColors: [UIColor]?;
+  public let hierarchicalColor: UIColor?;
+  public let paletteColors: [UIColor]?;
   
   @available(iOS 13.0, *)
-  var symbolConfigs: [UIImage.SymbolConfiguration] {
+  public var symbolConfigs: [UIImage.SymbolConfiguration] {
     var configs: [UIImage.SymbolConfiguration] = [];
     
     if let pointSize = self.pointSize {
@@ -268,7 +267,7 @@ internal struct RNIImageSystemMaker {
   };
   
   @available(iOS 13.0, *)
-  var symbolConfig: UIImage.SymbolConfiguration? {
+  public var symbolConfig: UIImage.SymbolConfiguration? {
     var combinedConfig: UIImage.SymbolConfiguration?;
     
     for config in symbolConfigs {
@@ -284,7 +283,7 @@ internal struct RNIImageSystemMaker {
   };
   
   @available(iOS 13.0, *)
-  var image: UIImage? {
+  public var image: UIImage? {
     if let symbolConfig = symbolConfig {
       return UIImage(
         systemName: self.systemName,
@@ -295,7 +294,7 @@ internal struct RNIImageSystemMaker {
     return UIImage(systemName: self.systemName);
   };
   
-  init?(dict: NSDictionary){
+  public init?(dict: NSDictionary){
     guard let systemName = dict["systemName"] as? String
     else { return nil };
     
@@ -322,11 +321,11 @@ internal struct RNIImageSystemMaker {
   };
 };
 
-internal class RNIImageItem {
+public class RNIImageItem {
   
   static private var imageCache: [String: UIImage] = [:];
   
-  enum ImageType: String {
+  public enum ImageType: String {
     case IMAGE_ASSET;
     case IMAGE_SYSTEM;
     case IMAGE_REQUIRE;
@@ -338,19 +337,19 @@ internal class RNIImageItem {
   // MARK: - Properties
   // -----------------
   
-  let type: ImageType;
+  public let type: ImageType;
   
   // MARK: Properties - `imageOptions`-Related
   // -----------------------------------------
 
-  let tint: UIColor?;
-  let renderingMode: UIImage.RenderingMode;
+  public let tint: UIColor?;
+  public let renderingMode: UIImage.RenderingMode;
   
   // MARK: Properties - Internal/Private
   // -----------------------------------
   
-  var useImageCache: Bool?;
-  var defaultSize = CGSize(width: 100, height: 100);
+  internal var useImageCache: Bool?;
+  internal var defaultSize = CGSize(width: 100, height: 100);
   
   private let imageValue: Any?;
   private var imageRequire: UIImage?;
@@ -363,7 +362,7 @@ internal class RNIImageItem {
     self.useImageCache ?? (self.type == .IMAGE_REQUIRE)
   };
   
-  var baseImage: UIImage? {
+  public var baseImage: UIImage? {
     switch self.type {
       case .IMAGE_ASSET:
         guard let string = self.imageValue as? String,
@@ -420,7 +419,7 @@ internal class RNIImageItem {
     };
   };
   
-  var image: UIImage? {
+  public var image: UIImage? {
     let image = self.baseImage;
     
     if #available(iOS 13.0, *), let tint = self.tint {
@@ -434,7 +433,7 @@ internal class RNIImageItem {
     };
   };
   
-  var dictionary: [String: Any] {
+  public var dictionary: [String: Any] {
     var dict: [String: Any] = [
       "type": self.type
     ];
@@ -449,7 +448,7 @@ internal class RNIImageItem {
   // MARK: - Init
   // -----------
   
-  init?(type: ImageType, imageValue: Any?, imageOptions: NSDictionary?){
+  public init?(type: ImageType, imageValue: Any?, imageOptions: NSDictionary?){
     self.type = type;
     self.imageValue = imageValue;
     
@@ -470,7 +469,7 @@ internal class RNIImageItem {
     }();
   };
   
-  convenience init?(dict: NSDictionary){
+  public convenience init?(dict: NSDictionary){
     guard let typeString = dict["type"] as? String,
           let type       = ImageType(rawValue: typeString)
     else { return nil };

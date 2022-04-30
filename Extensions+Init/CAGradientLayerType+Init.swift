@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension CAGradientLayerType {
+public extension CAGradientLayerType {
   init?(string: String){
     switch string {
       case "axial" : self = .axial;

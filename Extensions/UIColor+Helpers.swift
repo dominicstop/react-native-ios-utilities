@@ -197,7 +197,7 @@ fileprivate class UIColorHelpers {
   };
 };
 
-extension UIColor {
+public extension UIColor {
   
   var rgba: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
     var red  : CGFloat = 0;
