@@ -8,6 +8,10 @@
 import Foundation
 
 public struct RNIImageGradientMaker {
+  
+  // MARK: - Nested Types
+  // --------------------
+  
   public enum PointPresets: String {
     case top, bottom, left, right;
     case bottomLeft, bottomRight, topLeft, topRight;
@@ -67,6 +71,9 @@ public struct RNIImageGradientMaker {
     };
   };
   
+  // MARK: - Static Members
+  // ----------------------
+  
   static private func extractCGPoint(dict: NSDictionary) -> CGPoint? {
     guard let x = dict["x"] as? CGFloat,
           let y = dict["y"] as? CGFloat
@@ -91,6 +98,9 @@ public struct RNIImageGradientMaker {
     };
   }
   
+  // MARK: - Public Properties
+  // -------------------------
+  
   public let type: CAGradientLayerType;
   
   public let colors    : [CGColor];
@@ -100,6 +110,9 @@ public struct RNIImageGradientMaker {
   
   public var size: CGSize;
   public let borderRadius: CGFloat;
+  
+  // MARK: - Computed Properties
+  // ---------------------------
   
   public var gradientLayer: CALayer {
     let layer = CAGradientLayer();
@@ -113,6 +126,9 @@ public struct RNIImageGradientMaker {
     
     return layer;
   };
+  
+  // MARK: - Init
+  // ------------
   
   public init?(dict: NSDictionary) {
     guard let colors = dict["colors"] as? NSArray
@@ -152,6 +168,9 @@ public struct RNIImageGradientMaker {
     
     self.borderRadius = dict["borderRadius"] as? CGFloat ?? 0;
   };
+  
+  // MARK: - Functions
+  // -----------------
   
   public mutating func setSizeIfNotSet(_ newSize: CGSize){
     self.size = CGSize(

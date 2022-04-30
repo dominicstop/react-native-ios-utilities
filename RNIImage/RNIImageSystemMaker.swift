@@ -8,6 +8,10 @@
 import Foundation
 
 public struct RNIImageSystemMaker {
+  
+  // MARK: - Properties
+  // ------------------
+  
   public let systemName: String;
   
   public let pointSize: CGFloat?;
@@ -16,6 +20,9 @@ public struct RNIImageSystemMaker {
   
   public let hierarchicalColor: UIColor?;
   public let paletteColors: [UIColor]?;
+  
+  // MARK: - Computed Properties
+  // ---------------------------
   
   @available(iOS 13.0, *)
   public var symbolConfigs: [UIImage.SymbolConfiguration] {
@@ -83,6 +90,9 @@ public struct RNIImageSystemMaker {
     
     return UIImage(systemName: self.systemName);
   };
+  
+  // MARK: - Init
+  // ------------
   
   public init?(dict: NSDictionary){
     guard let systemName = dict["systemName"] as? String

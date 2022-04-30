@@ -8,10 +8,16 @@
 import Foundation
 
 public struct RNIImageMaker {
+  
+  // MARK: - Properties
+  // ------------------
 
   public let size        : CGSize;
   public let fillColor   : UIColor;
   public let borderRadius: CGFloat;
+  
+  // MARK: - Init
+  // ------------
   
   public init?(dict: NSDictionary) {
     guard let width  = dict["width" ] as? CGFloat,
@@ -28,6 +34,9 @@ public struct RNIImageMaker {
     
     self.borderRadius = dict["borderRadius"] as? CGFloat ?? 0;
   };
+  
+  // MARK: - Functions
+  // --------------------
 
   public func makeImage() -> UIImage {
     return UIGraphicsImageRenderer(size: self.size).image { context in

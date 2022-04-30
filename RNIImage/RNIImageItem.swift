@@ -9,7 +9,8 @@ import UIKit
 
 public class RNIImageItem {
   
-  static private var imageCache: [String: UIImage] = [:];
+  // MARK: - Nested Types
+  // --------------------
   
   public enum ImageType: String {
     case IMAGE_ASSET;
@@ -19,6 +20,11 @@ public class RNIImageItem {
     case IMAGE_RECT;
     case IMAGE_GRADIENT;
   };
+  
+  // MARK: - Static Members
+  // ----------------------
+  
+  static private var imageCache: [String: UIImage] = [:];
   
   // MARK: - Properties
   // -----------------
@@ -132,7 +138,7 @@ public class RNIImageItem {
   };
   
   // MARK: - Init
-  // -----------
+  // ------------
   
   public init?(type: ImageType, imageValue: Any?, imageOptions: NSDictionary?){
     self.type = type;
