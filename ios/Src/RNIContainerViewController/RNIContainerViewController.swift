@@ -54,7 +54,7 @@ public class RNIContainerViewController: UIViewController {
   };
   
   public override func viewDidDisappear(_ animated: Bool) {
-    self.eventsDelegate?.onViewControllerWillDisappear?(
+    self.eventsDelegate?.onViewControllerDidDisappear?(
       sender: self,
       parentVC: parentVC,
       isBeingPopped: self.isBeingPopped
