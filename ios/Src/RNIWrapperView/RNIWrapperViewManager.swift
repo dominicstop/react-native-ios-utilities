@@ -8,19 +8,19 @@
 import Foundation
 
 @objc(RNIWrapperViewManager)
-internal class RNIWrapperViewManager: RCTViewManager {
+public class RNIWrapperViewManager: RCTViewManager {
   
   static var sharedBridge: RCTBridge?;
   
   // MARK: - RN Module Setup
   // -----------------------
   
-  override static func requiresMainQueueSetup() -> Bool {
+  public override static func requiresMainQueueSetup() -> Bool {
     // run init in bg thread
     return false;
   };
   
-  override func view() -> UIView! {
+  public override func view() -> UIView! {
     // save a ref to this module's RN bridge instance
     if Self.sharedBridge == nil {
       Self.sharedBridge = self.bridge;
