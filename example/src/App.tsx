@@ -1,12 +1,12 @@
 import * as React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 
-import { StyleSheet, View } from 'react-native';
-import IosUtilitiesViewManager from 'react-native-ios-utilities';
+import {  } from 'react-native-ios-utilities';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <IosUtilitiesViewManager color="#32a852" style={styles.box} />
+      <Text>TBA</Text>
     </View>
   );
 }
