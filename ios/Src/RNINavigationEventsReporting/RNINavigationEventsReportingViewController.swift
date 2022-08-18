@@ -18,12 +18,12 @@ public class RNINavigationEventsReportingViewController: UIViewController {
   // MARK: - Init
   // ------------
   
-  init() {
+  public init() {
     super.init(nibName: nil, bundle: nil);
   };
   
   // loaded from a storyboard
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder);
   };
   
