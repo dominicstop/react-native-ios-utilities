@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		883424FF28AE2C37005C9BDB /* IosUtilities-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = 88AA7A3228ABAD98001EE044 /* IosUtilities-Bridging-Header.h */; };
 		88AA7A4428ABAD99001EE044 /* RNINavigationEventsReportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AA7A3428ABAD98001EE044 /* RNINavigationEventsReportingViewController.swift */; };
 		88AA7A4528ABAD99001EE044 /* RNINavigationEventsNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AA7A3528ABAD98001EE044 /* RNINavigationEventsNotifiable.swift */; };
 		88AA7A4628ABAD99001EE044 /* RNIGenericErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AA7A3728ABAD98001EE044 /* RNIGenericErrorCode.swift */; };
@@ -189,6 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				883424FF28AE2C37005C9BDB /* IosUtilities-Bridging-Header.h in Sources */,
 				88AA7A4E28ABAD99001EE044 /* RNIWrapperViewModule.m in Sources */,
 				88AA7A4728ABAD99001EE044 /* RNIGenericError.swift in Sources */,
 				88AA7A4A28ABAD99001EE044 /* RNIWrapperView.swift in Sources */,
