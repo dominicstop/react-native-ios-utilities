@@ -133,7 +133,7 @@ public class RNIUtilities {
       // one is nil, not equal
       return false;
       
-    } else if a == b {
+    } else if a === b {
       // same ref to the object, true
       return true;
       
