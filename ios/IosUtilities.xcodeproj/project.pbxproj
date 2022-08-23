@@ -20,6 +20,7 @@
 		88C7C12828AE31E200BDD0DC /* RNIWrapperViewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C7C11A28AE31E200BDD0DC /* RNIWrapperViewModule.m */; };
 		88C7C12928AE31E200BDD0DC /* RNIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C7C11C28AE31E200BDD0DC /* RNIUtilities.swift */; };
 		88C7C12A28AE31E200BDD0DC /* RNICleanable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C7C11D28AE31E200BDD0DC /* RNICleanable.swift */; };
+		88C7C12E28B19BD200BDD0DC /* IosUtilities-Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = 88C7C10C28AE31E100BDD0DC /* IosUtilities-Bridging-Header.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -189,6 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88C7C12E28B19BD200BDD0DC /* IosUtilities-Bridging-Header.h in Sources */,
 				88C7C12828AE31E200BDD0DC /* RNIWrapperViewModule.m in Sources */,
 				88C7C12128AE31E200BDD0DC /* RNIGenericError.swift in Sources */,
 				88C7C12428AE31E200BDD0DC /* RNIWrapperView.swift in Sources */,
