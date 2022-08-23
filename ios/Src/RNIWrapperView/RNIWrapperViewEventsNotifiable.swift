@@ -8,8 +8,8 @@
 import Foundation
 
 
-@objc public protocol RNIWrapperViewEventsNotifiable: AnyObject {
-  @objc optional func onJSComponentWillUnmount(
+public protocol RNIWrapperViewEventsNotifiable: AnyObject {
+  func onJSComponentWillUnmount(
     sender: RNIWrapperView,
     isManuallyTriggered: Bool
   );

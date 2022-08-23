@@ -8,7 +8,7 @@
 import Foundation
 
 @objc(RNIWrapperViewModule)
-public class RNIWrapperViewModule: NSObject {
+internal class RNIWrapperViewModule: NSObject {
   
   @objc public private(set) var bridge: RCTBridge!;
   
@@ -17,7 +17,7 @@ public class RNIWrapperViewModule: NSObject {
     return false;
   };
   
-  public func getWrapperView(_ node: NSNumber) -> RNIWrapperView? {
+  func getWrapperView(_ node: NSNumber) -> RNIWrapperView? {
     return RNIUtilities.getView(
       forNode: node,
       type   : RNIWrapperView.self,
@@ -28,7 +28,7 @@ public class RNIWrapperViewModule: NSObject {
   // MARK: - Module Commands: Navigator
   // ---------------------------------
   
-  @objc public func notifyComponentWillUnmount(
+  @objc func notifyComponentWillUnmount(
     _ node: NSNumber,
     params: NSDictionary
   ){

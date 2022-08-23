@@ -226,7 +226,7 @@ public class RNIWrapperView: UIView {
   
   /// Called by `RNIWrapperViewModule.notifyComponentWillUnmount`
   public func onJSComponentWillUnmount(isManuallyTriggered: Bool){
-    self.delegate?.onJSComponentWillUnmount?(
+    self.delegate?.onJSComponentWillUnmount(
       sender: self,
       isManuallyTriggered: isManuallyTriggered
     );
