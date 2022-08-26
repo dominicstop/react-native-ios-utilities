@@ -1,6 +1,6 @@
 {
   "name": "react-native-ios-utilities",
-  "version": "1.0.0-3",
+  "version": "1.0.0-4",
   "description": "Utilities for react-native + iOS",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -32,13 +32,11 @@
     "build": "yarn run typescript && yarn run bob build && cd example/ios && pod install && xcodebuild -workspace IosUtilitiesExample.xcworkspace -scheme IosUtilitiesExample",
     "run-release": "cd example && npx react-native run-ios --simulator \"iPhone 8\" --configuration Release",
     "run-debug": "cd example && npx react-native run-ios --simulator \"iPhone 8\" --configuration Debug",
-
     "example-open-xcode": "echo 'Opening example xcworkspace...' ; open ./example/ios/IosUtilitiesExample.xcworkspace",
     "example-delete-xcworkspace": "echo 'Begin deleting example ios workspace project...' ; cd example/ios && echo 'Deleting 1 of 3...' ; rm -rf ./IosUtilitiesExample.xcworkspace &>/dev/null ; echo 'Deleting 2 of 3...' ; rm -rf ./Pods &>/dev/null ; echo 'Deleting 3 of 3...' ; rm -f Podfile.lock ; echo 'Example ios workspace project deleted.\n'",
     "example-install-pods": "echo 'Begin installing example pods...' ; cd example/ios && pod install --silent &>/dev/null ; echo 'Example pods installed.\n'",
     "example-nuke-workspace": "echo 'Deleting example workspace...' && yarn example-delete-xcworkspace ; echo 'Example workspace deleted.'",
     "example-reinstall-pods": "echo 'Deleting and re-installing example pods...' && yarn example-nuke-workspace && yarn example-install-pods ; yarn example-open-xcode"
-    
   },
   "keywords": [
     "react-native",
