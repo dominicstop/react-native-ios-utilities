@@ -8,10 +8,10 @@
 import Foundation
 
 
-public class RNIGenericError: RNIBaseError<RNIGenericErrorCodes> {
+public class RNIGenericError: RNIBaseError<RNIGenericErrorCode> {
   
   init(
-    code: RNIGenericErrorCodes,
+    code: RNIGenericErrorCode,
     message: String? = nil,
     debug: String? = nil
   ) {

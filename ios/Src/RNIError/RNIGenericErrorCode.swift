@@ -7,9 +7,9 @@
 
 import Foundation
 
-public enum RNIGenericErrorCodes: String, Codable, CaseIterable {
+
+public enum RNIGenericErrorCode: String, Codable, CaseIterable {
+  
   case runtimeError, libraryError, reactError, unknownError,
        invalidArgument, outOfBounds, invalidReactTag, nilValue;
 };
-
-public typealias RNIGenericErrorCode = RNIBaseError<RNIGenericErrorCodes>;
