@@ -1,4 +1,5 @@
 export * from './functions/Helpers';
+export * from './functions/TypeUtils';
 
 export * from './types/RNIError';
 
