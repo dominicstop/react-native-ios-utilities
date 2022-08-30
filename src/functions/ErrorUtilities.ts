@@ -1,4 +1,4 @@
-import type { NativeError } from "src/types/NativeError";
+import type { NativeError } from "../types/NativeError";
 import { TypeUtils } from "./TypeUtils";
 
 

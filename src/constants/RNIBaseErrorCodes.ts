@@ -1,4 +1,4 @@
-import type { RNIBaseErrorCode } from "src/types/RNIError";
+import type { RNIBaseErrorCode } from "../types/RNIError";
 
 
 export const RNIBaseErrorCodes: {
