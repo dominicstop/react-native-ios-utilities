@@ -191,10 +191,10 @@ public class RNIWrapperView: UIView {
     };
   };
   
-  // MARK: - Internal Functions
-  // --------------------------
+  // MARK: -  Functions
+  // ------------------
   
-  internal func notifyForBoundsChange(size: CGSize){
+  public func notifyForBoundsChange(size: CGSize){
     if self.isDummyView {
       self.notifyForBoundsChangeForContent(size: size);
       
@@ -203,12 +203,12 @@ public class RNIWrapperView: UIView {
     };
   };
   
-  internal func notifyForBoundsChangeForWrapper(size: CGSize){
+  public func notifyForBoundsChangeForWrapper(size: CGSize){
     guard let bridge = self.bridge else { return };
     bridge.uiManager.setSize(size, for: self);
   };
   
-  internal func notifyForBoundsChangeForContent(size: CGSize){
+  public func notifyForBoundsChangeForContent(size: CGSize){
     guard let bridge = self.bridge
     else { return };
     
