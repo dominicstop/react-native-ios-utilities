@@ -10,6 +10,10 @@ import Foundation;
 
 public class RNIUtilities {
   
+  public static weak var sharedBridge: RCTBridge?;
+  
+  public static let osVersion = ProcessInfo().operatingSystemVersion;
+  
   /// If you remove a "react view" from the view hierarchy (e.g. via
   /// `removeFromSuperview`), it won't be released, because it's being retained
   /// by the `_viewRegistry` ivar in the shared `UIManager` (singleton) instance.
@@ -124,6 +128,17 @@ public class RNIUtilities {
     return views;
   };
   
+  public static func recursivelyGetAllSuperViews(for view: UIView) -> [UIView] {
+    var views: [UIView] = [];
+    
+    if let parentView = view.superview {
+      views.append(parentView);
+      views += Self.recursivelyGetAllSuperViews(for: parentView);
+    };
+    
+    return views;
+  };
+  
   public static func compareImages(_ a: UIImage?, _ b: UIImage?) -> Bool {
     if (a == nil && b == nil){
       // both are nil, equal
@@ -133,7 +148,7 @@ public class RNIUtilities {
       // one is nil, not equal
       return false;
       
-    } else if a === b {
+    } else if a! == b! {
       // same ref to the object, true
       return true;
       

@@ -1,17 +1,15 @@
 //
 //  RNIImageSystemMaker.swift
-//  react-native-ios-utilities
+//  react-native-ios-context-menu
 //
-//  Created by Dominic Go on 5/1/22.
+//  Created by Dominic Go on 9/26/22.
 //
 
 import Foundation
+import UIKit
+
 
 public struct RNIImageSystemMaker {
-  
-  // MARK: - Properties
-  // ------------------
-  
   public let systemName: String;
   
   public let pointSize: CGFloat?;
@@ -20,9 +18,6 @@ public struct RNIImageSystemMaker {
   
   public let hierarchicalColor: UIColor?;
   public let paletteColors: [UIColor]?;
-  
-  // MARK: - Computed Properties
-  // ---------------------------
   
   @available(iOS 13.0, *)
   public var symbolConfigs: [UIImage.SymbolConfiguration] {
@@ -89,9 +84,6 @@ public struct RNIImageSystemMaker {
     return UIImage(systemName: self.systemName);
   };
   
-  // MARK: - Init
-  // ------------
-  
   public init?(dict: NSDictionary){
     guard let systemName = dict["systemName"] as? String
     else { return nil };
@@ -118,3 +110,4 @@ public struct RNIImageSystemMaker {
     }();
   };
 };
+

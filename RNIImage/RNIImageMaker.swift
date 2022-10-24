@@ -1,23 +1,29 @@
 //
 //  RNIImageMaker.swift
-//  react-native-ios-utilities
+//  react-native-ios-context-menu
 //
-//  Created by Dominic Go on 5/1/22.
+//  Created by Dominic Go on 9/26/22.
 //
 
 import Foundation
+import UIKit
+
 
 public struct RNIImageMaker {
-  
-  // MARK: - Properties
-  // ------------------
 
   public let size        : CGSize;
   public let fillColor   : UIColor;
   public let borderRadius: CGFloat;
   
-  // MARK: - Init
-  // ------------
+  public init(
+    size: CGSize,
+    fillColor: UIColor,
+    borderRadius: CGFloat
+  ) {
+    self.size = size;
+    self.fillColor = fillColor;
+    self.borderRadius = borderRadius;
+  };
   
   public init?(dict: NSDictionary) {
     guard let width  = dict["width" ] as? CGFloat,
@@ -34,9 +40,6 @@ public struct RNIImageMaker {
     
     self.borderRadius = dict["borderRadius"] as? CGFloat ?? 0;
   };
-  
-  // MARK: - Functions
-  // --------------------
 
   public func makeImage() -> UIImage {
     return UIGraphicsImageRenderer(size: self.size).image { context in
