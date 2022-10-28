@@ -5,3 +5,7 @@ export type RNICleanupMode =
   | 'viewController'
   | 'reactComponentWillUnmount'
   | 'disabled';
+
+export type RNIInternalCleanupModeProps = {
+  internalCleanupMode?: RNICleanupMode;
+};
