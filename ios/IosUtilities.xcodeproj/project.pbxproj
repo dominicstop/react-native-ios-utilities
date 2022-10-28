@@ -7,29 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8883381528BC248300F7FA2D /* RNIImageMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888337F628BC248300F7FA2D /* RNIImageMaker.swift */; };
-		8883381628BC248300F7FA2D /* RNIImageGradientMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888337F728BC248300F7FA2D /* RNIImageGradientMaker.swift */; };
-		8883381728BC248300F7FA2D /* RNIImageSystemMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888337F828BC248300F7FA2D /* RNIImageSystemMaker.swift */; };
-		8883381828BC248300F7FA2D /* RNIImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888337F928BC248300F7FA2D /* RNIImageItem.swift */; };
-		8883381928BC248300F7FA2D /* CAGradientLayerType+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888337FB28BC248300F7FA2D /* CAGradientLayerType+Init.swift */; };
-		8883381A28BC248300F7FA2D /* UIImage+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888337FC28BC248300F7FA2D /* UIImage+Init.swift */; };
-		8883381B28BC248300F7FA2D /* RNINavigationEventsReportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888337FF28BC248300F7FA2D /* RNINavigationEventsReportingViewController.swift */; };
-		8883381C28BC248300F7FA2D /* RNINavigationEventsNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380028BC248300F7FA2D /* RNINavigationEventsNotifiable.swift */; };
-		8883381D28BC248300F7FA2D /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380228BC248300F7FA2D /* UIViewController+Helpers.swift */; };
-		8883381E28BC248300F7FA2D /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380328BC248300F7FA2D /* UIColor+Helpers.swift */; };
-		8883381F28BC248300F7FA2D /* Encodable+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380428BC248300F7FA2D /* Encodable+Helpers.swift */; };
-		8883382028BC248300F7FA2D /* RNIGenericErrorDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380628BC248300F7FA2D /* RNIGenericErrorDefaultable.swift */; };
-		8883382128BC248300F7FA2D /* RNIGenericErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380728BC248300F7FA2D /* RNIGenericErrorCode.swift */; };
-		8883382228BC248300F7FA2D /* RNIGenericError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380828BC248300F7FA2D /* RNIGenericError.swift */; };
-		8883382328BC248300F7FA2D /* RNIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380928BC248300F7FA2D /* RNIError.swift */; };
-		8883382428BC248300F7FA2D /* RNIWrapperViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380B28BC248300F7FA2D /* RNIWrapperViewManager.swift */; };
-		8883382528BC248300F7FA2D /* RNIWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380C28BC248300F7FA2D /* RNIWrapperView.swift */; };
-		8883382628BC248300F7FA2D /* RNIWrapperViewEventsNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380D28BC248300F7FA2D /* RNIWrapperViewEventsNotifiable.swift */; };
-		8883382728BC248300F7FA2D /* RNIWrapperViewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883380E28BC248300F7FA2D /* RNIWrapperViewModule.swift */; };
-		8883382828BC248300F7FA2D /* RNIWrapperViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8883380F28BC248300F7FA2D /* RNIWrapperViewManager.m */; };
-		8883382928BC248300F7FA2D /* RNIWrapperViewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 8883381028BC248300F7FA2D /* RNIWrapperViewModule.m */; };
-		8883382A28BC248300F7FA2D /* RNICleanable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883381228BC248300F7FA2D /* RNICleanable.swift */; };
-		8883382B28BC248300F7FA2D /* RNIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883381428BC248300F7FA2D /* RNIUtilities.swift */; };
+		8838941E290BAFD100227F85 /* RNIImageMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893F4290BAFD100227F85 /* RNIImageMaker.swift */; };
+		8838941F290BAFD100227F85 /* RNIImageLoadingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893F5290BAFD100227F85 /* RNIImageLoadingConfig.swift */; };
+		88389420290BAFD100227F85 /* RNIImageOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893F6290BAFD100227F85 /* RNIImageOptions.swift */; };
+		88389421290BAFD100227F85 /* RNIRemoteURLImageLoadingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893F7290BAFD100227F85 /* RNIRemoteURLImageLoadingConfig.swift */; };
+		88389422290BAFD100227F85 /* RNIImageRemoteURLMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893F8290BAFD100227F85 /* RNIImageRemoteURLMaker.swift */; };
+		88389423290BAFD100227F85 /* RNIImageGradientMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893F9290BAFD100227F85 /* RNIImageGradientMaker.swift */; };
+		88389424290BAFD100227F85 /* RNIImageRequireMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893FA290BAFD100227F85 /* RNIImageRequireMaker.swift */; };
+		88389425290BAFD100227F85 /* RNIImageSystemMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893FB290BAFD100227F85 /* RNIImageSystemMaker.swift */; };
+		88389426290BAFD100227F85 /* RNIImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893FC290BAFD100227F85 /* RNIImageType.swift */; };
+		88389427290BAFD100227F85 /* RNIImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893FD290BAFD100227F85 /* RNIImageItem.swift */; };
+		88389428290BAFD100227F85 /* CAGradientLayerType+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883893FF290BAFD100227F85 /* CAGradientLayerType+Init.swift */; };
+		88389429290BAFD100227F85 /* UIImage+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389400290BAFD100227F85 /* UIImage+Init.swift */; };
+		8838942A290BAFD100227F85 /* RNICleanupMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389402290BAFD100227F85 /* RNICleanupMode.swift */; };
+		8838942B290BAFD100227F85 /* RNINavigationEventsReportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389405290BAFD100227F85 /* RNINavigationEventsReportingViewController.swift */; };
+		8838942C290BAFD100227F85 /* RNINavigationEventsNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389406290BAFD100227F85 /* RNINavigationEventsNotifiable.swift */; };
+		8838942D290BAFD100227F85 /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389408290BAFD100227F85 /* UIViewController+Helpers.swift */; };
+		8838942E290BAFD100227F85 /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389409290BAFD100227F85 /* UIColor+Helpers.swift */; };
+		8838942F290BAFD100227F85 /* Encodable+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838940A290BAFD100227F85 /* Encodable+Helpers.swift */; };
+		88389430290BAFD100227F85 /* RNIGenericErrorDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838940C290BAFD100227F85 /* RNIGenericErrorDefaultable.swift */; };
+		88389431290BAFD100227F85 /* RNIGenericErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838940D290BAFD100227F85 /* RNIGenericErrorCode.swift */; };
+		88389432290BAFD100227F85 /* RNIGenericError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838940E290BAFD100227F85 /* RNIGenericError.swift */; };
+		88389433290BAFD100227F85 /* RNIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838940F290BAFD100227F85 /* RNIError.swift */; };
+		88389434290BAFD100227F85 /* RNIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389411290BAFD100227F85 /* RNIUtilities.swift */; };
+		88389435290BAFD200227F85 /* RNIUtilitiesModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 88389412290BAFD100227F85 /* RNIUtilitiesModule.m */; };
+		88389436290BAFD200227F85 /* RNIUtilitiesModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389413290BAFD100227F85 /* RNIUtilitiesModule.swift */; };
+		88389437290BAFD200227F85 /* RNIWrapperViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389415290BAFD100227F85 /* RNIWrapperViewManager.swift */; };
+		88389438290BAFD200227F85 /* RNIWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389416290BAFD100227F85 /* RNIWrapperView.swift */; };
+		88389439290BAFD200227F85 /* RNIWrapperViewEventsNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389417290BAFD100227F85 /* RNIWrapperViewEventsNotifiable.swift */; };
+		8838943A290BAFD200227F85 /* RNIWrapperViewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88389418290BAFD100227F85 /* RNIWrapperViewModule.swift */; };
+		8838943B290BAFD200227F85 /* RNIWrapperViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88389419290BAFD100227F85 /* RNIWrapperViewManager.m */; };
+		8838943C290BAFD200227F85 /* RNIWrapperViewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 8838941A290BAFD100227F85 /* RNIWrapperViewModule.m */; };
+		8838943D290BAFD200227F85 /* RNIJSComponentWillUnmountNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838941C290BAFD100227F85 /* RNIJSComponentWillUnmountNotifiable.swift */; };
+		8838943E290BAFD200227F85 /* RNICleanable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8838941D290BAFD100227F85 /* RNICleanable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,30 +56,40 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libIosUtilities.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIosUtilities.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		888337F628BC248300F7FA2D /* RNIImageMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageMaker.swift; sourceTree = "<group>"; };
-		888337F728BC248300F7FA2D /* RNIImageGradientMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageGradientMaker.swift; sourceTree = "<group>"; };
-		888337F828BC248300F7FA2D /* RNIImageSystemMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageSystemMaker.swift; sourceTree = "<group>"; };
-		888337F928BC248300F7FA2D /* RNIImageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageItem.swift; sourceTree = "<group>"; };
-		888337FB28BC248300F7FA2D /* CAGradientLayerType+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAGradientLayerType+Init.swift"; sourceTree = "<group>"; };
-		888337FC28BC248300F7FA2D /* UIImage+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Init.swift"; sourceTree = "<group>"; };
-		888337FD28BC248300F7FA2D /* IosUtilities-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IosUtilities-Bridging-Header.h"; sourceTree = "<group>"; };
-		888337FF28BC248300F7FA2D /* RNINavigationEventsReportingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNINavigationEventsReportingViewController.swift; sourceTree = "<group>"; };
-		8883380028BC248300F7FA2D /* RNINavigationEventsNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNINavigationEventsNotifiable.swift; sourceTree = "<group>"; };
-		8883380228BC248300F7FA2D /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
-		8883380328BC248300F7FA2D /* UIColor+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
-		8883380428BC248300F7FA2D /* Encodable+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+Helpers.swift"; sourceTree = "<group>"; };
-		8883380628BC248300F7FA2D /* RNIGenericErrorDefaultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIGenericErrorDefaultable.swift; sourceTree = "<group>"; };
-		8883380728BC248300F7FA2D /* RNIGenericErrorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIGenericErrorCode.swift; sourceTree = "<group>"; };
-		8883380828BC248300F7FA2D /* RNIGenericError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIGenericError.swift; sourceTree = "<group>"; };
-		8883380928BC248300F7FA2D /* RNIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIError.swift; sourceTree = "<group>"; };
-		8883380B28BC248300F7FA2D /* RNIWrapperViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIWrapperViewManager.swift; sourceTree = "<group>"; };
-		8883380C28BC248300F7FA2D /* RNIWrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIWrapperView.swift; sourceTree = "<group>"; };
-		8883380D28BC248300F7FA2D /* RNIWrapperViewEventsNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIWrapperViewEventsNotifiable.swift; sourceTree = "<group>"; };
-		8883380E28BC248300F7FA2D /* RNIWrapperViewModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIWrapperViewModule.swift; sourceTree = "<group>"; };
-		8883380F28BC248300F7FA2D /* RNIWrapperViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNIWrapperViewManager.m; sourceTree = "<group>"; };
-		8883381028BC248300F7FA2D /* RNIWrapperViewModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNIWrapperViewModule.m; sourceTree = "<group>"; };
-		8883381228BC248300F7FA2D /* RNICleanable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNICleanable.swift; sourceTree = "<group>"; };
-		8883381428BC248300F7FA2D /* RNIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIUtilities.swift; sourceTree = "<group>"; };
+		883893F4290BAFD100227F85 /* RNIImageMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageMaker.swift; sourceTree = "<group>"; };
+		883893F5290BAFD100227F85 /* RNIImageLoadingConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageLoadingConfig.swift; sourceTree = "<group>"; };
+		883893F6290BAFD100227F85 /* RNIImageOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageOptions.swift; sourceTree = "<group>"; };
+		883893F7290BAFD100227F85 /* RNIRemoteURLImageLoadingConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIRemoteURLImageLoadingConfig.swift; sourceTree = "<group>"; };
+		883893F8290BAFD100227F85 /* RNIImageRemoteURLMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageRemoteURLMaker.swift; sourceTree = "<group>"; };
+		883893F9290BAFD100227F85 /* RNIImageGradientMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageGradientMaker.swift; sourceTree = "<group>"; };
+		883893FA290BAFD100227F85 /* RNIImageRequireMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageRequireMaker.swift; sourceTree = "<group>"; };
+		883893FB290BAFD100227F85 /* RNIImageSystemMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageSystemMaker.swift; sourceTree = "<group>"; };
+		883893FC290BAFD100227F85 /* RNIImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageType.swift; sourceTree = "<group>"; };
+		883893FD290BAFD100227F85 /* RNIImageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIImageItem.swift; sourceTree = "<group>"; };
+		883893FF290BAFD100227F85 /* CAGradientLayerType+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAGradientLayerType+Init.swift"; sourceTree = "<group>"; };
+		88389400290BAFD100227F85 /* UIImage+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Init.swift"; sourceTree = "<group>"; };
+		88389402290BAFD100227F85 /* RNICleanupMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNICleanupMode.swift; sourceTree = "<group>"; };
+		88389403290BAFD100227F85 /* IosUtilities-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IosUtilities-Bridging-Header.h"; sourceTree = "<group>"; };
+		88389405290BAFD100227F85 /* RNINavigationEventsReportingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNINavigationEventsReportingViewController.swift; sourceTree = "<group>"; };
+		88389406290BAFD100227F85 /* RNINavigationEventsNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNINavigationEventsNotifiable.swift; sourceTree = "<group>"; };
+		88389408290BAFD100227F85 /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
+		88389409290BAFD100227F85 /* UIColor+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
+		8838940A290BAFD100227F85 /* Encodable+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+Helpers.swift"; sourceTree = "<group>"; };
+		8838940C290BAFD100227F85 /* RNIGenericErrorDefaultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIGenericErrorDefaultable.swift; sourceTree = "<group>"; };
+		8838940D290BAFD100227F85 /* RNIGenericErrorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIGenericErrorCode.swift; sourceTree = "<group>"; };
+		8838940E290BAFD100227F85 /* RNIGenericError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIGenericError.swift; sourceTree = "<group>"; };
+		8838940F290BAFD100227F85 /* RNIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIError.swift; sourceTree = "<group>"; };
+		88389411290BAFD100227F85 /* RNIUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIUtilities.swift; sourceTree = "<group>"; };
+		88389412290BAFD100227F85 /* RNIUtilitiesModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNIUtilitiesModule.m; sourceTree = "<group>"; };
+		88389413290BAFD100227F85 /* RNIUtilitiesModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIUtilitiesModule.swift; sourceTree = "<group>"; };
+		88389415290BAFD100227F85 /* RNIWrapperViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIWrapperViewManager.swift; sourceTree = "<group>"; };
+		88389416290BAFD100227F85 /* RNIWrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIWrapperView.swift; sourceTree = "<group>"; };
+		88389417290BAFD100227F85 /* RNIWrapperViewEventsNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIWrapperViewEventsNotifiable.swift; sourceTree = "<group>"; };
+		88389418290BAFD100227F85 /* RNIWrapperViewModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIWrapperViewModule.swift; sourceTree = "<group>"; };
+		88389419290BAFD100227F85 /* RNIWrapperViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNIWrapperViewManager.m; sourceTree = "<group>"; };
+		8838941A290BAFD100227F85 /* RNIWrapperViewModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNIWrapperViewModule.m; sourceTree = "<group>"; };
+		8838941C290BAFD100227F85 /* RNIJSComponentWillUnmountNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNIJSComponentWillUnmountNotifiable.swift; sourceTree = "<group>"; };
+		8838941D290BAFD100227F85 /* RNICleanable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNICleanable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,104 +114,122 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				888337F428BC248300F7FA2D /* Src */,
+				883893F2290BAFD100227F85 /* Src */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		888337F428BC248300F7FA2D /* Src */ = {
+		883893F2290BAFD100227F85 /* Src */ = {
 			isa = PBXGroup;
 			children = (
-				888337F528BC248300F7FA2D /* RNIImage */,
-				888337FA28BC248300F7FA2D /* Extensions+Init */,
-				888337FD28BC248300F7FA2D /* IosUtilities-Bridging-Header.h */,
-				888337FE28BC248300F7FA2D /* RNINavigationEventsReporting */,
-				8883380128BC248300F7FA2D /* Extensions */,
-				8883380528BC248300F7FA2D /* RNIError */,
-				8883380A28BC248300F7FA2D /* RNIWrapperView */,
-				8883381128BC248300F7FA2D /* Protocols */,
-				8883381328BC248300F7FA2D /* Helpers */,
+				883893F3290BAFD100227F85 /* RNIImage */,
+				883893FE290BAFD100227F85 /* Extensions+Init */,
+				88389401290BAFD100227F85 /* RNIMisc */,
+				88389403290BAFD100227F85 /* IosUtilities-Bridging-Header.h */,
+				88389404290BAFD100227F85 /* RNINavigationEventsReporting */,
+				88389407290BAFD100227F85 /* Extensions */,
+				8838940B290BAFD100227F85 /* RNIError */,
+				88389410290BAFD100227F85 /* RNIUtilities */,
+				88389414290BAFD100227F85 /* RNIWrapperView */,
+				8838941B290BAFD100227F85 /* Protocols */,
 			);
 			path = Src;
 			sourceTree = "<group>";
 		};
-		888337F528BC248300F7FA2D /* RNIImage */ = {
+		883893F3290BAFD100227F85 /* RNIImage */ = {
 			isa = PBXGroup;
 			children = (
-				888337F628BC248300F7FA2D /* RNIImageMaker.swift */,
-				888337F728BC248300F7FA2D /* RNIImageGradientMaker.swift */,
-				888337F828BC248300F7FA2D /* RNIImageSystemMaker.swift */,
-				888337F928BC248300F7FA2D /* RNIImageItem.swift */,
+				883893F4290BAFD100227F85 /* RNIImageMaker.swift */,
+				883893F5290BAFD100227F85 /* RNIImageLoadingConfig.swift */,
+				883893F6290BAFD100227F85 /* RNIImageOptions.swift */,
+				883893F7290BAFD100227F85 /* RNIRemoteURLImageLoadingConfig.swift */,
+				883893F8290BAFD100227F85 /* RNIImageRemoteURLMaker.swift */,
+				883893F9290BAFD100227F85 /* RNIImageGradientMaker.swift */,
+				883893FA290BAFD100227F85 /* RNIImageRequireMaker.swift */,
+				883893FB290BAFD100227F85 /* RNIImageSystemMaker.swift */,
+				883893FC290BAFD100227F85 /* RNIImageType.swift */,
+				883893FD290BAFD100227F85 /* RNIImageItem.swift */,
 			);
 			path = RNIImage;
 			sourceTree = "<group>";
 		};
-		888337FA28BC248300F7FA2D /* Extensions+Init */ = {
+		883893FE290BAFD100227F85 /* Extensions+Init */ = {
 			isa = PBXGroup;
 			children = (
-				888337FB28BC248300F7FA2D /* CAGradientLayerType+Init.swift */,
-				888337FC28BC248300F7FA2D /* UIImage+Init.swift */,
+				883893FF290BAFD100227F85 /* CAGradientLayerType+Init.swift */,
+				88389400290BAFD100227F85 /* UIImage+Init.swift */,
 			);
 			path = "Extensions+Init";
 			sourceTree = "<group>";
 		};
-		888337FE28BC248300F7FA2D /* RNINavigationEventsReporting */ = {
+		88389401290BAFD100227F85 /* RNIMisc */ = {
 			isa = PBXGroup;
 			children = (
-				888337FF28BC248300F7FA2D /* RNINavigationEventsReportingViewController.swift */,
-				8883380028BC248300F7FA2D /* RNINavigationEventsNotifiable.swift */,
+				88389402290BAFD100227F85 /* RNICleanupMode.swift */,
+			);
+			path = RNIMisc;
+			sourceTree = "<group>";
+		};
+		88389404290BAFD100227F85 /* RNINavigationEventsReporting */ = {
+			isa = PBXGroup;
+			children = (
+				88389405290BAFD100227F85 /* RNINavigationEventsReportingViewController.swift */,
+				88389406290BAFD100227F85 /* RNINavigationEventsNotifiable.swift */,
 			);
 			path = RNINavigationEventsReporting;
 			sourceTree = "<group>";
 		};
-		8883380128BC248300F7FA2D /* Extensions */ = {
+		88389407290BAFD100227F85 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				8883380228BC248300F7FA2D /* UIViewController+Helpers.swift */,
-				8883380328BC248300F7FA2D /* UIColor+Helpers.swift */,
-				8883380428BC248300F7FA2D /* Encodable+Helpers.swift */,
+				88389408290BAFD100227F85 /* UIViewController+Helpers.swift */,
+				88389409290BAFD100227F85 /* UIColor+Helpers.swift */,
+				8838940A290BAFD100227F85 /* Encodable+Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		8883380528BC248300F7FA2D /* RNIError */ = {
+		8838940B290BAFD100227F85 /* RNIError */ = {
 			isa = PBXGroup;
 			children = (
-				8883380628BC248300F7FA2D /* RNIGenericErrorDefaultable.swift */,
-				8883380728BC248300F7FA2D /* RNIGenericErrorCode.swift */,
-				8883380828BC248300F7FA2D /* RNIGenericError.swift */,
-				8883380928BC248300F7FA2D /* RNIError.swift */,
+				8838940C290BAFD100227F85 /* RNIGenericErrorDefaultable.swift */,
+				8838940D290BAFD100227F85 /* RNIGenericErrorCode.swift */,
+				8838940E290BAFD100227F85 /* RNIGenericError.swift */,
+				8838940F290BAFD100227F85 /* RNIError.swift */,
 			);
 			path = RNIError;
 			sourceTree = "<group>";
 		};
-		8883380A28BC248300F7FA2D /* RNIWrapperView */ = {
+		88389410290BAFD100227F85 /* RNIUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				8883380B28BC248300F7FA2D /* RNIWrapperViewManager.swift */,
-				8883380C28BC248300F7FA2D /* RNIWrapperView.swift */,
-				8883380D28BC248300F7FA2D /* RNIWrapperViewEventsNotifiable.swift */,
-				8883380E28BC248300F7FA2D /* RNIWrapperViewModule.swift */,
-				8883380F28BC248300F7FA2D /* RNIWrapperViewManager.m */,
-				8883381028BC248300F7FA2D /* RNIWrapperViewModule.m */,
+				88389411290BAFD100227F85 /* RNIUtilities.swift */,
+				88389412290BAFD100227F85 /* RNIUtilitiesModule.m */,
+				88389413290BAFD100227F85 /* RNIUtilitiesModule.swift */,
+			);
+			path = RNIUtilities;
+			sourceTree = "<group>";
+		};
+		88389414290BAFD100227F85 /* RNIWrapperView */ = {
+			isa = PBXGroup;
+			children = (
+				88389415290BAFD100227F85 /* RNIWrapperViewManager.swift */,
+				88389416290BAFD100227F85 /* RNIWrapperView.swift */,
+				88389417290BAFD100227F85 /* RNIWrapperViewEventsNotifiable.swift */,
+				88389418290BAFD100227F85 /* RNIWrapperViewModule.swift */,
+				88389419290BAFD100227F85 /* RNIWrapperViewManager.m */,
+				8838941A290BAFD100227F85 /* RNIWrapperViewModule.m */,
 			);
 			path = RNIWrapperView;
 			sourceTree = "<group>";
 		};
-		8883381128BC248300F7FA2D /* Protocols */ = {
+		8838941B290BAFD100227F85 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				8883381228BC248300F7FA2D /* RNICleanable.swift */,
+				8838941C290BAFD100227F85 /* RNIJSComponentWillUnmountNotifiable.swift */,
+				8838941D290BAFD100227F85 /* RNICleanable.swift */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		8883381328BC248300F7FA2D /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				8883381428BC248300F7FA2D /* RNIUtilities.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,29 +289,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8883381928BC248300F7FA2D /* CAGradientLayerType+Init.swift in Sources */,
-				8883381E28BC248300F7FA2D /* UIColor+Helpers.swift in Sources */,
-				8883382828BC248300F7FA2D /* RNIWrapperViewManager.m in Sources */,
-				8883381C28BC248300F7FA2D /* RNINavigationEventsNotifiable.swift in Sources */,
-				8883381B28BC248300F7FA2D /* RNINavigationEventsReportingViewController.swift in Sources */,
-				8883382528BC248300F7FA2D /* RNIWrapperView.swift in Sources */,
-				8883382928BC248300F7FA2D /* RNIWrapperViewModule.m in Sources */,
-				8883382228BC248300F7FA2D /* RNIGenericError.swift in Sources */,
-				8883382028BC248300F7FA2D /* RNIGenericErrorDefaultable.swift in Sources */,
-				8883382728BC248300F7FA2D /* RNIWrapperViewModule.swift in Sources */,
-				8883382428BC248300F7FA2D /* RNIWrapperViewManager.swift in Sources */,
-				8883381828BC248300F7FA2D /* RNIImageItem.swift in Sources */,
-				8883381D28BC248300F7FA2D /* UIViewController+Helpers.swift in Sources */,
-				8883382A28BC248300F7FA2D /* RNICleanable.swift in Sources */,
-				8883381628BC248300F7FA2D /* RNIImageGradientMaker.swift in Sources */,
-				8883381A28BC248300F7FA2D /* UIImage+Init.swift in Sources */,
-				8883382B28BC248300F7FA2D /* RNIUtilities.swift in Sources */,
-				8883381528BC248300F7FA2D /* RNIImageMaker.swift in Sources */,
-				8883381F28BC248300F7FA2D /* Encodable+Helpers.swift in Sources */,
-				8883382628BC248300F7FA2D /* RNIWrapperViewEventsNotifiable.swift in Sources */,
-				8883381728BC248300F7FA2D /* RNIImageSystemMaker.swift in Sources */,
-				8883382128BC248300F7FA2D /* RNIGenericErrorCode.swift in Sources */,
-				8883382328BC248300F7FA2D /* RNIError.swift in Sources */,
+				8838943C290BAFD200227F85 /* RNIWrapperViewModule.m in Sources */,
+				88389423290BAFD100227F85 /* RNIImageGradientMaker.swift in Sources */,
+				8838943E290BAFD200227F85 /* RNICleanable.swift in Sources */,
+				88389426290BAFD100227F85 /* RNIImageType.swift in Sources */,
+				88389427290BAFD100227F85 /* RNIImageItem.swift in Sources */,
+				88389420290BAFD100227F85 /* RNIImageOptions.swift in Sources */,
+				8838942D290BAFD100227F85 /* UIViewController+Helpers.swift in Sources */,
+				88389438290BAFD200227F85 /* RNIWrapperView.swift in Sources */,
+				8838941F290BAFD100227F85 /* RNIImageLoadingConfig.swift in Sources */,
+				8838943D290BAFD200227F85 /* RNIJSComponentWillUnmountNotifiable.swift in Sources */,
+				88389421290BAFD100227F85 /* RNIRemoteURLImageLoadingConfig.swift in Sources */,
+				8838942E290BAFD100227F85 /* UIColor+Helpers.swift in Sources */,
+				8838943A290BAFD200227F85 /* RNIWrapperViewModule.swift in Sources */,
+				88389424290BAFD100227F85 /* RNIImageRequireMaker.swift in Sources */,
+				8838942C290BAFD100227F85 /* RNINavigationEventsNotifiable.swift in Sources */,
+				88389430290BAFD100227F85 /* RNIGenericErrorDefaultable.swift in Sources */,
+				88389432290BAFD100227F85 /* RNIGenericError.swift in Sources */,
+				88389433290BAFD100227F85 /* RNIError.swift in Sources */,
+				88389428290BAFD100227F85 /* CAGradientLayerType+Init.swift in Sources */,
+				88389437290BAFD200227F85 /* RNIWrapperViewManager.swift in Sources */,
+				8838942F290BAFD100227F85 /* Encodable+Helpers.swift in Sources */,
+				8838942B290BAFD100227F85 /* RNINavigationEventsReportingViewController.swift in Sources */,
+				88389434290BAFD100227F85 /* RNIUtilities.swift in Sources */,
+				88389425290BAFD100227F85 /* RNIImageSystemMaker.swift in Sources */,
+				88389435290BAFD200227F85 /* RNIUtilitiesModule.m in Sources */,
+				8838943B290BAFD200227F85 /* RNIWrapperViewManager.m in Sources */,
+				88389436290BAFD200227F85 /* RNIUtilitiesModule.swift in Sources */,
+				88389429290BAFD100227F85 /* UIImage+Init.swift in Sources */,
+				88389422290BAFD100227F85 /* RNIImageRemoteURLMaker.swift in Sources */,
+				8838942A290BAFD100227F85 /* RNICleanupMode.swift in Sources */,
+				8838941E290BAFD100227F85 /* RNIImageMaker.swift in Sources */,
+				88389439290BAFD200227F85 /* RNIWrapperViewEventsNotifiable.swift in Sources */,
+				88389431290BAFD100227F85 /* RNIGenericErrorCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
