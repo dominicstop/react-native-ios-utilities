@@ -13,7 +13,7 @@ public protocol RNIInternalCleanupMode {
   var synthesizedInternalCleanupMode: RNICleanupMode { get };
   
   /// exported react prop
-  var internalCleanupMode: String? { set get };
+  var internalCleanupMode: String? { get };
   
   /// computed property - override behavior for `.automatic`
   var cleanupMode: RNICleanupMode { get };
