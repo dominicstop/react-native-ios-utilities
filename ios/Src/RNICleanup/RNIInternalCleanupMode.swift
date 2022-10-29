@@ -10,7 +10,7 @@ import Foundation
 
 public protocol RNIInternalCleanupMode {
   /// shadow variable for react prop
-  var _internalCleanupMode: RNICleanupMode { get };
+  var synthesizedInternalCleanupMode: RNICleanupMode { get };
   
   /// exported react prop
   var internalCleanupMode: String? { set get };
@@ -31,9 +31,9 @@ public extension RNIInternalCleanupMode {
   
   var cleanupMode: RNICleanupMode {
     get {
-      switch self._internalCleanupMode {
+      switch self.synthesizedInternalCleanupMode {
         case .automatic: return .reactComponentWillUnmount;
-        default: return self._internalCleanupMode;
+        default: return self.synthesizedInternalCleanupMode;
       };
     }
   };
