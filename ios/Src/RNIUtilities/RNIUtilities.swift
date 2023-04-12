@@ -148,13 +148,13 @@ public class RNIUtilities {
       // one is nil, not equal
       return false;
       
-    } else if a! == b! {
+    } else if a! === b! {
       // same ref to the object, true
       return true;
       
-    } else if a!.size != b!.size {
+    } else if a!.size == b!.size {
       // size diff, not equal
-      return false;
+      return true;
     };
     
     // compare raw data
