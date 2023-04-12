@@ -2,6 +2,8 @@
 #import <React/RCTDevLoadingView.h>
 #endif
 
+#import "RNILog/_RNILog.h"
+
 #import <React/RCTBridge.h>
 #import <React/RCTConvert.h>
 
