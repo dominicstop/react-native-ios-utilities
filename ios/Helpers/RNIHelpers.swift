@@ -40,7 +40,7 @@ public class RNIHelpers {
   @discardableResult
   public static func recursivelyRemoveFromViewRegistry(
     forReactView reactView: UIView,
-    bridge: RCTBridge
+    usingReactBridge bridge: RCTBridge
   ) -> [NSNumber] {
     
     /// Get a ref to the `_viewRegistry` ivar in the `RCTUIManager` instance.
