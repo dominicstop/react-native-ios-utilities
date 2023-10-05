@@ -32,6 +32,11 @@ public class RNIDummyView: ExpoView {
     }
   };
   
+  // MARK: Properties - Props
+  // ------------------------
+  
+  public var shouldCleanupOnComponentWillUnmount = false;
+  
   // MARK: Properties - Prop - Events
   // --------------------------------
   
@@ -62,7 +67,9 @@ public class RNIDummyView: ExpoView {
       isManuallyTriggered: isManuallyTriggered
     );
     
-    self.cleanup();
+    if self.shouldCleanupOnComponentWillUnmount {
+      self.cleanup();
+    };
   };
 };
 
