@@ -8,11 +8,12 @@
 
 - [ ] `TODO:2023-10-05-12-33-20` Impl: Initial impl. of `RNIDummyView`, a rewrite of `RNIWrapperView`.
 - [ ] `TODO:2023-10-05-12-30-30` Impl: Re-add prev. deleted sources, and update/re-write them.
-- [ ] `TODO:2023-10-05-12-25-42` Refactor: Delete all sources and related-files, and init. repository w/ expo modules.s
 
 <br><br>
 
 ## Version `next`
+
+- [x] `TODO:2023-10-05-12-25-42` Refactor: Delete all sources and related-files, and init. repository w/ expo modules.
 
 <br><br>
 
