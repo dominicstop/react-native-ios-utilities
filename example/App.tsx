@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import * as ReactNativeIosUtilities from 'react-native-ios-utilities';
+// import {  } from 'react-native-ios-utilities';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>{ReactNativeIosUtilities.hello()}</Text>
+      <Text>
+        "Hello World"
+      </Text>
     </View>
   );
 }
@@ -13,7 +15,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
   },
