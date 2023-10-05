@@ -6,12 +6,11 @@
 
 ## TODO - Current Tasks
 
-- [ ] `TODO:2023-10-05-12-33-20` Impl: Initial impl. of `RNIDummyView`, a rewrite of `RNIWrapperView`.
-
 <br><br>
 
 ## Version `next`
 
+- [x] `TODO:2023-10-05-12-33-20` Impl: Rewrite `RNIWrapperView` - Initial impl. for `RNIDummyView`,
 - [x] `TODO:2023-10-05-12-30-30` Impl: Re-add prev. deleted sources, and update/re-write them.
 - [x] `TODO:2023-10-05-12-25-42` Refactor: Delete all sources and related-files, and init. repository w/ expo modules.
 
