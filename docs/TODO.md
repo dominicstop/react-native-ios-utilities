@@ -6,6 +6,9 @@
 
 ## TODO - Current Tasks
 
+- [ ] `TODO:2023-10-05-17-01-58` - Impl: `RNIDummyView` - Impl, `RNIDummyViewRegistryManager`.
+- [ ] `TODO:2023-10-05-17-00-32` - Impl: `RNIDummyView` Prop - Impl. `shouldAutoDetachFromSuperview`. 
+
 <br><br>
 
 ## Version `next`
