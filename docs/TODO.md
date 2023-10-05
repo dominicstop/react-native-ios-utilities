@@ -6,14 +6,14 @@
 
 ## TODO - Current Tasks
 
-- [ ] `TODO:2023-10-05-17-01-58` - Impl: `RNIDummyView` - Impl, `RNIDummyViewRegistryManager`.
 - [ ] `TODO:2023-10-05-17-00-32` - Impl: `RNIDummyView` Prop - Impl. `shouldAutoDetachFromSuperview`. 
 
 <br><br>
 
 ## Version `next`
 
-- [x]  `TODO:2023-10-05-12-46-37` - Impl: `RNIDummyView` - Impl. `shouldCleanupOnComponentWillUnmount` prop.
+- [x] `TODO:2023-10-05-17-01-58` - Impl: `RNIDummyView` - Impl, `RNIDummyViewRegistryManager`. 
+- [x] `TODO:2023-10-05-12-46-37` - Impl: `RNIDummyView` - Impl. `shouldCleanupOnComponentWillUnmount` prop.
 - [x] `TODO:2023-10-05-12-33-20` - Impl: Rewrite `RNIWrapperView` - Initial impl. for `RNIDummyView`,
 - [x] `TODO:2023-10-05-12-30-30` - Impl: Re-add prev. deleted sources, and update/re-write them.
 - [x] `TODO:2023-10-05-12-25-42` - Refactor: Delete all sources and related-files, and init. repository w/ expo modules.
