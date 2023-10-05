@@ -22,6 +22,7 @@
   ],
   "scripts": {
     "typescript": "tsc --noEmit",
+    "release": "release-it --only-version",
     "build": "expo-module build",
     "clean": "expo-module clean",
     "lint": "expo-module lint",
@@ -53,11 +54,24 @@
     "@types/react": "^18.0.25",
     "@types/react-native": "^0.72.3",
     "expo-module-scripts": "^3.0.11",
-    "expo-modules-core": "^1.5.11"
+    "expo-modules-core": "^1.5.11",
+    "release-it": "^16.2.1"
   },
   "peerDependencies": {
     "expo": "*",
     "react": "*",
     "react-native": "*"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "⚙️ Chore: Release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    }
   }
 }
