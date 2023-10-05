@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-// import {  } from 'react-native-ios-utilities';
+import { RNIDummyView } from 'react-native-ios-utilities';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>
-        "Hello World"
-      </Text>
+      <RNIDummyView>
+        <Text>
+          "Dummy View - Hello World"
+        </Text>
+      </RNIDummyView>
     </View>
   );
 }
