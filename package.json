@@ -12,7 +12,7 @@
     "android",
     "ios",
     "cpp",
-    "react-native-ios-utilities.podspec",
+    "ReactNativeIosUtilities.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
