@@ -1,9 +1,11 @@
 {
   "platforms": ["ios", "android", "web"],
   "ios": {
-    "modules": ["ReactNativeIosUtilitiesModule"]
+    "modules": [
+      "RNIDummyViewModule"
+    ]
   },
   "android": {
-    "modules": ["expo.modules.iosutilities.ReactNativeIosUtilitiesModule"]
+    "modules": []
   }
 }
