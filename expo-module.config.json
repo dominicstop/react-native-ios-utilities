@@ -1,11 +1,10 @@
 {
-  "platforms": ["ios", "android", "web"],
+  "name": "ReactNativeIosUtilities",
+  "platforms": ["ios"],
   "ios": {
     "modules": [
       "RNIDummyViewModule"
-    ]
-  },
-  "android": {
-    "modules": []
+    ],
+    "podspecPath": "./ReactNativeIosUtilities.podspec"
   }
 }
