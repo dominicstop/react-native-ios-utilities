@@ -1,67 +1,38 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { useRef, useEffect } from "react";
+import { StyleSheet } from "react-native";
 
-import { RNIDummyViewModule } from './RNIDummyViewModule';
-import { RNIDummyNativeView } from './RNIDummyNativeView';
+import { RNIDummyViewModule } from "./RNIDummyViewModule";
+import { RNIDummyNativeView } from "./RNIDummyNativeView";
 
-import { RNIDummyViewProps } from './RNIDummyViewTypes';
-import { OnReactTagDidSetEvent } from './RNIDummyViewEvents';
+import { RNIDummyViewProps } from "./RNIDummyViewTypes";
+import { OnReactTagDidSetEvent } from "./RNIDummyViewEvents";
 
+export function RNIDummyView(props: RNIDummyViewProps) {
+  const { shouldCleanupOnComponentWillUnmount = false, ...restProps } = props;
 
-export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
+  const reactTag = useRef<number>();
   
-  reactTag?: number;
+  useEffect(function onUnmount() {
+    return () => {
+      const tag = reactTag.current;
+      const isManuallyTriggered = false;
+      // this is the cleanup function returned from useEffect
+      if (typeof tag !== "number") return;
 
-  constructor(props: RNIDummyViewProps){
-    super(props);
-  };
-
-  getProps() {
-    const { 
-      shouldCleanupOnComponentWillUnmount, 
-      ...otherProps 
-    } = this.props;
-
-    return {
-      shouldCleanupOnComponentWillUnmount: 
-        shouldCleanupOnComponentWillUnmount ?? false,
-
-      ...otherProps,
+      RNIDummyViewModule.notifyComponentWillUnmount(
+        tag,
+        isManuallyTriggered
+      );
     };
-  };
+  }, []);
 
-  componentWillUnmount(){
-    this.notifyComponentWillUnmount(false);
-  };
-
-  notifyComponentWillUnmount = (isManuallyTriggered: boolean = true) => {
-    const reactTag = this.reactTag;
-    if(typeof reactTag !== 'number') return;
-
-    RNIDummyViewModule.notifyComponentWillUnmount(
-      reactTag, 
-      isManuallyTriggered
-    );
-  };
-
-  private _handleOnReactTagDidSet: OnReactTagDidSetEvent = ({nativeEvent}) => {
-    this.reactTag = nativeEvent.reactTag;
-  };
-
-  render(){
-    const props = this.getProps();
-
-    return React.createElement(RNIDummyNativeView, {
-      ...props,
-      style: styles.nativeDummyView,
-      onReactTagDidSet: this._handleOnReactTagDidSet,
-    });
-  };
-};
-
-const styles = StyleSheet.create({
-  nativeDummyView: {
-    position: 'absolute',
-    opacity: 0.01,
-  },
-});
+  return (
+    <RNIDummyNativeView
+      {...restProps}
+      styles={styles.nativeDummyView}
+      onReactTagDidSet={useCallback(({ nativeEvent }) => {
+        reactTag.current = nativeEvent.reactTag;
+      }, [])}
+    />
+  );
+}
