@@ -3,7 +3,8 @@
   "platforms": ["ios"],
   "ios": {
     "modules": [
-      "RNIDummyViewModule"
+      "RNIDummyViewModule",
+      "RNIDetachedViewModule"
     ],
     "podspecPath": "./ReactNativeIosUtilities.podspec"
   }
