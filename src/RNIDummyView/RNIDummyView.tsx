@@ -4,8 +4,8 @@ import { StyleSheet } from 'react-native';
 import { RNIDummyViewModule } from './RNIDummyViewModule';
 import { RNIDummyNativeView } from './RNIDummyNativeView';
 
-import { RNIDummyViewProps } from './RNIDummyViewTypes';
-import { OnReactTagDidSetEvent } from './RNIDummyViewEvents';
+import type { RNIDummyViewProps } from './RNIDummyViewTypes';
+import type { OnReactTagDidSetEvent } from '../types/SharedEvents';
 
 
 export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {

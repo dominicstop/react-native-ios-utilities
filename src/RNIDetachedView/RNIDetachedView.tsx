@@ -4,15 +4,15 @@ import { StyleSheet } from 'react-native';
 import { RNIDetachedViewModule } from './RNIDetachedViewModule';
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
 
-import { RNIDetachedViewProps, RNIDetachedViewState } from './RNIDetachedViewTypes';
-import { OnDetachedViewDidDetachEvent } from './RNIDetachedViewEvents';
+import type { RNIDetachedViewProps, RNIDetachedViewState } from './RNIDetachedViewTypes';
+import type { OnDetachedViewDidDetachEvent } from './RNIDetachedViewEvents';
 
-import { OnReactTagDidSetEvent } from '../types/SharedEvents';
+import type { OnReactTagDidSetEvent } from '../types/SharedEvents';
 
 
 export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, RNIDetachedViewState> {
   
-  reactTag?: number;
+  reactTag?: number; type
 
   constructor(props: RNIDetachedViewProps){
     super(props);
