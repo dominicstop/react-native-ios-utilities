@@ -1,10 +1,8 @@
 import { requireNativeModule } from 'expo-modules-core';
+import { NotifyComponentWillUnmount } from '../types/SharedModuleFunctions';
 
 interface RNIDetachedViewModule {
-  notifyComponentWillUnmount(
-    reactTag: number,
-    isManuallyTriggered: boolean
-  ): void;
+  notifyComponentWillUnmount: NotifyComponentWillUnmount;
 };
 
 export const RNIDetachedViewModule: RNIDetachedViewModule = 
