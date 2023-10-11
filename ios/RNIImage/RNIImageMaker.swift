@@ -31,7 +31,7 @@ public struct RNIImageMaker {
     self.borderRadius = borderRadius;
   };
   
-  public init?(dict: NSDictionary) {
+  public init?(dict: Dictionary<String, Any>) {
     guard let width = dict["width" ] as? CGFloat,
           let height = dict["height"] as? CGFloat
     else { return nil };

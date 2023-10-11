@@ -355,7 +355,7 @@ public class UIColorHelpers {
         return UIColor(cssColor: string);
       };
       
-    } else if let dict = value as? NSDictionary {
+    } else if let dict = value as? Dictionary<String, Any> {
       // d: react-native DynamicColor object
       return UIColor(dynamicDict: dict);
     };

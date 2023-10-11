@@ -212,8 +212,8 @@ public class RNIImageRemoteURLMaker {
   // ------------
   
   public init?(
-    dict: NSDictionary,
-    imageLoadingConfig: NSDictionary?,
+    dict: Dictionary<String, Any>,
+    imageLoadingConfig: Dictionary<String, Any>?,
     onImageDidLoadBlock: ImageDidLoadHandler? = nil
   ){
     guard let urlString = dict["url"] as? String
@@ -223,7 +223,7 @@ public class RNIImageRemoteURLMaker {
     self.url = URL(string: urlString);
     
     self.fallbackImageConfig = {
-      guard let rawConfig = dict["fallbackImage"] as? NSDictionary
+      guard let rawConfig = dict["fallbackImage"] as? Dictionary<String, Any>
       else { return nil };
       
       return RNIImageItem(dict: rawConfig);

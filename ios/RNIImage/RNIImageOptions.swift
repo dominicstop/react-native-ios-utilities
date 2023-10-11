@@ -20,7 +20,7 @@ public struct RNIImageOptions {
   // MARK: - Init
   // ------------
   
-  init(dict: NSDictionary){
+  init(dict: Dictionary<String, Any>){
     self.tint = {
       guard let value = dict["tint"],
             let color = UIColorHelpers.parseColor(value: value)

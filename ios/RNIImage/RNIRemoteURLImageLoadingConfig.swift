@@ -35,7 +35,7 @@ public struct RNIRemoteURLImageLoadingConfig: RNIImageLoadingConfigurable {
   // MARK: Init
   // ----------
   
-  public init(dict: NSDictionary) {
+  public init(dict: Dictionary<String, Any>) {
     self.shouldCache = dict["shouldCache"] as? Bool;
     self.shouldLazyLoad = dict["shouldLazyLoad"] as? Bool;
     

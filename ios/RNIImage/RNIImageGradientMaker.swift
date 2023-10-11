@@ -78,7 +78,7 @@ public struct RNIImageGradientMaker {
   // MARK: Static Functions
   // ----------------------
   
-  static private func extractCGPoint(dict: NSDictionary) -> CGPoint? {
+  static private func extractCGPoint(dict: Dictionary<String, Any>) -> CGPoint? {
     guard let x = dict["x"] as? CGFloat,
           let y = dict["y"] as? CGFloat
     else { return nil };
@@ -86,10 +86,10 @@ public struct RNIImageGradientMaker {
     return CGPoint(x: x, y: y);
   };
   
-  static private func extractPoint(dict: NSDictionary, key: String) -> CGPoint? {
+  static private func extractPoint(dict: Dictionary<String, Any>, key: String) -> CGPoint? {
     guard let rawValue = dict[key] else { return nil };
   
-    if let pointDict = rawValue as? NSDictionary,
+    if let pointDict = rawValue as? Dictionary<String, Any>,
        let point = Self.extractCGPoint(dict: pointDict) {
       
       return point;
@@ -136,7 +136,7 @@ public struct RNIImageGradientMaker {
   // MARK: - Init
   // ------------
   
-  public init?(dict: NSDictionary) {
+  public init?(dict: Dictionary<String, Any>) {
     guard let colors = dict["colors"] as? NSArray
     else { return nil };
     

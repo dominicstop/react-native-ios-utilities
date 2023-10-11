@@ -14,7 +14,7 @@ public class RNIImageRequireMaker {
   public let uri: String;
   public let imageLoadingConfig: RNIImageLoadingConfig;
   
-  public let rawConfig: NSDictionary;
+  public let rawConfig: Dictionary<String, Any>;
   
   public lazy var image: UIImage? = {
     let shouldCache = self.imageLoadingConfig._shouldCache;
@@ -37,8 +37,8 @@ public class RNIImageRequireMaker {
   }();
   
   public init?(
-    dict: NSDictionary,
-    imageLoadingConfig loadingConfigDict: NSDictionary?
+    dict: Dictionary<String, Any>,
+    imageLoadingConfig loadingConfigDict: Dictionary<String, Any>?
   ){
     guard let uriString = dict["uri"] as? String
     else { return nil };

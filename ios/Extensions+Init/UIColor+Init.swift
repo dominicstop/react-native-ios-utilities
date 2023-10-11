@@ -123,8 +123,8 @@ public extension UIColor {
   };
   
   /// create color from `DynamicColorIOS` dictionary
-  convenience init?(dynamicDict: NSDictionary) {
-    guard let dict        = dynamicDict["dynamic"] as? NSDictionary,
+  convenience init?(dynamicDict: Dictionary<String, Any>) {
+    guard let dict        = dynamicDict["dynamic"] as? Dictionary<String, Any>,
           let stringDark  = dict["dark" ] as? String,
           let stringLight = dict["light"] as? String
     else { return nil };

@@ -129,8 +129,8 @@ public class RNIImageItem {
   public init?(
     type: RNIImageType,
     imageValue: Any?,
-    imageOptions: NSDictionary?,
-    imageLoadingConfig: NSDictionary? = nil,
+    imageOptions: Dictionary<String, Any>?,
+    imageLoadingConfig: Dictionary<String, Any>? = nil,
     defaultImageSize: CGSize = CGSize(width: 100, height: 100)
   ){
     
@@ -148,14 +148,14 @@ public class RNIImageItem {
           
         case .IMAGE_SYSTEM:
           guard #available(iOS 13.0, *),
-                let rawConfig = imageValue as? NSDictionary,
+                let rawConfig = imageValue as? Dictionary<String, Any>,
                 let imageConfig = RNIImageSystemMaker(dict: rawConfig)
           else { return nil };
         
           return .IMAGE_SYSTEM(config: imageConfig);
           
         case .IMAGE_REQUIRE:
-          guard let rawConfig = imageValue as? NSDictionary,
+          guard let rawConfig = imageValue as? Dictionary<String, Any>,
                 let imageConfig = RNIImageRequireMaker(
                   dict: rawConfig,
                   imageLoadingConfig: imageLoadingConfig
@@ -168,14 +168,14 @@ public class RNIImageItem {
           return .IMAGE_EMPTY;
           
         case .IMAGE_RECT:
-          guard let rawConfig = imageValue as? NSDictionary,
+          guard let rawConfig = imageValue as? Dictionary<String, Any>,
                 let imageConfig = RNIImageMaker(dict: rawConfig)
           else { return nil };
         
           return .IMAGE_RECT(config: imageConfig);
           
         case .IMAGE_GRADIENT:
-          guard let rawConfig = imageValue as? NSDictionary,
+          guard let rawConfig = imageValue as? Dictionary<String, Any>,
                 var imageConfig = RNIImageGradientMaker(dict: rawConfig)
           else { return nil };
         
@@ -183,7 +183,7 @@ public class RNIImageItem {
           return .IMAGE_GRADIENT(config: imageConfig);
           
         case .IMAGE_REMOTE_URL:
-          guard let rawConfig = imageValue as? NSDictionary,
+          guard let rawConfig = imageValue as? Dictionary<String, Any>,
                 let imageConfig = RNIImageRemoteURLMaker(
                   dict: rawConfig,
                   imageLoadingConfig: imageLoadingConfig
@@ -198,7 +198,7 @@ public class RNIImageItem {
     self.imageOptions = RNIImageOptions(dict: imageOptions ?? [:]);
   };
   
-  public convenience init?(dict: NSDictionary){
+  public convenience init?(dict: Dictionary<String, Any>){
     guard let typeString = dict["type"] as? String,
           let type = RNIImageType(rawValue: typeString)
     else { return nil };
@@ -206,8 +206,8 @@ public class RNIImageItem {
     self.init(
       type: type,
       imageValue: dict["imageValue"],
-      imageOptions: dict["imageOptions"] as? NSDictionary,
-      imageLoadingConfig: dict["imageLoadingConfig"] as? NSDictionary
+      imageOptions: dict["imageOptions"] as? Dictionary<String, Any>,
+      imageLoadingConfig: dict["imageLoadingConfig"] as? Dictionary<String, Any>
     );
   };
 };

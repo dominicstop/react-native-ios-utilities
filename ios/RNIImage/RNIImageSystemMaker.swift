@@ -86,7 +86,7 @@ public struct RNIImageSystemMaker {
     return UIImage(systemName: self.systemName);
   };
   
-  public init?(dict: NSDictionary){
+  public init?(dict: Dictionary<String, Any>){
     guard let systemName = dict["systemName"] as? String
     else { return nil };
     
