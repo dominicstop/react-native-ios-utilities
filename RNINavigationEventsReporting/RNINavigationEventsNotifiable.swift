@@ -7,8 +7,9 @@
 
 import UIKit
 
-protocol RNINavigationEventsNotifiable: UIView {
+public protocol RNINavigationEventsNotifiable: UIView {
   
-  func notifyViewControllerDidPop(sender: RNINavigationEventsReportingViewController);
-  
+  func notifyViewControllerDidPop(
+    sender: RNINavigationEventsReportingViewController
+  );
 };
