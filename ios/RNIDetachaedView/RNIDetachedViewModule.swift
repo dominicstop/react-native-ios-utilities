@@ -8,11 +8,23 @@
 import ExpoModulesCore
 
 public class RNIDetachedViewModule: Module {
+
   public func definition() -> ModuleDefinition {
     Name("RNIDetachedView");
     
-    Function("notifyOnComponentWillUnmount") { (reactTag: Int, isManuallyTriggered: Bool) in
-      guard let bridge = RNIHelpers.bridge else { return };
+    AsyncFunction("notifyOnComponentWillUnmount") {
+      (reactTag: Int, isManuallyTriggered: Bool, promise: Promise) in
+      
+      guard let bridge = RNIHelpers.bridge else {
+        let error = RNIError(
+          domain: "react-native-ios-utilities",
+          description: "Could not get bridge instance",
+          extraDebugInfo: "reactTag: \(reactTag)"
+        );
+        
+        promise.reject(error);
+        return;
+      };
     
       let detachedView = RNIHelpers.getView(
         forNode: reactTag as NSNumber,
@@ -20,12 +32,35 @@ public class RNIDetachedViewModule: Module {
         bridge: bridge
       );
       
-      guard let detachedView = detachedView else { return };
-      detachedView.notifyOnComponentWillUnmount(isManuallyTriggered: isManuallyTriggered);
+      guard let detachedView = detachedView else {
+        let error = RNIError(
+          domain: "react-native-ios-utilities",
+          description: "Could not get view instance",
+          extraDebugInfo: "reactTag: \(reactTag)"
+        );
+        
+        promise.reject(error);
+        return;
+      };
+      
+      detachedView.notifyOnComponentWillUnmount(
+        isManuallyTriggered: isManuallyTriggered
+      );
+      
+      promise.resolve();
     };
     
-    Function("onViewDidDetach") { (reactTag: Int) in
-      guard let bridge = RNIHelpers.bridge else { return };
+    AsyncFunction("onViewDidDetach") { (reactTag: Int, promise: Promise) in
+      guard let bridge = RNIHelpers.bridge else {
+        let error = RNIError(
+          domain: "react-native-ios-utilities",
+          description: "Could not get bridge instance",
+          extraDebugInfo: "reactTag: \(reactTag)"
+        );
+        
+        promise.reject(error);
+        return;
+      };
     
       let detachedView = RNIHelpers.getView(
         forNode: reactTag as NSNumber,
@@ -33,15 +68,26 @@ public class RNIDetachedViewModule: Module {
         bridge: bridge
       );
       
-      guard let detachedView = detachedView else { return };
+      guard let detachedView = detachedView else {
+        let error = RNIError(
+          domain: "react-native-ios-utilities",
+          description: "Could not get view instance",
+          extraDebugInfo: "reactTag: \(reactTag)"
+        );
+        
+        promise.reject(error);
+        return;
+      };
+      
       detachedView.onViewDidDetach();
+      promise.resolve();
     };
     
     View(RNIDetachedView.self) {
       Events("onReactTagDidSet");
     
-      Prop("shouldCleanupOnComponentWillUnmount") { (view: RNIDetachedView, prop: Bool) in
-        view.shouldCleanupOnComponentWillUnmount = prop;
+      Prop("shouldCleanupOnComponentWillUnmount") {
+        $0.shouldCleanupOnComponentWillUnmount = $1;
       };
     };
   };
