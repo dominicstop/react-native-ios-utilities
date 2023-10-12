@@ -34,11 +34,13 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
     this.notifyComponentWillUnmount(false);
   };
 
-  notifyComponentWillUnmount = (isManuallyTriggered: boolean = true) => {
+  notifyComponentWillUnmount = async (
+    isManuallyTriggered: boolean = true
+  ) => {
     const reactTag = this.reactTag;
     if(typeof reactTag !== 'number') return;
 
-    RNIDummyViewModule.notifyComponentWillUnmount(
+    await RNIDummyViewModule.notifyComponentWillUnmount(
       reactTag, 
       isManuallyTriggered
     );

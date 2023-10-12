@@ -40,11 +40,13 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     this.notifyComponentWillUnmount(false);
   };
 
-  notifyComponentWillUnmount = (isManuallyTriggered: boolean = true) => {
+  notifyComponentWillUnmount = async (
+    isManuallyTriggered: boolean = true
+  ) => {
     const reactTag = this.reactTag;
     if(typeof reactTag !== 'number') return;
 
-    RNIDetachedViewModule.notifyComponentWillUnmount(
+    await RNIDetachedViewModule.notifyComponentWillUnmount(
       reactTag, 
       isManuallyTriggered
     );
