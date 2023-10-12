@@ -12,7 +12,7 @@ import type { OnReactTagDidSetEvent } from '../types/SharedEvents';
 
 export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, RNIDetachedViewState> {
   
-  reactTag?: number; type
+  reactTag?: number;
 
   constructor(props: RNIDetachedViewProps){
     super(props);
