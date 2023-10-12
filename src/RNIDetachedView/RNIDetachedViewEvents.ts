@@ -1,6 +1,6 @@
+import { NativeSyntheticEvent } from 'react-native';
 
-export type OnDetachedViewDidDetachPayload = {};
+export type OnDetachedViewDidDetachPayload = NativeSyntheticEvent<{}>;
 
-export type OnDetachedViewDidDetachEvent = (event: { 
-  nativeEvent: OnDetachedViewDidDetachPayload 
-}) => void;
+export type OnDetachedViewDidDetachEvent = 
+  (event: OnDetachedViewDidDetachPayload) => void;

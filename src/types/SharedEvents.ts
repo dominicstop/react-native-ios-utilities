@@ -1,8 +1,8 @@
+import { NativeSyntheticEvent } from 'react-native';
 
-export type OnReactTagDidSetEventPayload = {
+export type OnReactTagDidSetEventPayload = NativeSyntheticEvent<{
   reactTag?: number;
-};
+}>;
 
-export type OnReactTagDidSetEvent = (event: { 
-  nativeEvent: OnReactTagDidSetEventPayload 
-}) => void;
+export type OnReactTagDidSetEvent = 
+  (event: OnReactTagDidSetEventPayload) => void;
