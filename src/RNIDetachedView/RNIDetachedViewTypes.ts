@@ -3,6 +3,7 @@ import type { RNIDetachedNativeViewBaseProps } from './RNIDetachedNativeViewType
 
 type InheritedProps = Partial<Pick<RNIDetachedNativeViewBaseProps,
   | 'shouldCleanupOnComponentWillUnmount'
+  | 'onViewDidDetach'
 >>;
 
 export type RNIDetachedViewBaseProps = {};

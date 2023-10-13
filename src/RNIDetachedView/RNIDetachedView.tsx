@@ -56,8 +56,9 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     this.reactTag = nativeEvent.reactTag;
   };
 
-  private _handleOnViewDidDetach: OnDetachedViewDidDetachEvent = ({nativeEvent}) => {
+  private _handleOnViewDidDetach: OnDetachedViewDidDetachEvent = (event) => {
     this.setState({ isDetached: true });
+    this.props.onViewDidDetach?.(event);
   };
 
   render(){
