@@ -1,11 +1,21 @@
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { RNIDetachedView } from 'react-native-ios-utilities';
 
 export default function App() {
+  const detachedViewRef = React.useRef<RNIDetachedView>(null);
+
+  React.useEffect(() => {
+    console.log("App - component did mount");
+  }, []);
+
   return (
     <View style={styles.container}>
-      <RNIDetachedView style={styles.detachedView}>
+      <RNIDetachedView  
+        ref={detachedViewRef}
+        style={styles.detachedView}
+      >
         <View nativeID='test'>
           <Text>
             "Dummy View - Hello World"
