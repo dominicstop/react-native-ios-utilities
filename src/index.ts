@@ -5,7 +5,6 @@ export * from './RNIDetachedView';
 export * from './functions/Helpers';
 export * from './functions/TypeUtils';
 
-export * from './types/SharedEvents';
 export * from './types/SharedModuleFunctions';
 
 export * from './types/ImageItemConfig';

@@ -28,18 +28,6 @@ public class RNIDetachedView: ExpoView {
   
   private(set) public var detachState: DetachState = .initial;
   
-  public override var reactTag: NSNumber! {
-    didSet {
-      guard let newValue = self.reactTag,
-            newValue != oldValue
-      else { return };
-      
-      self.onReactTagDidSetEvent.callAsFunction([
-        "reactTag": newValue
-      ]);
-    }
-  };
-  
   private(set) public var didTriggerCleanup = false;
   
   // MARK: Properties - Props
@@ -50,7 +38,6 @@ public class RNIDetachedView: ExpoView {
   // MARK: Properties - Prop - Events
   // --------------------------------
   
-  let onReactTagDidSetEvent = EventDispatcher("onReactTagDidSet");
   let onViewDidDetach = EventDispatcher("onViewDidDetach");
   
   // MARK: Init

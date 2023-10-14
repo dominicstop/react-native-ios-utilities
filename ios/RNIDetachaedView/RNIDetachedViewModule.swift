@@ -51,7 +51,6 @@ public class RNIDetachedViewModule: Module {
     };
     
     View(RNIDetachedView.self) {
-      Events("onReactTagDidSet");
       Events("onViewDidDetach");
     
       Prop("shouldCleanupOnComponentWillUnmount") {

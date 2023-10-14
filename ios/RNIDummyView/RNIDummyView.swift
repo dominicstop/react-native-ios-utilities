@@ -21,27 +21,10 @@ public class RNIDummyView: ExpoView {
   
   private(set) public var didTriggerCleanup = false;
   
-  public override var reactTag: NSNumber! {
-    didSet {
-      guard let newValue = self.reactTag,
-            newValue != oldValue
-      else { return };
-      
-      self.onReactTagDidSetEvent.callAsFunction([
-        "reactTag": newValue
-      ]);
-    }
-  };
-  
   // MARK: Properties - Props
   // ------------------------
   
   public var shouldCleanupOnComponentWillUnmount = false;
-  
-  // MARK: Properties - Prop - Events
-  // --------------------------------
-  
-  let onReactTagDidSetEvent = EventDispatcher("onReactTagDidSet");
   
   // MARK: Init + Lifecycle
   // ----------------------

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 
 import { RNIDetachedViewModule } from './RNIDetachedViewModule';
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
@@ -7,12 +7,10 @@ import { RNIDetachedNativeView } from './RNIDetachedNativeView';
 import type { RNIDetachedViewProps, RNIDetachedViewState } from './RNIDetachedViewTypes';
 import type { OnDetachedViewDidDetachEvent } from './RNIDetachedViewEvents';
 
-import type { OnReactTagDidSetEvent } from '../types/SharedEvents';
-
 
 export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, RNIDetachedViewState> {
   
-  reactTag?: number;
+  nativeRef?: View;
 
   constructor(props: RNIDetachedViewProps){
     super(props);
@@ -20,6 +18,10 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     this.state = {
       isDetached: false,
     };
+  };
+
+  componentWillUnmount(){
+    this.notifyComponentWillUnmount(false);
   };
 
   getProps() {
@@ -36,14 +38,19 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     };
   };
 
-  componentWillUnmount(){
-    this.notifyComponentWillUnmount(false);
+  getNativeRef: () => View | undefined = () => {
+    return this.nativeRef;
+  };
+
+  getNativeReactTag: () => number | undefined = () => {
+    // @ts-ignore
+    return this.nativeRef?.nativeTag;
   };
 
   notifyComponentWillUnmount = async (
     isManuallyTriggered: boolean = true
   ) => {
-    const reactTag = this.reactTag;
+    const reactTag = this.getNativeReactTag();
     if(typeof reactTag !== 'number') return;
 
     await RNIDetachedViewModule.notifyComponentWillUnmount(
@@ -52,8 +59,8 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     );
   };
 
-  private _handleOnReactTagDidSet: OnReactTagDidSetEvent = ({nativeEvent}) => {
-    this.reactTag = nativeEvent.reactTag;
+  private _handleOnNativeRef = (ref: View) => {
+    this.nativeRef = ref;
   };
 
   private _handleOnViewDidDetach: OnDetachedViewDidDetachEvent = (event) => {
@@ -75,7 +82,8 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
           height: 0,
         }),
       },
-      onReactTagDidSet: this._handleOnReactTagDidSet,
+      // @ts-ignore
+      ref: this._handleOnNativeRef,
       onViewDidDetach: this._handleOnViewDidDetach,
     });
   };

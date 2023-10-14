@@ -25,8 +25,6 @@ public class RNIDummyViewModule: Module {
     };
 
     View(RNIDummyView.self) {
-      Events("onReactTagDidSet");
-    
       Prop("shouldCleanupOnComponentWillUnmount") { (view: RNIDummyView, prop: Bool) in
         view.shouldCleanupOnComponentWillUnmount = prop;
       };

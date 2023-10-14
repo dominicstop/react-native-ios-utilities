@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
 
 import { RNIDummyViewModule } from './RNIDummyViewModule';
 import { RNIDummyNativeView } from './RNIDummyNativeView';
 
 import type { RNIDummyViewProps } from './RNIDummyViewTypes';
-import type { OnReactTagDidSetEvent } from '../types/SharedEvents';
 
 
 export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
   
-  reactTag?: number;
+  nativeRef?: View;
 
   constructor(props: RNIDummyViewProps){
     super(props);
@@ -34,10 +33,19 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
     this.notifyComponentWillUnmount(false);
   };
 
+  getNativeRef: () => View | undefined = () => {
+    return this.nativeRef;
+  };
+
+  getNativeReactTag: () => number | undefined = () => {
+    // @ts-ignore
+    return this.nativeRef?.nativeTag;
+  };
+
   notifyComponentWillUnmount = async (
     isManuallyTriggered: boolean = true
   ) => {
-    const reactTag = this.reactTag;
+    const reactTag = this.getNativeReactTag();
     if(typeof reactTag !== 'number') return;
 
     await RNIDummyViewModule.notifyComponentWillUnmount(
@@ -46,17 +54,14 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
     );
   };
 
-  private _handleOnReactTagDidSet: OnReactTagDidSetEvent = ({nativeEvent}) => {
-    this.reactTag = nativeEvent.reactTag;
-  };
-
   render(){
     const props = this.getProps();
 
     return React.createElement(RNIDummyNativeView, {
       ...props,
       style: styles.nativeDummyView,
-      onReactTagDidSet: this._handleOnReactTagDidSet,
+      // @ts-ignore
+      ref: this._handleOnNativeRef,
     });
   };
 };
