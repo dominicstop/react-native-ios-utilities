@@ -1,4 +1,3 @@
-import { findNodeHandle } from 'react-native';
 
 /** wrapper func for setState that returns a promise */
 // eslint-disable-next-line consistent-this
