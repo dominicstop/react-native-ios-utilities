@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, View, ViewStyle } from 'react-native';
 
 import { RNIDetachedViewModule } from './RNIDetachedViewModule';
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
@@ -27,14 +27,14 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
   getProps() {
     const { 
       shouldCleanupOnComponentWillUnmount, 
-      ...otherProps 
+      ...viewProps 
     } = this.props;
 
     return {
       shouldCleanupOnComponentWillUnmount: 
         shouldCleanupOnComponentWillUnmount ?? false,
 
-      ...otherProps,
+      viewProps,
     };
   };
 
@@ -72,19 +72,25 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     const props = this.getProps();
     const state = this.state;
 
+    const nativeStyleOverride: ViewStyle = {
+      ...(!state.isDetached && {
+        opacity: 0.001,
+        width: 0,
+        height: 0,
+      }),
+    };
+    
     return React.createElement(RNIDetachedNativeView, {
-      ...props,
-      style: {
-        ...styles.nativeView,
-        ...(!state.isDetached && {
-          opacity: 0.001,
-          width: 0,
-          height: 0,
-        }),
-      },
+      ...props.viewProps,
+      style: [
+        props.viewProps.style,
+        styles.nativeView,        
+        nativeStyleOverride,
+      ],
       // @ts-ignore
       ref: this._handleOnNativeRef,
       onViewDidDetach: this._handleOnViewDidDetach,
+      shouldCleanupOnComponentWillUnmount: props.shouldCleanupOnComponentWillUnmount,
     });
   };
 };

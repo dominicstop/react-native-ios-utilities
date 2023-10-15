@@ -15,39 +15,41 @@ public class RNIDetachedViewModule: Module {
     AsyncFunction("notifyOnComponentWillUnmount") {
       (reactTag: Int, isManuallyTriggered: Bool, promise: Promise) in
       
-      guard let bridge = RNIHelpers.bridge else {
-        let error = RNIError(
-          domain: "react-native-ios-utilities",
-          description: "Could not get bridge instance",
-          extraDebugInfo: "reactTag: \(reactTag)"
+      DispatchQueue.main.async {
+        guard let bridge = RNIHelpers.bridge else {
+          let error = RNIError(
+            domain: "react-native-ios-utilities",
+            description: "Could not get bridge instance",
+            extraDebugInfo: "reactTag: \(reactTag)"
+          );
+          
+          promise.reject(error);
+          return;
+        };
+      
+        let detachedView = RNIHelpers.getView(
+          forNode: reactTag as NSNumber,
+          type: RNIDetachedView.self,
+          bridge: bridge
         );
         
-        promise.reject(error);
-        return;
-      };
-    
-      let detachedView = RNIHelpers.getView(
-        forNode: reactTag as NSNumber,
-        type: RNIDetachedView.self,
-        bridge: bridge
-      );
-      
-      guard let detachedView = detachedView else {
-        let error = RNIError(
-          domain: "react-native-ios-utilities",
-          description: "Could not get view instance",
-          extraDebugInfo: "reactTag: \(reactTag)"
+        guard let detachedView = detachedView else {
+          let error = RNIError(
+            domain: "react-native-ios-utilities",
+            description: "Could not get view instance",
+            extraDebugInfo: "reactTag: \(reactTag)"
+          );
+          
+          promise.reject(error);
+          return;
+        };
+        
+        detachedView.notifyOnComponentWillUnmount(
+          isManuallyTriggered: isManuallyTriggered
         );
         
-        promise.reject(error);
-        return;
+        promise.resolve();
       };
-      
-      detachedView.notifyOnComponentWillUnmount(
-        isManuallyTriggered: isManuallyTriggered
-      );
-      
-      promise.resolve();
     };
     
     View(RNIDetachedView.self) {
