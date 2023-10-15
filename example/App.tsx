@@ -1,27 +1,44 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { RNIDetachedView } from 'react-native-ios-utilities';
+import { RNIDetachedView, Helpers } from 'react-native-ios-utilities';
 
 export default function App() {
+  const [shouldMount, setShouldMount] = React.useState(true);
   const detachedViewRef = React.useRef<RNIDetachedView>(null);
 
   React.useEffect(() => {
     console.log("App - component did mount");
+
+    (async () => {
+      await Helpers.timeout(3000);
+      console.log("App - setShouldMount: false");
+      
+      setShouldMount(false);
+    })();
   }, []);
 
   return (
     <View style={styles.container}>
-      <RNIDetachedView  
-        ref={detachedViewRef}
-        style={styles.detachedView}
-      >
-        <View nativeID='test'>
+      {(shouldMount && (
+        <RNIDetachedView  
+          ref={detachedViewRef}
+          style={styles.detachedView}
+        >
+          <View nativeID='test'>
+            <Text>
+              "Dummy View - Hello World"
+            </Text>
+          </View>
+        </RNIDetachedView>
+      ))}
+      {(!shouldMount) && (
+        <View>
           <Text>
-            "Dummy View - Hello World"
+            {`shouldMount: ${shouldMount}`}
           </Text>
         </View>
-      </RNIDetachedView>
+      )}
     </View>
   );
 }
@@ -29,11 +46,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
   },
   detachedView: {
+    flex: 1,
     backgroundColor: 'blue',
   },
 });
