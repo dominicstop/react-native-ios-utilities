@@ -30,7 +30,7 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
   };
 
   componentWillUnmount(){
-    this.notifyComponentWillUnmount(false);
+    this.notifyOnComponentWillUnmount(false);
   };
 
   getNativeRef: () => View | undefined = () => {
@@ -42,13 +42,13 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
     return this.nativeRef?.nativeTag;
   };
 
-  notifyComponentWillUnmount = async (
+  notifyOnComponentWillUnmount = async (
     isManuallyTriggered: boolean = true
   ) => {
     const reactTag = this.getNativeReactTag();
     if(typeof reactTag !== 'number') return;
 
-    await RNIDummyViewModule.notifyComponentWillUnmount(
+    await RNIDummyViewModule.notifyOnComponentWillUnmount(
       reactTag, 
       isManuallyTriggered
     );

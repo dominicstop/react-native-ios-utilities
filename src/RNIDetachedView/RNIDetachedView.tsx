@@ -21,7 +21,7 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
   };
 
   componentWillUnmount(){
-    this.notifyComponentWillUnmount(false);
+    this.notifyOnComponentWillUnmount(false);
   };
 
   getProps() {
@@ -47,13 +47,13 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     return this.nativeRef?.nativeTag;
   };
 
-  notifyComponentWillUnmount = async (
+  notifyOnComponentWillUnmount = async (
     isManuallyTriggered: boolean = true
   ) => {
     const reactTag = this.getNativeReactTag();
     if(typeof reactTag !== 'number') return;
 
-    await RNIDetachedViewModule.notifyComponentWillUnmount(
+    await RNIDetachedViewModule.notifyOnComponentWillUnmount(
       reactTag, 
       isManuallyTriggered
     );
