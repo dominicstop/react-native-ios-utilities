@@ -12,16 +12,18 @@ public class RNIDummyViewModule: Module {
     Name("RNIDummyView");
     
     Function("notifyOnComponentWillUnmount") { (reactTag: Int, isManuallyTriggered: Bool) in
-      guard let bridge = RNIHelpers.bridge else { return };
+      DispatchQueue.main.async {
+        guard let bridge = RNIHelpers.bridge else { return };
     
-      let dummyView = RNIHelpers.getView(
-        forNode: reactTag as NSNumber,
-        type: RNIDummyView.self,
-        bridge: bridge
-      );
-      
-      guard let dummyView = dummyView else { return };
-      dummyView.notifyOnComponentWillUnmount(isManuallyTriggered: isManuallyTriggered);
+        let dummyView = RNIHelpers.getView(
+          forNode: reactTag as NSNumber,
+          type: RNIDummyView.self,
+          bridge: bridge
+        );
+        
+        guard let dummyView = dummyView else { return };
+        dummyView.notifyOnComponentWillUnmount(isManuallyTriggered: isManuallyTriggered);
+      };
     };
 
     View(RNIDummyView.self) {

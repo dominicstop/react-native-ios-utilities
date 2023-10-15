@@ -18,14 +18,14 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
   getProps() {
     const { 
       shouldCleanupOnComponentWillUnmount, 
-      ...otherProps 
+      ...viewProps 
     } = this.props;
 
     return {
       shouldCleanupOnComponentWillUnmount: 
         shouldCleanupOnComponentWillUnmount ?? false,
 
-      ...otherProps,
+      viewProps,
     };
   };
 
@@ -58,16 +58,20 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
     const props = this.getProps();
 
     return React.createElement(RNIDummyNativeView, {
-      ...props,
-      style: styles.nativeDummyView,
+      ...props.viewProps,
+      style: [
+        props.viewProps.style,
+        styles.nativeView,        
+      ],
       // @ts-ignore
       ref: this._handleOnNativeRef,
+      shouldCleanupOnComponentWillUnmount: props.shouldCleanupOnComponentWillUnmount,
     });
   };
 };
 
 const styles = StyleSheet.create({
-  nativeDummyView: {
+  nativeView: {
     position: 'absolute',
     opacity: 0.01,
   },
