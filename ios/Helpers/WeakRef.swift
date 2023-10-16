@@ -9,9 +9,9 @@ import Foundation
 
 public struct WeakRef<T> where T: AnyObject {
 
-  private(set) weak var value: T?;
+  private(set) public weak var value: T?;
 
-  init(value: T?) {
+  public init(value: T?) {
     self.value = value;
   };
 };
