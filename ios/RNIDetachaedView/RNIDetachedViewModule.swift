@@ -16,29 +16,23 @@ public class RNIDetachedViewModule: Module {
       (reactTag: Int, isManuallyTriggered: Bool, promise: Promise) in
       
       DispatchQueue.main.async {
-        guard let bridge = RNIHelpers.bridge else {
-          let error = RNIUtilitiesError(errorCode: .nilReactBridge);
+        do {
+          let detachedView = try RNIModuleHelpers.getView(
+            withErrorType: RNIUtilitiesError.self,
+            forNode: reactTag,
+            type: RNIDetachedView.self
+          );
+          
+          detachedView.notifyOnComponentWillUnmount(
+            isManuallyTriggered: isManuallyTriggered
+          );
+          
+          promise.resolve();
+        
+        } catch let error {
           promise.reject(error);
           return;
         };
-      
-        let detachedView = RNIHelpers.getView(
-          forNode: reactTag as NSNumber,
-          type: RNIDetachedView.self,
-          bridge: bridge
-        );
-        
-        guard let detachedView = detachedView else {
-          let error = RNIUtilitiesError(errorCode: .viewNotFoundForReactTag);          
-          promise.reject(error);
-          return;
-        };
-        
-        detachedView.notifyOnComponentWillUnmount(
-          isManuallyTriggered: isManuallyTriggered
-        );
-        
-        promise.resolve();
       };
     };
     
