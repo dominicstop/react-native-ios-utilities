@@ -11,24 +11,33 @@ public class RNIDummyViewModule: Module {
   public func definition() -> ModuleDefinition {
     Name("RNIDummyView");
     
-    Function("notifyOnComponentWillUnmount") { (reactTag: Int, isManuallyTriggered: Bool) in
+    AsyncFunction("notifyOnComponentWillUnmount") {
+      (reactTag: Int, isManuallyTriggered: Bool, promise: Promise) in
+      
       DispatchQueue.main.async {
-        guard let bridge = RNIHelpers.bridge else { return };
-    
-        let dummyView = RNIHelpers.getView(
-          forNode: reactTag as NSNumber,
-          type: RNIDummyView.self,
-          bridge: bridge
-        );
+        do {
+          let dummyView = try RNIModuleHelpers.getView(
+            withErrorType: RNIUtilitiesError.self,
+            forNode: reactTag,
+            type: RNIDummyView.self
+          );
+          
+          dummyView.notifyOnComponentWillUnmount(
+            isManuallyTriggered: isManuallyTriggered
+          );
+          
+          promise.resolve();
         
-        guard let dummyView = dummyView else { return };
-        dummyView.notifyOnComponentWillUnmount(isManuallyTriggered: isManuallyTriggered);
+        } catch let error {
+          promise.reject(error);
+          return;
+        };
       };
     };
 
     View(RNIDummyView.self) {
-      Prop("shouldCleanupOnComponentWillUnmount") { (view: RNIDummyView, prop: Bool) in
-        view.shouldCleanupOnComponentWillUnmount = prop;
+      Prop("shouldCleanupOnComponentWillUnmount") {
+        $0.shouldCleanupOnComponentWillUnmount = $1;
       };
     };
   };
