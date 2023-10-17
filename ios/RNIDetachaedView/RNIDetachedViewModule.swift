@@ -17,12 +17,7 @@ public class RNIDetachedViewModule: Module {
       
       DispatchQueue.main.async {
         guard let bridge = RNIHelpers.bridge else {
-          let error = RNIError(
-            domain: "react-native-ios-utilities",
-            description: "Could not get bridge instance",
-            extraDebugInfo: "reactTag: \(reactTag)"
-          );
-          
+          let error = RNIUtilitiesError(errorCode: .nilReactBridge);
           promise.reject(error);
           return;
         };
@@ -34,12 +29,7 @@ public class RNIDetachedViewModule: Module {
         );
         
         guard let detachedView = detachedView else {
-          let error = RNIError(
-            domain: "react-native-ios-utilities",
-            description: "Could not get view instance",
-            extraDebugInfo: "reactTag: \(reactTag)"
-          );
-          
+          let error = RNIUtilitiesError(errorCode: .viewNotFoundForReactTag);          
           promise.reject(error);
           return;
         };
