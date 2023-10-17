@@ -8,7 +8,8 @@
 import Foundation
 
 public protocol RNIDefaultErrorCodes {
-  static var nilReactBridge         : Self { get };
-  static var viewNotFoundForReactTag: Self { get };
-  static var unableToParseArguments : Self { get };
+  static var nilReactBridge             : Self { get };
+  static var viewNotFoundForReactTag    : Self { get };
+  static var unableToParseArguments     : Self { get };
+  static var viewForReactTagTypeMismatch: Self { get };
 };
