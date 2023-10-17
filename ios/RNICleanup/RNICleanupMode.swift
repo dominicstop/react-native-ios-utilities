@@ -8,7 +8,7 @@
 import Foundation
 
 
-/// If a class conforms to `RNICleanable`,
+/// If a type conforms to `RNIInternalCleanupMode`,
 /// this enum determines how the cleanup routine is triggered.
 ///
 public enum RNICleanupMode: String {
@@ -22,5 +22,20 @@ public enum RNICleanupMode: String {
   /// from the js-side, i.e. via `RNIJSComponentWillUnmountNotifiable`
   case reactComponentWillUnmount;
   
+  /// Trigger cleanup when the view moves to `nil` window
+  case didMoveToWindowNil;
+  
   case disabled;
+};
+
+
+public extension RNICleanupMode {
+  
+  var shouldEnableCleanup: Bool {
+    self != .disabled;
+  };
+  
+  var shouldAttachToParentVC: Bool {
+    self == .viewController;
+  };
 };

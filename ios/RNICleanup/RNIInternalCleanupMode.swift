@@ -11,5 +11,4 @@ import Foundation
 public protocol RNIInternalCleanupMode {
 
   var cleanupMode: RNICleanupMode { get };
-  
 };
