@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol RNIErrorCode: RawRepresentable<String>  {
+public protocol RNIErrorCode: RawRepresentable<String>, RNIDefaultErrorCodes  {
   var description: String { get };
 };

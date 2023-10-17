@@ -44,8 +44,6 @@ public struct RNIError<
   var extraDebugValuesString: String? {
     guard let extraDebugValues = self.extraDebugValues else { return nil };
     
-    let shouldIncludeOffset = extraDebugValues.count > 1;
-  
     let items = extraDebugValues.enumerated().map {
       var string = "\($0.element.key): \($0.element.value)";
       
