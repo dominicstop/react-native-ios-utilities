@@ -7,10 +7,16 @@
 
 import Foundation
 
-public struct RNIError: LocalizedError {
-  
-  public var domain: String;
+
+public struct RNIError<
+  ErrorMetadata: RNIErrorMetadata,
+  ErrorCodeEnum: RNIErrorCode
+>: LocalizedError {
+
+  public var errorCode: ErrorCodeEnum?;
   public var description: String;
+  
+  public var extraDebugValues: Dictionary<String, Any>?;
   public var extraDebugInfo: String?;
 
   public var fileName: String;
@@ -22,43 +28,80 @@ public struct RNIError: LocalizedError {
   // ---------------------------
   
   public var debugTrace: String {
-      "fileName: \(self.fileName)"
-    + " - functionName: \(self.functionName)"
-    + " - lineNumber: \(self.lineNumber)"
-    + " - columnNumber: \(self.columnNumber)"
+    var string = "fileName: \(self.fileName)";
+    
+    if let parentType = ErrorMetadata.parentType {
+      string += " - type: \(parentType)";
+    };
+    
+    string += " - functionName: \(self.functionName)";
+    string += " - lineNumber: \(self.lineNumber)";
+    string += " - columnNumber: \(self.columnNumber)";
+    
+    return string;
+  };
+  
+  var extraDebugValuesString: String? {
+    guard let extraDebugValues = self.extraDebugValues else { return nil };
+    
+    let shouldIncludeOffset = extraDebugValues.count > 1;
+  
+    let items = extraDebugValues.enumerated().map {
+      var string = "\($0.element.key): \($0.element.value)";
+      
+      let isLastItem = ($0.offset == extraDebugValues.count - 1);
+      string += isLastItem ? "" : ", ";
+      
+      return string;
+    };
+    
+    let itemsString = items.reduce("") {
+      $0 + $1;
+    };
+    
+    return "extraDebugValuesString: { \(itemsString) }";
   };
   
   public var baseErrorMessage: String {
-    var errorMessage =
-        "domain: \(self.domain)"
-      + " - description: \(self.description)";
+    var errorMessage = "domain: \(ErrorMetadata.domain)";
+      
+    if let errorCode = self.errorCode {
+      errorMessage += " - code: \(errorCode.rawValue)";
+    };
+    
+    errorMessage += " - description: \(self.description)";
   
     if let extraDebugInfo = self.extraDebugInfo {
       errorMessage += " - extraDebugInfo: \(extraDebugInfo)";
+    };
+    
+    if let extraDebugValuesString = self.extraDebugValuesString {
+      errorMessage += " - extraDebugValues: \(extraDebugValuesString)";
     };
     
     return errorMessage;
   };
   
   public var errorDescription: String? {
-    self.baseErrorMessage + " - \(self.debugTrace)";
+    "\(self.baseErrorMessage) - \(self.debugTrace)";
   };
   
   // MARK: - Init
   // ------------
   
   public init(
-    domain: String,
     description: String,
-    extraDebugInfo: String,
+    extraDebugValues: Dictionary<String, Any>? = nil,
+    extraDebugInfo: String? = nil,
     fileName: String = #file,
     lineNumber: Int = #line,
     columnNumber: Int = #column,
     functionName: String = #function
   ) {
   
-    self.domain = domain;
     self.description = description;
+    
+    self.extraDebugValues = extraDebugValues;
     self.extraDebugInfo = extraDebugInfo;
     
     self.fileName = fileName;
@@ -66,55 +109,37 @@ public struct RNIError: LocalizedError {
     self.columnNumber = columnNumber;
     self.functionName = functionName;
   };
-};
-
-
-open class RNIBaseError<E: RawRepresentable>: Error where E.RawValue == String  {
-  
-  public var code: E;
-  public let domain: String;
-  
-  public let message: String?;
-  public let debug: String?;
   
   public init(
-    code: E,
-    domain: String,
-    message: String? = nil,
-    debug: String? = nil
+    errorCode: ErrorCodeEnum,
+    description: String? = nil,
+    extraDebugValues: Dictionary<String, Any>? = nil,
+    extraDebugInfo: String? = nil,
+    fileName: String = #file,
+    lineNumber: Int = #line,
+    columnNumber: Int = #column,
+    functionName: String = #function
   ) {
-    self.code = code;
-    self.domain = domain;
-    self.message = message;
-    self.debug = debug;
+    
+    self.errorCode = errorCode;
+    self.description = description ?? errorCode.description;
+    
+    self.extraDebugValues = extraDebugValues;
+    self.extraDebugInfo = extraDebugInfo;
+    
+    self.fileName = fileName;
+    self.lineNumber = lineNumber;
+    self.columnNumber = columnNumber;
+    self.functionName = functionName;
   };
   
-  public func createJSONString() -> String? {
-    let encoder = JSONEncoder();
-    
-    guard let data = try? encoder.encode(self),
-          let jsonString = String(data: data, encoding: .utf8)
-    else { return nil };
-    
-    return jsonString;
-  };
-};
-
-// ----------------
-// MARK:- Encodable
-// ----------------
-
-extension RNIBaseError: Encodable {
-  enum CodingKeys: String, CodingKey {
-    case code, domain, message, debug;
-  };
+  // MARK: - Functions
+  // -----------------
   
-  public func encode(to encoder: Encoder) throws {
-    var container = encoder.container(keyedBy: CodingKeys.self);
-        
-    try container.encode(self.code.rawValue, forKey: .code);
-    try container.encode(self.domain, forKey: .domain);
-    try container.encode(self.message, forKey: .message);
-    try container.encode(self.debug, forKey: .debug);
+  func log(){
+    #if DEBUG
+    guard let errorDescription = self.errorDescription else { return };
+    print("Error -", errorDescription);
+    #endif
   };
 };
