@@ -1,5 +1,5 @@
 import { requireNativeModule } from 'expo-modules-core';
-import { NotifyOnComponentWillUnmount } from '../types/SharedModuleFunctions';
+import { NotifyOnComponentWillUnmount } from '../../types/SharedModuleFunctions';
 
 interface RNIDetachedViewModule {
   notifyOnComponentWillUnmount: NotifyOnComponentWillUnmount;

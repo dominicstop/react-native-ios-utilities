@@ -1,6 +1,6 @@
 
-export * from './RNIDummyView';
-export * from './RNIDetachedView';
+export * from './native_components/RNIDummyView';
+export * from './native_components/RNIDetachedView';
 
 export * as Helpers from './functions/Helpers';
 export * from './functions/TypeUtils';
