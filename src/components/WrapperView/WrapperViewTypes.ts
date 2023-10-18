@@ -1,10 +1,14 @@
-import type { LegacyRef } from "react";
+import type { LegacyRef, Ref } from "react";
 import type { ViewProps } from "react-native";
 
 import type { WrapperView } from "./WrapperView";
 
 export type WrapperViewBaseProps = {
-  ref: LegacyRef<WrapperView> | undefined;
+  ref: (
+    | Ref<WrapperView>
+    | LegacyRef<WrapperView> 
+    | undefined
+  );
 };
 
 export type WrapperViewProps = 
