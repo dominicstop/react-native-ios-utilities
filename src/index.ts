@@ -2,6 +2,8 @@
 export * from './native_components/RNIDummyView';
 export * from './native_components/RNIDetachedView';
 
+export * from './components/WrapperView';
+
 export * as Helpers from './functions/Helpers';
 export * from './functions/TypeUtils';
 
