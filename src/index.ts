@@ -14,3 +14,4 @@ export * from './types/MiscTypes';
 export * from './types/NativeError';
 export * from './types/RNICleanupMode';
 export * from './types/UtilityTypes';
+export * from './types/SharedPropTypes';
