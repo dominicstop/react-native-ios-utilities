@@ -21,6 +21,8 @@ public class RNIDetachedView: ExpoView {
   // MARK: Properties
   // ----------------
   
+  lazy var debugLogger: Logger = .init(options: [.logToOS]);
+  
   public weak var eventDelegate: RNIDetachedViewEventsNotifiable?;
   
   private(set) public var touchHandler: RCTTouchHandler?;
@@ -83,6 +85,9 @@ public class RNIDetachedView: ExpoView {
   
   public override func layoutSubviews() {
     super.layoutSubviews();
+    
+    let logger = Logger(category: "RNIDetachedView", options: [.logToFile]);
+    logger.info("layoutSubviews");
     
     if self.detachState == .initial,
        let window = self.window,
