@@ -11,6 +11,7 @@ import type { OnDetachedViewDidDetachEvent } from './RNIDetachedViewEvents';
 export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, RNIDetachedViewState> {
   
   nativeRef?: View;
+  reactTag?: number;
 
   constructor(props: RNIDetachedViewProps){
     super(props);
@@ -22,6 +23,7 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
 
   componentWillUnmount(){
     this.notifyOnComponentWillUnmount(false);
+    this.reactTag = undefined;
   };
 
   getProps() {
@@ -44,7 +46,14 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
 
   getNativeReactTag: () => number | undefined = () => {
     // @ts-ignore
-    return this.nativeRef?.nativeTag;
+    return this.nativeRef?.nativeTag ?? this.reactTag;
+  };
+
+  private _handleOnLayout = (event: LayoutChangeEvent) => {
+    this.props.onLayout?.(event);
+
+    // @ts-ignore
+    this.reactTag = event.nativeEvent.target;
   };
 
   notifyOnComponentWillUnmount = async (
@@ -72,6 +81,8 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     const props = this.getProps();
     const state = this.state;
 
+    const didSetReactTag = this.reactTag != null;
+
     const nativeStyleOverride: ViewStyle = {
       ...(!state.isDetached && {
         opacity: 0.001,
@@ -89,6 +100,10 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
       ],
       // @ts-ignore
       ref: this._handleOnNativeRef,
+      onLayout: (didSetReactTag 
+        ? undefined
+        : this._handleOnLayout
+      ),
       onViewDidDetach: this._handleOnViewDidDetach,
       shouldCleanupOnComponentWillUnmount: props.shouldCleanupOnComponentWillUnmount,
     });

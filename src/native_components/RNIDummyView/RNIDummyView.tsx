@@ -10,6 +10,7 @@ import type { RNIDummyViewProps } from './RNIDummyViewTypes';
 export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
   
   nativeRef?: View;
+  reactTag?: number;
 
   constructor(props: RNIDummyViewProps){
     super(props);
@@ -39,7 +40,7 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
 
   getNativeReactTag: () => number | undefined = () => {
     // @ts-ignore
-    return this.nativeRef?.nativeTag;
+    return this.nativeRef?.nativeTag ?? this.reactTag;
   };
 
   notifyOnComponentWillUnmount = async (
@@ -54,8 +55,20 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
     );
   };
 
+  private _handleOnNativeRef = (ref: View) => {
+    this.nativeRef = ref;
+  };
+
+  private _handleOnLayout = (event: LayoutChangeEvent) => {
+    this.props.onLayout?.(event);
+
+    // @ts-ignore
+    this.reactTag = event.nativeEvent.target;
+  };
+
   render(){
     const props = this.getProps();
+    const didSetReactTag = this.reactTag != null;
 
     return React.createElement(RNIDummyNativeView, {
       ...props.viewProps,
@@ -65,7 +78,12 @@ export class RNIDummyView extends React.PureComponent<RNIDummyViewProps> {
       ],
       // @ts-ignore
       ref: this._handleOnNativeRef,
-      shouldCleanupOnComponentWillUnmount: props.shouldCleanupOnComponentWillUnmount,
+      onLayout: (didSetReactTag 
+        ? undefined
+        : this._handleOnLayout
+      ),
+      shouldCleanupOnComponentWillUnmount: 
+        props.shouldCleanupOnComponentWillUnmount,
     });
   };
 };
