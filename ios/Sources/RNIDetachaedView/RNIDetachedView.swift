@@ -6,7 +6,7 @@
 //
 
 import ExpoModulesCore
-
+import DGSwiftUtilities
 
 public class RNIDetachedView: ExpoView {
 
@@ -16,7 +16,7 @@ public class RNIDetachedView: ExpoView {
     case detached;
   };
   
-  public static var detachedView: [WeakRef<RNIDetachedView>] = [];
+  public static var detachedView: [RNIWeakRef<RNIDetachedView>] = [];
 
   // MARK: Properties
   // ----------------
@@ -110,7 +110,7 @@ public class RNIDetachedView: ExpoView {
     
     self.removeFromSuperview();
     Self.detachedView.append(
-      .init(value: self)
+      .init(with: self)
     );
     
     self.detachState = .detached;
