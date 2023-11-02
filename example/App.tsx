@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { RNIDetachedView, Helpers } from 'react-native-ios-utilities';
 
@@ -11,7 +11,7 @@ export default function App() {
     console.log("App - component did mount");
 
     (async () => {
-      await Helpers.timeout(3000);
+      await Helpers.timeout(5000);
       console.log("App - setShouldMount: false");
       
       setShouldMount(false);
@@ -25,11 +25,16 @@ export default function App() {
           ref={detachedViewRef}
           style={styles.detachedView}
         >
-          <View nativeID='test'>
+          <Pressable 
+            nativeID='test'
+            onPress={() => {
+              console.log("I am being pressed...");
+            }}
+          >
             <Text>
               "Dummy View - Hello World"
             </Text>
-          </View>
+          </Pressable>
         </RNIDetachedView>
       ))}
       {(!shouldMount) && (
