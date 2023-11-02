@@ -33,7 +33,8 @@
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module",
     "open:ios": "open -a \"Xcode\" example/ios",
-    "open:android": "open -a \"Android Studio\" example/android"
+    "open:android": "open -a \"Android Studio\" example/android",
+    "update-dep": "cd example/ios && pod update DGSwiftUtilities"
   },
   "keywords": [
     "react-native",
