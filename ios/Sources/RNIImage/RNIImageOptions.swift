@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DGSwiftUtilities
 
 
 public struct RNIImageOptions {
@@ -23,7 +24,7 @@ public struct RNIImageOptions {
   init(dict: Dictionary<String, Any>){
     self.tint = {
       guard let value = dict["tint"],
-            let color = UIColorHelpers.parseColor(value: value)
+            let color = UIColor.parseColor(value: value)
       else { return nil };
       
       return color;

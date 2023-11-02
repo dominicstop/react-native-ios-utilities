@@ -7,8 +7,7 @@
 
 import Foundation
 import UIKit
-
-
+import DGSwiftUtilities
 
 
 public struct RNIImageSystemMaker {
@@ -98,7 +97,7 @@ public struct RNIImageSystemMaker {
 
     self.hierarchicalColor = {
       guard let value = dict["hierarchicalColor"],
-            let color = UIColorHelpers.parseColor(value: value)
+            let color = UIColor.parseColor(value: value)
       else { return nil };
       
       return color;
@@ -110,7 +109,7 @@ public struct RNIImageSystemMaker {
       };
       
       return items.compactMap {
-        UIColorHelpers.parseColor(value: $0)
+        UIColor.parseColor(value: $0)
       };
     }();
   };

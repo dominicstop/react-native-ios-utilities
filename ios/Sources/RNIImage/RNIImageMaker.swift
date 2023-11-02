@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import DGSwiftUtilities
 
 
 public struct RNIImageMaker {
@@ -39,7 +40,7 @@ public struct RNIImageMaker {
     self.size = CGSize(width: width, height: height);
     
     guard let fillColorValue = dict["fillColor" ],
-          let fillColor = UIColorHelpers.parseColor(value: fillColorValue)
+          let fillColor = UIColor.parseColor(value: fillColorValue)
     else { return nil };
     
     self.fillColor = fillColor;
