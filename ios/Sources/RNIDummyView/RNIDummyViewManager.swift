@@ -14,7 +14,7 @@ public let RNIDummyViewRegistry = RNIDummyViewRegistryManager.shared;
 public final class RNIDummyViewRegistryManager {
   public static let shared: RNIDummyViewRegistryManager = .init();
   
-  public var dummyViews: [RNIWeakRef<RNIDummyView>] = [];
+  public var dummyViews: [WeakRef<RNIDummyView>] = [];
   
   public var detachedDummyViews = NSMapTable<NSNumber, RNIDummyView>.init(
     keyOptions: .copyIn,
@@ -23,7 +23,7 @@ public final class RNIDummyViewRegistryManager {
   
   func register(dummyView: RNIDummyView, shouldRetain: Bool){
     self.dummyViews.append(
-      RNIWeakRef(with: dummyView)
+      WeakRef(with: dummyView)
     );
     
     guard let reactTag = dummyView.reactTag else { return };
@@ -35,7 +35,7 @@ public final class RNIDummyViewRegistryManager {
   
   func remove(dummyView: RNIDummyView){
     self.dummyViews = self.dummyViews.filter {
-      $0.synthesizedRef != nil && $0.synthesizedRef !== dummyView;
+      $0.ref != nil && $0.ref !== dummyView;
     };
   
     guard let reactTag = dummyView.reactTag else { return };
@@ -54,7 +54,7 @@ public final class RNIDummyViewRegistryManager {
     };
     
     self.dummyViews = self.dummyViews.filter {
-      guard let dummyView = $0.synthesizedRef else { return false };
+      guard let dummyView = $0.ref else { return false };
       let dummySuperview = dummyView.superview ?? dummyView.cachedSuperview;
       
       return dummySuperview !== parent;
@@ -67,20 +67,20 @@ public final class RNIDummyViewRegistryManager {
     };
   
     let match = self.dummyViews.first {
-      $0.synthesizedRef?.reactTag == key;
+      $0.ref?.reactTag == key;
     };
     
-    return match?.synthesizedRef;
+    return match?.ref;
   };
   
   func getInstance(belongingTo parent: UIView) -> RNIDummyView? {
     let match = self.dummyViews.first {
-      guard let dummyView = $0.synthesizedRef else { return false };
+      guard let dummyView = $0.ref else { return false };
       let parentView = dummyView.superview ?? dummyView.cachedSuperview;
       
       return parentView === parent;
     };
   
-    return match?.synthesizedRef;
+    return match?.ref;
   };
 };

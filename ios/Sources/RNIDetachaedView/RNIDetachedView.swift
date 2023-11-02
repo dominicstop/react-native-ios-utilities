@@ -16,7 +16,7 @@ public class RNIDetachedView: ExpoView {
     case detached;
   };
   
-  public static var detachedView: [RNIWeakRef<RNIDetachedView>] = [];
+  public static var detachedView: [WeakRef<RNIDetachedView>] = [];
 
   // MARK: Properties
   // ----------------
