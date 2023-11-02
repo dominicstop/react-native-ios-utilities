@@ -6,12 +6,13 @@
 //
 
 import React
+import DGSwiftUtilities
 
 
 public class RNIHelpers {
   
   public static var bridge: RCTBridge? {
-    guard let keyWindow = UIApplication.shared.keyWindow,
+    guard let keyWindow = UIApplication.shared.activeWindow,
           let rootVC = keyWindow.rootViewController,
           let rootView = rootVC.view,
           let rootReactView = rootView as? RCTRootView
