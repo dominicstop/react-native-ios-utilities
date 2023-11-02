@@ -6,11 +6,12 @@
 //
 
 import ExpoModulesCore
+import DGSwiftUtilities
 
 public class RNIModuleHelpers {
   
   public static func getReactBridge(
-    withErrorType errorType: RNIError<some RNIErrorMetadata, some RNIErrorCode>.Type
+    withErrorType errorType: RNIError<some ErrorMetadata>.Type
   ) throws -> RCTBridge {
   
     guard let bridge = RNIHelpers.bridge else {
@@ -21,7 +22,7 @@ public class RNIModuleHelpers {
   };
   
   public static func getView<T>(
-    withErrorType errorType: RNIError<some RNIErrorMetadata, some RNIErrorCode>.Type,
+    withErrorType errorType: RNIError<some ErrorMetadata>.Type,
     forNode node: Int,
     type: T.Type,
     bridge: RCTBridge? = nil

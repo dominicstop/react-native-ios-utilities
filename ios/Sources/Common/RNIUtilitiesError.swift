@@ -6,13 +6,12 @@
 //
 
 import Foundation
+import DGSwiftUtilities
 
 
-public typealias RNIUtilitiesError =
-  RNIError<RNIUtilitiesErrorMetadata, RNIDefaultErrorCode>;
-
-public struct RNIUtilitiesErrorMetadata: RNIErrorMetadata {
-  public static var domain = "react-native-ios-utilities";
-  
+public struct RNIUtilitiesErrorMetadata: ErrorMetadata {
+  public static var domain: String? = "react-native-ios-utilities";
   public static var parentType: String? = nil;
 };
+
+public typealias RNIUtilitiesError = RNIError<RNIUtilitiesErrorMetadata>;
