@@ -8,7 +8,7 @@
 import ExpoModulesCore
 
 
-extension RCTView {
+public extension RCTView {
   
   var closestParentRootView: RCTRootView? {
     let targetType = RCTRootView.self;
