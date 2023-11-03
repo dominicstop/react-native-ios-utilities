@@ -106,9 +106,16 @@ public class RNIDetachedView: ExpoView {
   // ---------------
   
   public func detach(completion: (() -> Void)? = nil){
+    guard let bridge = self.appContext?.reactBridge else { return };
+  
     self.detachState = .detaching;
-    
     self.removeFromSuperview();
+    
+    let touchHandler = RCTTouchHandler(bridge: bridge);
+    self.touchHandler = touchHandler;
+    
+    touchHandler?.attach(to: self);
+    
     Self.detachedView.append(
       .init(with: self)
     );
