@@ -15,6 +15,7 @@ export * from './types/NativeTypes/UIViewTypes';
 export * from './types/DGSwiftUtilitiesTypes/AnimationConfig';
 export * from './types/DGSwiftUtilitiesTypes/VerticalAnchorPositionMode';
 export * from './types/DGSwiftUtilitiesTypes/HorizontalAlignmentPosition';
+export * from './types/DGSwiftUtilitiesTypes/Transform3D';
 
 export * from './types/ImageItemConfig';
 export * from './types/MiscTypes';
