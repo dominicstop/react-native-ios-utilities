@@ -9,7 +9,8 @@ export * from './functions/TypeUtils';
 
 export * from './types/SharedModuleFunctions';
 
-export * from './types/CoreGraphicsTypes';
+export * from './types/NativeTypes/CoreGraphicsTypes';
+
 export * from './types/ImageItemConfig';
 export * from './types/MiscTypes';
 export * from './types/NativeError';
