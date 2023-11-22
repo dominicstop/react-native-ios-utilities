@@ -10,6 +10,7 @@ export * from './functions/TypeUtils';
 export * from './types/SharedModuleFunctions';
 
 export * from './types/NativeTypes/CoreGraphicsTypes';
+export * from './types/NativeTypes/UIViewTypes';
 
 export * from './types/ImageItemConfig';
 export * from './types/MiscTypes';
