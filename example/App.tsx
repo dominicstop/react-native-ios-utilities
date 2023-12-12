@@ -9,12 +9,12 @@ export default function App() {
 
   React.useEffect(() => {
     console.log("App - component did mount");
+    console.log("shouldMount:", shouldMount);
 
     (async () => {
       await Helpers.timeout(5000);
-      console.log("App - setShouldMount: false");
-      
       setShouldMount(false);
+      console.log("shouldMount:", shouldMount);
     })();
   }, []);
 
