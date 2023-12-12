@@ -85,20 +85,6 @@ public class RNIDetachedView: ExpoView {
   
   public override func layoutSubviews() {
     super.layoutSubviews();
-    
-    let logger = Logger(category: "RNIDetachedView", options: [.logToFile]);
-    logger.info("layoutSubviews");
-    
-    if self.detachState == .initial,
-       let window = self.window,
-       let rootVC = window.rootViewController,
-       let rootView = rootVC.view {
-      
-      self.detach();
-      rootView.addSubview(self);
-    };
-    
-    guard self.detachState == .detached else { return };
     self.eventDelegate?.notifyOnLayoutSubviews(sender: self);
   };
   
