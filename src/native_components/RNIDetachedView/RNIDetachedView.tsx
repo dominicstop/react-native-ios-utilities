@@ -28,13 +28,17 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
 
   getProps() {
     const { 
-      shouldCleanupOnComponentWillUnmount, 
+      shouldCleanupOnComponentWillUnmount,
+      shouldApplyStyleOverride,
       ...viewProps 
     } = this.props;
 
     return {
       shouldCleanupOnComponentWillUnmount: 
         shouldCleanupOnComponentWillUnmount ?? false,
+
+      shouldApplyStyleOverride: 
+        shouldApplyStyleOverride ?? true,
 
       viewProps,
     };
@@ -93,11 +97,13 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     
     return React.createElement(RNIDetachedNativeView, {
       ...props.viewProps,
-      style: [
+      style: (props.shouldApplyStyleOverride ? [
         props.viewProps.style,
         styles.nativeView,        
         nativeStyleOverride,
-      ],
+      ] : [
+        props.viewProps.style,
+      ]),
       // @ts-ignore
       ref: this._handleOnNativeRef,
       onLayout: (didSetReactTag 
