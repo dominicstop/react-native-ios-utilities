@@ -14,6 +14,8 @@ export default function App() {
     (async () => {
       await Helpers.timeout(5000);
       setShouldMount(false);
+
+      console.log("App - component did mount - 5000ms timeout");
       console.log("shouldMount:", shouldMount);
     })();
   }, []);
@@ -24,6 +26,7 @@ export default function App() {
         <RNIDetachedView  
           ref={detachedViewRef}
           style={styles.detachedView}
+          shouldApplyStyleOverride={false}
         >
           <Pressable 
             nativeID='test'
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   detachedView: {
-    flex: 1,
+    position: 'absolute',
     backgroundColor: 'blue',
   },
 });
