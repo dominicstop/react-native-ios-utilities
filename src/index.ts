@@ -11,6 +11,11 @@ export * from './types/SharedModuleFunctions';
 
 export * from './types/NativeTypes/CoreGraphicsTypes';
 export * from './types/NativeTypes/UIViewTypes';
+export * from './types/NativeTypes/UIDevice';
+export * from './types/NativeTypes/UIGeometry';
+export * from './types/NativeTypes/UIInterface';
+export * from './types/NativeTypes/UIOrientation';
+
 
 export * from './types/DGSwiftUtilitiesTypes/AnimationConfig';
 export * from './types/DGSwiftUtilitiesTypes/VerticalAnchorPositionMode';
