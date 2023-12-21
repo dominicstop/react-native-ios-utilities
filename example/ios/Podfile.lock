@@ -1,6 +1,6 @@
 PODS:
   - boost (1.76.0)
-  - DGSwiftUtilities (0.6.2)
+  - DGSwiftUtilities (0.9.1)
   - DoubleConversion (1.1.6)
   - EXApplication (5.3.1):
     - ExpoModulesCore
@@ -444,7 +444,7 @@ PODS:
     - React-jsi (= 0.72.5)
     - React-logger (= 0.72.5)
     - React-perflogger (= 0.72.5)
-  - ReactNativeIosUtilities (4.2.1):
+  - ReactNativeIosUtilities (4.2.3):
     - DGSwiftUtilities (~> 0.6)
     - ExpoModulesCore
   - SocketRocket (0.6.1)
@@ -607,7 +607,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
-  DGSwiftUtilities: c0a3708bacecddbbeb107e167eb5a55cb00bd768
+  DGSwiftUtilities: b2113a3d3979674da034f08d6d8eabf3c0dd1d1a
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
@@ -654,7 +654,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: cc32add98c45c5df18436a6a52a7e1f6edec102c
   React-utils: 7a9918a1ffdd39aba67835d42386f592ea3f8e76
   ReactCommon: 91ece8350ebb3dd2be9cef662abd78b6948233c0
-  ReactNativeIosUtilities: 3c974a94004bae8d987ab76d9b9174e3615792ce
+  ReactNativeIosUtilities: 6b8ba94768909b87b5f6e5b3fa7249afae320947
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
 
