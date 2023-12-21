@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
 
   s.dependency 'ExpoModulesCore'
   s.dependency 'DGSwiftUtilities', '~> 0.9'
+  s.dependency 'ComputableLayout', '~> 0.6'
 
   # Swift/Objective-C compatibility
   s.pod_target_xcconfig = {
