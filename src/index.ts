@@ -11,8 +11,9 @@ export * from './types/SharedModuleFunctions';
 
 export * from './types/NativeTypes';
 export * from './types/DGSwiftUtilities';
-
+export * from './types/ComputableLayout';
 export * from './types/ImageItemConfig';
+
 export * from './types/MiscTypes';
 export * from './types/NativeError';
 export * from './types/RNICleanupMode';
