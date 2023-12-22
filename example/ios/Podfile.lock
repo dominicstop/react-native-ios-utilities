@@ -1,8 +1,8 @@
 PODS:
   - boost (1.76.0)
-  - ComputableLayout (0.6.0):
+  - ComputableLayout (0.6.1):
     - DGSwiftUtilities (~> 0.9)
-  - DGSwiftUtilities (0.9.1)
+  - DGSwiftUtilities (0.10.0)
   - DoubleConversion (1.1.6)
   - EXApplication (5.3.1):
     - ExpoModulesCore
@@ -611,8 +611,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
-  ComputableLayout: 737a7c7981b9fed121f7042bb4fde81497b2fd49
-  DGSwiftUtilities: b2113a3d3979674da034f08d6d8eabf3c0dd1d1a
+  ComputableLayout: e21061d28fd992f2c481ceaf0dab56f4021015fd
+  DGSwiftUtilities: ce67d946b70de72bdadb8e0fb8d609a72e00861f
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
