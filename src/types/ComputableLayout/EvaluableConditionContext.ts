@@ -1,8 +1,4 @@
-import { CGRect } from "react-native-ios-utilities";
-import { UIEdgeInsets } from "../TempTypes/UIGeometry";
-import { UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle } from "../TempTypes/UIInterface";
-import { UIUserInterfaceIdiom } from "../TempTypes/UIDevice";
-import { UIDeviceOrientation } from "../TempTypes/UIOrientation";
+import { CGRect, UIEdgeInsets, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle } from "../NativeTypes";
 
 
 export type EvaluableConditionContext = {

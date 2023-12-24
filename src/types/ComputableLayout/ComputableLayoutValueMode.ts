@@ -1,5 +1,4 @@
-import { CGRect, CGSize } from "react-native-ios-utilities";
-import { UIEdgeInsets } from "../TempTypes/UIGeometry";
+import { CGRect, CGSize, UIEdgeInsets } from "../NativeTypes";
 import { ComputableLayoutValuePercentTarget } from "./ComputableLayoutValuePercentTarget";
 import { ComputableLayoutValueEvaluableCondition } from "./ComputableLayoutValueEvaluableCondition";
 import { EvaluableCondition } from "./EvaluableCondition";

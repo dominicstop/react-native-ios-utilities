@@ -1,9 +1,5 @@
-import { CGRect, CGSize } from "react-native-ios-utilities";
+import { CGRect, CGSize, UIEdgeInsets, UIDevice, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle } from "../NativeTypes";
 import { NumericLogicalExpression } from "./NumericLogicalExpression";
-import { UIEdgeInsets } from "../TempTypes/UIGeometry";
-import { UIDevice, UIUserInterfaceIdiom } from "../TempTypes/UIDevice";
-import { UIDeviceOrientation } from "../TempTypes/UIOrientation";
-import { UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle } from "../TempTypes/UIInterface";
 import { EvaluableConditionContext } from "./EvaluableConditionContext";
 import { StringComparisonMode } from "./StringComparisonMode";
 import { KeysWithType } from "../UtilityTypes";
