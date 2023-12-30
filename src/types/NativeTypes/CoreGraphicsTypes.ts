@@ -16,7 +16,28 @@ export type CGVector = {
   dy: number;
 };
 
-export type CGRect = {
+/** The base properties for `CGRect` */
+export type CGRectBase = {
   origin: CGPoint;
   size: CGSize;
 };
+
+/** The computed properties for `CGRect` */
+export type CGRectComputed = {
+  minX: boolean;
+  midX: boolean;
+  maxX: boolean;
+  minY: boolean;
+  midY: boolean;
+  maxY: boolean;
+  width: boolean;
+  height: boolean;
+  isEmpty: boolean;
+  isNull: boolean;
+  isInfinite: boolean;
+  standardized: CGRect;
+  integral: CGRect;
+  // dictionaryRepresentation
+};
+
+export type CGRect = CGRectBase & CGRectComputed;
