@@ -42,6 +42,19 @@ public extension Dictionary where Key == String {
     return value;
   };
   
+  func getValueFromDictionary<T: InitializableFromDictionary>(
+    forKey key: String,
+    type: T.Type = T.self
+  ) throws -> T {
+  
+    let dictValue = try self.getValueFromDictionary(
+      forKey: key,
+      type: Dictionary<String, Any>.self
+    );
+    
+    return try T.init(fromDict: dictValue);
+  };
+  
   func getEnumFromDictionary<T: RawRepresentable<String>>(
     forKey key: String,
     type: T.Type = T.self
@@ -84,5 +97,22 @@ public extension Dictionary where Key == String {
     };
     
     return value;
+  };
+  
+  func getKeyPathFromDictionary<
+    KeyPathRoot: StringKeyPathMapping,
+    KeyPathValue
+  >(
+    forKey key: String,
+    rootType: KeyPathRoot.Type,
+    valueType: KeyPathValue.Type
+  ) throws -> KeyPath<KeyPathRoot, KeyPathValue> {
+  
+    let dictValue: String = try self.getValueFromDictionary(forKey: key);
+    
+    return try KeyPathRoot.getKeyPath(
+      forKey: dictValue,
+      valueType: KeyPathValue.self
+    );
   };
 };
