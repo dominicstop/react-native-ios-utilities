@@ -1,14 +1,19 @@
-import { CGRect, CGSize, UIEdgeInsets, UIDevice, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle } from "../NativeTypes";
+import { CGRect, CGSize, UIEdgeInsets, UIDevice, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle, CGRectBase } from "../NativeTypes";
 import { NumericLogicalExpression } from "./NumericLogicalExpression";
 import { EvaluableConditionContext } from "./EvaluableConditionContext";
 import { StringComparisonMode } from "./StringComparisonMode";
 import { KeysWithType } from "../UtilityTypes";
 
-export type FrameRectValue =
-  | 'window'
-  | 'targetView'
-  | 'statusBar'
-  | 'custom';
+export type FrameRectValue = {
+ mode: 'window'; 
+} | {
+ mode: 'targetView';
+} | {
+ mode: 'statusBar';
+} | {
+ mode: 'custom';
+ value: CGRectBase;
+};
 
 export type SizeValue =  { 
   mode: 'window';
