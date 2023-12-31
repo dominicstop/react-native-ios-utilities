@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DGSwiftUtilities
 
 @available(iOS 13, *)
 extension UIMenuElement.Attributes: InitializableFromString {

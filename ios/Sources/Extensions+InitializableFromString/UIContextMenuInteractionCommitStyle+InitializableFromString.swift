@@ -5,7 +5,8 @@
 //  Created by Dominic Go on 11/12/21.
 //
 
-import UIKit;
+import UIKit
+import DGSwiftUtilities
 
 @available(iOS 13.0, *)
 extension UIContextMenuInteractionCommitStyle: InitializableFromString {

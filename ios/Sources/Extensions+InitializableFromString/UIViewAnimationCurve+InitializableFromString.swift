@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DGSwiftUtilities
 
 extension UIView.AnimationCurve: InitializableFromString {
 

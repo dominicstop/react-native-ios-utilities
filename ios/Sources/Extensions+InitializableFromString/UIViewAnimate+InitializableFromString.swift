@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DGSwiftUtilities
 
 extension UIView.AnimationOptions: InitializableFromString {
 

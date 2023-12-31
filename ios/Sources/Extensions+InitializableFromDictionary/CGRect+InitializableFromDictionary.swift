@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DGSwiftUtilities
 
 // TODO: Move to `DGSwiftUtilities`
 extension CGRect: InitializableFromDictionary {
