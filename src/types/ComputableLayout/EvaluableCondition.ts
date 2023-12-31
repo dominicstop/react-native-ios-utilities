@@ -89,8 +89,8 @@ export type EvaluableCondition = {
   value: EvaluableCondition;
 } | {
   mode: 'ifAnyAreTrue'
-  value: EvaluableCondition[];
+  values: EvaluableCondition[];
 } | {
   mode: 'ifAllAreTrue'
-  value: EvaluableCondition[];
+  values: EvaluableCondition[];
 };
