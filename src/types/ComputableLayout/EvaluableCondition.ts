@@ -4,7 +4,7 @@ import { EvaluableConditionContext } from "./EvaluableConditionContext";
 import { StringComparisonMode } from "./StringComparisonMode";
 import { KeysWithType } from "../UtilityTypes";
 
-export type FrameRectValue = {
+export type EvaluableConditionFrameRectValue = {
  mode: 'window'; 
 } | {
  mode: 'targetView';
@@ -15,7 +15,7 @@ export type FrameRectValue = {
  value: CGRectBase;
 };
 
-export type SizeValue =  { 
+export type EvaluableConditionSizeValue =  { 
   mode: 'window';
 } | { 
   mode: 'screen';
@@ -30,12 +30,12 @@ export type SizeValue =  {
     
 export type EvaluableCondition = {
   mode: 'frameRect';
-  of: FrameRectValue;
+  of: EvaluableConditionFrameRectValue;
   valueForKey: keyof CGRect;
   condition: NumericLogicalExpression;
 } | {
   mode: 'size';
-  of: SizeValue;
+  of: EvaluableConditionSizeValue;
   valueForKey: keyof CGSize;
   condition: NumericLogicalExpression;
 } | {
