@@ -55,6 +55,19 @@ public extension Dictionary where Key == String {
     return try T.init(fromDict: dictValue);
   };
   
+  func getValueFromDictionary<T: InitializableFromString>(
+    forKey key: String,
+    type: T.Type = T.self
+  ) throws -> T {
+  
+    let dictValue = try self.getValueFromDictionary(
+      forKey: key,
+      type: String.self
+    );
+    
+    return try T.init(fromString: dictValue);
+  };
+  
   func getEnumFromDictionary<T: RawRepresentable<String>>(
     forKey key: String,
     type: T.Type = T.self
