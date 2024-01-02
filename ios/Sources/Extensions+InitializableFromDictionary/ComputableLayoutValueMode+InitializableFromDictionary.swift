@@ -28,8 +28,8 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         self = .constant(value.doubleValue);
         
       case "percent":
-        let percentTarget = try dict.getEnumFromDictionary(
-          forKey: "value",
+        let percentTarget = try? dict.getEnumFromDictionary(
+          forKey: "relativeTo",
           type: ComputableLayoutValuePercentTarget.self
         );
         
@@ -39,7 +39,7 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         );
         
         self = .percent(
-          relativeTo: percentTarget,
+          relativeTo: percentTarget ?? .targetSize,
           percentValue: percentValue.doubleValue
         );
         
