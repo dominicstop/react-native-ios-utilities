@@ -8,7 +8,6 @@
 import UIKit
 import DGSwiftUtilities
 import ComputableLayout
-import AdaptiveModal
 
 
 extension ComputableLayoutPreset: InitializableFromDictionary {
@@ -67,7 +66,7 @@ extension ComputableLayoutPreset: InitializableFromDictionary {
         self = .center;
         
       default:
-        throw RNIAdaptiveModalError(
+        throw RNIUtilitiesError(
           errorCode: .invalidValue,
           description: "Invalid string value",
           extraDebugValues: [
@@ -101,7 +100,7 @@ extension ComputableLayoutPreset: InitializableFromDictionary {
         self = .layoutConfig(value);
         
       default:
-        throw RNIAdaptiveModalError(
+        throw RNIUtilitiesError(
           errorCode: .invalidValue,
           description: "Invalid string value for mode",
           extraDebugValues: [
