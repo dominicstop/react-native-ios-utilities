@@ -42,6 +42,10 @@ public class RNIDetachedViewModule: Module {
       Prop("shouldCleanupOnComponentWillUnmount") {
         $0.shouldCleanupOnComponentWillUnmount = $1;
       };
+      
+      Prop("contentTargetMode") {
+        $0.contentTargetModeProp = $1;
+      };
     };
   };
 };

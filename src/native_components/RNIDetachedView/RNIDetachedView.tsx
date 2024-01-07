@@ -29,6 +29,7 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
   getProps() {
     const { 
       shouldCleanupOnComponentWillUnmount,
+      contentTargetMode,
       shouldApplyStyleOverride,
       ...viewProps 
     } = this.props;
@@ -36,6 +37,8 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     return {
       shouldCleanupOnComponentWillUnmount: 
         shouldCleanupOnComponentWillUnmount ?? false,
+
+      contentTargetMode,
 
       shouldApplyStyleOverride: 
         shouldApplyStyleOverride ?? true,
@@ -112,6 +115,7 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
       ),
       onViewDidDetach: this._handleOnViewDidDetach,
       shouldCleanupOnComponentWillUnmount: props.shouldCleanupOnComponentWillUnmount,
+      contentTargetMode: props.contentTargetMode,
     });
   };
 };

@@ -1,7 +1,9 @@
 import type { ViewProps } from 'react-native';
 import type { RNIDetachedNativeViewBaseProps } from './RNIDetachedNativeViewTypes';
 
-type InheritedProps = Partial<Pick<RNIDetachedNativeViewBaseProps,
+type InheritedProps = Pick<RNIDetachedNativeViewBaseProps,
+  | 'contentTargetMode'
+> & Partial<Pick<RNIDetachedNativeViewBaseProps,
   | 'shouldCleanupOnComponentWillUnmount'
   | 'onViewDidDetach'
 >>;

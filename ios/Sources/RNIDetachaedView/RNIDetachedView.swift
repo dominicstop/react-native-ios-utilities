@@ -5,8 +5,11 @@
 //  Created by Dominic Go on 10/4/23.
 //
 
+import UIKit
+import React
 import ExpoModulesCore
 import DGSwiftUtilities
+
 
 public class RNIDetachedView: ExpoView {
 
@@ -21,8 +24,6 @@ public class RNIDetachedView: ExpoView {
   // MARK: Properties
   // ----------------
   
-  lazy var debugLogger: Logger = .init(options: [.logToOS]);
-  
   public weak var eventDelegate: RNIDetachedViewEventsNotifiable?;
   
   private(set) public var touchHandler: RCTTouchHandler?;
@@ -32,8 +33,30 @@ public class RNIDetachedView: ExpoView {
   
   private(set) public var didTriggerCleanup = false;
   
+  public var contentView: UIView? {
+    switch self.contentTargetMode {
+      case .subview:
+        return self.subviews.first;
+        
+      case .wrapper:
+        return self;
+    }
+  };
+  
   // MARK: Properties - Props
   // ------------------------
+  
+  var contentTargetMode: RNIDetachedViewContentTargetMode = .wrapper;
+  public var contentTargetModeProp: String? {
+    willSet {
+      guard let newValue = newValue,
+            let contentTargetMode =
+              try? RNIDetachedViewContentTargetMode(fromString: newValue)
+      else { return };
+      
+      self.contentTargetMode = contentTargetMode;
+    }
+  };
   
   public var shouldCleanupOnComponentWillUnmount = false;
   
@@ -60,7 +83,7 @@ public class RNIDetachedView: ExpoView {
           newSuperview !== self.cachedSuperview
     else { return };
 
-    self.cachedSuperview = superview;
+    self.cachedSuperview = newSuperview;
   };
   
   public override func didMoveToSuperview() {
@@ -91,16 +114,34 @@ public class RNIDetachedView: ExpoView {
   // MARK: Functions
   // ---------------
   
-  public func detach(completion: (() -> Void)? = nil){
-    guard let bridge = self.appContext?.reactBridge else { return };
-  
-    self.detachState = .detaching;
-    self.removeFromSuperview();
+  public func detach() throws {
+    guard let bridge = self.appContext?.reactBridge else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to get `reactBridge` instance"
+      );
+    };
     
-    let touchHandler = RCTTouchHandler(bridge: bridge);
+    guard let contentView = self.contentView else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to get `contentView`"
+      );
+    };
+    
+    guard let touchHandler = RCTTouchHandler(bridge: bridge) else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to create `RCTTouchHandler` instance"
+      );
+    };
+    
+    self.detachState = .detaching;
+    contentView.removeFromSuperview();
+    
+    touchHandler.attach(to: contentView);
     self.touchHandler = touchHandler;
     
-    touchHandler?.attach(to: self);
     
     Self.detachedView.append(
       .init(with: self)
@@ -108,17 +149,24 @@ public class RNIDetachedView: ExpoView {
     
     self.detachState = .detached;
     self.onViewDidDetach.callAsFunction([:]);
-    completion?();
   };
   
-  public func updateBounds(newSize: CGSize){
-    let oldSize = self.bounds.size;
+  public func updateBounds(newSize: CGSize) throws {
+    guard let reactBridge = self.appContext?.reactBridge else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to get `reactBridge` instance"
+      );
+    };
     
-    guard let reactBridge = self.appContext?.reactBridge,
-          newSize != oldSize
-    else { return };
+    guard let contentView = self.contentView else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to get contentView"
+      );
+    };
     
-    reactBridge.uiManager.setSize(newSize, for: self);
+    reactBridge.uiManager.setSize(newSize, for: contentView);
   };
   
   // MARK: Module Functions
@@ -150,12 +198,14 @@ extension RNIDetachedView: RNICleanable {
     
     self.didTriggerCleanup = true;
     
-    if let touchHandler = self.touchHandler {
-      touchHandler.detach(from: self);
+    if let touchHandler = self.touchHandler,
+       let contentView = self.contentView {
+       
+      touchHandler.detach(from: contentView);
     };
     
     RNIHelpers.recursivelyRemoveFromViewRegistry(
-      forReactView: self,
+      forReactView: self.contentView ?? self,
       usingReactBridge: bridge
     );
     
