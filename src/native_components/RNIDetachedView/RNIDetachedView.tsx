@@ -75,6 +75,15 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     );
   };
 
+  debugAttachToWindow = async (
+    isManuallyTriggered: boolean = true
+  ) => {
+    const reactTag = this.getNativeReactTag();
+    if(typeof reactTag !== 'number') return;
+
+    await RNIDetachedViewModule.debugAttachToWindow(reactTag);
+  };
+
   private _handleOnNativeRef = (ref: View) => {
     this.nativeRef = ref;
   };

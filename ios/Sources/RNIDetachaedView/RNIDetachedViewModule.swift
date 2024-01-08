@@ -6,6 +6,7 @@
 //
 
 import ExpoModulesCore
+import DGSwiftUtilities
 
 public class RNIDetachedViewModule: Module {
 
@@ -27,6 +28,42 @@ public class RNIDetachedViewModule: Module {
             isManuallyTriggered: isManuallyTriggered
           );
           
+          promise.resolve();
+        
+        } catch let error {
+          promise.reject(error);
+          return;
+        };
+      };
+    };
+    
+    AsyncFunction("debugAttachToWindow") { (reactTag: Int, promise: Promise) in
+      
+      DispatchQueue.main.async {
+        do {
+          let detachedView = try RNIModuleHelpers.getView(
+            withErrorType: RNIUtilitiesError.self,
+            forNode: reactTag,
+            type: RNIDetachedView.self
+          );
+          
+          try detachedView.detach();
+          
+          guard let window = UIApplication.shared.activeWindow else {
+            throw RNIUtilitiesError(
+              errorCode: .unexpectedNilValue,
+              description: "Could not get `window` instance"
+            );
+          };
+          
+          guard let contentView = detachedView.contentView else {
+            throw RNIUtilitiesError(
+              errorCode: .unexpectedNilValue,
+              description: "Could not get `detachedView.contentView`"
+            );
+          };
+          
+          window.addSubview(contentView);
           promise.resolve();
         
         } catch let error {
