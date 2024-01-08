@@ -33,10 +33,11 @@ public class RNIDetachedView: ExpoView {
   
   private(set) public var didTriggerCleanup = false;
   
+  private var _firstSubview: UIView?;
   public var contentView: UIView? {
     switch self.contentTargetMode {
       case .subview:
-        return self.subviews.first;
+        return self._firstSubview;
         
       case .wrapper:
         return self;
@@ -122,12 +123,23 @@ public class RNIDetachedView: ExpoView {
       );
     };
     
-    guard let contentView = self.contentView else {
-      throw RNIUtilitiesError(
-        errorCode: .unexpectedNilValue,
-        description: "Unable to get `contentView`"
-      );
-    };
+    let contentView: UIView = try {
+      switch self.contentTargetMode {
+        case .subview:
+          guard let firstSubview = self.subviews.first else {
+            throw RNIUtilitiesError(
+              errorCode: .unexpectedNilValue,
+              description: "Unable to get `contentView`"
+            );
+          };
+          
+          self._firstSubview = firstSubview;
+          return firstSubview;
+          
+        case .wrapper:
+          return self;
+      }
+    }();
     
     guard let touchHandler = RCTTouchHandler(bridge: bridge) else {
       throw RNIUtilitiesError(
@@ -141,7 +153,6 @@ public class RNIDetachedView: ExpoView {
     
     touchHandler.attach(to: contentView);
     self.touchHandler = touchHandler;
-    
     
     Self.detachedView.append(
       .init(with: self)
