@@ -24,7 +24,7 @@ export type ComputableLayoutValueMode = {
   sizeKey: keyof CGSize;
 } | {
   mode: 'multipleValues';
-  values: [ComputableLayoutValueMode];
+  values: ComputableLayoutValueMode[];
 } | {
   mode: 'conditionalLayoutValue';
   condition: ComputableLayoutValueEvaluableCondition;
