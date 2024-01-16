@@ -23,7 +23,7 @@ extension ComputableLayoutValue: InitializableFromDictionary {
     );
     
     let offsetOperation = try? dict.getEnumFromDictionary(
-      forKey: "offsetValue",
+      forKey: "offsetOperation",
       type: NumericOperation.self
     );
     
