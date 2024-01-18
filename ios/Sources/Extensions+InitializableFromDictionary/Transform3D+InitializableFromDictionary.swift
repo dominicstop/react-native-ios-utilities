@@ -71,17 +71,17 @@ extension Transform3D: InitializableFromDictionary {
     );
     
     self.init(
-      translateX: translateX?.doubleValue as? CGFloat,
-      translateY: translateY?.doubleValue as? CGFloat,
-      translateZ: translateZ?.doubleValue as? CGFloat,
-      scaleX: scaleX?.doubleValue as? CGFloat,
-      scaleY: scaleY?.doubleValue as? CGFloat,
+      translateX: translateX as? CGFloat,
+      translateY: translateY as? CGFloat,
+      translateZ: translateZ as? CGFloat,
+      scaleX: scaleX as? CGFloat,
+      scaleY: scaleY as? CGFloat,
       rotateX: rotateX,
       rotateY: rotateY,
       rotateZ: rotateZ,
-      perspective: perspective?.doubleValue as? CGFloat,
-      skewX: skewX?.doubleValue as? CGFloat,
-      skewY:skewY?.doubleValue as? CGFloat
+      perspective: perspective as? CGFloat,
+      skewX: skewX as? CGFloat,
+      skewY: skewY as? CGFloat
     );
   };
 
