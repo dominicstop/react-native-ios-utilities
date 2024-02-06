@@ -8,6 +8,7 @@ type InheritedProps = Partial<Pick<RNIDetachedNativeViewBaseProps,
 
 export type RNIDetachedViewBaseProps = {
   shouldApplyStyleOverride?: boolean;
+  shouldNotifyOnComponentWillUnmount?: boolean;
 };
 
 export type RNIDetachedViewProps = 
