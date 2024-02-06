@@ -33,7 +33,7 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
         let curve = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "curve",
           type: UIView.AnimationCurve.self
         );
         
@@ -49,7 +49,7 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
         let dampingRatio = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "dampingRatio",
           type: CGFloat.self
         );
         
@@ -65,12 +65,12 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
         let controlPoint1 = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "controlPoint1",
           type: CGPoint.self
         );
         
         let controlPoint2 = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "controlPoint2",
           type: CGPoint.self
         );
         
@@ -87,17 +87,17 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
         let dampingRatio = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "dampingRatio",
           type: CGFloat.self
         );
         
         let initialVelocity = try? dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "initialVelocity",
           type: CGVector.self
         );
         
         let maxVelocity = try? dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "maxVelocity",
           type: CGFloat.self
         );
         
@@ -115,27 +115,27 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
         let mass = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "mass",
           type: CGFloat.self
         );
         
         let stiffness = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "stiffness",
           type: CGFloat.self
         );
         
         let damping = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "damping",
           type: CGFloat.self
         );
         
         let initialVelocity = try? dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "initialVelocity",
           type: CGVector.self
         );
         
         let maxVelocity = try? dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "maxVelocity",
           type: CGFloat.self
         );
         
@@ -155,12 +155,12 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
         let dampingRatio = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "dampingRatio",
           type: CGFloat.self
         );
         
         let maxGestureVelocity = try dict.getValueFromDictionary(
-          forKey: "duration",
+          forKey: "maxGestureVelocity",
           type: CGFloat.self
         );
         
