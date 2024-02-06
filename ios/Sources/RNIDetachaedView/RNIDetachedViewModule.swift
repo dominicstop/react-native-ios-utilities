@@ -17,23 +17,22 @@ public class RNIDetachedViewModule: Module {
       (reactTag: Int, isManuallyTriggered: Bool, promise: Promise) in
       
       DispatchQueue.main.async {
-        do {
-          let detachedView = try RNIModuleHelpers.getView(
-            withErrorType: RNIUtilitiesError.self,
-            forNode: reactTag,
-            type: RNIDetachedView.self
-          );
-          
-          detachedView.notifyOnComponentWillUnmount(
-            isManuallyTriggered: isManuallyTriggered
-          );
-          
-          promise.resolve();
+        let detachedView = try? RNIModuleHelpers.getView(
+          withErrorType: RNIUtilitiesError.self,
+          forNode: reactTag,
+          type: RNIDetachedView.self
+        );
         
-        } catch let error {
-          promise.reject(error);
+        guard let detachedView = detachedView else {
+          promise.resolve();
           return;
         };
+        
+        detachedView.notifyOnComponentWillUnmount(
+          isManuallyTriggered: isManuallyTriggered
+        );
+        
+        promise.resolve();
       };
     };
     
