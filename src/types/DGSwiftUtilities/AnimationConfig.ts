@@ -16,6 +16,7 @@ export type AnimationConfig = {
 
 } | {
   mode: 'bezierCurve';
+  duration: number;
   controlPoint1: CGPoint;
   controlPoint2: CGPoint;
 
