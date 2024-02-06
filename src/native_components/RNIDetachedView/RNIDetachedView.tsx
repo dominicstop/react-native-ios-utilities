@@ -22,6 +22,9 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
   };
 
   componentWillUnmount(){
+    const props = this.getProps();
+    if(!props.shouldNotifyOnComponentWillUnmount) return;
+
     this.notifyOnComponentWillUnmount(false);
     this.reactTag = undefined;
   };
@@ -31,6 +34,7 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
       shouldCleanupOnComponentWillUnmount,
       contentTargetMode,
       shouldApplyStyleOverride,
+      shouldNotifyOnComponentWillUnmount,
       ...viewProps 
     } = this.props;
 
@@ -42,6 +46,9 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
 
       shouldApplyStyleOverride: 
         shouldApplyStyleOverride ?? true,
+
+      shouldNotifyOnComponentWillUnmount:
+        shouldNotifyOnComponentWillUnmount ?? false,
 
       viewProps,
     };
