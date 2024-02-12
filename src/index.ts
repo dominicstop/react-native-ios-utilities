@@ -17,5 +17,7 @@ export * from './types/ImageItemConfig';
 export * from './types/MiscTypes';
 export * from './types/NativeError';
 export * from './types/RNICleanupMode';
+export * from './types/RNIViewCleanupMode';
+export * from './types/RNIViewCleanupTrigger';
 export * from './types/UtilityTypes';
 export * from './types/SharedPropTypes';
