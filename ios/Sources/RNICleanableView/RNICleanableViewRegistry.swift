@@ -9,7 +9,6 @@ import UIKit
 import React
 import ExpoModulesCore
 import DGSwiftUtilities
-import ReactNativeIosUtilities
 
 
 public let RNICleanableViewRegistryShared = RNICleanableViewRegistry.shared;

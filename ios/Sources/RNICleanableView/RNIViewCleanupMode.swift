@@ -29,7 +29,7 @@ public enum RNIViewCleanupMode: EnumCaseStringRepresentable {
   // MARK: - Computed Properties
   // ---------------------------
   
-  var isDisabled: Bool {
+  public var isDisabled: Bool {
     switch self {
       case .disabled:
         return true;
