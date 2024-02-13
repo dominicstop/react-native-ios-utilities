@@ -28,13 +28,13 @@ public struct RNIImageSystemMaker {
     };
     
     if let string = self.weight,
-       let weight = UIImage.SymbolWeight(string: string) {
+       let weight = try? UIImage.SymbolWeight(fromString: string) {
       
       configs.append( .init(weight: weight) );
     };
     
     if let string = self.scale,
-       let scale = UIImage.SymbolScale(string: string) {
+       let scale = try? UIImage.SymbolScale(fromString: string) {
       
       configs.append( .init(scale: scale) );
     };

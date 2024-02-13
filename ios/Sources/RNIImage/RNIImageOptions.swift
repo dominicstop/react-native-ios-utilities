@@ -32,7 +32,7 @@ public struct RNIImageOptions {
     
     self.renderingMode = {
       guard let string = dict["renderingMode"] as? String,
-            let mode = UIImage.RenderingMode(string: string)
+            let mode = try? UIImage.RenderingMode(fromString: string)
       else { return .automatic };
       
       return mode;
