@@ -4,7 +4,8 @@
   "ios": {
     "modules": [
       "RNIDummyViewModule",
-      "RNIDetachedViewModule"
+      "RNIDetachedViewModule",
+      "RNIUtilitiesModule"
     ],
     "podspecPath": "./ReactNativeIosUtilities.podspec"
   }

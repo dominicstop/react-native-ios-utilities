@@ -4,6 +4,8 @@ export * from './native_components/RNIDetachedView';
 
 export * from './components/WrapperView';
 
+export * from './modules/RNIUtilitiesModule';
+
 export * as Helpers from './functions/Helpers';
 export * from './functions/TypeUtils';
 
