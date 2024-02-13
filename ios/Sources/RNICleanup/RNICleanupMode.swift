@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+@available(*, deprecated, message: "Use `RNIViewCleanupTrigger` instead")
 /// If a type conforms to `RNIInternalCleanupMode`,
 /// this enum determines how the cleanup routine is triggered.
 ///
@@ -28,7 +28,7 @@ public enum RNICleanupMode: String {
   case disabled;
 };
 
-
+@available(*, deprecated, message: "Use `RNIViewCleanupTrigger` instead")
 public extension RNICleanupMode {
   
   var shouldEnableCleanup: Bool {

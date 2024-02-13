@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+@available(*, deprecated, message: "Use `RNIViewCleanupMode` instead")
 public protocol RNIInternalCleanupMode {
 
   var cleanupMode: RNICleanupMode { get };
