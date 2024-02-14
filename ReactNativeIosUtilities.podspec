@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.dependency 'ExpoModulesCore'
-  s.dependency 'DGSwiftUtilities', '~> 0.12'
+  s.dependency 'DGSwiftUtilities', '~> 0.13'
   s.dependency 'ComputableLayout', '~> 0.7'
 
   # Swift/Objective-C compatibility
