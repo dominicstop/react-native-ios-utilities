@@ -18,6 +18,9 @@ public class RNICleanableViewItem {
   public var shouldProceedCleanupWhenDelegateIsNil: Bool;
   public var viewCleanupMode: RNIViewCleanupMode = .default;
   
+  public var eventDelegates =
+    MulticastDelegate<RNICleanableViewEventsNotifiable>();
+  
   public init(
     key: Int,
     delegate: RNICleanableViewDelegate,

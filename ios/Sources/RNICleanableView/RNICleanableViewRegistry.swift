@@ -148,9 +148,23 @@ public class RNICleanableViewRegistry {
     };
     
     match.delegate?.notifyOnViewCleanupWillBegin();
+    match.eventDelegates.invoke {
+      $0.notifyOnViewCleanupWillBegin(
+        forDelegate: match.delegate,
+        registryEntry: match
+      );
+    };
+    
     try self._cleanup(views: viewsToCleanup);
     
     match.delegate?.notifyOnViewCleanupCompletion();
+    match.eventDelegates.invoke {
+      $0.notifyOnViewCleanupCompletion(
+        forDelegate: match.delegate,
+        registryEntry: match
+      );
+    };
+    
     self.registry.removeValue(forKey: match.key);
     
     var failedToCleanupItems: [RNICleanableViewItem] = [];
