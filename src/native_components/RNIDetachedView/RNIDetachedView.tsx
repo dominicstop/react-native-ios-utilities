@@ -4,8 +4,10 @@ import { LayoutChangeEvent, StyleSheet, View, ViewStyle } from 'react-native';
 import { RNIDetachedViewModule } from './RNIDetachedViewModule';
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
 
-import type { RNIDetachedViewProps, RNIDetachedViewState } from './RNIDetachedViewTypes';
+import { RNIUtilitiesModule } from '../../modules/RNIUtilitiesModule';
+
 import type { OnDetachedViewDidDetachEvent } from './RNIDetachedViewEvents';
+import type { RNIDetachedViewProps, RNIDetachedViewState } from './RNIDetachedViewTypes';
 
 
 export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, RNIDetachedViewState> {
@@ -23,10 +25,17 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
 
   componentWillUnmount(){
     const props = this.getProps();
-    if(!props.shouldNotifyOnComponentWillUnmount) return;
+    if(!props.shouldCleanupOnComponentWillUnmount) return;
 
-    this.notifyOnComponentWillUnmount(false);
-    this.reactTag = undefined;
+    const reactTag = this.getNativeReactTag();
+    if(typeof reactTag !== 'number') return;
+
+    RNIUtilitiesModule.notifyOnComponentWillUnmount(
+      reactTag, {
+        shouldForceCleanup: true,
+        shouldIgnoreCleanupTriggers: false,
+      }
+    );
   };
 
   getProps() {
@@ -70,21 +79,7 @@ export class RNIDetachedView extends React.PureComponent<RNIDetachedViewProps, R
     this.reactTag = event.nativeEvent.target;
   };
 
-  notifyOnComponentWillUnmount = async (
-    isManuallyTriggered: boolean = true
-  ) => {
-    const reactTag = this.getNativeReactTag();
-    if(typeof reactTag !== 'number') return;
-
-    await RNIDetachedViewModule.notifyOnComponentWillUnmount(
-      reactTag, 
-      isManuallyTriggered
-    );
-  };
-
-  debugAttachToWindow = async (
-    isManuallyTriggered: boolean = true
-  ) => {
+  debugAttachToWindow = async () => {
     const reactTag = this.getNativeReactTag();
     if(typeof reactTag !== 'number') return;
 

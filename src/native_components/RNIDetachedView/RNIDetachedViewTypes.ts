@@ -1,20 +1,21 @@
 import type { ViewProps } from 'react-native';
 import type { RNIDetachedNativeViewBaseProps } from './RNIDetachedNativeViewTypes';
 
-type InheritedProps = Pick<RNIDetachedNativeViewBaseProps,
+export type RNIDetachedViewInheritedProps = Pick<RNIDetachedNativeViewBaseProps,
   | 'contentTargetMode'
 > & Partial<Pick<RNIDetachedNativeViewBaseProps,
-  | 'shouldCleanupOnComponentWillUnmount'
+  | 'internalViewCleanupMode'
   | 'onViewDidDetach'
 >>;
 
 export type RNIDetachedViewBaseProps = {
   shouldApplyStyleOverride?: boolean;
+  shouldCleanupOnComponentWillUnmount?: boolean;
   shouldNotifyOnComponentWillUnmount?: boolean;
 };
 
 export type RNIDetachedViewProps = 
-  & InheritedProps
+  & RNIDetachedViewInheritedProps
   & RNIDetachedViewBaseProps 
   & ViewProps;
 

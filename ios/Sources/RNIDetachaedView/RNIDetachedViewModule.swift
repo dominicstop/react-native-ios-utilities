@@ -13,29 +13,6 @@ public class RNIDetachedViewModule: Module {
   public func definition() -> ModuleDefinition {
     Name("RNIDetachedView");
     
-    AsyncFunction("notifyOnComponentWillUnmount") {
-      (reactTag: Int, isManuallyTriggered: Bool, promise: Promise) in
-      
-      DispatchQueue.main.async {
-        let detachedView = try? RNIModuleHelpers.getView(
-          withErrorType: RNIUtilitiesError.self,
-          forNode: reactTag,
-          type: RNIDetachedView.self
-        );
-        
-        guard let detachedView = detachedView else {
-          promise.resolve();
-          return;
-        };
-        
-        detachedView.notifyOnComponentWillUnmount(
-          isManuallyTriggered: isManuallyTriggered
-        );
-        
-        promise.resolve();
-      };
-    };
-    
     AsyncFunction("debugAttachToWindow") { (reactTag: Int, promise: Promise) in
       
       DispatchQueue.main.async {
@@ -75,8 +52,8 @@ public class RNIDetachedViewModule: Module {
     View(RNIDetachedView.self) {
       Events("onViewDidDetach");
     
-      Prop("shouldCleanupOnComponentWillUnmount") {
-        $0.shouldCleanupOnComponentWillUnmount = $1;
+      Prop("internalViewCleanupMode") {
+        $0.internalViewCleanupModeRaw = $1;
       };
       
       Prop("contentTargetMode") {

@@ -26,12 +26,12 @@ public class RNIDetachedView: ExpoView {
   
   public weak var eventDelegate: RNIDetachedViewEventsNotifiable?;
   
-  private(set) public var touchHandler: RCTTouchHandler?;
-  private(set) public weak var cachedSuperview: UIView?;
+  public var touchHandler: RCTTouchHandler?;
+  public weak var cachedSuperview: UIView?;
   
-  private(set) public var detachState: DetachState = .initial;
+  public var detachState: DetachState = .initial;
   
-  private(set) public var didTriggerCleanup = false;
+  public var _didTriggerCleanup = false;
   
   private var _firstSubview: UIView?;
   public var contentView: UIView? {
@@ -41,6 +41,16 @@ public class RNIDetachedView: ExpoView {
         
       case .wrapper:
         return self;
+    }
+  };
+  
+  override public var reactTag: NSNumber! {
+    didSet {
+      RNICleanableViewRegistryShared.register(
+        forDelegate: self,
+        shouldIncludeDelegateInViewsToCleanup: true,
+        shouldProceedCleanupWhenDelegateIsNil: true
+      );
     }
   };
   
@@ -59,7 +69,26 @@ public class RNIDetachedView: ExpoView {
     }
   };
   
-  public var shouldCleanupOnComponentWillUnmount = false;
+  private(set) public var viewCleanupMode: RNIViewCleanupMode = .default;
+  public var internalViewCleanupModeRaw: Dictionary<String, Any>? {
+    willSet {
+      let nextValue: RNIViewCleanupMode = {
+        guard let newValue = newValue,
+              let viewCleanupMode = try? RNIViewCleanupMode(fromDict: newValue)
+        else {
+          return .default;
+        };
+        
+        return viewCleanupMode;
+      }();
+      
+      self.viewCleanupMode = nextValue;
+      
+      if let cleanableViewItem = self.associatedCleanableViewItem {
+        cleanableViewItem.viewCleanupMode = nextValue;
+      };
+    }
+  };
   
   // MARK: Properties - Prop - Events
   // --------------------------------
@@ -97,6 +126,13 @@ public class RNIDetachedView: ExpoView {
   
   public override func didMoveToWindow() {
     super.didMoveToWindow();
+    
+    // trigger manual cleanup, if needed
+    try? self.viewCleanupMode.triggerCleanupIfNeededForDidMoveToWindow(
+      forView: self,
+      associatedViewController: nil,
+      currentWindow: self.window
+    );
   };
   
   public override func willRemoveSubview(_ subview: UIView) {
@@ -105,6 +141,12 @@ public class RNIDetachedView: ExpoView {
   
   public override func didAddSubview(_ subview: UIView) {
     super.didAddSubview(subview);
+    
+    if let cleanableViewItem = self.associatedCleanableViewItem {
+      cleanableViewItem.viewsToCleanup.append(
+        .init(with: subview)
+      );
+    };
   };
   
   public override func layoutSubviews() {
@@ -179,22 +221,6 @@ public class RNIDetachedView: ExpoView {
     
     reactBridge.uiManager.setSize(newSize, for: contentView);
   };
-  
-  // MARK: Module Functions
-  // ----------------------
-  
-  public func notifyOnComponentWillUnmount(isManuallyTriggered: Bool){
-    self.eventDelegate?.notifyOnJSComponentWillUnmount(
-      sender: self,
-      isManuallyTriggered: isManuallyTriggered
-    );
-    
-    if self.shouldCleanupOnComponentWillUnmount {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-        self.cleanup();
-      };
-    };
-  };
 };
 
 // MARK: - RNICleanable
@@ -203,23 +229,11 @@ public class RNIDetachedView: ExpoView {
 extension RNIDetachedView: RNICleanable {
   
   public func cleanup(){
-    guard !self.didTriggerCleanup,
-          let bridge = self.appContext?.reactBridge
-    else { return };
-    
-    self.didTriggerCleanup = true;
-    
-    if let touchHandler = self.touchHandler,
-       let contentView = self.contentView {
-       
-      touchHandler.detach(from: contentView);
-    };
-    
-    RNIHelpers.recursivelyRemoveFromViewRegistry(
-      forReactView: self.contentView ?? self,
-      usingReactBridge: bridge
+    try? RNICleanableViewRegistryShared.notifyCleanup(
+      forKey: self.viewCleanupKey,
+      sender: .cleanableViewDelegate(self),
+      shouldForceCleanup: true,
+      cleanupTrigger: nil
     );
-    
-    self.touchHandler = nil;
   };
 };
