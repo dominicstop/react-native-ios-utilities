@@ -1,7 +1,11 @@
 import { requireNativeModule } from 'expo-modules-core';
 
 
-interface RNIUtilitiesModule  {
+interface RNIUtilitiesModule {
+  notifyOnJavascriptModuleDidLoad(): void;
+
+  setSharedEnv<T extends object>(env: T);
+
   notifyOnComponentWillUnmount(
     node: number,
     commandParams: {
@@ -13,3 +17,5 @@ interface RNIUtilitiesModule  {
 
 export const RNIUtilitiesModule: RNIUtilitiesModule = 
   requireNativeModule('RNIUtilitiesModule');
+
+RNIUtilitiesModule.notifyOnJavascriptModuleDidLoad();

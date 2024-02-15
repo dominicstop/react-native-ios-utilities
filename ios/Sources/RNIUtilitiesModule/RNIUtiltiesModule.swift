@@ -7,12 +7,33 @@
 
 import UIKit
 import ExpoModulesCore
+import DGSwiftUtilities
+
+public protocol Singleton {
+  static var shared: Self { get };
+  
+  init();
+};
 
 public class RNIUtilitiesModule: Module {
 
   public func definition() -> ModuleDefinition {
   
-    Name("RNIUtilitiesModule")
+    Name("RNIUtilitiesModule");
+    
+    Function("notifyOnJavascriptModuleDidLoad") {
+      DispatchQueue.main.async {
+        RNIUtilitiesManagerShared.eventDelegates.invoke {
+          $0.notifyOnJavascriptModuleDidLoad();
+        };
+      };
+    };
+    
+    Function("setSharedEnv"){ (env: Dictionary<String, Any>) in
+      DispatchQueue.main.async {
+        RNIUtilitiesManagerShared.appendToSharedEnv(newEntries: env);
+      };
+    };
 
     AsyncFunction("notifyOnComponentWillUnmount") {
       (reactTag: Int, commandParams: Dictionary<String, Any>, promise: Promise) in
