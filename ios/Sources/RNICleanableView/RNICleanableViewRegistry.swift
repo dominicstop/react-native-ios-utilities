@@ -14,7 +14,8 @@ import DGSwiftUtilities
 public let RNICleanableViewRegistryShared = RNICleanableViewRegistry.shared;
 
 public class RNICleanableViewRegistry {
-
+  
+  public static var shouldGloballyDisableCleanup = false;
   public static var debugShouldLogCleanup = false;
   public static var debugShouldLogRegister = false;
 
@@ -97,6 +98,7 @@ public class RNICleanableViewRegistry {
     shouldForceCleanup: Bool,
     cleanupTrigger: RNIViewCleanupTrigger?
   ) throws {
+    guard !Self.shouldGloballyDisableCleanup else { return };
     guard let match = self.getEntry(forKey: key) else { return };
     
     var shouldCleanup = false;
