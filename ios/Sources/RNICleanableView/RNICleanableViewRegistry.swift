@@ -16,6 +16,7 @@ public let RNICleanableViewRegistryShared = RNICleanableViewRegistry.shared;
 public final class RNICleanableViewRegistry {
   
   public static var shouldGloballyDisableCleanup = false;
+  public static var shouldAllowForceCleanup = false;
   public static var debugShouldLogCleanup = false;
   public static var debugShouldLogRegister = false;
 
@@ -100,6 +101,10 @@ public final class RNICleanableViewRegistry {
   ) throws {
     guard !Self.shouldGloballyDisableCleanup else { return };
     guard let match = self.getEntry(forKey: key) else { return };
+    
+    let shouldForceCleanup =
+         shouldForceCleanup
+      && Self.shouldAllowForceCleanup;
     
     var shouldCleanup = false;
     

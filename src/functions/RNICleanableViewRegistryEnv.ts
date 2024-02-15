@@ -3,6 +3,7 @@ import { RNIUtilitiesModule } from "../modules/RNIUtilitiesModule";
 
 export type RNICleanableViewRegistryEnv = {
   shouldGloballyDisableCleanup?: boolean;
+  shouldAllowForceCleanup?: boolean;
   debugShouldLogCleanup?: boolean;
   debugShouldLogRegister?: boolean;
 };

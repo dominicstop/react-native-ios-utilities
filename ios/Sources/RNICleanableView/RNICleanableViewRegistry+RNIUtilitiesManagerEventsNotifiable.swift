@@ -22,6 +22,7 @@ extension RNICleanableViewRegistry: RNIUtilitiesManagerEventsNotifiable {
     else { return };
     
     Self.shouldGloballyDisableCleanup = env.shouldGloballyDisableCleanup;
+    Self.shouldAllowForceCleanup = env.shouldAllowForceCleanup;
     Self.debugShouldLogCleanup = env.debugShouldLogCleanup;
     Self.debugShouldLogRegister = env.debugShouldLogRegister;
   };

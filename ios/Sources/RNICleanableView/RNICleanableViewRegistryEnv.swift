@@ -10,13 +10,14 @@ import DGSwiftUtilities
 
 public struct RNICleanableViewRegistryEnv {
   public var shouldGloballyDisableCleanup: Bool;
+  public var shouldAllowForceCleanup: Bool;
   public var debugShouldLogCleanup: Bool;
   public var debugShouldLogRegister: Bool;
 };
 
 extension RNICleanableViewRegistryEnv: InitializableFromDictionary {
   public init(fromDict dict: Dictionary<String, Any>) throws {
-  
+    
     self.shouldGloballyDisableCleanup = {
       let value = try? dict.getValueFromDictionary(
         forKey: "shouldGloballyDisableCleanup",
@@ -25,7 +26,15 @@ extension RNICleanableViewRegistryEnv: InitializableFromDictionary {
       
       return value ?? false;
     }();
+    
+    self.shouldAllowForceCleanup = {
+      let value = try? dict.getValueFromDictionary(
+        forKey: "shouldAllowForceCleanup",
+        type: Bool.self
+      );
       
+      return value ?? true;
+    }();
     self.debugShouldLogCleanup = {
       let value = try? dict.getValueFromDictionary(
         forKey: "debugShouldLogCleanup",
