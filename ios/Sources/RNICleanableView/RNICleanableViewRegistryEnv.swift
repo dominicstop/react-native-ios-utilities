@@ -11,6 +11,9 @@ import DGSwiftUtilities
 public struct RNICleanableViewRegistryEnv {
   public var shouldGloballyDisableCleanup: Bool;
   public var shouldAllowForceCleanup: Bool;
+  
+  public var shouldIncludeDelegateInViewsToCleanupByDefault: Bool;
+  
   public var debugShouldLogCleanup: Bool;
   public var debugShouldLogRegister: Bool;
 };
@@ -35,6 +38,16 @@ extension RNICleanableViewRegistryEnv: InitializableFromDictionary {
       
       return value ?? true;
     }();
+    
+    self.shouldIncludeDelegateInViewsToCleanupByDefault = {
+      let value = try? dict.getValueFromDictionary(
+        forKey: "shouldIncludeDelegateInViewsToCleanupByDefault",
+        type: Bool.self
+      );
+      
+      return value ?? false;
+    }();
+    
     self.debugShouldLogCleanup = {
       let value = try? dict.getValueFromDictionary(
         forKey: "debugShouldLogCleanup",

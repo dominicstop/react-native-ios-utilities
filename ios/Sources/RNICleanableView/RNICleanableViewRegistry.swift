@@ -17,6 +17,8 @@ public final class RNICleanableViewRegistry {
   
   public static var shouldGloballyDisableCleanup = false;
   public static var shouldAllowForceCleanup = false;
+  
+  public static var shouldIncludeDelegateInViewsToCleanupByDefault = false;
   public static var debugShouldLogCleanup = false;
   public static var debugShouldLogRegister = false;
 
@@ -39,8 +41,9 @@ public final class RNICleanableViewRegistry {
   public func register(
     forDelegate entry: RNICleanableViewDelegate,
     initialViewsToCleanup initialViewsToCleanupRaw: [UIView] = [],
-    shouldIncludeDelegateInViewsToCleanup: Bool = true,
     shouldProceedCleanupWhenDelegateIsNil: Bool = true
+    shouldIncludeDelegateInViewsToCleanup: Bool =
+      RNICleanableViewRegistry.shouldIncludeDelegateInViewsToCleanupByDefault,
   ){
     
     self._setBridgeIfNeeded(usingDelegate: entry);

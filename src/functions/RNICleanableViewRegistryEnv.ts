@@ -4,6 +4,7 @@ import { RNIUtilitiesModule } from "../modules/RNIUtilitiesModule";
 export type RNICleanableViewRegistryEnv = {
   shouldGloballyDisableCleanup?: boolean;
   shouldAllowForceCleanup?: boolean;
+  shouldIncludeDelegateInViewsToCleanupByDefault?: boolean;
   debugShouldLogCleanup?: boolean;
   debugShouldLogRegister?: boolean;
 };
