@@ -9,9 +9,9 @@ import Foundation
 import DGSwiftUtilities
 
 public struct RNICleanableViewRegistryEnv {
-  var shouldGloballyDisableCleanup: Bool;
-  var debugShouldLogCleanup: Bool;
-  var debugShouldLogRegister: Bool;
+  public var shouldGloballyDisableCleanup: Bool;
+  public var debugShouldLogCleanup: Bool;
+  public var debugShouldLogRegister: Bool;
 };
 
 extension RNICleanableViewRegistryEnv: InitializableFromDictionary {
