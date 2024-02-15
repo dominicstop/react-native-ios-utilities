@@ -101,7 +101,7 @@ public class RNIHelpers {
       };
     };
     
-    DispatchQueue.main.async {
+    RCTExecuteOnMainQueue {
       // start recursively removing views...
       let removedReactTags = removeView(reactView);
       
