@@ -13,6 +13,7 @@ public struct RNICleanableViewRegistryEnv {
   public var shouldAllowForceCleanup: Bool;
   
   public var shouldIncludeDelegateInViewsToCleanupByDefault: Bool;
+  public var shouldProceedCleanupWhenDelegateIsNilByDefault: Bool;
   
   public var debugShouldLogCleanup: Bool;
   public var debugShouldLogRegister: Bool;
@@ -48,6 +49,15 @@ extension RNICleanableViewRegistryEnv: InitializableFromDictionary {
       return value ?? false;
     }();
     
+    self.shouldProceedCleanupWhenDelegateIsNilByDefault = {
+      let value = try? dict.getValueFromDictionary(
+        forKey: "shouldProceedCleanupWhenDelegateIsNilByDefault",
+        type: Bool.self
+      );
+      
+      return value ?? true;
+    }();
+    
     self.debugShouldLogCleanup = {
       let value = try? dict.getValueFromDictionary(
         forKey: "debugShouldLogCleanup",
@@ -56,7 +66,7 @@ extension RNICleanableViewRegistryEnv: InitializableFromDictionary {
       
       return value ?? false;
     }();
-      
+    
     self.debugShouldLogRegister = {
       let value = try? dict.getValueFromDictionary(
         forKey: "debugShouldLogRegister",
