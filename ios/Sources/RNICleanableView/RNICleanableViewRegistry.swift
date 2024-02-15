@@ -13,7 +13,7 @@ import DGSwiftUtilities
 
 public let RNICleanableViewRegistryShared = RNICleanableViewRegistry.shared;
 
-public class RNICleanableViewRegistry {
+public final class RNICleanableViewRegistry {
   
   public static var shouldGloballyDisableCleanup = false;
   public static var debugShouldLogCleanup = false;
@@ -31,7 +31,7 @@ public class RNICleanableViewRegistry {
   // MARK: - Functions
   // -----------------
   
-  init(){
+  public init(){
     // no-op
   };
   
