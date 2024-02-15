@@ -446,7 +446,7 @@ PODS:
     - React-jsi (= 0.72.5)
     - React-logger (= 0.72.5)
     - React-perflogger (= 0.72.5)
-  - ReactNativeIosUtilities (4.3.0):
+  - ReactNativeIosUtilities (4.3.1):
     - ComputableLayout (~> 0.7)
     - DGSwiftUtilities (~> 0.12)
     - ExpoModulesCore
@@ -659,7 +659,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: cc32add98c45c5df18436a6a52a7e1f6edec102c
   React-utils: 7a9918a1ffdd39aba67835d42386f592ea3f8e76
   ReactCommon: 91ece8350ebb3dd2be9cef662abd78b6948233c0
-  ReactNativeIosUtilities: ad0bcb8526a3df32ca82930a119eda4916b31a55
+  ReactNativeIosUtilities: 3f8d4775f9719b43932a34b21688b407c0e897d2
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
 
