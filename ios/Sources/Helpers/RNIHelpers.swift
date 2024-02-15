@@ -38,11 +38,12 @@ public class RNIHelpers {
   /// being used, this helper func. will remove the specified `reactView` (and
   /// all of it's subviews) in the `_viewRegistry`.
   ///
-  @discardableResult
   public static func recursivelyRemoveFromViewRegistry(
     forReactView reactView: UIView,
     usingReactBridge bridge: RCTBridge
-  ) -> [NSNumber] {
+  ) {
+  
+    guard let reactView = reactView as? RCTView else { return };
     
     /// Get a ref to the `_viewRegistry` ivar in the `RCTUIManager` instance.
     ///
@@ -62,55 +63,53 @@ public class RNIHelpers {
     let shadowViewRegistry =
       bridge.uiManager?.value(forKey: "_shadowViewRegistry") as? NSMutableDictionary;
     
-    guard let viewRegistry = viewRegistry else { return [] };
+    guard let viewRegistry = viewRegistry else { return };
     
-    /// The "react tags" of the views that were removed
-    var removedViewTags: [NSNumber] = [];
-    
-    func removeView(_ v: UIView){
+    func removeView(_ v: UIView) -> [NSNumber] {
       /// if this really is a "react view" then it should have a `reactTag`
-      if let reactTag = v.reactTag,
-         viewRegistry[reactTag] != nil {
-        
-        removedViewTags.append(reactTag);
-        
-        /// remove from view hierarchy
-        v.removeFromSuperview();
-        
-        /// remove this "react view" from the registry
-        viewRegistry.removeObject(forKey: reactTag);
+      guard v.reactTag != nil,
+            let reactTag = v.reactTag,
+            reactTag.intValue > 0,
+            
+            viewRegistry[reactTag] != nil
+      else { return [] };
+      
+      /// remove this "react view" from the registry
+      viewRegistry.removeObject(forKey: reactTag);
+      
+      /// remove from parent
+      v.removeFromSuperview();
+      
+      let reactSubviews = v.subviews.compactMap {
+        $0 as? RCTView;
       };
       
-      /// remove other subviews...
-      v.subviews.forEach {
-        removeView($0);
+      var removedReactTags: [NSNumber] = [reactTag];
+      reactSubviews.forEach {
+        /// remove other subviews...
+        removedReactTags += removeView($0);
       };
       
-      /// remove other react subviews...
-      v.reactSubviews()?.forEach {
-        removeView($0);
-      };
+      return removedReactTags;
     };
     
-    func removeShadowViews(){
+    func removeShadowViews(for reactTags: [NSNumber]){
       guard let shadowViewRegistry = shadowViewRegistry else { return };
       
-      for reactTag in removedViewTags {
-        shadowViewRegistry.removeObject(forKey: reactTag);
+      reactTags.forEach {
+        shadowViewRegistry.removeObject(forKey: $0);
       };
     };
     
-    DispatchQueue.main.async {
+    RCTExecuteOnMainQueue {
       // start recursively removing views...
-      removeView(reactView);
+      let removedReactTags = removeView(reactView);
       
       // remove shadow views...
       RCTExecuteOnUIManagerQueue {
-        removeShadowViews();
+        removeShadowViews(for: removedReactTags);
       };
     };
-    
-    return removedViewTags;
   };
   
   /// Recursive climb the responder chain until `T` is found.
