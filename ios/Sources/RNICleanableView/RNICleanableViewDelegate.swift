@@ -10,7 +10,7 @@ import React
 
 public protocol RNICleanableViewDelegate: AnyObject {
 
-  var viewCleanupKey: Int { get };
+  var viewCleanupKey: Int? { get };
   
   var bridge: RCTBridge? { get };
   

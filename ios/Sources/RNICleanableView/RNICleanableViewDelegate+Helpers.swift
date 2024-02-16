@@ -14,7 +14,8 @@ public extension RNICleanableViewDelegate {
 
   var associatedCleanableViewItem: RNICleanableViewItem? {
     get {
-      RNICleanableViewRegistry.shared.getEntry(forKey: self.viewCleanupKey);
+      guard let viewCleanupKey = self.viewCleanupKey else { return nil };
+      return RNICleanableViewRegistry.shared.getEntry(forKey: viewCleanupKey);
     }
   };
   

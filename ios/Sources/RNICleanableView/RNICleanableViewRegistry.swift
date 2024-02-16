@@ -32,7 +32,7 @@ public final class RNICleanableViewRegistry {
   };
   
   public func register(
-    forDelegate entry: RNICleanableViewDelegate,
+    forDelegate delegate: RNICleanableViewDelegate,
     initialViewsToCleanup initialViewsToCleanupRaw: [UIView] = [],
     shouldIncludeDelegateInViewsToCleanup: Bool =
       RNICleanableViewRegistryEnv.shouldIncludeDelegateInViewsToCleanupByDefault,
@@ -41,14 +41,16 @@ public final class RNICleanableViewRegistry {
       RNICleanableViewRegistryEnv.shouldProceedCleanupWhenDelegateIsNilByDefault
   ){
     
-    self._setBridgeIfNeeded(usingDelegate: entry);
+    guard let viewCleanupKey = delegate.viewCleanupKey else { return };
+    
+    self._setBridgeIfNeeded(usingDelegate: delegate);
     
     var initialViewsToCleanup = initialViewsToCleanupRaw.map {
       WeakRef(with: $0);
     };
     
     if shouldIncludeDelegateInViewsToCleanup,
-       let reactView = entry as? RCTView {
+       let reactView = delegate as? RCTView {
        
       initialViewsToCleanup.append(
         .init(with: reactView)
@@ -59,8 +61,8 @@ public final class RNICleanableViewRegistry {
     if RNICleanableViewRegistryEnv.debugShouldLogRegister {
       print(
         "RNICleanableViewRegistry.register",
-        "\n - delegate.viewCleanupKey:", entry.viewCleanupKey,
-        "\n - delegate type:", type(of: entry),
+        "\n - delegate.viewCleanupKey:", viewCleanupKey,
+        "\n - delegate type:", type(of: delegate),
         "\n - initialViewsToCleanup.count", initialViewsToCleanup.count,
         "\n - shouldIncludeDelegateInViewsToCleanup", shouldIncludeDelegateInViewsToCleanup,
         "\n - shouldProceedCleanupWhenDelegateIsNil", shouldProceedCleanupWhenDelegateIsNil,
@@ -69,20 +71,31 @@ public final class RNICleanableViewRegistry {
     };
     #endif
     
-    self.registry[entry.viewCleanupKey] = .init(
-      key: entry.viewCleanupKey,
-      delegate: entry,
+    self.registry[viewCleanupKey] = .init(
+      key: viewCleanupKey,
+      delegate: delegate,
       viewsToCleanup: initialViewsToCleanup,
       shouldProceedCleanupWhenDelegateIsNil: shouldProceedCleanupWhenDelegateIsNil,
-      viewCleanupMode: entry.viewCleanupMode
+      viewCleanupMode: delegate.viewCleanupMode
     );
   };
   
   // TOOD: Mark as throws - Add error throwing
   func unregister(forDelegate delegate: RNICleanableViewDelegate){
-    guard let match = self.getEntry(forKey: delegate.viewCleanupKey)
-    else { return };
-    
+  
+    let match: RNICleanableViewItem? = {
+      if let viewCleanupKey = delegate.viewCleanupKey,
+         let match = self.getEntry(forKey: viewCleanupKey) {
+         
+         return match;
+      };
+      
+      return self.registry.values.first {
+        $0.delegate === delegate;
+      };
+    }();
+  
+    guard let match = match else { return };
     self.registry.removeValue(forKey: match.key);
   };
   
@@ -231,6 +244,22 @@ public final class RNICleanableViewRegistry {
       );
     };
     #endif
+  };
+  
+  public func notifyCleanup(
+    forDelegate delegate: RNICleanableViewDelegate,
+    shouldForceCleanup: Bool,
+    cleanupTrigger: RNIViewCleanupTrigger?
+  ) throws {
+  
+    guard let viewCleanupKey = delegate.viewCleanupKey else { return };
+    
+    try? self.notifyCleanup(
+      forKey: viewCleanupKey,
+      sender: .cleanableViewDelegate(delegate),
+      shouldForceCleanup: shouldForceCleanup,
+      cleanupTrigger: cleanupTrigger
+    );
   };
   
   // MARK: - Internal Functions

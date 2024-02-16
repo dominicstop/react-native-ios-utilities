@@ -129,10 +129,12 @@ public extension RNIViewCleanupMode {
       currentWindow: window
     );
     
-    guard shouldTriggerCleanup else { return };
+    guard let viewCleanupKey = view.viewCleanupKey,
+          shouldTriggerCleanup
+    else { return };
     
     try RNICleanableViewRegistryShared.notifyCleanup(
-      forKey: view.viewCleanupKey,
+      forKey: viewCleanupKey,
       sender: .cleanableViewDelegate(view),
       shouldForceCleanup: shouldForceCleanup,
       cleanupTrigger: .didMoveToNilWindow
@@ -143,10 +145,13 @@ public extension RNIViewCleanupMode {
     for delegate: RNICleanableViewDelegate,
     shouldForceCleanup: Bool = false
   ) throws {
-    guard self.triggers.contains(.viewControllerLifecycle) else { return };
+  
+    guard let viewCleanupKey = delegate.viewCleanupKey,
+          self.triggers.contains(.viewControllerLifecycle)
+    else { return };
     
     try RNICleanableViewRegistryShared.notifyCleanup(
-      forKey: delegate.viewCleanupKey,
+      forKey: viewCleanupKey,
       sender: .cleanableViewDelegate(delegate),
       shouldForceCleanup: shouldForceCleanup,
       cleanupTrigger: .viewControllerLifecycle
@@ -157,10 +162,12 @@ public extension RNIViewCleanupMode {
     for delegate: RNICleanableViewDelegate,
     shouldForceCleanup: Bool = false
   ) throws {
-    guard self.triggers.contains(.reactComponentWillUnmount) else { return };
+    guard let viewCleanupKey = delegate.viewCleanupKey,
+          self.triggers.contains(.reactComponentWillUnmount)
+    else { return };
     
     try RNICleanableViewRegistryShared.notifyCleanup(
-      forKey: delegate.viewCleanupKey,
+      forKey: viewCleanupKey,
       sender: .cleanableViewDelegate(delegate),
       shouldForceCleanup: shouldForceCleanup,
       cleanupTrigger: .reactComponentWillUnmount
@@ -171,10 +178,12 @@ public extension RNIViewCleanupMode {
     for delegate: RNICleanableViewDelegate,
     shouldForceCleanup: Bool = false
   ) throws {
-    guard self.triggers.contains(.instanceDeinit) else { return };
+    guard let viewCleanupKey = delegate.viewCleanupKey,
+          self.triggers.contains(.instanceDeinit)
+    else { return };
     
     try RNICleanableViewRegistryShared.notifyCleanup(
-      forKey: delegate.viewCleanupKey,
+      forKey: viewCleanupKey,
       sender: .cleanableViewDelegate(delegate),
       shouldForceCleanup: shouldForceCleanup,
       cleanupTrigger: .instanceDeinit
