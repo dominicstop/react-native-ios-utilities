@@ -18,14 +18,6 @@ extension RNICleanableViewRegistry: RNIUtilitiesManagerEventsNotifiable {
     newEntries: Dictionary<String, Any>,
     oldEntries: Dictionary<String, Any>
   ) {
-    guard let env = try? RNICleanableViewRegistryEnv(fromDict: sharedEnv)
-    else { return };
-    
-    Self.shouldGloballyDisableCleanup = env.shouldGloballyDisableCleanup;
-    Self.shouldAllowForceCleanup = env.shouldAllowForceCleanup;
-    Self.shouldIncludeDelegateInViewsToCleanupByDefault = env.shouldIncludeDelegateInViewsToCleanupByDefault;
-    Self.shouldProceedCleanupWhenDelegateIsNilByDefault = env.shouldProceedCleanupWhenDelegateIsNilByDefault;
-    Self.debugShouldLogCleanup = env.debugShouldLogCleanup;
-    Self.debugShouldLogRegister = env.debugShouldLogRegister;
+    RNICleanableViewRegistryEnv.updateEnv(usingDict: sharedEnv);
   };
 };

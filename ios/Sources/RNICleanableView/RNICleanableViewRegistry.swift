@@ -14,15 +14,6 @@ import DGSwiftUtilities
 public let RNICleanableViewRegistryShared = RNICleanableViewRegistry.shared;
 
 public final class RNICleanableViewRegistry {
-  
-  public static var shouldGloballyDisableCleanup = false;
-  public static var shouldAllowForceCleanup = false;
-  
-  public static var shouldIncludeDelegateInViewsToCleanupByDefault = false;
-  public static var shouldProceedCleanupWhenDelegateIsNilByDefault = true;
-  
-  public static var debugShouldLogCleanup = false;
-  public static var debugShouldLogRegister = false;
 
   public static let shared: RNICleanableViewRegistry = .init();
   
@@ -44,10 +35,10 @@ public final class RNICleanableViewRegistry {
     forDelegate entry: RNICleanableViewDelegate,
     initialViewsToCleanup initialViewsToCleanupRaw: [UIView] = [],
     shouldIncludeDelegateInViewsToCleanup: Bool =
-      RNICleanableViewRegistry.shouldIncludeDelegateInViewsToCleanupByDefault,
+      RNICleanableViewRegistryEnv.shouldIncludeDelegateInViewsToCleanupByDefault,
       
     shouldProceedCleanupWhenDelegateIsNil: Bool =
-      RNICleanableViewRegistry.shouldProceedCleanupWhenDelegateIsNilByDefault
+      RNICleanableViewRegistryEnv.shouldProceedCleanupWhenDelegateIsNilByDefault
   ){
     
     self._setBridgeIfNeeded(usingDelegate: entry);
@@ -65,7 +56,7 @@ public final class RNICleanableViewRegistry {
     };
     
     #if DEBUG
-    if Self.debugShouldLogRegister {
+    if RNICleanableViewRegistryEnv.debugShouldLogRegister {
       print(
         "RNICleanableViewRegistry.register",
         "\n - delegate.viewCleanupKey:", entry.viewCleanupKey,
@@ -106,12 +97,12 @@ public final class RNICleanableViewRegistry {
     shouldForceCleanup: Bool,
     cleanupTrigger: RNIViewCleanupTrigger?
   ) throws {
-    guard !Self.shouldGloballyDisableCleanup else { return };
+    guard !RNICleanableViewRegistryEnv.shouldGloballyDisableCleanup else { return };
     guard let match = self.getEntry(forKey: key) else { return };
     
     let shouldForceCleanup =
          shouldForceCleanup
-      && Self.shouldAllowForceCleanup;
+      && RNICleanableViewRegistryEnv.shouldAllowForceCleanup;
     
     var shouldCleanup = false;
     
@@ -198,7 +189,7 @@ public final class RNICleanableViewRegistry {
     
     failedToCleanupItems.forEach {
       #if DEBUG
-      if Self.debugShouldLogCleanup {
+      if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
         let _className = ($0.delegate as? NSObject)?.className ?? "N/A";
         let _viewReactTag = ($0.delegate as? RCTView)?.reactTag?.intValue ?? -1;
         
@@ -221,7 +212,7 @@ public final class RNICleanableViewRegistry {
     };
     
     #if DEBUG
-    if Self.debugShouldLogCleanup {
+    if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
       let _className = (match.delegate as? NSObject)?.className ?? "N/A";
       let _triggers = match.viewCleanupMode.triggers.map { $0.rawValue; };
       
@@ -285,7 +276,7 @@ public final class RNICleanableViewRegistry {
     };
     
     #if DEBUG
-    if Self.debugShouldLogCleanup {
+    if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
       print(
         "RNICleanableViewRegistry._cleanup",
         "\n - viewsToCleanup.count:", viewsToCleanup.count,

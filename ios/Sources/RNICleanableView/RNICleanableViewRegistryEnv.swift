@@ -9,71 +9,57 @@ import Foundation
 import DGSwiftUtilities
 
 public struct RNICleanableViewRegistryEnv {
-  public var shouldGloballyDisableCleanup: Bool;
-  public var shouldAllowForceCleanup: Bool;
-  
-  public var shouldIncludeDelegateInViewsToCleanupByDefault: Bool;
-  public var shouldProceedCleanupWhenDelegateIsNilByDefault: Bool;
-  
-  public var debugShouldLogCleanup: Bool;
-  public var debugShouldLogRegister: Bool;
-};
 
-extension RNICleanableViewRegistryEnv: InitializableFromDictionary {
-  public init(fromDict dict: Dictionary<String, Any>) throws {
+  public static var shouldGloballyDisableCleanup = false;
+  public static var shouldAllowForceCleanup = false;
+  
+  public static var shouldIncludeDelegateInViewsToCleanupByDefault = false;
+  public static var shouldProceedCleanupWhenDelegateIsNilByDefault = true;
+  
+  public static var debugShouldLogCleanup = false;
+  public static var debugShouldLogRegister = false;
+  
+  public static func updateEnv(usingDict dict: Dictionary<String, Any>) {
+    if let value = try? dict.getValueFromDictionary(
+      forKey: "shouldGloballyDisableCleanup",
+      type: Bool.self
+    ) {
+      Self.shouldGloballyDisableCleanup = value;
+    };
     
-    self.shouldGloballyDisableCleanup = {
-      let value = try? dict.getValueFromDictionary(
-        forKey: "shouldGloballyDisableCleanup",
-        type: Bool.self
-      );
-      
-      return value ?? false;
-    }();
+    if let value = try? dict.getValueFromDictionary(
+      forKey: "shouldAllowForceCleanup",
+      type: Bool.self
+    ) {
+      Self.shouldAllowForceCleanup = value;
+    };
     
-    self.shouldAllowForceCleanup = {
-      let value = try? dict.getValueFromDictionary(
-        forKey: "shouldAllowForceCleanup",
-        type: Bool.self
-      );
-      
-      return value ?? true;
-    }();
+    if let value = try? dict.getValueFromDictionary(
+      forKey: "shouldIncludeDelegateInViewsToCleanupByDefault",
+      type: Bool.self
+    ) {
+      Self.shouldIncludeDelegateInViewsToCleanupByDefault = value;
+    };
     
-    self.shouldIncludeDelegateInViewsToCleanupByDefault = {
-      let value = try? dict.getValueFromDictionary(
-        forKey: "shouldIncludeDelegateInViewsToCleanupByDefault",
-        type: Bool.self
-      );
-      
-      return value ?? false;
-    }();
+    if let value = try? dict.getValueFromDictionary(
+      forKey: "shouldProceedCleanupWhenDelegateIsNilByDefault",
+      type: Bool.self
+    ) {
+      Self.shouldProceedCleanupWhenDelegateIsNilByDefault = value;
+    };
     
-    self.shouldProceedCleanupWhenDelegateIsNilByDefault = {
-      let value = try? dict.getValueFromDictionary(
-        forKey: "shouldProceedCleanupWhenDelegateIsNilByDefault",
-        type: Bool.self
-      );
-      
-      return value ?? true;
-    }();
+    if let value = try? dict.getValueFromDictionary(
+      forKey: "debugShouldLogCleanup",
+      type: Bool.self
+    ) {
+      Self.debugShouldLogCleanup = value;
+    };
     
-    self.debugShouldLogCleanup = {
-      let value = try? dict.getValueFromDictionary(
-        forKey: "debugShouldLogCleanup",
-        type: Bool.self
-      );
-      
-      return value ?? false;
-    }();
-    
-    self.debugShouldLogRegister = {
-      let value = try? dict.getValueFromDictionary(
-        forKey: "debugShouldLogRegister",
-        type: Bool.self
-      );
-      
-      return value ?? false;
-    }();
+    if let value = try? dict.getValueFromDictionary(
+      forKey: "debugShouldLogRegister",
+      type: Bool.self
+    ) {
+      Self.debugShouldLogRegister = value;
+    };
   };
 };

@@ -38,7 +38,7 @@ public extension RNIViewCleanupMode {
       && triggers.contains(.viewControllerLifecycle);
       
     #if DEBUG
-    if Self.debugShouldLog {
+    if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
       let _triggers = triggers.map { $0.rawValue };
       let _viewReactTag = (view as? RCTView)?.reactTag?.intValue ?? -1;
       
@@ -94,7 +94,7 @@ public extension RNIViewCleanupMode {
       
     
     #if DEBUG
-    if Self.debugShouldLog {
+    if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
       let _triggers = triggers.map { $0.rawValue };
       let _viewReactTag = (view as? RCTView)?.reactTag?.intValue ?? -1;
       
