@@ -23,6 +23,18 @@ public class RNIHelpers {
     return rootReactView.bridge;
   };
   
+  static weak var _bridge: RCTBridge?;
+  public static var cachedBridge: RCTBridge? {
+    if let _bridge = Self._bridge {
+      return _bridge;
+    };
+    
+    let bridge = Self.bridge;
+    Self._bridge = bridge;
+    
+    return bridge;
+  };
+  
   public static let osVersion = ProcessInfo().operatingSystemVersion;
   
   /// If you remove a "react view" from the view hierarchy (e.g. via
