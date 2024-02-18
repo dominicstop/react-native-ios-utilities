@@ -39,9 +39,14 @@ public final class RNICleanableViewRegistry {
       
     shouldProceedCleanupWhenDelegateIsNil: Bool =
       RNICleanableViewRegistryEnv.shouldProceedCleanupWhenDelegateIsNilByDefault
-  ){
+  ) throws {
     
-    guard let viewCleanupKey = delegate.viewCleanupKey else { return };
+    guard let viewCleanupKey = delegate.viewCleanupKey else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to get `viewCleanupKey`"
+      );
+    };
     
     self._setBridgeIfNeeded(usingDelegate: delegate);
     
@@ -80,9 +85,11 @@ public final class RNICleanableViewRegistry {
     );
   };
   
-  // TOOD: Mark as throws - Add error throwing
-  func unregister(forDelegate delegate: RNICleanableViewDelegate){
-  
+  func unregister(forKey key: Int){
+    self.registry.removeValue(forKey: key);
+  };
+
+  func unregister(forDelegate delegate: RNICleanableViewDelegate) throws {
     let match: RNICleanableViewItem? = {
       if let viewCleanupKey = delegate.viewCleanupKey,
          let match = self.getEntry(forKey: viewCleanupKey) {
@@ -95,23 +102,50 @@ public final class RNICleanableViewRegistry {
       };
     }();
   
-    guard let match = match else { return };
-    self.registry.removeValue(forKey: match.key);
+    guard let match = match else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to get matching entry for delegate"
+      );
+    };
+    
+    self.unregister(forKey: match.key);
   };
   
   public func getEntry(forKey key: Int) -> RNICleanableViewItem? {
     return self.registry[key];
   };
-  
-  // TOOD: Mark as throws - Add error throwing
+
   public func notifyCleanup(
     forKey key: Int,
     sender: RNICleanableViewSenderType,
     shouldForceCleanup: Bool,
     cleanupTrigger: RNIViewCleanupTrigger?
   ) throws {
-    guard !RNICleanableViewRegistryEnv.shouldGloballyDisableCleanup else { return };
-    guard let match = self.getEntry(forKey: key) else { return };
+  
+    guard !RNICleanableViewRegistryEnv.shouldGloballyDisableCleanup else {
+      throw RNIUtilitiesError(
+        errorCode: .guardCheckFailed,
+        description: "Cleanup is disabled via: shouldGloballyDisableCleanup",
+        extraDebugValues: [
+          "key": key,
+          "sender": sender,
+          "shouldForceCleanup": shouldForceCleanup,
+        ]
+      );
+    };
+    
+    guard let match = self.getEntry(forKey: key) else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Could not get associated `RNICleanableViewItem` for key",
+        extraDebugValues: [
+          "key": key,
+          "sender": sender,
+          "shouldForceCleanup": shouldForceCleanup,
+        ]
+      );
+    };
     
     let shouldForceCleanup =
          shouldForceCleanup
@@ -133,7 +167,18 @@ public final class RNICleanableViewRegistry {
       shouldCleanup = true;
     };
     
-    guard shouldCleanup else { return };
+    guard shouldCleanup else {
+      throw RNIUtilitiesError(
+        errorCode: .guardCheckFailed,
+        description: "Cleanup has been blocked",
+        extraDebugValues: [
+          "key": key,
+          "sender": sender,
+          "shouldForceCleanup": shouldForceCleanup,
+          "match": match
+        ]
+      );
+    };
     
     var viewsToCleanup: [UIView] = [];
     var cleanableViewItems: [RNICleanableViewItem] = [];
@@ -183,7 +228,7 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    self.registry.removeValue(forKey: match.key);
+    self.unregister(forKey: match.key);
     
     var failedToCleanupItems: [RNICleanableViewItem] = [];
     cleanableViewItems.forEach {
@@ -252,9 +297,14 @@ public final class RNICleanableViewRegistry {
     cleanupTrigger: RNIViewCleanupTrigger?
   ) throws {
   
-    guard let viewCleanupKey = delegate.viewCleanupKey else { return };
+    guard let viewCleanupKey = delegate.viewCleanupKey else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Could not get viewCleanupKey from delegate"
+      );
+    };
     
-    try? self.notifyCleanup(
+    try self.notifyCleanup(
       forKey: viewCleanupKey,
       sender: .cleanableViewDelegate(delegate),
       shouldForceCleanup: shouldForceCleanup,
@@ -293,8 +343,10 @@ public final class RNICleanableViewRegistry {
   
   func _cleanup(views viewsToCleanup: [UIView]) throws {
     guard let bridge = self._bridge else {
-      // TODO: WIP - Replace
-      throw NSError();
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to get react bridge"
+      );
     };
     
     viewsToCleanup.forEach {

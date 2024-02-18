@@ -46,7 +46,7 @@ public class RNIDetachedView: ExpoView {
   
   override public var reactTag: NSNumber! {
     didSet {
-      RNICleanableViewRegistryShared.register(
+      try? RNICleanableViewRegistryShared.register(
         forDelegate: self,
         shouldIncludeDelegateInViewsToCleanup: true,
         shouldProceedCleanupWhenDelegateIsNil: true

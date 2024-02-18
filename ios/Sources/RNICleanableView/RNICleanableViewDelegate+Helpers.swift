@@ -12,6 +12,9 @@ import DGSwiftUtilities
 
 public extension RNICleanableViewDelegate {
 
+  // MARK: - Computed Properties
+  // ---------------------------
+
   var associatedCleanableViewItem: RNICleanableViewItem? {
     get {
       guard let viewCleanupKey = self.viewCleanupKey else { return nil };
@@ -23,12 +26,21 @@ public extension RNICleanableViewDelegate {
     self.associatedCleanableViewItem?.viewsToCleanup;
   };
   
-  func cleanupOrphanedViews(){
-    guard let cleanableViewItem = self.associatedCleanableViewItem,
-          let viewsToCleanup = self.viewsToCleanup
-    else { return };
+  // MARK: - Functions
+  // -----------------
+  
+  func cleanupOrphanedViews() throws {
+    guard let cleanableViewItem = self.associatedCleanableViewItem else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Could not get associated cleanableViewItem",
+        extraDebugValues: [
+          "viewCleanupKey:": self.viewCleanupKey ?? -1
+        ]
+      );
+    };
     
-    let purged = viewsToCleanup.compactMap {
+    let purged = cleanableViewItem.viewsToCleanup.compactMap {
       $0.ref;
     };
     
