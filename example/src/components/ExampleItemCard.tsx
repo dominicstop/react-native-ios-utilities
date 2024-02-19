@@ -12,11 +12,10 @@ export type ExampleItemCardProps = {
 
   style?: ViewStyle;
   extraContentContainerStyle?: ViewStyle;
-  children?: JSX.Element | JSX.Element[];
 };
 
 
-export function ExampleItemCard(props: ExampleItemCardProps) {
+export function ExampleItemCard(props: React.PropsWithChildren<ExampleItemCardProps>) {
 
   const descriptionMain = props.description?.[0];
   const descriptionSub  = props.description?.slice(1);

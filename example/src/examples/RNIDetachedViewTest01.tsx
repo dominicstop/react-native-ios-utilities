@@ -10,6 +10,12 @@ import { CardButton } from '../components/Card';
 
 export function RNIDetachedViewTest01(props: ExampleItemProps) {
   const ref = React.createRef<RNIDetachedView>();
+
+  const [
+    shouldMountDetachedView,
+    setShouldMountDetachedView
+  ] = React.useState(true);
+  
   
   return (
     <ExampleItemCard
@@ -20,14 +26,25 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         `Test - TBA`,
       ]}
     >
-      <RNIDetachedView
-        ref={ref}
-        contentTargetMode={'subview'}
-      >
-        <View style={styles.detachedViewContent}>
-          <Text>"RNIDetachedView Content"</Text>
-        </View>
-      </RNIDetachedView>
+      {(shouldMountDetachedView && (
+        <RNIDetachedView
+          ref={ref}
+          contentTargetMode={'subview'}
+          shouldCleanupOnComponentWillUnmount={true}
+        >
+          <View style={styles.detachedViewContent}>
+            <Text>
+              "RNIDetachedView Content"
+            </Text>
+            <Text onPress={() => {
+              setShouldMountDetachedView(prevValue => !prevValue);
+            }}>
+              "Tap to Unmount"
+            </Text>
+          </View>
+        </RNIDetachedView>
+      ))}
+      
       <CardButton
         title={'Dettach and Attach to Window'}
         subtitle={'Trigger: `debugAttachToWindow`'}
