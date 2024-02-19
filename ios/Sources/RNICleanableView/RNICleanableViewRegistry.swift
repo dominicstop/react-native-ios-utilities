@@ -218,77 +218,77 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    try self._cleanup(views: viewsToCleanup);
-    
-    match.delegate?.notifyOnViewCleanupCompletion();
-    match.eventDelegates.invoke {
-      $0.notifyOnViewCleanupCompletion(
-        forDelegate: match.delegate,
-        registryEntry: match
-      );
-    };
-    
-    self.unregister(forKey: match.key);
-    
-    var failedToCleanupItems: [RNICleanableViewItem] = [];
-    cleanableViewItems.forEach {
-      do {
-        try self.notifyCleanup(
-          forKey: $0.key,
-          sender: sender,
-          shouldForceCleanup: shouldForceCleanup,
-          cleanupTrigger: cleanupTrigger
+    try? self._cleanup(views: viewsToCleanup) {
+      match.delegate?.notifyOnViewCleanupCompletion();
+      match.eventDelegates.invoke {
+        $0.notifyOnViewCleanupCompletion(
+          forDelegate: match.delegate,
+          registryEntry: match
         );
-        
-      } catch {
-        failedToCleanupItems.append($0);
       };
-    };
-    
-    failedToCleanupItems.forEach {
+      
+      self.unregister(forKey: match.key);
+      
+      var failedToCleanupItems: [RNICleanableViewItem] = [];
+      cleanableViewItems.forEach {
+        do {
+          try self.notifyCleanup(
+            forKey: $0.key,
+            sender: sender,
+            shouldForceCleanup: shouldForceCleanup,
+            cleanupTrigger: cleanupTrigger
+          );
+          
+        } catch {
+          failedToCleanupItems.append($0);
+        };
+      };
+      
+      failedToCleanupItems.forEach {
+        #if DEBUG
+        if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
+          let _className = ($0.delegate as? NSObject)?.className ?? "N/A";
+          let _viewReactTag = ($0.delegate as? RCTView)?.reactTag?.intValue ?? -1;
+          
+          print(
+            "RNICleanableViewRegistry.notifyCleanup",
+            "\n - Failed to cleanup items...",
+            "\n - key:", $0.key,
+            "\n - delegate, type:", type(of: $0.delegate),
+            "\n - delegate, className:", _className,
+            "\n - delegate, reactTag:", _viewReactTag,
+            "\n - shouldProceedCleanupWhenDelegateIsNil:", $0.shouldProceedCleanupWhenDelegateIsNil,
+            "\n - viewsToCleanup.count", $0.viewsToCleanup.count,
+            "\n"
+          );
+        };
+        #endif
+        
+        // re-add failed items
+        self.registry[$0.key] = $0;
+      };
+      
       #if DEBUG
       if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
-        let _className = ($0.delegate as? NSObject)?.className ?? "N/A";
-        let _viewReactTag = ($0.delegate as? RCTView)?.reactTag?.intValue ?? -1;
+        let _className = (match.delegate as? NSObject)?.className ?? "N/A";
+        let _triggers = match.viewCleanupMode.triggers.map { $0.rawValue; };
         
         print(
           "RNICleanableViewRegistry.notifyCleanup",
-          "\n - Failed to cleanup items...",
-          "\n - key:", $0.key,
-          "\n - delegate, type:", type(of: $0.delegate),
-          "\n - delegate, className:", _className,
-          "\n - delegate, reactTag:", _viewReactTag,
-          "\n - shouldProceedCleanupWhenDelegateIsNil:", $0.shouldProceedCleanupWhenDelegateIsNil,
-          "\n - viewsToCleanup.count", $0.viewsToCleanup.count,
+          "\n - forKey:", key,
+          "\n - cleanupTrigger:", cleanupTrigger?.rawValue ?? "N/A",
+          "\n - match.viewsToCleanup.count:", match.viewsToCleanup.count,
+          "\n - match.shouldProceedCleanupWhenDelegateIsNil:", match.shouldProceedCleanupWhenDelegateIsNil,
+          "\n - match.delegate.className:", _className,
+          "\n - match.viewCleanupMode.caseString:", match.viewCleanupMode.caseString,
+          "\n - match.viewCleanupMode.triggers:", _triggers,
+          "\n - viewsToCleanup.count:", viewsToCleanup.count,
+          "\n - cleanableViewItems.count:", cleanableViewItems.count,
           "\n"
         );
       };
       #endif
-      
-      // re-add failed items
-      self.registry[$0.key] = $0;
     };
-    
-    #if DEBUG
-    if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
-      let _className = (match.delegate as? NSObject)?.className ?? "N/A";
-      let _triggers = match.viewCleanupMode.triggers.map { $0.rawValue; };
-      
-      print(
-        "RNICleanableViewRegistry.notifyCleanup",
-        "\n - forKey:", key,
-        "\n - cleanupTrigger:", cleanupTrigger?.rawValue ?? "N/A",
-        "\n - match.viewsToCleanup.count:", match.viewsToCleanup.count,
-        "\n - match.shouldProceedCleanupWhenDelegateIsNil:", match.shouldProceedCleanupWhenDelegateIsNil,
-        "\n - match.delegate.className:", _className,
-        "\n - match.viewCleanupMode.caseString:", match.viewCleanupMode.caseString,
-        "\n - match.viewCleanupMode.triggers:", _triggers,
-        "\n - viewsToCleanup.count:", viewsToCleanup.count,
-        "\n - cleanableViewItems.count:", cleanableViewItems.count,
-        "\n"
-      );
-    };
-    #endif
   };
   
   public func notifyCleanup(
@@ -341,7 +341,11 @@ public final class RNICleanableViewRegistry {
     self._bridge = RNIHelpers.bridge;
   };
   
-  func _cleanup(views viewsToCleanup: [UIView]) throws {
+  func _cleanup(
+    views _viewsToCleanup: [UIView],
+    completion: (() -> Void)? = nil
+  ) throws {
+  
     guard let bridge = self._bridge else {
       throw RNIUtilitiesError(
         errorCode: .unexpectedNilValue,
@@ -349,31 +353,55 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    viewsToCleanup.forEach {
-      RNIHelpers.recursivelyRemoveFromViewRegistry(
-        forReactView: $0,
-        usingReactBridge: bridge
-      );
+    var viewsToCleanup: [UIView] = [];
+    func addView(_ view: UIView){
+      let isDuplicate = viewsToCleanup.contains {
+        $0 === view;
+      };
+      
+      guard !isDuplicate else { return };
+      viewsToCleanup.append(view);
     };
     
-    #if DEBUG
-    if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
-      print(
-        "RNICleanableViewRegistry._cleanup",
-        "\n - viewsToCleanup.count:", viewsToCleanup.count,
-        "\n"
-      );
+    
+    _viewsToCleanup.forEach {
+      addView($0);
       
-      viewsToCleanup.enumerated().forEach {
-        print(
-          "RNICleanableViewRegistry._cleanup",
-          "\n - item: \($0.offset + 1) of \(viewsToCleanup.count)",
-          "\n - reactTag:", $0.element.reactTag?.intValue ?? -1,
-          "\n - className:", $0.element.className,
-          "\n"
-        );
+      $0.recursivelyGetAllSubviews.forEach {
+        addView($0);
       };
     };
-    #endif
+    
+    viewsToCleanup.forEach {
+      $0.removeFromSuperview();
+    };
+    
+    RNIHelpers.removeViewsFromViewRegistry(
+      reactViews: viewsToCleanup,
+      usingReactBridge: bridge
+    ) {
+      
+      #if DEBUG
+      if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
+        print(
+          "RNICleanableViewRegistry._cleanup",
+          "\n - viewsToCleanup.count:", viewsToCleanup.count,
+          "\n"
+        );
+        
+        viewsToCleanup.enumerated().forEach {
+          print(
+            "RNICleanableViewRegistry._cleanup",
+            "\n - item: \($0.offset + 1) of \(viewsToCleanup.count)",
+            "\n - reactTag:", $0.element.reactTag?.intValue ?? -1,
+            "\n - className:", $0.element.className,
+            "\n"
+          );
+        };
+      };
+      #endif
+      
+      completion?();
+    };
   };
 };
