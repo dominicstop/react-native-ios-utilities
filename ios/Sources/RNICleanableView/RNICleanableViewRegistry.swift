@@ -120,9 +120,12 @@ public final class RNICleanableViewRegistry {
     forKey key: Int,
     sender: RNICleanableViewSenderType,
     shouldForceCleanup: Bool,
-    cleanupTrigger: RNIViewCleanupTrigger?
+    cleanupTrigger: RNIViewCleanupTrigger?,
+    cleanupDelay _cleanupDelay: Double = 0.1
   ) throws {
   
+    let cleanupDelay = min(_cleanupDelay, 1);
+
     guard !RNICleanableViewRegistryEnv.shouldGloballyDisableCleanup else {
       throw RNIUtilitiesError(
         errorCode: .guardCheckFailed,
@@ -218,7 +221,7 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    try? self._cleanup(views: viewsToCleanup) {
+    let cleanupBlock = {
       match.delegate?.notifyOnViewCleanupCompletion();
       match.eventDelegates.invoke {
         $0.notifyOnViewCleanupCompletion(
@@ -232,11 +235,14 @@ public final class RNICleanableViewRegistry {
       var failedToCleanupItems: [RNICleanableViewItem] = [];
       cleanableViewItems.forEach {
         do {
+          let newDelay = max(cleanupDelay / 2, 0);
+          
           try self.notifyCleanup(
             forKey: $0.key,
             sender: sender,
             shouldForceCleanup: shouldForceCleanup,
-            cleanupTrigger: cleanupTrigger
+            cleanupTrigger: cleanupTrigger,
+            cleanupDelay: newDelay
           );
           
         } catch {
@@ -288,6 +294,13 @@ public final class RNICleanableViewRegistry {
         );
       };
       #endif
+    };
+    
+    /// just to be safe, we add an extra delay to prevent `EXC_BAD_ACESS`
+    DispatchQueue.main.asyncAfter(deadline: .now() + cleanupDelay) {
+      try? self._cleanup(views: viewsToCleanup){
+        cleanupBlock();
+      };
     };
   };
   
