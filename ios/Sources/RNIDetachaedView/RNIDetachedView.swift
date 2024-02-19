@@ -127,6 +127,8 @@ public class RNIDetachedView: ExpoView {
   public override func didMoveToWindow() {
     super.didMoveToWindow();
     
+    guard self.detachState != .detaching else { return };
+    
     // trigger manual cleanup, if needed
     try? self.viewCleanupMode.triggerCleanupIfNeededForDidMoveToWindow(
       forView: self,
@@ -146,6 +148,10 @@ public class RNIDetachedView: ExpoView {
       cleanableViewItem.viewsToCleanup.append(
         .init(with: subview)
       );
+      
+      cleanableViewItem.viewsToCleanup += subview.recursivelyGetAllSubviews.map {
+        .init(with: $0)
+      };
     };
   };
   
@@ -191,6 +197,7 @@ public class RNIDetachedView: ExpoView {
     };
     
     self.detachState = .detaching;
+    self.removeFromSuperview();
     contentView.removeFromSuperview();
     
     touchHandler.attach(to: contentView);
