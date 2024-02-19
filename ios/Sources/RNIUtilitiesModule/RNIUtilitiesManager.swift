@@ -10,7 +10,8 @@ import DGSwiftUtilities
 
 public let RNIUtilitiesManagerShared = RNIUtilitiesManager.shared;
 
-public class RNIUtilitiesManager {
+public final class RNIUtilitiesManager {
+  
   public static let shared: RNIUtilitiesManager = .init();
   
   public var sharedEnv: Dictionary<String, Any> = [:];
@@ -18,21 +19,23 @@ public class RNIUtilitiesManager {
   public var eventDelegates =
     MulticastDelegate<RNIUtilitiesManagerEventsNotifiable>();
   
-  init(){
+  public init(){
     let singletonClasses =
       ClassRegistry.allClasses.getClasses(ofType: Singleton.Type.self);
       
-    let delegateSingletonTypes = singletonClasses.compactMap {
-      $0 as? RNIUtilitiesManagerEventsNotifiable.Type;
-    };
-    
-    let delegateSingletons = delegateSingletonTypes.compactMap {
-      $0.shared;
+    let delegateSingletons: [RNIUtilitiesManagerEventsNotifiable] = singletonClasses.compactMap {
+      guard let delegateType = $0 as? RNIUtilitiesManagerEventsNotifiable.Type,
+            delegateType != RNIUtilitiesManager.self
+      else { return nil };
+      
+      return delegateType.shared;
     };
     
     delegateSingletons.forEach {
       self.eventDelegates.add($0);
     };
+    
+    self.eventDelegates.add(self);
   };
   
   func appendToSharedEnv(newEntries: Dictionary<String, Any>) {

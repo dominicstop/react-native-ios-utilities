@@ -8,6 +8,7 @@ export * from './modules/RNIUtilitiesModule';
 
 export * as Helpers from './functions/Helpers';
 export * from './functions/TypeUtils';
+export * from './functions/RNICleanableViewRegistryEnv';
 
 export * from './types/SharedModuleFunctions';
 

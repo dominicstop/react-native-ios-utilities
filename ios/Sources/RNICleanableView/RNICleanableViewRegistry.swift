@@ -367,7 +367,7 @@ public final class RNICleanableViewRegistry {
       viewsToCleanup.enumerated().forEach {
         print(
           "RNICleanableViewRegistry._cleanup",
-          "\n - item: \($0.offset) of \(viewsToCleanup.count - 1)",
+          "\n - item: \($0.offset + 1) of \(viewsToCleanup.count)",
           "\n - reactTag:", $0.element.reactTag?.intValue ?? -1,
           "\n - className:", $0.element.className,
           "\n"
