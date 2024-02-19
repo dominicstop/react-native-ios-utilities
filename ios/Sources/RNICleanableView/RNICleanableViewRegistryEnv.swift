@@ -11,7 +11,7 @@ import DGSwiftUtilities
 public struct RNICleanableViewRegistryEnv {
 
   public static var shouldGloballyDisableCleanup = false;
-  public static var shouldAllowForceCleanup = false;
+  public static var shouldAllowForceCleanup = true;
   
   public static var shouldIncludeDelegateInViewsToCleanupByDefault = false;
   public static var shouldProceedCleanupWhenDelegateIsNilByDefault = true;
