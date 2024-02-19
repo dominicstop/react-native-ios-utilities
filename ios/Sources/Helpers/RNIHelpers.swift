@@ -131,6 +131,68 @@ public class RNIHelpers {
     };
   };
   
+  public static func removeViewsFromViewRegistry(
+    reactViews: [UIView],
+    usingReactBridge bridge: RCTBridge,
+    completion: (() -> Void)? = nil
+  ){
+      
+    RCTExecuteOnMainQueue {
+      let viewRegistry =
+        bridge.uiManager?.value(forKey: "_viewRegistry") as? NSMutableDictionary;
+        
+      guard let viewRegistry = viewRegistry else { return };
+      var removedReactTags: [NSNumber] = [];
+    
+      reactViews.enumerated().forEach {
+          /// if this really is a "react view" then it should have a `reactTag`
+        guard $1.reactTag != nil,
+              let reactTag = $1.reactTag,
+              reactTag.intValue > 0,
+              
+              viewRegistry[reactTag] != nil
+        else { return };
+        
+        removedReactTags.append(reactTag);
+        
+        /// remove this "react view" from the registry
+        viewRegistry.removeObject(forKey: reactTag);
+        
+        /// remove from parent
+        $1.removeFromSuperview();
+        
+        if Self.debugShouldLogViewRegistryEntryRemoval {
+          #if DEBUG
+          print(
+            "RNIHelpers.removeViewsFromViewRegistry:",
+            "\n - view: \($0 + 1) of \(reactViews.count)",
+            "\n - className:", $1.className,
+            "\n - reactTag:", reactTag,
+            "\n"
+          );
+          #endif
+        };
+      };
+      
+      // remove shadow views...
+      RCTExecuteOnUIManagerQueue {
+        let shadowViewRegistry =
+          bridge.uiManager?.value(forKey: "_shadowViewRegistry") as? NSMutableDictionary;
+        
+        guard let shadowViewRegistry = shadowViewRegistry else { return };
+        
+        removedReactTags.forEach {
+          shadowViewRegistry.removeObject(forKey: $0)
+        };
+        
+        guard let completion = completion else { return };
+        DispatchQueue.main.async {
+          completion();
+        };
+      };
+    };
+  };
+  
   /// Recursive climb the responder chain until `T` is found.
   /// Useful for finding the corresponding view controller of a view.
   /// 
