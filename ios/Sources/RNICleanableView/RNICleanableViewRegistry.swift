@@ -187,7 +187,7 @@ public final class RNICleanableViewRegistry {
       guard let view = weakView.ref else { continue };
       
       let isDuplicate = viewsToCleanup.contains {
-        view.tag == $0.tag;
+        view === $0;
       };
       
       guard !isDuplicate else { continue };
