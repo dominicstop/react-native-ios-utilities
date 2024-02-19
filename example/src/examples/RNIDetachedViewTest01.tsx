@@ -45,13 +45,24 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         </RNIDetachedView>
       ))}
       
-      <CardButton
-        title={'Dettach and Attach to Window'}
-        subtitle={'Trigger: `debugAttachToWindow`'}
-        onPress={() => {
-          ref?.current?.debugAttachToWindow();
-        }}
-      />
+      {!shouldMountDetachedView && (
+        <CardButton
+          title={'Re-Mount RNIDetachedView'}
+          subtitle={'set shouldMountDetachedView to true'}
+          onPress={() => {
+            setShouldMountDetachedView(true);
+          }}
+        />
+      )}
+      {shouldMountDetachedView && (
+        <CardButton
+          title={'Dettach and Attach to Window'}
+          subtitle={'Trigger: `debugAttachToWindow`'}
+          onPress={() => {
+            ref?.current?.debugAttachToWindow();
+          }}
+        />
+      )}
     </ExampleItemCard>
   );
 };
