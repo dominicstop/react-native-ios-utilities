@@ -10,6 +10,8 @@ import DGSwiftUtilities
 
 
 public class RNIHelpers {
+
+  public static var debugShouldLogViewRegistryEntryRemoval = false;
   
   public static var bridge: RCTBridge? {
     guard let keyWindow = UIApplication.shared.activeWindow,
@@ -116,6 +118,15 @@ public class RNIHelpers {
     RCTExecuteOnMainQueue {
       // start recursively removing views...
       let removedReactTags = removeView(reactView);
+      
+      if Self.debugShouldLogViewRegistryEntryRemoval {
+        #if DEBUG
+        print(
+          "RNIHelpers.recursivelyRemoveFromViewRegistry:",
+          "\n - removedReactTags:", removedReactTags
+        );
+        #endif
+      };
       
       // remove shadow views...
       RCTExecuteOnUIManagerQueue {
