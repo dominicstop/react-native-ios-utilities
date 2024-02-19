@@ -94,12 +94,8 @@ public class RNIHelpers {
       /// remove from parent
       v.removeFromSuperview();
       
-      let reactSubviews = v.subviews.compactMap {
-        $0 as? RCTView;
-      };
-      
       var removedReactTags: [NSNumber] = [reactTag];
-      reactSubviews.forEach {
+      v.subviews.forEach {
         /// remove other subviews...
         removedReactTags += removeView($0);
       };
