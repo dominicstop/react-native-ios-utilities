@@ -120,12 +120,9 @@ public final class RNICleanableViewRegistry {
     forKey key: Int,
     sender: RNICleanableViewSenderType,
     shouldForceCleanup: Bool,
-    cleanupTrigger: RNIViewCleanupTrigger?,
-    cleanupDelay _cleanupDelay: Double = 0.1
+    cleanupTrigger: RNIViewCleanupTrigger?
   ) throws {
   
-    let cleanupDelay = min(_cleanupDelay, 1);
-
     guard !RNICleanableViewRegistryEnv.shouldGloballyDisableCleanup else {
       throw RNIUtilitiesError(
         errorCode: .guardCheckFailed,
@@ -221,7 +218,7 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    let cleanupBlock = { [self, match] in
+    let cleanupCompletionBlock = { [self, match] in
       match.delegate?.notifyOnViewCleanupCompletion();
       match.eventDelegates.invoke {
         $0.notifyOnViewCleanupCompletion(
@@ -230,19 +227,17 @@ public final class RNICleanableViewRegistry {
         );
       };
       
+      
       self.unregister(forKey: match.key);
       
       var failedToCleanupItems: [RNICleanableViewItem] = [];
       cleanableViewItems.forEach {
         do {
-          let newDelay = max(cleanupDelay / 2, 0);
-          
           try self.notifyCleanup(
             forKey: $0.key,
             sender: sender,
             shouldForceCleanup: shouldForceCleanup,
-            cleanupTrigger: cleanupTrigger,
-            cleanupDelay: newDelay
+            cleanupTrigger: cleanupTrigger
           );
           
         } catch {
@@ -251,7 +246,6 @@ public final class RNICleanableViewRegistry {
           #if DEBUG
           if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
             let _className = ($0.delegate as? NSObject)?.className ?? "N/A";
-            let _triggers = $0.viewCleanupMode.triggers.map { $0.rawValue; };
             
             print(
               "RNICleanableViewRegistry.notifyCleanup",
@@ -313,10 +307,24 @@ public final class RNICleanableViewRegistry {
       #endif
     };
     
-    /// just to be safe, we add an extra delay to prevent `EXC_BAD_ACESS`
-    DispatchQueue.main.asyncAfter(deadline: .now() + cleanupDelay) { [self, cleanupBlock] in
-      try? self._cleanup(views: viewsToCleanup){ [cleanupBlock] in
-        cleanupBlock();
+    guard let bridge = self._bridge else {
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Unable to get react bridge"
+      );
+    };
+    
+    let cleanupBlock = { [self, cleanupCompletionBlock] in
+      try? self._cleanup(views: viewsToCleanup){ [cleanupCompletionBlock] in
+        cleanupCompletionBlock();
+      };
+    };
+    
+    RCTExecuteOnUIManagerQueue { [cleanupBlock] in
+      bridge.uiManager.addUIBlock { [cleanupBlock] _,_ in
+        DispatchQueue.main.async { [cleanupBlock] in
+          cleanupBlock();
+        };
       };
     };
   };
@@ -372,7 +380,7 @@ public final class RNICleanableViewRegistry {
   };
   
   func _cleanup(
-    views _viewsToCleanup: [UIView],
+    views viewsToCleanup: [UIView],
     completion: (() -> Void)? = nil
   ) throws {
   
@@ -383,31 +391,8 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    var viewsToCleanup: [UIView] = [];
-    func addView(_ view: UIView){
-      let isDuplicate = viewsToCleanup.contains {
-        $0 === view;
-      };
-      
-      guard !isDuplicate else { return };
-      viewsToCleanup.append(view);
-    };
-    
-    
-    _viewsToCleanup.forEach {
-      addView($0);
-      
-      $0.recursivelyGetAllSubviews.forEach {
-        addView($0);
-      };
-    };
-    
-    viewsToCleanup.forEach {
-      $0.removeFromSuperview();
-    };
-    
-    RNIHelpers.removeViewsFromViewRegistry(
-      reactViews: viewsToCleanup,
+    RNIHelpers.recursivelyRemoveFromViewRegistry(
+      forReactViews: viewsToCleanup,
       usingReactBridge: bridge
     ) {
       
