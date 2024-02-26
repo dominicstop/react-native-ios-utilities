@@ -39,6 +39,38 @@ public class RNIHelpers {
   
   public static let osVersion = ProcessInfo().operatingSystemVersion;
   
+  @discardableResult
+  public static func recursivelyRemoveFromViewRegistry(
+    forComponent component: RCTComponent,
+    registry: NSMutableDictionary
+  ) -> [NSNumber] {
+  
+    /// if this really is a "react view" then it should have a `reactTag`
+    guard component.reactTag != nil,
+          let reactTag = component.reactTag,
+          reactTag.intValue > 0
+    else { return [] };
+
+    if let invalidatable = component as? RCTInvalidating {
+      invalidatable.invalidate();
+    };
+
+    /// remove this "react view" from the registry
+    registry.removeObject(forKey: reactTag);
+    
+    var removedReactViews: [NSNumber] = [reactTag];
+    let reactSubviews = component.reactSubviews() ?? [];
+    
+    reactSubviews.forEach {
+      removedReactViews += Self.recursivelyRemoveFromViewRegistry(
+        forComponent: $0,
+        registry: registry
+      );
+    };
+    
+    return removedReactViews;
+  };
+  
   /// If you remove a "react view" from the view hierarchy (e.g. via
   /// `removeFromSuperview`), it won't be released, because it's being retained
   /// by the `_viewRegistry` ivar in the shared `UIManager` (singleton)
@@ -51,171 +83,120 @@ public class RNIHelpers {
   /// If you are **absolutely sure** that a particular `reactView` is no longer
   /// being used, this helper func. will remove the specified `reactView` (and
   /// all of it's subviews) in the `_viewRegistry`.
-  ///
   public static func recursivelyRemoveFromViewRegistry(
     forReactView reactView: UIView,
-    usingReactBridge bridge: RCTBridge
-  ) {
-  
-    guard let reactView = reactView as? RCTView else { return };
-    
-    /// Get a ref to the `_viewRegistry` ivar in the `RCTUIManager` instance.
-    ///
-    /// * Note: Unlike objc properties, ivars are "private" so they aren't
-    ///   automagically exposed/bridged to swift.
-    ///
-    /// * Note: key is: `NSNumber` (the `reactTag`), and value: `UIView`
-    ///
-    let viewRegistry =
-      bridge.uiManager?.value(forKey: "_viewRegistry") as? NSMutableDictionary;
-    
-    /// Get a ref to the `_shadowViewRegistry` ivar in the `RCTUIManager`
-    /// instance.
-    ///
-    /// * Note: Execute on "RCT thread" (i.e. "com.facebook.react.ShadowQueue")
-    ///
-    let shadowViewRegistry =
-      bridge.uiManager?.value(forKey: "_shadowViewRegistry") as? NSMutableDictionary;
-    
-    guard let viewRegistry = viewRegistry else { return };
-    
-    func removeView(_ v: UIView) -> [NSNumber] {
-      /// if this really is a "react view" then it should have a `reactTag`
-      guard v.reactTag != nil,
-            let reactTag = v.reactTag,
-            reactTag.intValue > 0,
-            
-            viewRegistry[reactTag] != nil
-      else { return [] };
-      
-      /// remove this "react view" from the registry
-      viewRegistry.removeObject(forKey: reactTag);
-      
-      /// remove from parent
-      v.removeFromSuperview();
-      
-      var removedReactTags: [NSNumber] = [reactTag];
-      v.subviews.forEach {
-        /// remove other subviews...
-        removedReactTags += removeView($0);
-      };
-      
-      return removedReactTags;
-    };
-    
-    func removeShadowViews(for reactTags: [NSNumber]){
-      guard let shadowViewRegistry = shadowViewRegistry else { return };
-      
-      reactTags.forEach {
-        shadowViewRegistry.removeObject(forKey: $0);
-      };
-    };
-    
-    RCTExecuteOnMainQueue {
-      // start recursively removing views...
-      let removedReactTags = removeView(reactView);
-      
-      if Self.debugShouldLogViewRegistryEntryRemoval {
-        #if DEBUG
-        print(
-          "RNIHelpers.recursivelyRemoveFromViewRegistry:",
-          "\n - removedReactTags:", removedReactTags
-        );
-        #endif
-      };
-      
-      // remove shadow views...
-      RCTExecuteOnUIManagerQueue {
-        removeShadowViews(for: removedReactTags);
-      };
-    };
-  };
-  
-  public static func removeViewsFromViewRegistry(
-    reactViews: [UIView],
     usingReactBridge bridge: RCTBridge,
     completion: (() -> Void)? = nil
-  ){
-      
+  ) {
+  
+    Self.recursivelyRemoveFromViewRegistry(
+      forReactViews: [reactView],
+      usingReactBridge: bridge,
+      completion: completion
+    );
+  };
+  
+  public static func recursivelyRemoveFromViewRegistry(
+    forReactViews reactViews: [UIView],
+    usingReactBridge bridge: RCTBridge,
+    completion: (() -> Void)? = nil
+  ) {
+  
+    guard let uiManager = bridge.uiManager else {
+      completion?();
+      return;
+    };
+    
+    let purgeChildrenSelector =
+      NSSelectorFromString("_purgeChildren:fromRegistry:");
+        
+    let shouldInvokePurgeChildrenMethod =
+      uiManager.responds(to: purgeChildrenSelector);
+    
     RCTExecuteOnMainQueue {
+      /// Get a ref to the `_viewRegistry` ivar in the `RCTUIManager` instance.
       let viewRegistry =
-        bridge.uiManager?.value(forKey: "_viewRegistry") as? NSMutableDictionary;
+        uiManager.value(forKey: "_viewRegistry") as? NSMutableDictionary;
         
-      guard let viewRegistry = viewRegistry else { return };
-      var removedReactTags: [NSNumber] = [];
-      
-      if Self.debugShouldLogViewRegistryEntryRemoval {
-        #if DEBUG
-        print(
-          "RNIHelpers.recursivelyRemoveFromViewRegistry:",
-          "\n - reactViews.count:", reactViews.count,
-          "\n - viewRegistry.count - before:", viewRegistry.count
-        );
-        #endif
+      guard let viewRegistry = viewRegistry else {
+        completion?();
+        return;
       };
       
-      reactViews.enumerated().forEach {
-          /// if this really is a "react view" then it should have a `reactTag`
-        guard $1.reactTag != nil,
-              let reactTag = $1.reactTag,
-              reactTag.intValue > 0,
-              
-              viewRegistry[reactTag] != nil
-        else { return };
+      #if DEBUG
+      if Self.debugShouldLogViewRegistryEntryRemoval {
+        print(
+          "RNIHelpers.recursivelyRemoveFromViewRegistry:",
+          "\n - viewRegistry.count - before:", viewRegistry.count,
+          "\n"
+        );
+      };
+      #endif
+      
+      if shouldInvokePurgeChildrenMethod {
+        uiManager.perform(
+          purgeChildrenSelector,
+          with: reactViews,
+          with: viewRegistry
+        );
         
-        if let invalidatable = $1 as? RCTInvalidating {
-          invalidatable.invalidate();
-        };
-        
-        removedReactTags.append(reactTag);
-        
-        /// remove this "react view" from the registry
-        viewRegistry.removeObject(forKey: reactTag);
-        
-        /// remove from parent
-        $1.removeFromSuperview();
-        
-        if Self.debugShouldLogViewRegistryEntryRemoval {
-          #if DEBUG
-          print(
-            "RNIHelpers.removeViewsFromViewRegistry:",
-            "\n - view: \($0 + 1) of \(reactViews.count)",
-            "\n - className:", $1.className,
-            "\n - reactTag:", reactTag,
-            "\n"
+      } else {
+        reactViews.forEach {
+          Self.recursivelyRemoveFromViewRegistry(
+            forComponent: $0,
+            registry: viewRegistry
           );
-          #endif
         };
       };
       
+      reactViews.forEach {
+        $0.removeFromSuperview();
+      };
+      
+      #if DEBUG
       if Self.debugShouldLogViewRegistryEntryRemoval {
-        #if DEBUG
         print(
           "RNIHelpers.recursivelyRemoveFromViewRegistry:",
-          "\n - removedReactTags:", removedReactTags,
-          "\n - viewRegistry.count - after:", viewRegistry.count
+          "\n - viewRegistry.count - after:", viewRegistry.count,
+          "\n"
         );
-        #endif
       };
+      #endif
       
-      // remove shadow views...
       RCTExecuteOnUIManagerQueue {
+        /// Get a ref to the `_shadowViewRegistry` ivar in the `RCTUIManager`
+        /// instance.
         let shadowViewRegistry =
-          bridge.uiManager?.value(forKey: "_shadowViewRegistry") as? NSMutableDictionary;
-        
-        guard let shadowViewRegistry = shadowViewRegistry else { return };
-        
-        removedReactTags.forEach {
-          shadowViewRegistry.removeObject(forKey: $0)
+          uiManager.value(forKey: "_shadowViewRegistry") as? NSMutableDictionary;
+          
+        guard let shadowViewRegistry = shadowViewRegistry else {
+          completion?();
+          return;
         };
         
-        guard let completion = completion else { return };
+        if shouldInvokePurgeChildrenMethod {
+          uiManager.perform(
+            purgeChildrenSelector,
+            with: reactViews,
+            with: shadowViewRegistry
+          );
+          
+        } else {
+          reactViews.forEach {
+            Self.recursivelyRemoveFromViewRegistry(
+              forComponent: $0,
+              registry: shadowViewRegistry
+            );
+          };
+        };
+        
         DispatchQueue.main.async {
-          completion();
+          completion?();
         };
       };
     };
   };
+  
   
   /// Recursive climb the responder chain until `T` is found.
   /// Useful for finding the corresponding view controller of a view.
