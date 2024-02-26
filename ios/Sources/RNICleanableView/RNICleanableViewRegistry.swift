@@ -221,7 +221,7 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    let cleanupBlock = {
+    let cleanupBlock = { [self, match] in
       match.delegate?.notifyOnViewCleanupCompletion();
       match.eventDelegates.invoke {
         $0.notifyOnViewCleanupCompletion(
@@ -247,6 +247,23 @@ public final class RNICleanableViewRegistry {
           
         } catch {
           failedToCleanupItems.append($0);
+          
+          #if DEBUG
+          if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
+            let _className = ($0.delegate as? NSObject)?.className ?? "N/A";
+            let _triggers = $0.viewCleanupMode.triggers.map { $0.rawValue; };
+            
+            print(
+              "RNICleanableViewRegistry.notifyCleanup",
+              "\n - cleanup failed",
+              "\n - forKey:", $0.key,
+              "\n - delegate, type:", type(of: $0.delegate),
+              "\n - delegate, className:", _className,
+              "\n - error:", error.localizedDescription,
+              "\n"
+            );
+          };
+          #endif
         };
       };
       
@@ -297,8 +314,8 @@ public final class RNICleanableViewRegistry {
     };
     
     /// just to be safe, we add an extra delay to prevent `EXC_BAD_ACESS`
-    DispatchQueue.main.asyncAfter(deadline: .now() + cleanupDelay) {
-      try? self._cleanup(views: viewsToCleanup){
+    DispatchQueue.main.asyncAfter(deadline: .now() + cleanupDelay) { [self, cleanupBlock] in
+      try? self._cleanup(views: viewsToCleanup){ [cleanupBlock] in
         cleanupBlock();
       };
     };
