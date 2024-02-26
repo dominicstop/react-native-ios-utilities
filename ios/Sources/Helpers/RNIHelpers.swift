@@ -143,7 +143,17 @@ public class RNIHelpers {
         
       guard let viewRegistry = viewRegistry else { return };
       var removedReactTags: [NSNumber] = [];
-    
+      
+      if Self.debugShouldLogViewRegistryEntryRemoval {
+        #if DEBUG
+        print(
+          "RNIHelpers.recursivelyRemoveFromViewRegistry:",
+          "\n - reactViews.count:", reactViews.count,
+          "\n - viewRegistry.count - before:", viewRegistry.count
+        );
+        #endif
+      };
+      
       reactViews.enumerated().forEach {
           /// if this really is a "react view" then it should have a `reactTag`
         guard $1.reactTag != nil,
@@ -152,6 +162,10 @@ public class RNIHelpers {
               
               viewRegistry[reactTag] != nil
         else { return };
+        
+        if let invalidatable = $1 as? RCTInvalidating {
+          invalidatable.invalidate();
+        };
         
         removedReactTags.append(reactTag);
         
@@ -172,6 +186,16 @@ public class RNIHelpers {
           );
           #endif
         };
+      };
+      
+      if Self.debugShouldLogViewRegistryEntryRemoval {
+        #if DEBUG
+        print(
+          "RNIHelpers.recursivelyRemoveFromViewRegistry:",
+          "\n - removedReactTags:", removedReactTags,
+          "\n - viewRegistry.count - after:", viewRegistry.count
+        );
+        #endif
       };
       
       // remove shadow views...
