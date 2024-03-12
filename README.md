@@ -16,19 +16,21 @@ This library and its documentation is currently a ✨work-in-progress ✨
 npm install react-native-ios-utilities
 ```
 
-## Usage
+<br><br>
 
-```js
-import IosUtilities from "react-native-ios-utilities";
+## Version Compatibility
 
-// ...
+| Library Version                                      | Child Libraries                                              |
+| ---------------------------------------------------- | ------------------------------------------------------------ |
+| `react-native-ios-utilities`<br>**Version**: `4.4.x` | `react-native-ios-context-menu`<br/>**Version**: `2.5.x`<br><br>`react-native-ios-adaptive-modal`<br>**Version**: TBA |
 
-const result = await IosUtilities.multiply(3, 7);
-```
+<br><br>
 
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+
+<br><br>
 
 ## License
 
