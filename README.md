@@ -23,9 +23,9 @@ npm install react-native-ios-utilities
 ## Version Compatibility
 
 | Library Version                                       | Child Libraries / Dependents                                 |
-| ----------------------------------------------------- | ------------------------------------------------------------ |
-| `react-native-ios-utilities`<br/>**Version**: `4.3.x` | `react-native-ios-context-menu`<br/>**Version**: `2.4.x`<br/><br/>`react-native-text-input-wrapper`<br/>**Version**: `0.1.x`<br><br>`react-native-ios-adaptive-modal`<br/>**Version**: `0.6.x` |
-| `react-native-ios-utilities`<br>**Version**: `4.4.x`  | `react-native-ios-context-menu`<br/>**Version**: `2.5.x`     |
+| ----------------------------------------------------- | :----------------------------------------------------------- |
+| `react-native-ios-utilities`<br/>**Version**: `4.3.x` | `react-native-ios-context-menu`<br/>**Version**: `2.4.x`<br/><br/>`react-native-text-input-wrapper`<br/>**Version**: `0.1.x`<br><br>`react-native-ios-adaptive-modal`<br/>**Version**: `0.6.x`<br> |
+| `react-native-ios-utilities`<br>**Version**: `4.4.x`  | `react-native-ios-context-menu`<br/>**Version**: `2.5.x`<br/><br/>`react-native-text-input-wrapper`<br/>**Version**: `0.1.x`<br/><br/>`react-native-ios-adaptive-modal`<br/>**Version**: TBA<br> |
 
 <br><br>
 
