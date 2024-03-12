@@ -1,9 +1,9 @@
 import type { ViewProps } from 'react-native';
-import type { RNIDetachedNativeViewBaseProps } from './RNIDetachedNativeViewTypes';
+import type {  RNIDetachedNativeViewProps } from './RNIDetachedNativeViewTypes';
 
-export type RNIDetachedViewInheritedProps = Pick<RNIDetachedNativeViewBaseProps,
+export type RNIDetachedViewInheritedProps = Pick<RNIDetachedNativeViewProps,
   | 'contentTargetMode'
-> & Partial<Pick<RNIDetachedNativeViewBaseProps,
+> & Partial<Pick<RNIDetachedNativeViewProps,
   | 'internalViewCleanupMode'
   | 'onViewDidDetach'
 >>;
