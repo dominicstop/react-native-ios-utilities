@@ -1,6 +1,8 @@
 # react-native-ios-utilities
 
-This library is meant to be used as a dependency for other libraries — i.e. it is a way to share code between libraries, and prevent duplicated logic (specifically, this library contains iOS native code),
+This library is meant to be used as a dependency for other libraries — i.e. it is a way to share code between libraries, and prevent duplicated logic (specifically, this library contains iOS native code).
+
+See [`CHANGELOG`](./CHANGELOG.md) for the release history, and the [version compatibility](#version-compatibility) table for reference.
 
 <br><br>
 
