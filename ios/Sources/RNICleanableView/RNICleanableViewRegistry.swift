@@ -186,10 +186,17 @@ public final class RNICleanableViewRegistry {
     for weakView in match.viewsToCleanup {
       guard let view = weakView.ref else { continue };
       
-      let isDuplicate = viewsToCleanup.contains {
+      let hasMatchA = viewsToCleanup.contains {
         view === $0;
       };
       
+      let hasMatchB = cleanableViewItems.contains {
+        view === $0;
+      };
+      
+      let isDuplicate = hasMatchA || hasMatchB;
+      
+      // skip duplicates
       guard !isDuplicate else { continue };
       
       if let cleanableView = view as? RNICleanableViewDelegate,
@@ -210,6 +217,11 @@ public final class RNICleanableViewRegistry {
       };
     };
     
+    // remove from registry to prevent other duplicate cleanup requests from
+    // going through...
+    self.unregister(forKey: match.key);
+    
+    // notify cleanup will begin
     match.delegate?.notifyOnViewCleanupWillBegin();
     match.eventDelegates.invoke {
       $0.notifyOnViewCleanupWillBegin(
@@ -217,8 +229,8 @@ public final class RNICleanableViewRegistry {
         registryEntry: match
       );
     };
-    
-    let cleanupCompletionBlock = { [self, match] in
+        
+    try? self._cleanup(views: viewsToCleanup){ [match, cleanableViewItems] in
       match.delegate?.notifyOnViewCleanupCompletion();
       match.eventDelegates.invoke {
         $0.notifyOnViewCleanupCompletion(
@@ -226,9 +238,6 @@ public final class RNICleanableViewRegistry {
           registryEntry: match
         );
       };
-      
-      
-      self.unregister(forKey: match.key);
       
       var failedToCleanupItems: [RNICleanableViewItem] = [];
       cleanableViewItems.forEach {
@@ -306,27 +315,6 @@ public final class RNICleanableViewRegistry {
       };
       #endif
     };
-    
-    guard let bridge = self._bridge else {
-      throw RNIUtilitiesError(
-        errorCode: .unexpectedNilValue,
-        description: "Unable to get react bridge"
-      );
-    };
-    
-    let cleanupBlock = { [self, cleanupCompletionBlock] in
-      try? self._cleanup(views: viewsToCleanup){ [cleanupCompletionBlock] in
-        cleanupCompletionBlock();
-      };
-    };
-    
-    RCTExecuteOnUIManagerQueue { [cleanupBlock] in
-      bridge.uiManager.addUIBlock { [cleanupBlock] _,_ in
-        DispatchQueue.main.async { [cleanupBlock] in
-          cleanupBlock();
-        };
-      };
-    };
   };
   
   public func notifyCleanup(
@@ -391,32 +379,36 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    RNIHelpers.recursivelyRemoveFromViewRegistry(
-      forReactViews: viewsToCleanup,
-      usingReactBridge: bridge
-    ) {
-      
-      #if DEBUG
-      if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
-        print(
-          "RNICleanableViewRegistry._cleanup",
-          "\n - viewsToCleanup.count:", viewsToCleanup.count,
-          "\n"
-        );
-        
-        viewsToCleanup.enumerated().forEach {
-          print(
-            "RNICleanableViewRegistry._cleanup",
-            "\n - item: \($0.offset + 1) of \(viewsToCleanup.count)",
-            "\n - reactTag:", $0.element.reactTag?.intValue ?? -1,
-            "\n - className:", $0.element.className,
-            "\n"
-          );
+    RCTExecuteOnUIManagerQueue {  [viewsToCleanup, completion] in
+      bridge.uiManager.addUIBlock { [viewsToCleanup, completion] _,_ in
+        RNIHelpers.recursivelyRemoveFromViewRegistry(
+          forReactViews: viewsToCleanup,
+          usingReactBridge: bridge
+        ) {
+          
+          #if DEBUG
+          if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
+            print(
+              "RNICleanableViewRegistry._cleanup",
+              "\n - viewsToCleanup.count:", viewsToCleanup.count,
+              "\n"
+            );
+            
+            viewsToCleanup.enumerated().forEach {
+              print(
+                "RNICleanableViewRegistry._cleanup",
+                "\n - item: \($0.offset + 1) of \(viewsToCleanup.count)",
+                "\n - reactTag:", $0.element.reactTag?.intValue ?? -1,
+                "\n - className:", $0.element.className,
+                "\n"
+              );
+            };
+          };
+          #endif
+          
+          completion?();
         };
       };
-      #endif
-      
-      completion?();
     };
   };
 };
