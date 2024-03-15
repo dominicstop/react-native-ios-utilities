@@ -147,13 +147,16 @@ public final class RNICleanableViewRegistry {
       );
     };
     
+    // keep a strong ref. to match's delegate so it won't get deref
+    let matchDelegate = match.delegate;
+    
     let shouldForceCleanup =
          shouldForceCleanup
       && RNICleanableViewRegistryEnv.shouldAllowForceCleanup;
     
     var shouldCleanup = false;
     
-    if let delegate = match.delegate {
+    if let delegate = matchDelegate {
       shouldCleanup = delegate.notifyOnViewCleanupRequest(
         sender: sender,
         item: match
@@ -181,7 +184,10 @@ public final class RNICleanableViewRegistry {
     };
     
     var viewsToCleanup: [UIView] = [];
-    var cleanableViewItems: [RNICleanableViewItem] = [];
+    var otherItemsToCleanup: [(
+      entry: RNICleanableViewItem,
+      delegate: RNICleanableViewDelegate?
+    )] = [];
     
     for weakView in match.viewsToCleanup {
       guard let view = weakView.ref else { continue };
@@ -190,27 +196,34 @@ public final class RNICleanableViewRegistry {
         view === $0;
       };
       
-      let hasMatchB = cleanableViewItems.contains {
-        view === $0;
+      let hasMatchB = otherItemsToCleanup.contains {
+        view === $0.delegate;
       };
       
-      let isDuplicate = hasMatchA || hasMatchB;
+      let isDuplicate =
+           hasMatchA
+        || hasMatchB
+        || view === matchDelegate;
       
       // skip duplicates
       guard !isDuplicate else { continue };
       
       if let cleanableView = view as? RNICleanableViewDelegate,
-         let cleanableViewItem = cleanableView.associatedCleanableViewItem,
-         cleanableView !== match.delegate {
+         let cleanableViewItem = cleanableView.associatedCleanableViewItem {
          
-         cleanableViewItems.append(cleanableViewItem);
+        otherItemsToCleanup.append((
+          entry: cleanableViewItem,
+          delegate: cleanableViewItem.delegate
+        ));
       
       } else if let reactView = view as? RCTView,
                 let reactTag = reactView.reactTag,
-                let entry = self.getEntry(forKey: reactTag.intValue),
-                entry.delegate !== match.delegate  {
+                let entry = self.getEntry(forKey: reactTag.intValue) {
                 
-        cleanableViewItems.append(entry);
+        otherItemsToCleanup.append((
+          entry: entry,
+          delegate: entry.delegate
+        ));
       
       } else {
         viewsToCleanup.append(view);
@@ -222,15 +235,15 @@ public final class RNICleanableViewRegistry {
     self.unregister(forKey: match.key);
     
     // notify cleanup will begin
-    match.delegate?.notifyOnViewCleanupWillBegin();
+    matchDelegate?.notifyOnViewCleanupWillBegin();
     match.eventDelegates.invoke {
       $0.notifyOnViewCleanupWillBegin(
-        forDelegate: match.delegate,
+        forDelegate: matchDelegate,
         registryEntry: match
       );
     };
         
-    try? self._cleanup(views: viewsToCleanup){ [match, cleanableViewItems] in
+    try? self._cleanup(views: viewsToCleanup){ [match, otherItemsToCleanup] in
       match.delegate?.notifyOnViewCleanupCompletion();
       match.eventDelegates.invoke {
         $0.notifyOnViewCleanupCompletion(
@@ -240,17 +253,17 @@ public final class RNICleanableViewRegistry {
       };
       
       var failedToCleanupItems: [RNICleanableViewItem] = [];
-      cleanableViewItems.forEach {
+      otherItemsToCleanup.forEach {
         do {
           try self.notifyCleanup(
-            forKey: $0.key,
+            forKey: $0.entry.key,
             sender: sender,
             shouldForceCleanup: shouldForceCleanup,
             cleanupTrigger: cleanupTrigger
           );
           
         } catch {
-          failedToCleanupItems.append($0);
+          failedToCleanupItems.append($0.entry);
           
           #if DEBUG
           if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
@@ -259,7 +272,7 @@ public final class RNICleanableViewRegistry {
             print(
               "RNICleanableViewRegistry.notifyCleanup",
               "\n - cleanup failed",
-              "\n - forKey:", $0.key,
+              "\n - forKey:", $0.entry.key,
               "\n - delegate, type:", type(of: $0.delegate),
               "\n - delegate, className:", _className,
               "\n - error:", error.localizedDescription,
@@ -309,7 +322,7 @@ public final class RNICleanableViewRegistry {
           "\n - match.viewCleanupMode.caseString:", match.viewCleanupMode.caseString,
           "\n - match.viewCleanupMode.triggers:", _triggers,
           "\n - viewsToCleanup.count:", viewsToCleanup.count,
-          "\n - cleanableViewItems.count:", cleanableViewItems.count,
+          "\n - otherItemsToCleanup.count:", otherItemsToCleanup.count,
           "\n"
         );
       };
