@@ -4,9 +4,26 @@
 
 <br>
 
+## v4.4.2
+
+* **Release**: [v4.4.2](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.2) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.1...v4.4.2)
+* **Summary**: Refactor cleanup logic in `RNICleanableViewRegistry` to use queue.
+  * Recursively get items to clean, and add items to a queue that strongly retains the delegates.
+  * Schedule cleanup in `UIManager`, and recursively dequeue cleanup items.
+  * Re-enable cleanup logic via `RNICleanableViewRegistryEnv`'s `shouldGloballyDisableCleanup` flag.
+
+<br>
+
+## v4.4.1
+
+* **Release**: [v4.4.1](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.1) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.0...v4.4.1)
+* **Summary**: Globally disable cleanup logic via `RNICleanableViewRegistryEnv`'s `shouldGloballyDisableCleanup` flag as a temp. emergency fix for crashes.
+
+<br>
+
 ## v4.4.0
 
-* **Release**: [v4.4.0](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.0-6) | [current changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.0-6...v4.4.0) | [all changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.3.2...v4.4.0)
+* **Release**: [v4.4.0](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.0) | [current changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.0-6...v4.4.0) | [all changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.3.2...v4.4.0)
 * **Summary**: Finalized release for `v4.4.0`.
   * Impl. of new view cleanup logic: `RNICleanableView` (replacement for `RNICleanup`) - Cleanup logic is now shared + coordinated amongst views that conform to `RNICleanableViewDelegate` via the `RNICleanableViewRegistry` singleton.
   * Updated `RNIHelpers.recursivelyRemoveFromViewRegistry` logic - Use the built-in private function from RN internals + fallback (in case of unavailability).
