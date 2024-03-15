@@ -1,3 +1,8 @@
+import { setSharedEnvForRNICleanableViewRegistry } from './functions/RNICleanableViewRegistryEnv';
+
+setSharedEnvForRNICleanableViewRegistry({
+  shouldGloballyDisableCleanup: true,
+});
 
 export * from './native_components/RNIDummyView';
 export * from './native_components/RNIDetachedView';
@@ -25,3 +30,4 @@ export * from './types/RNIViewCleanupTrigger';
 export * from './types/RNIViewCleanupModeProp';
 export * from './types/UtilityTypes';
 export * from './types/SharedPropTypes';
+
