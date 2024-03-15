@@ -20,6 +20,8 @@ public class RNICleanableViewItem {
   
   public var eventDelegates =
     MulticastDelegate<RNICleanableViewEventsNotifiable>();
+    
+  var _isQueuedForCleanup = false;
   
   public init(
     key: Int,
