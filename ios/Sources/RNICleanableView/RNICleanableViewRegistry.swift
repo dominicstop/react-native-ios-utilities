@@ -31,13 +31,22 @@ public final class RNICleanableViewRegistry {
   weak var _bridge: RCTBridge?;
   
   var _cleanupQueue: [CleanupQueueItem] = [];
+  
   var _isCleanupActive = false;
+  var _shouldAbortNextCleanup = false;
   
   // MARK: - Functions
   // -----------------
   
   public init(){
-    // no-op
+    #if DEBUG
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(Self._onRCTBridgeWillReloadNotification(_:)),
+      name: NSNotification.Name.RCTBridgeWillReload,
+      object: nil
+    );
+    #endif
   };
   
   public func register(
@@ -171,6 +180,13 @@ public final class RNICleanableViewRegistry {
     
     RCTExecuteOnUIManagerQueue {
       bridge.uiManager.addUIBlock { _,_ in
+        #if DEBUG
+        guard !self._shouldAbortNextCleanup else {
+          self._shouldAbortNextCleanup = false;
+          return;
+        };
+        #endif
+      
         DispatchQueue.main.async {
           self._recursivelyDequeue(
             sender: sender,
@@ -205,6 +221,13 @@ public final class RNICleanableViewRegistry {
   
   // MARK: - Internal Functions
   // --------------------------
+  
+  #if DEBUG
+  @objc func _onRCTBridgeWillReloadNotification(_ notification: Notification){
+    self._cleanupQueue = [];
+    self._shouldAbortNextCleanup = true;
+  };
+  #endif
   
   func _setBridgeIfNeeded(usingDelegate delegate: RNICleanableViewDelegate){
     guard self._bridge == nil else { return };
