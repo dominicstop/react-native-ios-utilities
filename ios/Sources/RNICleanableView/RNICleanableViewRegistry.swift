@@ -271,6 +271,12 @@ public final class RNICleanableViewRegistry {
   func _addToQueue(forEntry entry: RNICleanableViewItem){
     entry._isQueuedForCleanup = true;
     
+    var allViewsInCleanupQueue: [UIView] = [];
+    
+    self._cleanupQueue.forEach {
+      allViewsInCleanupQueue += $0.viewsToCleanup;
+    };
+    
     var viewsToCleanup: [UIView] = [];
     var otherItemsToCleanup: [RNICleanableViewItem] = [];
     
@@ -285,7 +291,11 @@ public final class RNICleanableViewRegistry {
         view === $0.delegate;
       };
       
-      let isDuplicate = hasMatchA || hasMatchB;
+      let hasMatchC = allViewsInCleanupQueue.contains {
+        view === $0;
+      };
+      
+      let isDuplicate = hasMatchA || hasMatchB || hasMatchC;
       
       // skip duplicates
       guard !isDuplicate else { continue };
