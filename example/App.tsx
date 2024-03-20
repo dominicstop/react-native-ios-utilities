@@ -13,7 +13,7 @@ import { HomeScreen } from './src/screens/HomeScreen';
 
 setSharedEnvForRNIUtilitiesModule({
   debugShouldLogViewRegistryEntryRemoval: true,
-  overrideEnableLogStackTrace: true,
+  overrideEnableLogStackTrace: false,
   overrideShouldLogFileMetadata: true,
   overrideShouldLogFilePath: true
 });

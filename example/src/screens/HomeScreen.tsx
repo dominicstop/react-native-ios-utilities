@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { StyleSheet, SafeAreaView, FlatList, ListRenderItem } from 'react-native';
 
+import { SHARED_ENV } from '../constants/SharedEnv';
+
 import type { ExampleItemProps } from '../examples/SharedExampleTypes';
 
 import { RNIDetachedViewTest01 } from '../examples/RNIDetachedViewTest01';
-import { SHARED_ENV } from '../constants/SharedEnv';
+import { ContextMenuTest01 } from '../examples/ContextMenuTest01';
+
 
 type ExampleListItem = {
   id: number;
@@ -14,6 +17,7 @@ type ExampleListItem = {
 const EXAMPLE_COMPONENTS = (() => {
   const items = [
     RNIDetachedViewTest01,
+    ContextMenuTest01,
   ];
 
   if(SHARED_ENV.enableReactNavigation){
