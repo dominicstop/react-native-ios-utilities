@@ -1,6 +1,6 @@
 {
   "name": "react-native-ios-utilities",
-  "version": "4.4.2",
+  "version": "4.4.3",
   "description": "Utilities for react-native + iOS",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -37,7 +37,7 @@
     "nuke-node-modules": "rm -rfv ./node_modules ; cd example ; rm -rfv ./node_modules ; cd ../..",
     "nuke-example-pods": "cd example/ios ; pod cache clean --all ; rm -rfv ./Pods ./build ; cd ../..",
     "nuke-all": "yarn run nuke-node-modules ; yarn run nuke-example-pods",
-    "update-dep-pods": "cd example/ios ; pod update DGSwiftUtilities ComputableLayout AdaptiveModal ContextMenuAuxiliaryPreview ; pod install --repo-update ; cd ../..", 
+    "update-dep-pods": "cd example/ios ; pod update DGSwiftUtilities ComputableLayout AdaptiveModal ContextMenuAuxiliaryPreview ; pod install --repo-update ; cd ../..",
     "update-dep": "cd example ; yarn add react-native-ios-context-menu react-native-ios-adaptive-modal ; cd .. ; yarn run update-dep-pods",
     "update-dep-next": "cd example ; yarn add react-native-ios-context-menu@next react-native-ios-adaptive-modal@next ; cd .. ; yarn run update-dep-pods"
   },
