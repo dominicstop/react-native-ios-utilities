@@ -6,6 +6,7 @@ export type RNICleanableViewRegistryEnv = {
   shouldAllowForceCleanup?: boolean;
   shouldIncludeDelegateInViewsToCleanupByDefault?: boolean;
   shouldProceedCleanupWhenDelegateIsNilByDefault?: boolean;
+  shouldUseUIManagerQueueForCleanup?: boolean;
   debugShouldLogCleanup?: boolean;
   debugShouldLogRegister?: boolean;
 };

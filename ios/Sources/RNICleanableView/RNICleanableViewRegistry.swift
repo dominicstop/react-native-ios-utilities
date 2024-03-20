@@ -178,31 +178,35 @@ public final class RNICleanableViewRegistry {
     
     guard !self._isCleanupActive else { return };
     
-    guard let bridge = self._bridge else {
-      throw RNIUtilitiesError(
-        errorCode: .unexpectedNilValue,
-        description: "Unable to get react bridge"
-      );
-    };
-    
-    RCTExecuteOnUIManagerQueue {
-      bridge.uiManager.addUIBlock { _,_ in
-        #if DEBUG
-        guard !self._shouldAbortNextCleanup else {
-          self._isCleanupActive = false;
-          self._shouldAbortNextCleanup = false;
-          return;
-        };
-        #endif
+    if RNICleanableViewRegistryEnv.shouldUseUIManagerQueueForCleanup {
+      guard let bridge = self._bridge else {
+        throw RNIUtilitiesError(
+          errorCode: .unexpectedNilValue,
+          description: "Unable to get react bridge"
+        );
+      };
       
-        DispatchQueue.main.async {
-          self._recursivelyDequeue(
-            sender: sender,
-            shouldForceCleanup: shouldForceCleanup,
-            cleanupTrigger: cleanupTrigger
-          );
+      RCTExecuteOnUIManagerQueue {
+        bridge.uiManager.addUIBlock { _,_ in
+          #if DEBUG
+          guard !self._shouldAbortNextCleanup else { return };
+          #endif
+        
+          DispatchQueue.main.async {
+            self._recursivelyDequeue(
+              sender: sender,
+              shouldForceCleanup: shouldForceCleanup,
+              cleanupTrigger: cleanupTrigger
+            );
+          };
         };
       };
+    } else {
+      self._recursivelyDequeue(
+        sender: sender,
+        shouldForceCleanup: shouldForceCleanup,
+        cleanupTrigger: cleanupTrigger
+      );
     };
   };
   

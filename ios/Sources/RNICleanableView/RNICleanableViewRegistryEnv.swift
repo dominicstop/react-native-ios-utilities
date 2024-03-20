@@ -12,6 +12,7 @@ public struct RNICleanableViewRegistryEnv {
 
   public static var shouldGloballyDisableCleanup = false;
   public static var shouldAllowForceCleanup = true;
+  public static var shouldUseUIManagerQueueForCleanup = true;
   
   public static var shouldIncludeDelegateInViewsToCleanupByDefault = false;
   public static var shouldProceedCleanupWhenDelegateIsNilByDefault = true;
@@ -60,6 +61,13 @@ public struct RNICleanableViewRegistryEnv {
       type: Bool.self
     ) {
       Self.debugShouldLogRegister = value;
+    };
+    
+    if let value = try? dict.getValueFromDictionary(
+      forKey: "shouldUseUIManagerQueueForCleanup",
+      type: Bool.self
+    ) {
+      Self.shouldUseUIManagerQueueForCleanup = value;
     };
   };
 };
