@@ -16,9 +16,9 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
     setShouldMountDetachedView
   ] = React.useState(true);
   
-  
   return (
-    <ExampleItemCard
+    <ExampleItemCard  
+      style={props.style}
       index={props.index}
       title={'RNIDetachedViewTest01'}
       subtitle={'TBA'}
