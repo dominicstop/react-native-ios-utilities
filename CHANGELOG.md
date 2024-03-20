@@ -6,6 +6,11 @@
 
 ## v4.4.3
 
+* **Release**: [v4.4.3](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.3) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.2...v4.4.3)
+* **Summary**: Update cleanup logic to fix crash when the app is being reloaded
+
+<br><br>
+
 ## v4.4.2
 
 * **Release**: [v4.4.2](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.2) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.1...v4.4.2)
