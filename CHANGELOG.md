@@ -4,6 +4,16 @@
 
 <br>
 
+## v4.4.4
+
+* **Release**: [v4.4.3](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.4) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.3...v4.4.4)
+* **Summary**: Update view cleanup logic.
+  * Fix view cleanup logic being disabled on subsequent app reloads.
+  * `RNICleanableViewRegistryEnv` - Add `shouldUseUIManagerQueueForCleanup` option to `setSharedEnvForRNICleanableViewRegistry`.
+
+
+<br><br>
+
 ## v4.4.3
 
 * **Release**: [v4.4.3](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.3) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.2...v4.4.3)
