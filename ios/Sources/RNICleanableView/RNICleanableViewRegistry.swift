@@ -46,6 +46,13 @@ public final class RNICleanableViewRegistry {
       name: NSNotification.Name.RCTBridgeWillReload,
       object: nil
     );
+    
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(Self._onRCTJavaScriptDidLoad(_:)),
+      name: NSNotification.Name.RCTJavaScriptDidLoad,
+      object: nil
+    );
     #endif
   };
   
@@ -182,6 +189,7 @@ public final class RNICleanableViewRegistry {
       bridge.uiManager.addUIBlock { _,_ in
         #if DEBUG
         guard !self._shouldAbortNextCleanup else {
+          self._isCleanupActive = false;
           self._shouldAbortNextCleanup = false;
           return;
         };
@@ -226,6 +234,11 @@ public final class RNICleanableViewRegistry {
   @objc func _onRCTBridgeWillReloadNotification(_ notification: Notification){
     self._cleanupQueue = [];
     self._shouldAbortNextCleanup = true;
+  };
+  
+  @objc func _onRCTJavaScriptDidLoad(_ notification: Notification){
+    self._isCleanupActive = false;
+    self._shouldAbortNextCleanup = false;
   };
   #endif
   
