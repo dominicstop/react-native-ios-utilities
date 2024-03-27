@@ -187,7 +187,7 @@ public final class RNICleanableViewRegistry {
       };
       
       RCTExecuteOnUIManagerQueue {
-        bridge.uiManager.addUIBlock { _,_ in
+        bridge.uiManager?.addUIBlock { _,_ in
           #if DEBUG
           guard !self._shouldAbortNextCleanup else { return };
           #endif
