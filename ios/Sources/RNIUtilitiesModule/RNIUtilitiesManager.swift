@@ -22,11 +22,20 @@ public final class RNIUtilitiesManager {
   public var eventDelegates =
     MulticastDelegate<RNIUtilitiesManagerEventsNotifiable>();
   
+  public var _debugBridgeReloadCounter = 0;
   
   // MARK: - Init + Setup
   // --------------------
   
   public init(){
+    self._setupRegisterDelegates();
+    
+    #if DEBUG
+    self._setupDebugObservers();
+    #endif
+  };
+  
+  func _setupRegisterDelegates(){
     let singletonClasses =
       ClassRegistry.allClasses.getClasses(ofType: Singleton.Type.self);
       
@@ -45,9 +54,40 @@ public final class RNIUtilitiesManager {
     self.eventDelegates.add(self);
   };
   
+  #if DEBUG
+  func _setupDebugObservers(){
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(Self._onRCTBridgeWillReloadNotification(_:)),
+      name: NSNotification.Name.RCTBridgeWillReload,
+      object: nil
+    );
+  };
+  #endif
+  
+  #if DEBUG
+  @objc func _onRCTBridgeWillReloadNotification(_ notification: Notification){
+    self._debugBridgeReloadCounter += 1;
+  };
+  #endif
   
   // MARK: - Public Functions
   // ------------------------
+  
+  func _createBridgeReloadDidChangeBlock() -> (() -> Bool) {
+    #if DEBUG
+    let counterOld = self._debugBridgeReloadCounter;
+    
+    return {
+      let counterNew = Self.shared._debugBridgeReloadCounter;
+      return counterOld != counterNew;
+    };
+    #else
+    return {
+      return false
+    };
+    #endif
+  };
   
   func appendToSharedEnv(newEntries: Dictionary<String, Any>) {
     let oldSharedEnv = self.sharedEnv;
