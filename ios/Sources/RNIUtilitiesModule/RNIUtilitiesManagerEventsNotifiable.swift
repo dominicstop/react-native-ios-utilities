@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DGSwiftUtilities
 
 
 public protocol RNIUtilitiesManagerEventsNotifiable: Singleton {

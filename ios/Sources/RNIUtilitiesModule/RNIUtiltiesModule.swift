@@ -9,11 +9,6 @@ import UIKit
 import ExpoModulesCore
 import DGSwiftUtilities
 
-public protocol Singleton {
-  static var shared: Self { get };
-  
-  init();
-};
 
 public class RNIUtilitiesModule: Module {
 
