@@ -4,12 +4,18 @@
 
 <br>
 
+## v4.4.6
+
+* **Releases**: [v4.4.6-0](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.6-0) ([changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.5...v4.4.6-0))
+* **Summary**: TBA
+
+<br><br>
+
 ## v4.4.5
 
 * **Release**: [v4.4.5](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.5) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.4...v4.4.5)
 * **Summary**: Merge [PR #2](https://github.com/dominicstop/react-native-ios-utilities/pull/2) (by [Albert Gao](https://github.com/Albert-Gao))
   * Fix: Unexpectedly found nil while implicitly unwrapping an Optional
-
 
 <br><br>
 
