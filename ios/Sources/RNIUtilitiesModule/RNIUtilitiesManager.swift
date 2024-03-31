@@ -14,10 +14,17 @@ public final class RNIUtilitiesManager {
   
   public static let shared: RNIUtilitiesManager = .init();
   
+  // MARK: - Properties
+  // ------------------
+  
   public var sharedEnv: Dictionary<String, Any> = [:];
   
   public var eventDelegates =
     MulticastDelegate<RNIUtilitiesManagerEventsNotifiable>();
+  
+  
+  // MARK: - Init + Setup
+  // --------------------
   
   public init(){
     let singletonClasses =
@@ -37,6 +44,10 @@ public final class RNIUtilitiesManager {
     
     self.eventDelegates.add(self);
   };
+  
+  
+  // MARK: - Public Functions
+  // ------------------------
   
   func appendToSharedEnv(newEntries: Dictionary<String, Any>) {
     let oldSharedEnv = self.sharedEnv;
