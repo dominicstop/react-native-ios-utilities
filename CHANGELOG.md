@@ -4,9 +4,18 @@
 
 <br>
 
+## v4.4.5
+
+* **Release**: [v4.4.5](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.5) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.4...v4.4.5)
+* **Summary**: Merge [PR #2](https://github.com/dominicstop/react-native-ios-utilities/pull/2) (by [Albert Gao](https://github.com/Albert-Gao))
+  * Fix: Unexpectedly found nil while implicitly unwrapping an Optional
+
+
+<br><br>
+
 ## v4.4.4
 
-* **Release**: [v4.4.3](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.4) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.3...v4.4.4)
+* **Release**: [v4.4.4](https://github.com/dominicstop/react-native-ios-utilities/releases/tag/v4.4.4) | [changes](https://github.com/dominicstop/react-native-ios-utilities/compare/v4.4.3...v4.4.4)
 * **Summary**: Update view cleanup logic.
   * Fix view cleanup logic being disabled on subsequent app reloads.
   * `RNICleanableViewRegistryEnv` - Add `shouldUseUIManagerQueueForCleanup` option to `setSharedEnvForRNICleanableViewRegistry`.
