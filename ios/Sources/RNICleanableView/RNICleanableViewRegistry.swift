@@ -40,6 +40,10 @@ public final class RNICleanableViewRegistry {
   
   public init(){
     #if DEBUG
+    /// Invocation Order:
+    /// 1. `_onRCTBridgeWillReloadNotification`
+    /// 2. `_onRCTJavaScriptDidLoad`
+    
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(Self._onRCTBridgeWillReloadNotification(_:)),
@@ -172,13 +176,19 @@ public final class RNICleanableViewRegistry {
       );
     };
     
+    // item was already scheduled for cleanup, skip...
     guard !match._isQueuedForCleanup else { return };
-
     self._addToQueue(forEntry: match);
     
     guard !self._isCleanupActive else { return };
     
+    #if DEBUG
+    let checkIfBridgeDidReloadBlock =
+      RNIUtilitiesManagerShared._createBridgeReloadDidChangeBlock();
+    #endif
+    
     if RNICleanableViewRegistryEnv.shouldUseUIManagerQueueForCleanup {
+      // A - Schedule cleanup via `UIManager`...
       guard let bridge = self._bridge else {
         throw RNIUtilitiesError(
           errorCode: .unexpectedNilValue,
@@ -187,12 +197,20 @@ public final class RNICleanableViewRegistry {
       };
       
       RCTExecuteOnUIManagerQueue {
+        #if DEBUG
+        guard !checkIfBridgeDidReloadBlock() else { return };
+        #endif
+        
         bridge.uiManager?.addUIBlock { _,_ in
           #if DEBUG
-          guard !self._shouldAbortNextCleanup else { return };
+          guard !checkIfBridgeDidReloadBlock() else { return };
           #endif
-        
+          
           DispatchQueue.main.async {
+            #if DEBUG
+            guard !checkIfBridgeDidReloadBlock() else { return };
+            #endif
+            
             self._recursivelyDequeue(
               sender: sender,
               shouldForceCleanup: shouldForceCleanup,
@@ -233,7 +251,7 @@ public final class RNICleanableViewRegistry {
   
   // MARK: - Internal Functions
   // --------------------------
-  
+    
   #if DEBUG
   @objc func _onRCTBridgeWillReloadNotification(_ notification: Notification){
     self._cleanupQueue = [];
@@ -350,6 +368,12 @@ public final class RNICleanableViewRegistry {
   ){
   
     let nextRecursionCount = recursionCount + 1;
+    
+    if self._shouldAbortNextCleanup {
+      self._shouldAbortNextCleanup = false;
+      self._isCleanupActive = false;
+      return;
+    };
   
     guard self._cleanupQueue.count > 0,
           let item = self._cleanupQueue.first
@@ -381,6 +405,15 @@ public final class RNICleanableViewRegistry {
       shouldCleanup = true;
     };
     
+    func proceedToNextItemInQueue(){
+      self._recursivelyDequeue(
+        sender: sender,
+        shouldForceCleanup: shouldForceCleanup,
+        cleanupTrigger: cleanupTrigger,
+        recursionCount: nextRecursionCount
+      );
+    };
+    
     guard shouldCleanup else {
       #if DEBUG
       if RNICleanableViewRegistryEnv.debugShouldLogCleanup {
@@ -409,12 +442,7 @@ public final class RNICleanableViewRegistry {
       self.registry[item.entry.key] = item.entry;
     
       // proceed to next item...
-      self._recursivelyDequeue(
-        sender: sender,
-        shouldForceCleanup: shouldForceCleanup,
-        cleanupTrigger: cleanupTrigger,
-        recursionCount: nextRecursionCount
-      );
+      proceedToNextItemInQueue();
       return;
     };
     
@@ -447,16 +475,14 @@ public final class RNICleanableViewRegistry {
       );
     };
     
-    try? self._cleanup(views: item.viewsToCleanup) {
-      item.delegate?.notifyOnViewCleanupCompletion();
+    do {
+      try self._cleanup(views: item.viewsToCleanup) {
+        item.delegate?.notifyOnViewCleanupCompletion();
+        proceedToNextItemInQueue();
+      };
       
-      // proceed to next item...
-      self._recursivelyDequeue(
-        sender: sender,
-        shouldForceCleanup: shouldForceCleanup,
-        cleanupTrigger: cleanupTrigger,
-        recursionCount: nextRecursionCount
-      );
+    } catch {
+      proceedToNextItemInQueue();
     };
   };
   
