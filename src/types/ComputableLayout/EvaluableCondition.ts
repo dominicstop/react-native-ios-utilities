@@ -1,4 +1,4 @@
-import { CGRect, CGSize, UIEdgeInsets, UIDevice, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle, CGRectBase } from "../NativeTypes";
+import { CGRectNative, CGSize, UIEdgeInsets, UIDevice, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle, CGRectInit } from "../NativeTypes";
 import { NumericLogicalExpression } from "./NumericLogicalExpression";
 import { EvaluableConditionContext } from "./EvaluableConditionContext";
 import { StringComparisonMode } from "./StringComparisonMode";
@@ -12,7 +12,7 @@ export type EvaluableConditionFrameRectValue = {
  mode: 'statusBar';
 } | {
  mode: 'custom';
- value: CGRectBase;
+ value: CGRectInit;
 };
 
 export type EvaluableConditionSizeValue =  { 
@@ -31,7 +31,7 @@ export type EvaluableConditionSizeValue =  {
 export type EvaluableCondition = {
   mode: 'frameRect';
   of: EvaluableConditionFrameRectValue;
-  valueForKey: keyof CGRect;
+  valueForKey: keyof CGRectNative;
   condition: NumericLogicalExpression;
 } | {
   mode: 'size';

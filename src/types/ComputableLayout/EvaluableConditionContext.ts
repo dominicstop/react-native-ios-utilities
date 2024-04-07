@@ -1,14 +1,14 @@
-import { CGRect, UIEdgeInsets, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle } from "../NativeTypes";
+import { CGRectNative, UIEdgeInsets, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle } from "../NativeTypes";
 
 
 export type EvaluableConditionContext = {
 
-  windowFrame?: CGRect;
-  screenBounds: CGRect;
+  windowFrame?: CGRectNative;
+  screenBounds: CGRectNative;
 
-  targetViewFrame?: CGRect;
+  targetViewFrame?: CGRectNative;
 
-  statusBarFrame?: CGRect;
+  statusBarFrame?: CGRectNative;
   safeAreaInsets?: UIEdgeInsets;
 
   interfaceOrientation: UIInterfaceOrientation;

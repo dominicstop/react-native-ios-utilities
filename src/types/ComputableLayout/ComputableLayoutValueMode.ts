@@ -1,4 +1,4 @@
-import { CGRect, CGSize, UIEdgeInsets } from "../NativeTypes";
+import { CGRectNative, CGSize, UIEdgeInsets } from "../NativeTypes";
 import { ComputableLayoutValuePercentTarget } from "./ComputableLayoutValuePercentTarget";
 import { ComputableLayoutValueEvaluableCondition } from "./ComputableLayoutValueEvaluableCondition";
 import { EvaluableCondition } from "./EvaluableCondition";
@@ -18,7 +18,7 @@ export type ComputableLayoutValueMode = {
   insetKey: keyof UIEdgeInsets;
 } | {
   mode: 'keyboardScreenRect';
-  rectKey: keyof CGRect;
+  rectKey: keyof CGRectNative;
 } | {
   mode: 'keyboardRelativeSize';
   sizeKey: keyof CGSize;
