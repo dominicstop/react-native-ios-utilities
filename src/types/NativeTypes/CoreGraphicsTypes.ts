@@ -40,4 +40,24 @@ export type CGRectComputed = {
   // dictionaryRepresentation
 };
 
-export type CGRect = CGRectBase & CGRectComputed;
+/** Matches the `CGRect` init. for obj-c */
+export type CGRectObjC = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+/** Used for creating a `CGRect` from an object, i.e. JS -> Native */
+export type CGRectInit = CGRectBase | CGRectObjC;
+
+/** Represents a `CGRect` received from native, i.e. Native -> JS */
+export type CGRectNative = CGRectBase & CGRectComputed;
+
+/** 
+ * All the possible ways a `CGRect` could be represented.
+ * 
+ * Prefer to use either: `CGRectInit` or `CGRectNative` instead
+ * to avoid ambiguity.
+ * */
+export type CGRect = CGRectInit | CGRectNative;
