@@ -5,7 +5,8 @@
     "modules": [
       "RNIDummyViewModule",
       "RNIDetachedViewModule",
-      "RNIUtilitiesModule"
+      "RNIUtilitiesModule",
+      "RNIImageViewModule"
     ],
     "podspecPath": "./ReactNativeIosUtilities.podspec"
   }
