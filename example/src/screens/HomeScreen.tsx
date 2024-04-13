@@ -7,6 +7,7 @@ import type { ExampleItemProps } from '../examples/SharedExampleTypes';
 
 import { RNIDetachedViewTest01 } from '../examples/RNIDetachedViewTest01';
 import { ContextMenuTest01 } from '../examples/ContextMenuTest01';
+import { RNIImageViewTest01 } from '../examples/RNIImageViewTest01';
 
 
 type ExampleListItem = {
@@ -18,6 +19,7 @@ const EXAMPLE_COMPONENTS = (() => {
   const items = [
     RNIDetachedViewTest01,
     ContextMenuTest01,
+    RNIImageViewTest01,
   ];
 
   if(SHARED_ENV.enableReactNavigation){
