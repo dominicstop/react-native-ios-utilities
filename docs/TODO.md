@@ -6,7 +6,12 @@
 
 ## TODO - Current Tasks
 
-- [ ] `TODO:2023-10-05-17-00-32` - Impl: `RNIDummyView` Prop - Impl. `shouldAutoDetachFromSuperview`. 
+- [ ] Impl: `RNIImageView.contentMode` prop.
+- [ ] Impl: `RNIImageView.tintColor` prop.
+- [ ] Impl: `RNIImageView.highlightedImage` prop.
+- [ ] Impl: `RNIImageView.isHighlighted` prop.
+- [ ] Impl: `RNIImageView.preferredSymbolConfiguration` + ` UIImage.SymbolConfiguration` parsing.
+- [ ] Impl: `RNIImageView.symbolEffect` prop. 
 
 <br><br>
 
