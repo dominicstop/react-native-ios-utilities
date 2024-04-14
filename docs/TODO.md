@@ -10,12 +10,15 @@
 - [ ] Impl: `RNIImageView.tintColor` prop.
 - [ ] Impl: `RNIImageView.highlightedImage` prop.
 - [ ] Impl: `RNIImageView.isHighlighted` prop.
-- [ ] Impl: `RNIImageView.preferredSymbolConfiguration` + ` UIImage.SymbolConfiguration` parsing.
-- [ ] Impl: `RNIImageView.symbolEffect` prop. 
+- [ ] Impl: `RNIImageView` - Add support for symbol effects. 
 
 <br><br>
 
-## Version `next`
+## Completed
+
+- [x] Impl: `RNIImageView.preferredSymbolConfiguration` + ` UIImage.SymbolConfiguration` parsing.
+
+<br>
 
 - [x] `TODO:2023-10-05-17-01-58` - Impl: `RNIDummyView` - Impl, `RNIDummyViewRegistryManager`. 
 - [x] `TODO:2023-10-05-12-46-37` - Impl: `RNIDummyView` - Impl. `shouldCleanupOnComponentWillUnmount` prop.
