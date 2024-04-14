@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import { RNIDetachedView, RNIImageView } from 'react-native-ios-utilities';
+import { RNIDetachedView, RNIImageView, RNIImageViewModule } from 'react-native-ios-utilities';
 
 import type { ExampleItemProps } from '../SharedExampleTypes';
 import { ExampleItemCard } from '../../components/ExampleItemCard';
@@ -9,7 +9,23 @@ import { CardButton } from '../../components/Card';
 
 
 export function RNIImageViewTest01(props: ExampleItemProps) {
-  const ref = React.createRef<RNIDetachedView>();
+  const [counter, setCounter] = React.useState(0);
+  const [symbolsList, setSymbolsList] = React.useState<Array<string>>([]);
+
+  const symbolsListCount = symbolsList.length;
+  const currentSymbolListIndex = counter % symbolsListCount;
+
+  const currentSymbolListItem = symbolsList?.[counter] ?? 'star';
+
+  React.useEffect(() => {
+    const getSymbols = async () => {
+      const result = await RNIImageViewModule.getAllSFSymbols();
+      const keys = Object.keys(result);
+      setSymbolsList(keys);
+    };
+
+    getSymbols();
+  }, []);
 
   const [
     shouldMountDetachedView,
@@ -35,7 +51,7 @@ export function RNIImageViewTest01(props: ExampleItemProps) {
         imageConfig={{
           type: 'IMAGE_SYSTEM',
           imageValue: {
-            systemName: 'star',
+            systemName: currentSymbolListItem,
           },
         }}
         preferredSymbolConfiguration={{
@@ -48,7 +64,14 @@ export function RNIImageViewTest01(props: ExampleItemProps) {
           }],
         }}
       />
-    </ExampleItemCard>
+      <CardButton
+        title={'Next Icon'}
+        subtitle={`Index: ${currentSymbolListIndex} of ${symbolsListCount - 1}`}
+        onPress={() => {
+          setCounter(prevValue => prevValue + 1);
+        }}
+      />
+  </ExampleItemCard>
   );
 };
 
