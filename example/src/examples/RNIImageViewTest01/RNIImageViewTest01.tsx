@@ -37,9 +37,15 @@ export function RNIImageViewTest01(props: ExampleItemProps) {
           imageValue: {
             systemName: 'star',
           },
-          imageOptions: {
-            tint: 'red',
-          },
+        }}
+        preferredSymbolConfiguration={{
+          imageSymbolConfigItems: [{
+            pointSize: 100,
+          }, {
+            weight: 'bold',
+          }, {
+            paletteColors: ['orange', 'green'],
+          }],
         }}
       />
     </ExampleItemCard>

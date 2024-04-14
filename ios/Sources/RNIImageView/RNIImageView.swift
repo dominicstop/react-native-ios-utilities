@@ -25,6 +25,23 @@ public class RNIImageView: ExpoView {
     }
   };
   
+  public var preferredSymbolConfiguration: UIImage.SymbolConfiguration?;
+  public var preferredSymbolConfigurationProp: Dictionary<String, Any>? {
+    willSet {
+      defer {
+        self.imageView?.preferredSymbolConfiguration = self.preferredSymbolConfiguration;
+      };
+      
+      guard let newValue = newValue else {
+        self.preferredSymbolConfiguration = nil;
+        return;
+      };
+      
+      self.preferredSymbolConfiguration =
+        try? UIImage.SymbolConfiguration.create(fromDict: newValue);
+    }
+  };
+  
   public required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext);
     self._setupView();
@@ -35,6 +52,7 @@ public class RNIImageView: ExpoView {
     self.imageView = imageView;
     
     imageView.image = self.imageConfig?.image;
+    imageView.preferredSymbolConfiguration = self.preferredSymbolConfiguration;
     
     imageView.translatesAutoresizingMaskIntoConstraints = false;
     self.addSubview(imageView);

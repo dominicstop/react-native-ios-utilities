@@ -18,6 +18,10 @@ public class RNIImageViewModule: Module {
       Prop("imageConfig"){
         $0.imageConfigProp = $1;
       };
+      
+      Prop("preferredSymbolConfiguration"){
+        $0.preferredSymbolConfigurationProp = $1;
+      };
     };
   };
 };

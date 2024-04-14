@@ -19,12 +19,14 @@ export class RNIImageView extends React.PureComponent<RNIImageViewProps> {
   private getProps() {
     const { 
       imageConfig,
+      preferredSymbolConfiguration,
       ...viewProps
     } = this.props;
 
     return {
       nativeProps: {
         imageConfig,
+        preferredSymbolConfiguration,
       },
       viewProps,
     };
