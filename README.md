@@ -6,9 +6,9 @@ See [`CHANGELOG`](./CHANGELOG.md) for the release history, and the [version comp
 
 <br><br>
 
-## 🚧⚠️ Library + Documentation WIP 🚧⚠️
+## 🚧⚠️ Re-Write WIP 🚧⚠️
 
-This library and its documentation is currently a ✨work-in-progress ✨
+This library is being re-written to support the new architecture. Please see this is [issue](https://github.com/dominicstop/react-native-ios-context-menu/issues/100#issuecomment-2077986438) for progress 😔
 
 <br><br>
 
