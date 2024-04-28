@@ -4,6 +4,13 @@ import { StyleSheet, View } from 'react-native';
 import { IosUtilitiesView } from 'react-native-ios-utilities';
 
 export default function App() {
+  React.useEffect(() => {
+    const nativeFabricUIManager = global?.nativeFabricUIManager;
+    const isUsingNewArch = nativeFabricUIManager != null;
+
+    console.log(`isUsingNewArch: ${isUsingNewArch}`);
+  }, []);
+  
   return (
     <View style={styles.container}>
       <IosUtilitiesView color="#32a852" style={styles.box} />
