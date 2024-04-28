@@ -3,7 +3,7 @@
 #import "RCTBridge.h"
 #import "Utils.h"
 
-#import "react_native_ios_utilities-Swift.h"
+// #import "react_native_ios_utilities-Swift.h"
 
 
 @interface IosUtilitiesViewManager : RCTViewManager
@@ -18,7 +18,8 @@ RCT_EXPORT_MODULE(IosUtilitiesView)
   
   UIView *view = [UIView new];
   
-  NSNumber *result = @([TestClass addWithA:10 b:20]);
+  // NSNumber *result = @([TestClass addWithA:10 b:20]);
+  NSNumber *result = 0;
   
   UILabel *label = [UILabel new];
   label.text = [result.stringValue stringByAppendingString:@" Hello World, New Arch "];
