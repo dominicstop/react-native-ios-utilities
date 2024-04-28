@@ -27,6 +27,7 @@
   ],
   "scripts": {
     "example": "yarn workspace react-native-ios-utilities-example",
+    "pod-install": "cd example/ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
