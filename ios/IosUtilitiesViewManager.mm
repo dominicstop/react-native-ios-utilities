@@ -5,6 +5,7 @@
 
 #import "react_native_ios_utilities-Swift.h"
 
+
 @interface IosUtilitiesViewManager : RCTViewManager
 @end
 

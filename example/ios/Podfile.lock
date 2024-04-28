@@ -950,7 +950,6 @@ PODS:
     - React-graphics
     - React-ImageManager
     - React-NativeModulesApple
-    - React-RCTAppDelegate
     - React-RCTFabric
     - React-rendererdebug
     - React-utils
@@ -1395,15 +1394,15 @@ SPEC CHECKSUMS:
   React-jsitracing: 36a2bbc272300313653d980de5ab700ec86c534a
   React-logger: 03f2f7b955cfe24593a2b8c9705c23e142d1ad24
   React-Mapbuffer: 5e05d78fe6505f4a054b86f415733d4ad02dd314
-  react-native-ios-utilities: 845be8a0b3a5b3a0300aecc75d9317a0233f8694
+  react-native-ios-utilities: d366b97df44e94717790cf4accd9f49d2ab594cd
   React-nativeconfig: 951ec32f632e81cbd7d40aebb3211313251c092e
   React-NativeModulesApple: 0b3a42ca90069119ef79d8b2327d01441d71abd4
   React-perflogger: 271f1111779fef70f9502d1d38da5132e5585230
   React-RCTActionSheet: 5d6fb9adb11ab1bfbce6695a2b785767e4658c53
   React-RCTAnimation: 86ace32c56e69b3822e7e5184ea83a79d47fc7b9
-  React-RCTAppDelegate: 72f997b4e418d9db8715f12b2edc002fd583e9ec
+  React-RCTAppDelegate: 74b45c4e3c1c23db88385d74cf4f5a8500694527
   React-RCTBlob: fb91c62a549f004e251235c65c665c6890a923a3
-  React-RCTFabric: 593660526e2b6b59857acf9585de1247660e9b68
+  React-RCTFabric: af6b9bc4aa9dfa0af1a1bcf5d8e5c5b1f17ae99c
   React-RCTImage: b482f07cfdbe8e413edbf9d85953cecdb569472c
   React-RCTLinking: fbd73a66cab34df69b2389c17f200e4722890fd9
   React-RCTNetwork: fbdd716fbd6e53feb6d8e00eeb85e8184ad42ac8
@@ -1424,4 +1423,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4addf976769fc8cc864326d863bd182501265a79
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.14.2
