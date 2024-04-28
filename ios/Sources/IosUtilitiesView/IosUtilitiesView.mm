@@ -9,6 +9,8 @@
 #import "RCTFabricComponentsPlugins.h"
 #import "Utils.h"
 
+#import "react_native_ios_utilities-Swift.h"
+
 using namespace facebook::react;
 
 @interface IosUtilitiesView () <RCTIosUtilitiesViewViewProtocol>
@@ -30,9 +32,40 @@ using namespace facebook::react;
     static const auto defaultProps = std::make_shared<const IosUtilitiesViewProps>();
     _props = defaultProps;
 
-    _view = [[UIView alloc] init];
+    UIView *view = [UIView new];
+    self->_view = view;
+    
+    TestDummyClass *dummy = [TestDummyClass new];
+    NSNumber *result = @([dummy addWithA:10 b:20]);
+    
+    UILabel *label = [UILabel new];
+    label.text = [result.stringValue stringByAppendingString:@" Hello World, New Arch "];
+    label.textColor = [UIColor blackColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    [view addSubview:label];
 
-    self.contentView = _view;
+    NSArray *constraints = @[
+      [NSLayoutConstraint constraintWithItem:label
+                                   attribute:NSLayoutAttributeCenterX
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:label
+                                   attribute:NSLayoutAttributeCenterX
+                                  multiplier:1.0
+                                    constant:0.0],
+                                    
+      [NSLayoutConstraint constraintWithItem:label
+                                   attribute:NSLayoutAttributeCenterY
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:label
+                                   attribute:NSLayoutAttributeCenterY
+                                  multiplier:1.0
+                                    constant:0.0],
+    ];
+    
+    [NSLayoutConstraint activateConstraints:constraints];
+    self.contentView = view;
   }
 
   return self;
@@ -44,8 +77,10 @@ using namespace facebook::react;
     const auto &newViewProps = *std::static_pointer_cast<IosUtilitiesViewProps const>(props);
 
     if (oldViewProps.color != newViewProps.color) {
-        NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.color.c_str()];
-        [_view setBackgroundColor: [Utils hexStringToColor:colorToConvert]];
+      const char *colorStringRaw = newViewProps.color.c_str();
+      NSString *colorString = [NSString stringWithUTF8String:colorStringRaw];
+      UIColor *color = [Utils hexStringToColor:colorString];
+      [_view setBackgroundColor: color];
     }
 
     [super updateProps:props oldProps:oldProps];

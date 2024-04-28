@@ -4,7 +4,7 @@
 
 @implementation Utils
 
-+ hexStringToColor:(NSString *)stringToConvert
++ (UIColor *)hexStringToColor:(NSString *)stringToConvert
 {
     NSString *noHashString = [stringToConvert stringByReplacingOccurrencesOfString:@"#" withString:@""];
     NSScanner *stringScanner = [NSScanner scannerWithString:noHashString];
