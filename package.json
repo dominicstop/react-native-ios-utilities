@@ -135,5 +135,10 @@
         }
       ]
     ]
+  },
+  "codegenConfig": {
+    "name": "RNIosUtilitiesViewSpec",
+    "type": "components",
+    "jsSrcsDir": "src"
   }
 }
