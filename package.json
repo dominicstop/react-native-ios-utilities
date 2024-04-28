@@ -32,7 +32,8 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it"
+    "release": "release-it",
+    "pod-install": "cd example/ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install"
   },
   "keywords": [
     "react-native",
