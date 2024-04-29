@@ -1,2 +1,1 @@
-export { default as IosUtilitiesView } from './IosUtilitiesViewNativeComponent';
-export * from './IosUtilitiesViewNativeComponent';
+export * from './native_components/IosUtilitiesView';
