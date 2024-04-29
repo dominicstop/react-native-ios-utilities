@@ -9,7 +9,7 @@
 #import "RCTFabricComponentsPlugins.h"
 #import "Utils.h"
 
-#import "react_native_ios_utilities-Swift.h"
+#import "react-native-ios-utilities/Swift.h"
 
 using namespace facebook::react;
 
