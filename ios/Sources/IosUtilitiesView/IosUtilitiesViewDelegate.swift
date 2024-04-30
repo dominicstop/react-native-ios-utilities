@@ -9,7 +9,7 @@ import UIKit
 
 
 @objc
-public class IosUtilitiesViewDelegate: UIView, RNIViewLifecycleEventsNotifiable {
+public class IosUtilitiesViewDelegate: UIView {
   public var reactProps: NSDictionary = [:];
   
   public override init(frame: CGRect) {
@@ -38,5 +38,22 @@ public class IosUtilitiesViewDelegate: UIView, RNIViewLifecycleEventsNotifiable 
         equalTo: self.centerYAnchor
       ),
     ]);
+  };
+};
+
+extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
+  
+  public func notifyOnUpdateLayoutMetrics(
+    sender: RNIViewLifecycleEventsNotifying,
+    oldLayoutMetrics: RNILayoutMetrics,
+    newLayoutMetrics: RNILayoutMetrics
+  ) {
+    
+    print(
+      "IosUtilitiesViewDelegate.notifyOnUpdateLayoutMetrics",
+      "\n - oldLayoutMetric.frame:", oldLayoutMetrics.frame,
+      "\n - oldLayoutMetric.frame:", newLayoutMetrics.frame,
+      "\n"
+    );
   };
 };

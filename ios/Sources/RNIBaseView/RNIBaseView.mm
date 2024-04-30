@@ -6,7 +6,10 @@
 //
 
 #ifdef RCT_NEW_ARCH_ENABLED
-#import <react-native-ios-utilities/RNIBaseView.h>
+#import "RNIBaseView.h"
+#import "react-native-ios-utilities/Swift.h"
+
+#import <react-native-ios-utilities/RNIObjcUtils.h>
 
 #import <react/renderer/components/RNIosUtilitiesViewSpec/ComponentDescriptors.h>
 #import <react/renderer/components/RNIosUtilitiesViewSpec/EventEmitters.h>
@@ -14,9 +17,7 @@
 #import <react/renderer/components/RNIosUtilitiesViewSpec/RCTComponentViewHelpers.h>
 
 #import "RCTFabricComponentsPlugins.h"
-#import "Utils.h"
 
-#import "react-native-ios-utilities/Swift.h"
 
 using namespace facebook::react;
 
@@ -60,24 +61,32 @@ using namespace facebook::react;
   
   self.lifecycleEventDelegate = viewDelegate;
   self.contentView = viewDelegate;
-
-  static const auto defaultProps = std::make_shared<const IosUtilitiesViewProps>();
-  self->_props = defaultProps;
     
   if ([viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:frame:)]) {
     [viewDelegate notifyOnInitWithSender:self frame:frame];
   }
-
+  
   return self;
 }
 
-- (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
+- (void)updateLayoutMetrics:(const facebook::react::LayoutMetrics &)layoutMetrics
+           oldLayoutMetrics:(const facebook::react::LayoutMetrics &)oldLayoutMetrics
 {
-  const auto &oldViewProps = *std::static_pointer_cast<IosUtilitiesViewProps const>(_props);
-  const auto &newViewProps = *std::static_pointer_cast<IosUtilitiesViewProps const>(props);
-
-  [super updateProps:props oldProps:oldProps];
-}
+  [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
+  
+  BOOL shouldNotifyDelegate =
+       self.lifecycleEventDelegate != nil
+    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
+  
+  if (shouldNotifyDelegate) {
+    RNILayoutMetrics *layoutMetricsOld = [RNIObjcUtils createRNILayoutMetricsFrom:oldLayoutMetrics];
+    RNILayoutMetrics *layoutMetricsNew = [RNIObjcUtils createRNILayoutMetricsFrom:layoutMetrics];
+    
+    [self.lifecycleEventDelegate notifyOnUpdateLayoutMetricsWithSender:self
+                                                       oldLayoutMetrics:layoutMetricsOld
+                                                       newLayoutMetrics:layoutMetricsNew];
+  }
+};
 
 @end
 #endif

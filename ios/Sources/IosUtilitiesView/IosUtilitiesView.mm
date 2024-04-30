@@ -28,10 +28,12 @@ using namespace facebook::react;
   return concreteComponentDescriptorProvider<IosUtilitiesViewComponentDescriptor>();
 }
 
-
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
+  
+  static const auto defaultProps = std::make_shared<const IosUtilitiesViewProps>();
+  self->_props = defaultProps;
+
   self = [super initWithFrame:frame];
   if(self == nil){
     return nil;

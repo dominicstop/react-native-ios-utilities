@@ -19,4 +19,11 @@ public protocol RNIViewLifecycleEventsNotifiable where Self: UIView  {
     sender: RNIViewLifecycleEventsNotifying,
     frame: CGRect
   );
+  
+  @objc
+  optional func notifyOnUpdateLayoutMetrics(
+    sender: RNIViewLifecycleEventsNotifying,
+    oldLayoutMetrics: RNILayoutMetrics,
+    newLayoutMetrics: RNILayoutMetrics
+  );
 };
