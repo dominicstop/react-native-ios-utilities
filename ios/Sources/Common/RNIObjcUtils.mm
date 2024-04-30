@@ -5,15 +5,18 @@
 //  Created by Dominic Go on 4/30/24.
 //
 
-#import <Foundation/Foundation.h>
-#include <folly/dynamic.h>
+#import "RNIObjcUtils.h"
+#import "react-native-ios-utilities/Swift.h"
 
-@interface RNIObjcUtils : NSObject
-@end
+#import <Foundation/Foundation.h>
+#import <folly/dynamic.h>
+#import <React/RCTConversions.h>
+
 
 @implementation RNIObjcUtils
 
-+ (id)convertFollyDynamicToId: (const folly::dynamic*)dyn {
++ (id)convertFollyDynamicToId: (const folly::dynamic*)dyn
+{
   switch (dyn->type()) {
     case folly::dynamic::NULLT:
       return nil;
@@ -31,7 +34,7 @@
       return [[NSString alloc] initWithBytes:dyn->c_str()
                                       length:dyn->size()
                                     encoding:NSUTF8StringEncoding];
-      
+    
     case folly::dynamic::ARRAY: {
       NSMutableArray *array =
         [[NSMutableArray alloc] initWithCapacity:dyn->size()];
@@ -65,7 +68,39 @@
   return nil;
 }
 
-+ (id)alloc {
++ (RNILayoutMetrics *)createRNILayoutMetricsFrom: (facebook::react::LayoutMetrics)layoutMetrics
+{
+  RNILayoutMetrics *swiftLayoutMetrics = [RNILayoutMetrics new];
+  
+  swiftLayoutMetrics.frame =
+    RCTCGRectFromRect(layoutMetrics.frame);
+    
+  swiftLayoutMetrics.contentInsets =
+    RCTUIEdgeInsetsFromEdgeInsets(layoutMetrics.contentInsets);
+    
+  swiftLayoutMetrics.overflowInset =
+    RCTUIEdgeInsetsFromEdgeInsets(layoutMetrics.overflowInset);
+    
+  swiftLayoutMetrics.contentFrame =
+    RCTCGRectFromRect(layoutMetrics.getContentFrame());
+    
+  swiftLayoutMetrics.paddingFrame =
+    RCTCGRectFromRect(layoutMetrics.getPaddingFrame());
+    
+  swiftLayoutMetrics.displayTypeRaw =
+    static_cast<int>(layoutMetrics.displayType);
+    
+  swiftLayoutMetrics.positionTypeRaw =
+    static_cast<int>(layoutMetrics.positionType);
+    
+  swiftLayoutMetrics.layoutDirectionRaw =
+    static_cast<int>(layoutMetrics.layoutDirection);
+  
+  return swiftLayoutMetrics;
+}
+
++ (id)alloc
+{
   [NSException raise:@"Cannot be instantiated!"
               format:@"Static class 'RNIObjcUtils' cannot be instantiated!"];
   return nil;
