@@ -95,6 +95,7 @@ Pod::Spec.new do |s|
   install_modules_dependencies(s)
 
   s.source_files = 'ios/**/*.{h,m,mm,swift,cpp}', 'common/cpp/**/*.{h,cpp}'
+  s.public_header_files = 'ios/Sources/**/*.h'
 
   exclude_files = ['ios/Tests/']
   if !fabric_enabled
