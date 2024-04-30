@@ -1,17 +1,22 @@
-// This guard prevent this file to be compiled in the old architecture.
-#ifdef RCT_NEW_ARCH_ENABLED
-#import <React/RCTViewComponentView.h>
 #import <UIKit/UIKit.h>
 
-#ifndef IosUtilitiesViewNativeComponent_h
-#define IosUtilitiesViewNativeComponent_h
+#ifdef RCT_NEW_ARCH_ENABLED
+#import <React/RCTViewComponentView.h>
+#else
+#import <React/RCTView.h>
+#endif
 
-NS_ASSUME_NONNULL_BEGIN
+@protocol RNIViewLifecycleEventsNotifying;
+@protocol RNIViewLifecycleEventsNotifiable;
 
-@interface IosUtilitiesView : RCTViewComponentView
+// Interface visible in Swift
+@interface IosUtilitiesView:
+#ifdef RCT_NEW_ARCH_ENABLED
+  RCTViewComponentView<RNIViewLifecycleEventsNotifying>
+#else // RCT_NEW_ARCH_ENABLED
+   RCTView<RNIViewLifecycleEventsNotifying>
+#endif // paper
+
+@property (nonatomic, strong, nullable) NSObject<RNIViewLifecycleEventsNotifiable> *lifecycleEventDelegate;
+
 @end
-
-NS_ASSUME_NONNULL_END
-
-#endif /* IosUtilitiesViewNativeComponent_h */
-#endif /* RCT_NEW_ARCH_ENABLED */
