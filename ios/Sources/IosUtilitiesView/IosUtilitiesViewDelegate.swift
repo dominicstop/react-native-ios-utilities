@@ -10,6 +10,7 @@ import UIKit
 
 @objc
 public class IosUtilitiesViewDelegate: UIView, RNIViewLifecycleEventsNotifiable {
+  public var reactProps: NSDictionary = [:];
   
   public override init(frame: CGRect) {
     super.init(frame: frame);

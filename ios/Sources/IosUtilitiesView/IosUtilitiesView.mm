@@ -7,6 +7,8 @@
 #import <react/renderer/components/RNIosUtilitiesViewSpec/RCTComponentViewHelpers.h>
 
 #import "RCTFabricComponentsPlugins.h"
+
+
 #import "Utils.h"
 
 #import "react-native-ios-utilities/Swift.h"
@@ -23,27 +25,18 @@ using namespace facebook::react;
 
 + (ComponentDescriptorProvider)componentDescriptorProvider
 {
-    return concreteComponentDescriptorProvider<IosUtilitiesViewComponentDescriptor>();
+  return concreteComponentDescriptorProvider<IosUtilitiesViewComponentDescriptor>();
 }
+
+
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-  if (self = [super initWithFrame:frame]) {
-    
-    static const auto defaultProps = std::make_shared<const IosUtilitiesViewProps>();
-    _props = defaultProps;
-    
-    UIView<RNIViewLifecycleEventsNotifiable> *viewDelegate =
-      [[IosUtilitiesViewDelegate new] initWithFrame:frame];
-      
-    self.lifecycleEventDelegate = viewDelegate;
-    self.contentView = viewDelegate;
-    
-    if ([viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:frame:)]) {
-      [viewDelegate notifyOnInitWithSender:self frame:frame];
-    }
-  }
-
+  self = [super initWithFrame:frame];
+  if(self == nil){
+    return nil;
+  };
+  
   return self;
 }
 
@@ -56,7 +49,7 @@ using namespace facebook::react;
       const char *colorStringRaw = newViewProps.color.c_str();
       NSString *colorString = [NSString stringWithUTF8String:colorStringRaw];
       UIColor *color = [Utils hexStringToColor:colorString];
-      [_view setBackgroundColor: color];
+      [self.contentView setBackgroundColor: color];
     }
 
     [super updateProps:props oldProps:oldProps];
@@ -65,6 +58,14 @@ using namespace facebook::react;
 Class<RCTComponentViewProtocol> IosUtilitiesViewCls(void)
 {
     return IosUtilitiesView.class;
+}
+
+// MARK: - RNIBaseView
+// -------------------
+
+- (Class)viewDelegateClass
+{
+  return [IosUtilitiesViewDelegate class];
 }
 
 @end

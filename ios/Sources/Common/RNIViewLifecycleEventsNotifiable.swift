@@ -10,11 +10,13 @@ import UIKit
 
 @objc
 public protocol RNIViewLifecycleEventsNotifiable where Self: UIView  {
+
+  @objc
+  var reactProps: NSDictionary { set get }
   
-  @objc optional func notifyOnInit(
+  @objc
+  optional func notifyOnInit(
     sender: RNIViewLifecycleEventsNotifying,
     frame: CGRect
   );
-  
-  
 };
