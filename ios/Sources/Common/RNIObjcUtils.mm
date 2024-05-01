@@ -12,6 +12,7 @@
 #import <folly/dynamic.h>
 #import <React/RCTConversions.h>
 
+#include <react/renderer/core/LayoutMetrics.h>
 
 @implementation RNIObjcUtils
 
