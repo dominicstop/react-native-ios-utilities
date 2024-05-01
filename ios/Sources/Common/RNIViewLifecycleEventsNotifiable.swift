@@ -21,9 +21,47 @@ public protocol RNIViewLifecycleEventsNotifiable where Self: UIView  {
   );
   
   @objc
+  optional func notifyOnMountChildComponentView(
+    sender: RNIViewLifecycleEventsNotifying,
+    childComponentView: UIView,
+    index: NSInteger
+  );
+  
+  @objc
+  optional func notifyOnUnmountChildComponentView(
+    sender: RNIViewLifecycleEventsNotifying,
+    childComponentView: UIView,
+    index: NSInteger
+  );
+  
+  @objc
+  optional func notifyOnUpdateProps(
+    sender: RNIViewLifecycleEventsNotifying,
+    oldProps: NSDictionary,
+    newProps: NSDictionary
+  );
+  
+  @objc
+  optional func notifyOnUpdateState(
+    sender: RNIViewLifecycleEventsNotifying,
+    oldState: NSDictionary,
+    newState: NSDictionary
+  );
+  
+  @objc
   optional func notifyOnUpdateLayoutMetrics(
     sender: RNIViewLifecycleEventsNotifying,
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
+  );
+  
+  @objc
+  optional func notifyOnFinalizeUpdates(
+    sender: RNIViewLifecycleEventsNotifying
+  );
+  
+  @objc
+  optional func notifyOnPrepareForReuse(
+    sender: RNIViewLifecycleEventsNotifying
   );
 };
