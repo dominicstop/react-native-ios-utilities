@@ -83,8 +83,8 @@ using namespace facebook::react;
     RNILayoutMetrics *layoutMetricsNew = [RNIObjcUtils createRNILayoutMetricsFrom:layoutMetrics];
     
     [self.lifecycleEventDelegate notifyOnUpdateLayoutMetricsWithSender:self
-                                                       oldLayoutMetrics:layoutMetricsOld
-                                                       newLayoutMetrics:layoutMetricsNew];
+                                                      oldLayoutMetrics:layoutMetricsOld
+                                                      newLayoutMetrics:layoutMetricsNew];
   }
 };
 
