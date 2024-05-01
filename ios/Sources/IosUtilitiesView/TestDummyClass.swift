@@ -11,7 +11,13 @@ import Foundation
 public class TestDummyClass: NSObject {
 
   public override init() {
-    // no-op
+    super.init();
+    // call objc code testing
+    
+    let result = Utils.hexString(toColor: "#ff0000");
+    print(
+      "TestDummyClass.init - invoke Utils.hexString: \(String(describing: result))"
+    );
   };
 
   @objc
