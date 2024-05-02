@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
 import { IosUtilitiesView } from 'react-native-ios-utilities';
 
 export default function App() {
@@ -12,9 +13,39 @@ export default function App() {
     console.log(`isUsingNewArch: ${isUsingNewArch}`);
   }, []);
 
+  const [counter, setCounter] = React.useState(0);
+  const [isIntervalActive] = React.useState(true);
+
+  const intervalRef = React.useRef<NodeJS.Timeout | undefined>();
+
+  React.useEffect(() => {
+    if (!isIntervalActive) return;
+
+    const intervalID = setInterval(() => {
+      setCounter((prevValue) => prevValue + 1);
+    }, 2000);
+
+    intervalRef.current = intervalID;
+    return () => {
+      clearTimeout(intervalID);
+    };
+  }, []);
+
+  const boxStyle: ViewStyle = {
+    ...((counter % 2 === 0) && {
+      height: 100,
+    }),
+  }
+
   return (
     <View style={styles.container}>
-      <IosUtilitiesView color="#32a852" style={styles.box} />
+      <Text>{`Counter: ${counter}`}</Text>
+      <IosUtilitiesView 
+        style={[styles.box, boxStyle]}
+        color={"#32a852"}
+      >
+        <Text>{`Counter: ${counter}`}</Text>
+      </IosUtilitiesView>
     </View>
   );
 }
