@@ -44,7 +44,9 @@ export default function App() {
         style={[styles.box, boxStyle]}
         color={"#32a852"}
       >
-        <Text>{`Counter: ${counter}`}</Text>
+        {(counter % 4 === 0) && (
+          <Text>{`Counter: ${counter}`}</Text>
+        )}
       </IosUtilitiesView>
     </View>
   );

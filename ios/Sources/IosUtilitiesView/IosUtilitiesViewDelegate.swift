@@ -48,17 +48,40 @@ extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
     childComponentView: UIView,
     index: NSInteger
   ) {
+    print(
+      "IosUtilitiesViewDelegate.notifyOnMountChildComponentView",
+      "\n - childComponentView:", childComponentView.debugDescription,
+      "\n - index:", index,
+      "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
+      "\n - self.window:", self.window?.debugDescription ?? "N/A",
+      "\n"
+    );
+    
     // Note: Window might not be available yet
     self.addSubview(childComponentView);
   };
+  
+  public func notifyOnUnmountChildComponentView(
+    sender: RNIViewLifecycleEventsNotifying,
+    childComponentView: UIView,
+    index: NSInteger
+  ) {
+    childComponentView.removeFromSuperview();
+    
+    print(
+      "IosUtilitiesViewDelegate.notifyOnUnmountChildComponentView",
+      "\n - childComponentView:", childComponentView.debugDescription,
+      "\n - index:", index,
+      "\n - self.window:", self.window?.debugDescription ?? "N/A",
+      "\n"
+    );
+  }
   
   public func notifyOnUpdateLayoutMetrics(
     sender: RNIViewLifecycleEventsNotifying,
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   ) {
-    
-    
     #if RN_FABRIC_ENABLED
     print("Hello Fabric");
     #else
@@ -81,7 +104,6 @@ extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
     updateMaskRaw: Int,
     updateMask: RNIComponentViewUpdateMask
   ) {
-  
     print(
       "IosUtilitiesViewDelegate.notifyOnFinalizeUpdates",
       "\n - updateMaskRaw:", updateMaskRaw,

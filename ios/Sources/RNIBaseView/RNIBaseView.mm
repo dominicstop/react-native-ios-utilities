@@ -83,6 +83,20 @@ using namespace facebook::react;
   }
 }
 
+- (void)unmountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
+                            index:(NSInteger)index
+{
+  BOOL shouldNotifyDelegate =
+       self.lifecycleEventDelegate != nil
+    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
+  
+  if(shouldNotifyDelegate){
+    [self.lifecycleEventDelegate notifyOnUnmountChildComponentViewWithSender:self
+                                                          childComponentView:childComponentView
+                                                                      index:index];
+  }
+}
+
 - (void)updateLayoutMetrics:(const facebook::react::LayoutMetrics &)layoutMetrics
            oldLayoutMetrics:(const facebook::react::LayoutMetrics &)oldLayoutMetrics
 {
@@ -108,7 +122,7 @@ using namespace facebook::react;
   
   BOOL shouldNotifyDelegate =
        self.lifecycleEventDelegate != nil
-    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnFinalizeUpdatesWithSender:updateMaskRaw:updateMask:)];
+    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUnmountChildComponentViewWithSender:childComponentView:index:)];
     
   if(shouldNotifyDelegate){
     RNIComponentViewUpdateMask *swiftMask =
