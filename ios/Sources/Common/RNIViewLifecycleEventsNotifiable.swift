@@ -57,7 +57,9 @@ public protocol RNIViewLifecycleEventsNotifiable where Self: UIView  {
   
   @objc
   optional func notifyOnFinalizeUpdates(
-    sender: RNIViewLifecycleEventsNotifying
+    sender: RNIViewLifecycleEventsNotifying,
+    updateMaskRaw: Int,
+    updateMask: RNIComponentViewUpdateMask
   );
   
   @objc

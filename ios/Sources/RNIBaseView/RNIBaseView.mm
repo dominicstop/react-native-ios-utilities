@@ -88,5 +88,23 @@ using namespace facebook::react;
   }
 };
 
+- (void)finalizeUpdates:(RNComponentViewUpdateMask)updateMask
+{
+  [super finalizeUpdates:updateMask];
+  
+  BOOL shouldNotifyDelegate =
+       self.lifecycleEventDelegate != nil
+    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnFinalizeUpdatesWithSender:updateMaskRaw:updateMask:)];
+    
+  if(shouldNotifyDelegate){
+    RNIComponentViewUpdateMask *swiftMask =
+      [[RNIComponentViewUpdateMask new] initWithRawValue:updateMask];
+  
+    [self.lifecycleEventDelegate notifyOnFinalizeUpdatesWithSender:self
+                                                     updateMaskRaw:updateMask
+                                                        updateMask:swiftMask];
+  };
+}
+
 @end
 #endif

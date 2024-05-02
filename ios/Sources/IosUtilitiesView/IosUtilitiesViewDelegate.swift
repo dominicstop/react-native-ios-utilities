@@ -48,11 +48,30 @@ extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   ) {
-    
+
     print(
       "IosUtilitiesViewDelegate.notifyOnUpdateLayoutMetrics",
       "\n - oldLayoutMetric.frame:", oldLayoutMetrics.frame,
       "\n - oldLayoutMetric.frame:", newLayoutMetrics.frame,
+      "\n - self.tag:", self.tag,
+      "\n"
+    );
+  };
+  
+  public func notifyOnFinalizeUpdates(
+    sender: RNIViewLifecycleEventsNotifying,
+    updateMaskRaw: Int,
+    updateMask: RNIComponentViewUpdateMask
+  ) {
+  
+    print(
+      "IosUtilitiesViewDelegate.notifyOnFinalizeUpdates",
+      "\n - updateMaskRaw:", updateMaskRaw,
+      "\n - updateMask.contains(.eventEmitter):", updateMask.contains(.eventEmitter),
+      "\n - updateMask.contains(.layoutMetrics):", updateMask.contains(.layoutMetrics),
+      "\n - updateMask.contains(.props):", updateMask.contains(.props),
+      "\n - updateMask.contains(.state):", updateMask.contains(.state),
+      "\n - updateMask.contains(.all):", updateMask.contains(.all),
       "\n"
     );
   };
