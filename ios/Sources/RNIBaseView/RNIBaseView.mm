@@ -106,5 +106,17 @@ using namespace facebook::react;
   };
 }
 
+-(void) prepareForRecycle {
+  [super prepareForRecycle];
+  
+  BOOL shouldNotifyDelegate =
+       self.lifecycleEventDelegate != nil
+    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnPrepareForReuseWithSender:)];
+  
+  if(shouldNotifyDelegate){
+    [self.lifecycleEventDelegate notifyOnPrepareForReuseWithSender:self];
+  };
+}
+
 @end
 #endif

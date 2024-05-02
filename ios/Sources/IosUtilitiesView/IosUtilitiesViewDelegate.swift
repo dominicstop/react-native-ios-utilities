@@ -76,4 +76,10 @@ extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
       "\n"
     );
   };
+  
+  public func notifyOnPrepareForReuse(sender: RNIViewLifecycleEventsNotifying) {
+    print(
+      "IosUtilitiesViewDelegate.notifyOnPrepareForReuse"
+    );
+  };
 };
