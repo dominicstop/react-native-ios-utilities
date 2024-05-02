@@ -43,17 +43,35 @@ public class IosUtilitiesViewDelegate: UIView {
 
 extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
   
+  public func notifyOnMountChildComponentView(
+    sender: RNIViewLifecycleEventsNotifying,
+    childComponentView: UIView,
+    index: NSInteger
+  ) {
+    // Note: Window might not be available yet
+    self.addSubview(childComponentView);
+  };
+  
   public func notifyOnUpdateLayoutMetrics(
     sender: RNIViewLifecycleEventsNotifying,
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   ) {
-
+    
+    
+    #if RN_FABRIC_ENABLED
+    print("Hello Fabric");
+    #else
+    print("Hello Paper");
+    #endif
+    
     print(
       "IosUtilitiesViewDelegate.notifyOnUpdateLayoutMetrics",
       "\n - oldLayoutMetric.frame:", oldLayoutMetrics.frame,
       "\n - oldLayoutMetric.frame:", newLayoutMetrics.frame,
       "\n - self.tag:", self.tag,
+      "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
+      "\n - self.window:", self.window?.debugDescription ?? "N/A",
       "\n"
     );
   };

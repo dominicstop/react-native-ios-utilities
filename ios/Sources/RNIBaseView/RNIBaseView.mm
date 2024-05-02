@@ -69,6 +69,20 @@ using namespace facebook::react;
   return self;
 }
 
+-(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
+                         index:(NSInteger)index
+{
+  BOOL shouldNotifyDelegate =
+       self.lifecycleEventDelegate != nil
+    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
+  
+  if(shouldNotifyDelegate){
+    [self.lifecycleEventDelegate notifyOnMountChildComponentViewWithSender:self
+                                                        childComponentView:childComponentView
+                                                                     index:index];
+  }
+}
+
 - (void)updateLayoutMetrics:(const facebook::react::LayoutMetrics &)layoutMetrics
            oldLayoutMetrics:(const facebook::react::LayoutMetrics &)oldLayoutMetrics
 {
