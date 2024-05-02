@@ -13,9 +13,9 @@ import Foundation
 // We have to use NSObject so we can use it in objc.
 @objc
 public final class RNIComponentViewUpdateMask: NSObject, OptionSet, RawRepresentable, CaseIterable {
-  
-  @objc
-  public let rawValue: NSInteger;
+
+  // MARK: Options
+  // -------------
     
   public static var props: RNIComponentViewUpdateMask {
     return .init(rawValue: 1 << 0);
@@ -51,6 +51,22 @@ public final class RNIComponentViewUpdateMask: NSObject, OptionSet, RawRepresent
     ];
   };
   
+  // MARK: Properties
+  // ----------------
+  
+  @objc
+  public let rawValue: NSInteger;
+  
+  // MARK: Computed Properties
+  // -------------------------
+  
+  var isNone: Bool {
+    self.rawValue == 0;
+  };
+  
+  // MARK: Init
+  // ----------
+  
   @objc
   public init(rawValue: Int) {
     self.rawValue = rawValue;
@@ -66,6 +82,9 @@ public final class RNIComponentViewUpdateMask: NSObject, OptionSet, RawRepresent
   public convenience init(mask: [RNIComponentViewUpdateMask]) {
     self.init(mask);
   };
+  
+  // MARK: NSObject
+  // --------------
   
   public override var hash: Int {
     return self.rawValue;

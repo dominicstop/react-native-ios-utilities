@@ -72,6 +72,7 @@ extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
       "\n - updateMask.contains(.props):", updateMask.contains(.props),
       "\n - updateMask.contains(.state):", updateMask.contains(.state),
       "\n - updateMask.contains(.all):", updateMask.contains(.all),
+      "\n - updateMask.isNone:", updateMask.isNone,
       "\n"
     );
   };
