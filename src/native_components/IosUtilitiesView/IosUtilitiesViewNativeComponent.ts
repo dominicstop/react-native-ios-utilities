@@ -7,4 +7,5 @@ interface NativeProps extends ViewProps {
 
 export default codegenNativeComponent<NativeProps>('IosUtilitiesView', {
   excludedPlatforms: ['android'],
+  interfaceOnly: true,
 }) as HostComponent<NativeProps>;

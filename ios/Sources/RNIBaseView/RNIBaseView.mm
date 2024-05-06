@@ -7,15 +7,11 @@
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #import "RNIBaseView.h"
-#import "react-native-ios-utilities/Swift.h"
 
+#import "react-native-ios-utilities/Swift.h"
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
-#import <react/renderer/components/RNIosUtilitiesViewSpec/ComponentDescriptors.h>
-#import <react/renderer/components/RNIosUtilitiesViewSpec/EventEmitters.h>
-#import <react/renderer/components/RNIosUtilitiesViewSpec/Props.h>
-#import <react/renderer/components/RNIosUtilitiesViewSpec/RCTComponentViewHelpers.h>
-
+#include <react/renderer/core/ConcreteComponentDescriptor.h>
 #import "RCTFabricComponentsPlugins.h"
 
 
@@ -27,11 +23,6 @@ using namespace facebook::react;
 
 @implementation RNIBaseView {
   UIView * _view;
-}
-
-+ (ComponentDescriptorProvider)componentDescriptorProvider
-{
-  return concreteComponentDescriptorProvider<IosUtilitiesViewComponentDescriptor>();
 }
 
 // This is meant to be overriden
