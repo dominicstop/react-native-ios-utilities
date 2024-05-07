@@ -11,8 +11,11 @@
 #import "react-native-ios-utilities/Swift.h"
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
-#include <react/renderer/core/ConcreteComponentDescriptor.h>
+#include "RNIBaseViewState.h"
+
 #import "RCTFabricComponentsPlugins.h"
+#include <react/renderer/core/ConcreteComponentDescriptor.h>
+
 
 
 using namespace facebook::react;
@@ -23,6 +26,7 @@ using namespace facebook::react;
 
 @implementation RNIBaseView {
   UIView * _view;
+  RNIBaseViewState::SharedConcreteState _state;
 }
 
 // This is meant to be overriden
@@ -36,16 +40,16 @@ using namespace facebook::react;
   
   if(self == nil) {
     return nil;
-  };
+  }
   
   Class viewDelegateClass = [self viewDelegateClass];
   if(![viewDelegateClass isSubclassOfClass: [UIView class]]) {
     return nil;
-  };
+  }
   
   if(![viewDelegateClass conformsToProtocol:@protocol(RNIViewLifecycleEventsNotifiable)]) {
     return nil;
-  };
+  }
   
   UIView<RNIViewLifecycleEventsNotifiable> *viewDelegate =
     [[viewDelegateClass new] initWithFrame:frame];
@@ -91,8 +95,6 @@ using namespace facebook::react;
 - (void)updateLayoutMetrics:(const facebook::react::LayoutMetrics &)layoutMetrics
            oldLayoutMetrics:(const facebook::react::LayoutMetrics &)oldLayoutMetrics
 {
-  [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
-  
   BOOL shouldNotifyDelegate =
        self.lifecycleEventDelegate != nil
     && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
@@ -105,7 +107,55 @@ using namespace facebook::react;
                                                       oldLayoutMetrics:layoutMetricsOld
                                                       newLayoutMetrics:layoutMetricsNew];
   }
-};
+  
+  [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
+}
+
+- (void)updateState:(const facebook::react::State::Shared &)state
+           oldState:(const facebook::react::State::Shared &)oldState
+{
+  
+  auto newState =
+    std::static_pointer_cast<const RNIBaseViewState::ConcreteState>(state);
+    
+  self->_state = newState;
+  
+  auto newStateData = newState->getData();
+  auto newStateDynamic = newStateData.getDynamic();
+  
+  NSDictionary *newStateDict =
+    [RNIObjcUtils convertFollyDynamicToId:&newStateDynamic];
+    
+  auto _oldState =
+    std::static_pointer_cast<const RNIBaseViewState::ConcreteState>(oldState);
+  
+  std::optional<RNIBaseViewState> oldStateData = std::nullopt;
+  
+  if(_oldState != nullptr){
+    oldStateData = _oldState->getData();
+  };
+  
+  std::optional<folly::dynamic> oldStateDynamic = oldStateData.has_value()
+    ? std::make_optional(oldStateData.value().getDynamic())
+    : std::nullopt;
+  
+
+  NSMutableDictionary *oldStateDict = oldStateDynamic.has_value()
+    ? [RNIObjcUtils convertFollyDynamicToId:&newStateDynamic]
+    : nil;
+    
+  BOOL shouldNotifyDelegate =
+       self.lifecycleEventDelegate != nil
+    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUpdateStateWithSender:oldState:newState:)];
+    
+  if(shouldNotifyDelegate){
+    [self.lifecycleEventDelegate notifyOnUpdateStateWithSender:self
+                                                      oldState:oldStateDict
+                                                      newState:newStateDict];
+  };
+    
+  [super updateState:state oldState:oldState];
+}
 
 - (void)finalizeUpdates:(RNComponentViewUpdateMask)updateMask
 {
@@ -122,19 +172,20 @@ using namespace facebook::react;
     [self.lifecycleEventDelegate notifyOnFinalizeUpdatesWithSender:self
                                                      updateMaskRaw:updateMask
                                                         updateMask:swiftMask];
-  };
+  }
 }
 
--(void) prepareForRecycle {
-  [super prepareForRecycle];
-  
+-(void) prepareForRecycle
+{
   BOOL shouldNotifyDelegate =
        self.lifecycleEventDelegate != nil
     && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnPrepareForReuseWithSender:)];
   
   if(shouldNotifyDelegate){
     [self.lifecycleEventDelegate notifyOnPrepareForReuseWithSender:self];
-  };
+  }
+  
+  [super prepareForRecycle];
 }
 
 @end

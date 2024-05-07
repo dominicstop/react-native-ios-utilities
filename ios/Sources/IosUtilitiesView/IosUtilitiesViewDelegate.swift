@@ -99,6 +99,19 @@ extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
     );
   };
   
+  public func notifyOnUpdateState(
+    sender: RNIViewLifecycleEventsNotifying,
+    oldState: NSDictionary?,
+    newState: NSDictionary
+  ) {
+    print(
+      "IosUtilitiesViewDelegate.notifyOnUpdateState",
+      "\n - oldState:", oldState.debugDescription,
+      "\n - newState:", newState,
+      "\n"
+    );
+  };
+  
   public func notifyOnFinalizeUpdates(
     sender: RNIViewLifecycleEventsNotifying,
     updateMaskRaw: Int,

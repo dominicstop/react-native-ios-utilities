@@ -44,7 +44,7 @@ public protocol RNIViewLifecycleEventsNotifiable where Self: UIView  {
   @objc
   optional func notifyOnUpdateState(
     sender: RNIViewLifecycleEventsNotifying,
-    oldState: NSDictionary,
+    oldState: NSDictionary?,
     newState: NSDictionary
   );
   

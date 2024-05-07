@@ -9,13 +9,18 @@
 
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
+#include <react/renderer/core/ConcreteState.h>
 
 #include <folly/dynamic.h>
+
 
 namespace facebook::react {
 
 class RNIBaseViewState {
 public:
+  
+  using ConcreteState = ConcreteState<RNIBaseViewState>;
+  using SharedConcreteState = std::shared_ptr<const ConcreteState>;
   
   // frameHeight
   // frameWidth
