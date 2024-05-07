@@ -10,6 +10,7 @@
 #if __cplusplus
 namespace facebook::react {
   struct LayoutMetrics;
+  struct Size;
 }
 
 namespace folly {
@@ -22,6 +23,8 @@ namespace folly {
 + (id)convertFollyDynamicToId: (const folly::dynamic*)dyn;
 
 + (RNILayoutMetrics *)createRNILayoutMetricsFrom: (facebook::react::LayoutMetrics)layoutMetrics;
+
++ (facebook::react::Size)convertToReactSizeForSize:(CGSize)size;
 #endif
 @end
 

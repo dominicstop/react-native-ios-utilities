@@ -5,18 +5,20 @@
 //  Created by Dominic Go on 4/30/24.
 //
 
+#import <Foundation/Foundation.h>
+
 #import "RNIObjcUtils.h"
 #import "react-native-ios-utilities/Swift.h"
 
-#import <Foundation/Foundation.h>
 #import <folly/dynamic.h>
 #import <React/RCTConversions.h>
 
 #include <react/renderer/core/LayoutMetrics.h>
 
+
 @implementation RNIObjcUtils
 
-+ (id)convertFollyDynamicToId: (const folly::dynamic*)dyn
++ (id)convertFollyDynamicToId:(const folly::dynamic*)dyn
 {
   switch (dyn->type()) {
     case folly::dynamic::NULLT:
@@ -69,7 +71,7 @@
   return nil;
 }
 
-+ (RNILayoutMetrics *)createRNILayoutMetricsFrom: (facebook::react::LayoutMetrics)layoutMetrics
++ (RNILayoutMetrics *)createRNILayoutMetricsFrom:(facebook::react::LayoutMetrics)layoutMetrics
 {
   RNILayoutMetrics *swiftLayoutMetrics = [RNILayoutMetrics new];
   
@@ -98,6 +100,15 @@
     static_cast<int>(layoutMetrics.layoutDirection);
   
   return swiftLayoutMetrics;
+}
+
++ (facebook::react::Size)convertToReactSizeForSize:(CGSize)size
+{
+  facebook::react::Size newSize = {};
+  newSize.width = size.width;
+  newSize.height = size.height;
+  
+  return newSize;
 }
 
 + (id)alloc
