@@ -17,7 +17,6 @@
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 
 
-
 using namespace facebook::react;
 
 @interface RNIBaseView () <RNIViewLifecycleEventsNotifying>
@@ -92,8 +91,8 @@ using namespace facebook::react;
   }
 }
 
-- (void)updateLayoutMetrics:(const facebook::react::LayoutMetrics &)layoutMetrics
-           oldLayoutMetrics:(const facebook::react::LayoutMetrics &)oldLayoutMetrics
+- (void)updateLayoutMetrics:(const LayoutMetrics &)layoutMetrics
+           oldLayoutMetrics:(const LayoutMetrics &)oldLayoutMetrics
 {
   BOOL shouldNotifyDelegate =
        self.lifecycleEventDelegate != nil
@@ -111,8 +110,8 @@ using namespace facebook::react;
   [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
 }
 
-- (void)updateState:(const facebook::react::State::Shared &)state
-           oldState:(const facebook::react::State::Shared &)oldState
+- (void)updateState:(const State::Shared &)state
+           oldState:(const State::Shared &)oldState
 {
   
   auto newState =
