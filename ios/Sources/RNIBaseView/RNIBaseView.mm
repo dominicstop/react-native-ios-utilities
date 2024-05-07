@@ -20,7 +20,6 @@
 using namespace facebook::react;
 
 @interface RNIBaseView () <RNIViewLifecycleEventsNotifying>
-
 @end
 
 @implementation RNIBaseView {
@@ -28,10 +27,8 @@ using namespace facebook::react;
   RNIBaseViewState::SharedConcreteState _state;
 }
 
-// This is meant to be overriden
-- (Class _Nonnull)viewDelegateClass {
-  return [UIView class];
-}
+// MARK: - Init
+// ------------
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -62,6 +59,9 @@ using namespace facebook::react;
   
   return self;
 }
+
+// MARK: - Fabric Lifecycle
+// ------------------------
 
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
                          index:(NSInteger)index
@@ -185,6 +185,14 @@ using namespace facebook::react;
   }
   
   [super prepareForRecycle];
+}
+
+// MARK: - Dummy Impl.
+// -------------------
+
+// This is meant to be overridden by the subclass
+- (Class _Nonnull)viewDelegateClass {
+  return [UIView class];
 }
 
 @end

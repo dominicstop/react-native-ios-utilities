@@ -7,9 +7,10 @@
 
 #include "RNIBaseViewState.h"
 
+
 namespace facebook::react {
 
-folly::dynamic RNIBaseViewState::getDynamic() const  {
+folly::dynamic RNIBaseViewState::getDynamic() const {
   
   folly::dynamic map = folly::dynamic::object;
   map["frameWidth"] = this->frameSize.width;

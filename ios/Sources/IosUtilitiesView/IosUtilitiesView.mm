@@ -19,11 +19,6 @@ using namespace facebook::react;
   UIView * _view;
 }
 
-+ (ComponentDescriptorProvider)componentDescriptorProvider
-{
-  return concreteComponentDescriptorProvider<IosUtilitiesViewComponentDescriptor>();
-}
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
   static const auto defaultProps = std::make_shared<const IosUtilitiesViewProps>();
@@ -37,7 +32,8 @@ using namespace facebook::react;
   return self;
 }
 
-- (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
+- (void)updateProps:(Props::Shared const &)props
+           oldProps:(Props::Shared const &)oldProps
 {
   const auto &oldViewProps = *std::static_pointer_cast<IosUtilitiesViewProps const>(_props);
   const auto &newViewProps = *std::static_pointer_cast<IosUtilitiesViewProps const>(props);
@@ -52,17 +48,25 @@ using namespace facebook::react;
   [super updateProps:props oldProps:oldProps];
 }
 
-Class<RCTComponentViewProtocol> IosUtilitiesViewCls(void)
-{
-  return IosUtilitiesView.class;
-}
-
 // MARK: - RNIBaseView
 // -------------------
 
 - (Class)viewDelegateClass
 {
   return [IosUtilitiesViewDelegate class];
+}
+
+// MARK: - Fabric
+// --------------
+
++ (ComponentDescriptorProvider)componentDescriptorProvider
+{
+  return concreteComponentDescriptorProvider<IosUtilitiesViewComponentDescriptor>();
+}
+
+Class<RCTComponentViewProtocol> IosUtilitiesViewCls(void)
+{
+  return IosUtilitiesView.class;
 }
 
 @end
