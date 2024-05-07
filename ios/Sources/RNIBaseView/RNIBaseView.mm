@@ -113,7 +113,6 @@ using namespace facebook::react;
 - (void)updateState:(const State::Shared &)state
            oldState:(const State::Shared &)oldState
 {
-  
   auto newState =
     std::static_pointer_cast<const RNIBaseViewState::ConcreteState>(state);
     
@@ -158,8 +157,6 @@ using namespace facebook::react;
 
 - (void)finalizeUpdates:(RNComponentViewUpdateMask)updateMask
 {
-  [super finalizeUpdates:updateMask];
-  
   BOOL shouldNotifyDelegate =
        self.lifecycleEventDelegate != nil
     && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUnmountChildComponentViewWithSender:childComponentView:index:)];
@@ -172,6 +169,8 @@ using namespace facebook::react;
                                                      updateMaskRaw:updateMask
                                                         updateMask:swiftMask];
   }
+  
+  [super finalizeUpdates:updateMask];
 }
 
 -(void) prepareForRecycle
