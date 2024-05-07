@@ -38,18 +38,25 @@ class IosUtilitiesViewComponentDescriptor final
       
     auto rawState = shadowNode.getState();
 
-    // auto state = std::static_pointer_cast<
-    //   const IosUtilitiesViewShadowNode::ConcreteState
-    // >(rawState);
+    auto state = std::static_pointer_cast<
+       const IosUtilitiesViewShadowNode::ConcreteState
+     >(rawState);
             
-    // auto stateData = state->getData();
+    IosUtilitiesViewState stateData = state->getData();
+    Size newSize = stateData.frameSize;
+    
+    LayoutMetrics layoutMetrics = viewShadowNode.getLayoutMetrics();
+    Size oldSize = layoutMetrics.frame.size;
+    
+    // NOTE: `Size` impl. custom `!=` op for checking inequality
+    bool didChangeSize = newSize != oldSize;
+    bool isNewSizeValid = newSize.width != 0 && newSize.height != 0;
 
-    // if (stateData.frameSize.width != 0 && stateData.frameSize.height != 0) {
-    //   layoutableShadowNode.setSize(
-    //       Size{stateData.frameSize.width, stateData.frameSize.height});
-    // }
+    if (didChangeSize && isNewSizeValid) {
+      layoutableShadowNode.setSize(newSize);
+    };
 
-    // ConcreteComponentDescriptor::adopt(shadowNode);
+    ConcreteComponentDescriptor::adopt(shadowNode);
   }
 };
 

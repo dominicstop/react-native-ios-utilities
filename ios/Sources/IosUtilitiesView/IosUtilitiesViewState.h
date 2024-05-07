@@ -7,29 +7,61 @@
 
 #pragma once
 
-#ifdef ANDROID
+#include <react/renderer/graphics/Float.h>
+#include <react/renderer/core/graphicsConversions.h>
+
 #include <folly/dynamic.h>
-#include <react/renderer/mapbuffer/MapBuffer.h>
-#include <react/renderer/mapbuffer/MapBufferBuilder.h>
-#endif
 
 namespace facebook::react {
 
 class IosUtilitiesViewState {
 public:
+  
+  // frameHeight
+  // frameWidth
+  Size frameSize;
+  
+  // contentOffsetX
+  // contentOffsetY
+  Point contentOffset;
+  
+  // MARK: - Init
+  // ------------
+
   IosUtilitiesViewState() = default;
   
-#ifdef ANDROID
-  IosUtilitiesViewState(IosUtilitiesViewState const &previousState, folly::dynamic data){};
-  
-  folly::dynamic getDynamic() const {
-    return {};
-  }；
-  
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
+  IosUtilitiesViewState(
+    Size frameSize_,
+    Point contentOffset_
+  ) :
+    frameSize(frameSize_),
+    contentOffset(contentOffset_
+  ) {
+    // no-op
   };
-#endif
+
+  IosUtilitiesViewState(
+    IosUtilitiesViewState const &previousState,
+    folly::dynamic data
+  ) {
+  
+    Size frameSize = {};
+    frameSize.height = (Float)data["frameHeight"].getDouble();
+    frameSize.width = (Float)data["frameWidth"].getDouble();
+    
+    this->frameSize = frameSize;
+    
+    Point contentOffset = {};
+    contentOffset.x = (Float)data["contentOffsetX"].getDouble();
+    contentOffset.y = (Float)data["contentOffsetY"].getDouble();
+    
+    this->contentOffset = contentOffset;
+  };
+  
+  // MARK: - Methods
+  // ---------------
+  
+  folly::dynamic getDynamic() const;
 };
 
 } // namespace facebook::react
