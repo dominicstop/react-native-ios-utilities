@@ -28,4 +28,6 @@
 
 - (Class _Nonnull) viewDelegateClass;
 
+- (void)setSize:(CGSize)size;
+
 @end

@@ -11,13 +11,17 @@
 #import "react-native-ios-utilities/Swift.h"
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
+#import "RCTFabricComponentsPlugins.h"
+
 #include "RNIBaseViewState.h"
 
-#import "RCTFabricComponentsPlugins.h"
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
+#include <react/renderer/graphics/Float.h>
+#include <react/renderer/core/graphicsConversions.h>
 
 
-using namespace facebook::react;
+using namespace facebook;
+using namespace react;
 
 @interface RNIBaseView () <RNIViewLifecycleEventsNotifying>
 @end
@@ -59,6 +63,22 @@ using namespace facebook::react;
   
   return self;
 }
+
+// MARK: - Functions
+// -----------------
+
+- (void) setSize:(CGSize)size {
+  if(self->_state != nullptr){
+    RNIBaseViewState prevState = self->_state->getData();
+    RNIBaseViewState newState = RNIBaseViewState(prevState);
+    
+    auto newSize = [RNIObjcUtils convertToReactSizeForSize:size];
+    newState.frameSize = newSize;
+    
+    self->_state->updateState(std::move(newState));
+    [self->_view setNeedsLayout];
+  }
+};
 
 // MARK: - Fabric Lifecycle
 // ------------------------

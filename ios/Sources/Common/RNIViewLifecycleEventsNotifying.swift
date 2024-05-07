@@ -9,5 +9,6 @@ import UIKit
 
 @objc
 public protocol RNIViewLifecycleEventsNotifying where Self: UIView  {
-
+  
+  func setSize(_: CGSize);
 };
