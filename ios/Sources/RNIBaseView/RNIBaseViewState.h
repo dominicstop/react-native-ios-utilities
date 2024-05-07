@@ -44,6 +44,15 @@ public:
   {
     // no-op
   };
+  
+  RNIBaseViewState(
+    RNIBaseViewState const &previousState
+  ) :
+    frameSize(previousState.frameSize),
+    contentOffset(previousState.contentOffset)
+  {
+    // no-op
+  }
 
   RNIBaseViewState(
     RNIBaseViewState const &previousState,
