@@ -6,7 +6,7 @@
 //
 #pragma once
 
-#include <react-native-ios-utilities/RNIBaseViewState.h>
+#include <react-native-ios-utilities/RNIBaseViewShadowNode.h>
 
 #include <react/renderer/components/RNIosUtilitiesViewSpec/EventEmitters.h>
 #include <react/renderer/components/RNIosUtilitiesViewSpec/Props.h>
@@ -19,16 +19,14 @@ namespace facebook::react {
 
 JSI_EXPORT extern const char IosUtilitiesViewComponentName[] = "IosUtilitiesView";
 
-class JSI_EXPORT IosUtilitiesViewShadowNode final :
-  public ConcreteViewShadowNode<
-    IosUtilitiesViewComponentName,  															
-    IosUtilitiesViewProps,
-    IosUtilitiesViewEventEmitter,
-    RNIBaseViewState
+class JSI_EXPORT IosUtilitiesViewShadowNode final : public RNIBaseViewShadowNode<
+  IosUtilitiesViewComponentName,
+  IosUtilitiesViewProps,
+  IosUtilitiesViewEventEmitter
 > {
 
   public:
-    using ConcreteViewShadowNode::ConcreteViewShadowNode;
+    using RNIBaseViewShadowNode::RNIBaseViewShadowNode;
 
 };
 
