@@ -24,7 +24,7 @@ class RNIBaseViewComponentDescriptor
 public:
   using ConcreteComponentDescriptor<ShadowNodeT>::ConcreteComponentDescriptor;
   
-  void adopt(ShadowNode& shadowNode) const override {
+  virtual void adopt(ShadowNode& shadowNode) const override {
     react_native_assert(
       dynamic_cast<YogaLayoutableShadowNode*>(&shadowNode)
     );
