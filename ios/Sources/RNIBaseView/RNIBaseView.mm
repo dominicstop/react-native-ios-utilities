@@ -67,7 +67,7 @@ using namespace react;
 // MARK: - Functions
 // -----------------
 
-- (void) setSize:(CGSize)size {
+- (void)setSize:(CGSize)size {
   if(self->_state != nullptr){
     RNIBaseViewState prevState = self->_state->getData();
     RNIBaseViewState newState = RNIBaseViewState(prevState);
