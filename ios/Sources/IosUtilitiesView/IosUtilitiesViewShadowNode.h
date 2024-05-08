@@ -4,6 +4,7 @@
 //
 //  Created by Dominic Go on 5/6/24.
 //
+#if __cplusplus
 #pragma once
 
 #include <react-native-ios-utilities/RNIBaseViewShadowNode.h>
@@ -31,3 +32,4 @@ class JSI_EXPORT IosUtilitiesViewShadowNode final : public RNIBaseViewShadowNode
 };
 
 } // facebook::react
+#endif

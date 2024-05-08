@@ -4,6 +4,7 @@
 //
 //  Created by Dominic Go on 5/5/24.
 //
+#if __cplusplus
 #pragma once
 
 #include "IosUtilitiesViewShadowNode.h"
@@ -22,3 +23,4 @@ public:
 };
 
 } // namespace facebook::react
+#endif

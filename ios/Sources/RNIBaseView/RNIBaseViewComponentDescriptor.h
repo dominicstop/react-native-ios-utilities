@@ -5,6 +5,7 @@
 //  Created by Dominic Go on 5/7/24.
 //
 
+#if __cplusplus
 #pragma once
 
 #include "RNIBaseViewState.h"
@@ -62,4 +63,4 @@ public:
 };
 
 } // facebook::react
-
+#endif

@@ -5,6 +5,7 @@
 //  Created by Dominic Go on 5/7/24.
 //
 
+#if __cplusplus
 #pragma once
 
 #include <react/renderer/graphics/Float.h>
@@ -115,3 +116,4 @@ public:
 };
 
 } // namespace facebook::react
+#endif

@@ -5,6 +5,7 @@
 //  Created by Dominic Go on 5/7/24.
 //
 
+#if __cplusplus
 #include "RNIBaseViewState.h"
 
 
@@ -23,3 +24,4 @@ folly::dynamic RNIBaseViewState::getDynamic() const {
 }
 
 } // facebook::react
+#endif
