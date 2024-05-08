@@ -16,6 +16,8 @@
 @protocol RNIViewLifecycleEventsNotifying;
 @protocol RNIViewLifecycleEventsNotifiable;
 
+@class RNILayoutMetrics;
+
 // Interface visible in Swift
 @interface RNIBaseView:
 #ifdef RCT_NEW_ARCH_ENABLED
@@ -25,6 +27,7 @@
 #endif // paper
 
 @property (nonatomic, strong, nullable) NSObject<RNIViewLifecycleEventsNotifiable> *lifecycleEventDelegate;
+@property (nonatomic, strong, nullable) RNILayoutMetrics *cachedLayoutMetrics;
 
 - (nonnull Class) viewDelegateClass;
 

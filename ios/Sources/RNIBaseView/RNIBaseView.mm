@@ -114,13 +114,15 @@ using namespace react;
 - (void)updateLayoutMetrics:(const LayoutMetrics &)layoutMetrics
            oldLayoutMetrics:(const LayoutMetrics &)oldLayoutMetrics
 {
+  RNILayoutMetrics *layoutMetricsNew = [RNIObjcUtils createRNILayoutMetricsFrom:layoutMetrics];
+  self.cachedLayoutMetrics = layoutMetricsNew;
+
   BOOL shouldNotifyDelegate =
        self.lifecycleEventDelegate != nil
     && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
   
   if (shouldNotifyDelegate) {
     RNILayoutMetrics *layoutMetricsOld = [RNIObjcUtils createRNILayoutMetricsFrom:oldLayoutMetrics];
-    RNILayoutMetrics *layoutMetricsNew = [RNIObjcUtils createRNILayoutMetricsFrom:layoutMetrics];
     
     [self.lifecycleEventDelegate notifyOnUpdateLayoutMetricsWithSender:self
                                                       oldLayoutMetrics:layoutMetricsOld
