@@ -16,16 +16,16 @@
 
 @interface UIApplication (RNIHelpers)
 
-- (RCTAppDelegate *)reactAppDelegate;
+- (nullable RCTAppDelegate * )reactAppDelegate;
 
-- (RCTSurfacePresenterBridgeAdapter *)reactBridgeAdapter;
+- (nullable RCTSurfacePresenterBridgeAdapter *)reactBridgeAdapter;
 
-- (RCTRootViewFactory *)reactRootViewFactory;
+- (nullable RCTRootViewFactory *)reactRootViewFactory;
 
-- (RCTSurfacePresenter *) reactSurfacePresenter;
+- (nullable RCTSurfacePresenter *) reactSurfacePresenter;
 
-- (RCTMountingManager *)reactMountingManager;
+- (nullable RCTMountingManager *)reactMountingManager;
 
-- (RCTComponentViewRegistry *)componentViewRegistry;
+- (nullable RCTComponentViewRegistry *)reactComponentViewRegistry;
 
 @end

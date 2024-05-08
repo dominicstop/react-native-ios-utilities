@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 @objc
 public class IosUtilitiesViewDelegate: UIView {
   public var reactProps: NSDictionary = [:];

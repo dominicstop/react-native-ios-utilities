@@ -73,7 +73,7 @@
   return [reactSurfacePresenter mountingManager];
 }
 
-- (RCTComponentViewRegistry *)componentViewRegistry
+- (RCTComponentViewRegistry *)reactComponentViewRegistry
 {
   RCTMountingManager *reactMountingManager = [self reactMountingManager];
   

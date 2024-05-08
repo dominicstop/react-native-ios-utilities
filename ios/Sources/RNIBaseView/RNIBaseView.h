@@ -26,7 +26,7 @@
 
 @property (nonatomic, strong, nullable) NSObject<RNIViewLifecycleEventsNotifiable> *lifecycleEventDelegate;
 
-- (Class _Nonnull) viewDelegateClass;
+- (nonnull Class) viewDelegateClass;
 
 - (void)setSize:(CGSize)size;
 
