@@ -13,6 +13,8 @@
 @class RCTSurfacePresenter;
 @class RCTMountingManager;
 @class RCTComponentViewRegistry;
+@class RCTScheduler;
+
 
 @interface UIApplication (RNIHelpers)
 
@@ -27,5 +29,7 @@
 - (nullable RCTMountingManager *)reactMountingManager;
 
 - (nullable RCTComponentViewRegistry *)reactComponentViewRegistry;
+
+- (nullable RCTScheduler *)reactScheduler;
 
 @end

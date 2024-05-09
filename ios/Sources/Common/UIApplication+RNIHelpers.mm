@@ -9,10 +9,14 @@
 #import "UIApplication+RNIHelpers.h"
 
 #import "RCTAppDelegate.h"
+
 #import <React/RCTSurfacePresenter.h>
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <React/RCTMountingManager.h>
 #import <React/RCTComponentViewRegistry.h>
+#import <React/RCTScheduler.h>
+
+#import <react/renderer/uimanager/UIManager.h>
 
 
 @implementation UIApplication (RNIHelpers)
@@ -82,6 +86,32 @@
   };
   
   return [reactMountingManager componentViewRegistry];
+}
+
+- (RCTScheduler *)reactScheduler
+{
+  RCTSurfacePresenter *reactSurfacePresenter = [self reactSurfacePresenter];
+  if(reactSurfacePresenter == nil){
+    return nil;
+  };
+  
+  return [reactSurfacePresenter scheduler];
+}
+
+/// Note - Prefer to use:
+/// ```
+/// RCTScheduler *reactScheduler = [self reactScheduler];
+/// std::shared_ptr<facebook::react::UIManager> = *uiManager [reactScheduler uiManager];
+///
+/// ```
+- (facebook::react::UIManager *)reactUIManager
+{
+  RCTScheduler *reactScheduler = [self reactScheduler];
+  if(reactScheduler == nil){
+    return nil;
+  };
+  
+  return [reactScheduler uiManager].get();
 }
 
 @end
