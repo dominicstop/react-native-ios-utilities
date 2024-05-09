@@ -15,9 +15,15 @@
 @class RCTComponentViewRegistry;
 @class RCTScheduler;
 
+#if __cplusplus
+namespace facebook::react {
+  class UIManager;
+}
+#endif
 
 @interface UIApplication (RNIHelpers)
 
+#if __cplusplus
 - (nullable RCTAppDelegate * )reactAppDelegate;
 
 - (nullable RCTSurfacePresenterBridgeAdapter *)reactBridgeAdapter;
@@ -31,5 +37,8 @@
 - (nullable RCTComponentViewRegistry *)reactComponentViewRegistry;
 
 - (nullable RCTScheduler *)reactScheduler;
+
+- (nullable facebook::react::UIManager *)reactUIManager;
+#endif
 
 @end
