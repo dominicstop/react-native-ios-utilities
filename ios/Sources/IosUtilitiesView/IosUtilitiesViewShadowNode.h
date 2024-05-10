@@ -26,9 +26,16 @@ class JSI_EXPORT IosUtilitiesViewShadowNode final : public RNIBaseViewShadowNode
   IosUtilitiesViewEventEmitter
 > {
 
-  public:
-    using RNIBaseViewShadowNode::RNIBaseViewShadowNode;
-
+public:
+  using RNIBaseViewShadowNode::RNIBaseViewShadowNode;
+  
+  static RNIBaseViewState initialStateData(
+      const Props::Shared& /*props*/,
+      const ShadowNodeFamily::Shared& /*family*/,
+      const ComponentDescriptor& /*componentDescriptor*/
+  ) {
+    return {};
+  }
 };
 
 } // facebook::react

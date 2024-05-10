@@ -43,6 +43,15 @@ public:
     auto stateData = this->getStateData();
     return stateData.contentOffset;
   }
+  
+  // NOTE: impl. in subclass to customize initial state
+  static RNIBaseViewState initialStateData(
+      const Props::Shared& /*props*/,
+      const ShadowNodeFamily::Shared& /*family*/,
+      const ComponentDescriptor& /*componentDescriptor*/
+  ) {
+    return {};
+  }
 };
 
 } // facebook::react
