@@ -73,6 +73,14 @@ public:
     folly::dynamic data
   ) {
   
+    this->shouldSetSize = data["shouldSetSize"] == nullptr
+      ? previousState.shouldSetSize
+      : data["shouldSetSize"].getBool();
+      
+    this->shouldSetPadding = data["shouldSetPadding"] == nullptr
+      ? previousState.shouldSetSize
+      : data["shouldSetPadding"].getBool();
+      
     this->frameSize = [&]() {
       const Float frameHeight = data["frameHeight"] == nullptr
         ? previousState.frameSize.height
