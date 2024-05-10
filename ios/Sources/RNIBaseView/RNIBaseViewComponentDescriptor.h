@@ -45,16 +45,15 @@ public:
     };
     
     RNIBaseViewState stateData = state->getData();
-    Size newSize = stateData.frameSize;
-    
     LayoutMetrics layoutMetrics = layoutableShadowNode.getLayoutMetrics();
+    
+    Size newSize = stateData.frameSize;
     Size oldSize = layoutMetrics.frame.size;
     
     // NOTE: `Size` impl. custom `!=` op overload for checking inequality
     bool didChangeSize = newSize != oldSize;
-    bool isNewSizeValid = newSize.width != 0 && newSize.height != 0;
-
-    if (didChangeSize && isNewSizeValid) {
+    
+    if (didChangeSize && stateData.shouldSetSize) {
       layoutableShadowNode.setSize(newSize);
     };
 

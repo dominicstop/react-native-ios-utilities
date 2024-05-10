@@ -25,6 +25,8 @@ public:
   using ConcreteState = ConcreteState<RNIBaseViewState>;
   using SharedConcreteState = std::shared_ptr<const ConcreteState>;
   
+  bool shouldSetSize = false;
+  
   // frameHeight
   // frameWidth
   Size frameSize;
@@ -80,7 +82,7 @@ public:
         : (Float)data["frameWidth"].getDouble();
         
       Size frameSize = {};
-      frameSize.width = frameWidth;
+      frameSize.width  = frameWidth;
       frameSize.height = frameHeight;
       
       return frameSize;
@@ -102,21 +104,31 @@ public:
       return contentOffset;
     }();
     
-    const Float paddingTop = data["paddingTop"] == nullptr
-      ? previousState.padding.top
-      : (Float)data["paddingTop"].getDouble();
+    this->padding = [&]() {
+      const Float paddingTop = data["paddingTop"] == nullptr
+        ? previousState.padding.top
+        : (Float)data["paddingTop"].getDouble();
+        
+      const Float paddingBottom = data["paddingBottom"] == nullptr
+        ? previousState.padding.bottom
+        : (Float)data["paddingBottom"].getDouble();
+        
+      const Float paddingLeft = data["paddingLeft"] == nullptr
+        ? previousState.padding.left
+        : (Float)data["paddingLeft"].getDouble();
+        
+      const Float paddingRight = data["paddingRight"] == nullptr
+        ? previousState.padding.right
+        : (Float)data["paddingRight"].getDouble();
+        
+      RectangleEdges<Float> padding = {};
+      padding.top    = paddingTop;
+      padding.bottom = paddingBottom;
+      padding.left   = paddingLeft;
+      padding.right  = paddingRight;
       
-    const Float paddingBottom = data["paddingBottom"] == nullptr
-      ? previousState.padding.bottom
-      : (Float)data["paddingBottom"].getDouble();
-      
-    const Float paddingLeft = data["paddingLeft"] == nullptr
-      ? previousState.padding.left
-      : (Float)data["paddingLeft"].getDouble();
-      
-    const Float paddingRight = data["paddingRight"] == nullptr
-      ? previousState.padding.right
-      : (Float)data["paddingRight"].getDouble();
+      return padding;
+    }();
   };
   
   // MARK: - Methods

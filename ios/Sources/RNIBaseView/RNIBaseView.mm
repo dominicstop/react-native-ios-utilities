@@ -67,13 +67,15 @@ using namespace react;
 // MARK: - Functions
 // -----------------
 
-- (void)setSize:(CGSize)size {
+- (void)setSize:(CGSize)size
+{
   if(self->_state != nullptr){
     RNIBaseViewState prevState = self->_state->getData();
     RNIBaseViewState newState = RNIBaseViewState(prevState);
     
     auto newSize = [RNIObjcUtils convertToReactSizeForSize:size];
     newState.frameSize = newSize;
+    newState.shouldSetSize = true;
     
     self->_state->updateState(std::move(newState));
     [self->_view setNeedsLayout];
