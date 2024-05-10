@@ -12,5 +12,7 @@ public protocol RNIViewLifecycleEventsNotifying where Self: UIView  {
 
   var cachedLayoutMetrics: RNILayoutMetrics { get };
   
-  func setSize(_: CGSize);
+  func setSize(_ size: CGSize);
+  
+  func setPadding(_ insets: UIEdgeInsets)
 };

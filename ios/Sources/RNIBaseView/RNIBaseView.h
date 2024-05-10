@@ -33,4 +33,6 @@
 
 - (void)setSize:(CGSize)size;
 
+- (void)setPadding:(UIEdgeInsets)padding;
+
 @end

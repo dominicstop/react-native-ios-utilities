@@ -26,6 +26,7 @@ public:
   using SharedConcreteState = std::shared_ptr<const ConcreteState>;
   
   bool shouldSetSize = false;
+  bool shouldSetPadding = false;
   
   // frameHeight
   // frameWidth

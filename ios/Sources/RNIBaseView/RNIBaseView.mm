@@ -9,6 +9,8 @@
 #import "RNIBaseView.h"
 
 #import "react-native-ios-utilities/Swift.h"
+#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
+
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
 #import "RCTFabricComponentsPlugins.h"
@@ -81,6 +83,19 @@ using namespace react;
     [self->_view setNeedsLayout];
   }
 };
+
+- (void)setPadding:(UIEdgeInsets)padding
+{
+  RNIBaseViewState prevState = self->_state->getData();
+  RNIBaseViewState newState = RNIBaseViewState(prevState);
+  
+  auto newPadding = [RNIObjcUtils convertToReactRectangleEdgesForEdgeInsets:padding];
+  newState.padding = newPadding;
+  newState.shouldSetPadding = true;
+  
+  self->_state->updateState(std::move(newState));
+  [self->_view setNeedsLayout];
+}
 
 // MARK: - Fabric Lifecycle
 // ------------------------

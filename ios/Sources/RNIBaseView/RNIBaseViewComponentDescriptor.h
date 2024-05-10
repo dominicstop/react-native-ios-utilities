@@ -56,7 +56,11 @@ public:
     if (didChangeSize && stateData.shouldSetSize) {
       layoutableShadowNode.setSize(newSize);
     };
-
+    
+    if(stateData.shouldSetPadding){
+      layoutableShadowNode.setPadding(stateData.padding);
+    };
+    
     ConcreteComponentDescriptor<ShadowNodeT>::adopt(shadowNode);
   }
 };
