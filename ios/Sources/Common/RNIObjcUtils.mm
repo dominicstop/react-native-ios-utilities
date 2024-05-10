@@ -14,6 +14,8 @@
 #import <React/RCTConversions.h>
 
 #include <react/renderer/core/LayoutMetrics.h>
+#include <react/renderer/graphics/Rect.h>
+#include <react/renderer/graphics/RectangleEdges.h>
 
 
 @implementation RNIObjcUtils
@@ -109,6 +111,17 @@
   newSize.height = size.height;
   
   return newSize;
+}
+
++ (facebook::react::RectangleEdges<facebook::react::Float>)convertToReactRectangleEdgesForEdgeInsets:(UIEdgeInsets)edgeInsets
+{
+  facebook::react::RectangleEdges<facebook::react::Float> rectangleEdges = {};
+  rectangleEdges.left = edgeInsets.left;
+  rectangleEdges.top = edgeInsets.top;
+  rectangleEdges.bottom = edgeInsets.bottom;
+  rectangleEdges.right = edgeInsets.right;
+  
+  return rectangleEdges;
 }
 
 + (id)alloc
