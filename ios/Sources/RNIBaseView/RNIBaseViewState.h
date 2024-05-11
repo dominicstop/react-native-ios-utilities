@@ -16,6 +16,8 @@
 #include <react/renderer/core/ConcreteState.h>
 #include <folly/dynamic.h>
 
+#include <yoga/YGEnums.h>
+
 
 namespace facebook::react {
 
@@ -27,6 +29,7 @@ public:
   
   bool shouldSetSize = false;
   bool shouldSetPadding = false;
+  bool shouldSetPositionType = false;
   
   // frameHeight
   // frameWidth
@@ -42,6 +45,8 @@ public:
   // paddingRight
   RectangleEdges<Float> padding;
   
+  YGPositionType positionType;
+  
   // MARK: - Init
   // ------------
 
@@ -50,11 +55,13 @@ public:
   RNIBaseViewState(
     Size frameSize_,
     Point contentOffset_,
-    RectangleEdges<Float> padding_
+    RectangleEdges<Float> padding_,
+    YGPositionType positionType_
   ) :
     frameSize(frameSize_),
     contentOffset(contentOffset_),
-    padding(padding_)
+    padding(padding_),
+    positionType(positionType_)
   {
     // no-op
   };
@@ -67,7 +74,8 @@ public:
     shouldSetPositionType(previousState.shouldSetPositionType),
     frameSize(previousState.frameSize),
     contentOffset(previousState.contentOffset),
-    padding(previousState.padding)
+    padding(previousState.padding),
+    positionType(previousState.positionType)
   {
     // no-op
   }
@@ -84,6 +92,10 @@ public:
     this->shouldSetPadding = data["shouldSetPadding"] == nullptr
       ? previousState.shouldSetPadding
       : data["shouldSetPadding"].getBool();
+      
+    this->shouldSetPositionType = data["shouldSetPositionType"] == nullptr
+      ? previousState.shouldSetPositionType
+      : data["shouldSetPositionType"].getBool();
       
     this->frameSize = [&]() {
       const Float frameHeight = data["frameHeight"] == nullptr
@@ -142,6 +154,10 @@ public:
       
       return padding;
     }();
+    
+    this->positionType = data["positionType"] == nullptr
+      ? previousState.positionType
+      : (YGPositionType)data["positionType"].getInt();
   };
   
   // MARK: - Methods

@@ -14,8 +14,9 @@ namespace facebook::react {
 folly::dynamic RNIBaseViewState::getDynamic() const {
   
   folly::dynamic map = folly::dynamic::object;
-  map["shouldSetSize"   ] = this->shouldSetSize;
-  map["shouldSetPadding"] = this->shouldSetPadding;
+  map["shouldSetSize"        ] = this->shouldSetSize;
+  map["shouldSetPadding"     ] = this->shouldSetPadding;
+  map["shouldSetPositionType"] = this->shouldSetPositionType;
   
   map["frameWidth" ] = this->frameSize.width;
   map["frameHeight"] = this->frameSize.height;
@@ -27,6 +28,8 @@ folly::dynamic RNIBaseViewState::getDynamic() const {
   map["paddingBottom"] = this->padding.bottom;
   map["paddingLeft"  ] = this->padding.left;
   map["paddingRight" ] = this->padding.right;
+  
+  map["positionType"] = (int)this->positionType;
   
   return map;
 }
