@@ -62,8 +62,12 @@ public:
   RNIBaseViewState(
     RNIBaseViewState const &previousState
   ) :
+    shouldSetSize(previousState.shouldSetSize),
+    shouldSetPadding(previousState.shouldSetPadding),
+    shouldSetPositionType(previousState.shouldSetPositionType),
     frameSize(previousState.frameSize),
-    contentOffset(previousState.contentOffset)
+    contentOffset(previousState.contentOffset),
+    padding(previousState.padding)
   {
     // no-op
   }
@@ -78,7 +82,7 @@ public:
       : data["shouldSetSize"].getBool();
       
     this->shouldSetPadding = data["shouldSetPadding"] == nullptr
-      ? previousState.shouldSetSize
+      ? previousState.shouldSetPadding
       : data["shouldSetPadding"].getBool();
       
     this->frameSize = [&]() {
