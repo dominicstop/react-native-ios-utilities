@@ -17,6 +17,7 @@
 @protocol RNIViewLifecycleEventsNotifiable;
 
 @class RNILayoutMetrics;
+typedef NS_ENUM(NSInteger, RNIPositionType);
 
 // Interface visible in Swift
 @interface RNIBaseView:
@@ -34,5 +35,7 @@
 - (void)setSize:(CGSize)size;
 
 - (void)setPadding:(UIEdgeInsets)padding;
+
+- (void)setPositionType:(RNIPositionType)positionType;
 
 @end

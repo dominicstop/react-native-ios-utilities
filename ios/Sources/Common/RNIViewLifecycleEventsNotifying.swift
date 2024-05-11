@@ -14,5 +14,7 @@ public protocol RNIViewLifecycleEventsNotifying where Self: UIView  {
   
   func setSize(_ size: CGSize);
   
-  func setPadding(_ insets: UIEdgeInsets)
+  func setPadding(_ insets: UIEdgeInsets);
+  
+  func setPositionType(_ positionType: RNILayoutMetrics.RNIPositionType);
 };

@@ -97,6 +97,21 @@ using namespace react;
   [self->_view setNeedsLayout];
 }
 
+- (void)setPositionType:(RNIPositionType)positionType
+{
+  RNIBaseViewState prevState = self->_state->getData();
+  RNIBaseViewState newState = RNIBaseViewState(prevState);
+  
+  newState.positionType =
+    [RNIObjcUtils convertToYGPostionTypeForRNIPostionType:positionType];
+     
+  newState.shouldSetPositionType = true;
+  
+  self->_state->updateState(std::move(newState));
+  [self->_view setNeedsLayout];
+}
+
+
 // MARK: - Fabric Lifecycle
 // ------------------------
 

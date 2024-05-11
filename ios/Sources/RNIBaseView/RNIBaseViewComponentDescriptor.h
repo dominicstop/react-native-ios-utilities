@@ -61,6 +61,9 @@ public:
       layoutableShadowNode.setPadding(stateData.padding);
     };
     
+    if(stateData.shouldSetPositionType){
+      layoutableShadowNode.setPositionType(stateData.positionType);
+    };
     ConcreteComponentDescriptor<ShadowNodeT>::adopt(shadowNode);
   }
 };
