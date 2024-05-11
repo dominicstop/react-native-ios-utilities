@@ -7,10 +7,12 @@
 
 #if __cplusplus
 #include <react/renderer/graphics/Float.h>
+#include <yoga/YGEnums.h>
 #endif
 
 
 @class RNILayoutMetrics;
+typedef NS_ENUM(NSInteger, RNIPositionType);
 
 #if __cplusplus
 namespace facebook::react {
@@ -35,6 +37,8 @@ namespace folly {
 + (facebook::react::Size)convertToReactSizeForSize:(CGSize)size;
 
 + (facebook::react::RectangleEdges<facebook::react::Float>)convertToReactRectangleEdgesForEdgeInsets:(UIEdgeInsets)edgeInsets;
+
++ (YGPositionType)convertToYGPostionTypeForRNIPostionType:(RNIPositionType)positionType;
 #endif
 @end
 

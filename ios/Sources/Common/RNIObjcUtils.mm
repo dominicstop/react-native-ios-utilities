@@ -124,6 +124,24 @@
   return rectangleEdges;
 }
 
++ (YGPositionType)convertToYGPostionTypeForRNIPostionType:(RNIPositionType)positionType
+{
+  switch (positionType) {
+    case RNIPositionTypeStatic:
+      return YGPositionTypeStatic;
+      
+    case RNIPositionTypeRelative:
+      return YGPositionTypeRelative;
+      
+    case RNIPositionTypeAbsolute:
+      return YGPositionTypeAbsolute;
+      
+    default:
+      NSAssert(NO, @"Unsupported RNIPositionType value");
+  }
+}
+
+
 + (id)alloc
 {
   [NSException raise:@"Cannot be instantiated!"
