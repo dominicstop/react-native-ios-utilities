@@ -7,28 +7,57 @@
 
 #import <UIKit/UIKit.h>
 
-#ifdef RCT_NEW_ARCH_ENABLED
+#if RCT_NEW_ARCH_ENABLED
 #import <React/RCTViewComponentView.h>
 #else
 #import <React/RCTView.h>
 #endif
 
+// MARK: - Forward Declarations
+// ----------------------------
+
 @protocol RNIViewLifecycleEventsNotifying;
 @protocol RNIViewLifecycleEventsNotifiable;
 
+@class RCTBridge;
 @class RNILayoutMetrics;
+
 typedef NS_ENUM(NSInteger, RNIPositionType);
 
-// Interface visible in Swift
+// MARK: - RNIBaseView
+// -------------------
+
 @interface RNIBaseView:
 #ifdef RCT_NEW_ARCH_ENABLED
   RCTViewComponentView<RNIViewLifecycleEventsNotifying>
-#else // RCT_NEW_ARCH_ENABLED
-   RCTView<RNIViewLifecycleEventsNotifying>
-#endif // paper
+#else
+  RCTView<RNIViewLifecycleEventsNotifying>
+#endif
+
+// MARK: - Properties
+// ------------------
+
+#if !RCT_NEW_ARCH_ENABLED
+@property (nonatomic, weak) RCTBridge *bridge;
+#endif
 
 @property (nonatomic, strong, nullable) NSObject<RNIViewLifecycleEventsNotifiable> *lifecycleEventDelegate;
+
 @property (nonatomic, strong, nullable) RNILayoutMetrics *cachedLayoutMetrics;
+
+// MARK: - Init
+// ------------
+
+#if RCT_NEW_ARCH_ENABLED
+- (nonnull instancetype)initWithFrame:(CGRect)frame;
+#else
+- (nonnull instancetype)initWithBridge:(RCTBridge *)bridge;
+#endif
+
+- (void) initCommon;
+
+// MARK: - Methods
+// ---------------
 
 - (nonnull Class) viewDelegateClass;
 

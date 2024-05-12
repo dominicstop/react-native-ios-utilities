@@ -52,12 +52,6 @@ using namespace facebook::react;
 @end
 
 @implementation RNIDummyTestView {
-#ifdef RCT_NEW_ARCH_ENABLED
-  NSMutableArray<UIView *> *_reactSubviews;
-#else
-  __weak RCTBridge *_bridge;
-  CGRect _reactFrame;
-#endif
 }
 
 // MARK: - Init
@@ -66,26 +60,19 @@ using namespace facebook::react;
 #ifdef RCT_NEW_ARCH_ENABLED
 - (instancetype)initWithFrame:(CGRect)frame
 {
-  if (self = [super initWithFrame:frame]) {
-    static const auto defaultProps = std::make_shared<const react::RNIDummyTestViewProps>();
-    _props = defaultProps;
-    _reactSubviews = [NSMutableArray new];
-    [self initCommon];
-  }
+  self = [super initWithFrame:frame];
   return self;
 }
 #else
 - (instancetype)initWithBridge:(RCTBridge *)bridge
 {
-  if (self = [super init]) {
-    _bridge = bridge;
-    [self _reactSubviews];
-  }
+  self = [super initWithFrame:frame];
   return self;
 }
-#endif // RCT_NEW_ARCH_ENABLED
+#endif
 
 - (void)initCommon {
+  // no-op
 }
 
 // MARK: - RNIBaseView

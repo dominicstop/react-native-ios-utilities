@@ -5,7 +5,7 @@
 //  Created by Dominic Go on 4/30/24.
 //
 
-#ifdef RCT_NEW_ARCH_ENABLED
+
 #import "RNIBaseView.h"
 
 #import "react-native-ios-utilities/Swift.h"
@@ -13,6 +13,7 @@
 
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
+#ifdef RCT_NEW_ARCH_ENABLED
 #import "RCTFabricComponentsPlugins.h"
 #import <React/RCTFollyConvert.h>
 
@@ -22,21 +23,31 @@
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
+#endif
 
+#if __cplusplus
 using namespace facebook;
 using namespace react;
+#endif
 
 @interface RNIBaseView () <RNIViewLifecycleEventsNotifying>
 @end
 
+
 @implementation RNIBaseView {
+#ifdef RCT_NEW_ARCH_ENABLED
   UIView * _view;
   RNIBaseViewState::SharedConcreteState _state;
+  NSMutableArray<UIView *> *_reactSubviews;
+#else
+  CGRect _reactFrame;
+#endif
 }
 
 // MARK: - Init
 // ------------
 
+#ifdef RCT_NEW_ARCH_ENABLED
 - (instancetype)initWithFrame:(CGRect)frame
 {
   self = [super initWithFrame:frame];
@@ -64,7 +75,26 @@ using namespace react;
     [viewDelegate notifyOnInitWithSender:self frame:frame];
   }
   
+  [self initCommon];
   return self;
+}
+#else
+- (instancetype)initWithBridge:(RCTBridge *)bridge
+{
+  if (self = [super init]) {
+    self.bridge = bridge;
+    [self _reactSubviews];
+  }
+  
+  [self initCommon];
+  return self;
+}
+#endif
+
+- (void)initCommon
+{
+  // no-op
+  // NOTE: to be overridden + impl. by child class
 }
 
 // MARK: - Functions
@@ -280,4 +310,4 @@ using namespace react;
 }
 
 @end
-#endif
+
