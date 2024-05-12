@@ -88,6 +88,11 @@
   return dict;
 }
 
++ (NSDictionary *)convertToDictForFollyDynamicMap:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap
+{
+  return (NSDictionary *)[[RNIObjcUtils convertToMutableDictForFollyDynamicMap:stringToDynMap] copy];
+}
+
 + (RNILayoutMetrics *)createRNILayoutMetricsFrom:(facebook::react::LayoutMetrics)layoutMetrics
 {
   RNILayoutMetrics *swiftLayoutMetrics = [RNILayoutMetrics new];

@@ -7,7 +7,7 @@
 
 #if __cplusplus
 #include <string>
-#include <unordered_map> 
+#include <unordered_map>
 
 #include <react/renderer/graphics/Float.h>
 #include <yoga/YGEnums.h>
@@ -36,6 +36,8 @@ namespace folly {
 + (id)convertFollyDynamicToId:(const folly::dynamic*)dyn;
 
 + (NSMutableDictionary *)convertToMutableDictForFollyDynamicMap:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;
+
++ (NSDictionary *)convertToDictForFollyDynamicMap:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;
 
 + (RNILayoutMetrics *)createRNILayoutMetricsFrom: (facebook::react::LayoutMetrics)layoutMetrics;
 
