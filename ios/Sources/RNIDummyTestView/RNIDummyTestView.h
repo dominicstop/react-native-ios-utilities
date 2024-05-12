@@ -33,6 +33,6 @@ namespace react = facebook::react;
 - (instancetype)initWithFrame:(CGRect)frame;
 #else
 - (instancetype)initWithBridge:(RCTBridge *)bridge;
-#endif // RCT_NEW_ARCH_ENABLED
+#endif
 
 @end

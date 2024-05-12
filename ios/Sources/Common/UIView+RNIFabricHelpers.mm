@@ -9,14 +9,16 @@
 #import <objc/runtime.h>
 
 #import "UIView+RNIFabricHelpers.h"
+
+#if __cplusplus
 #import "UIView+RNIHelpers.h"
 
 #import <React/RCTSurfaceHostingView.h>
 #import <React/RCTFabricSurface.h>
-
+#endif
 
 @implementation UIView (RNIFabricHelpers)
-
+#if __cplusplus
 - (RCTSurfaceHostingView *)reactGetClosestParentSurfaceHostingView
 {
   UIResponder *match = [self findParentResponderWhere:^BOOL(UIResponder *responder) {
@@ -69,5 +71,5 @@
   
   return &surfaceHandler->value();
 }
-
+#endif
 @end

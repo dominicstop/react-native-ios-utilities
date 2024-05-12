@@ -10,11 +10,11 @@
 #import "RNIObjcUtils.h"
 #import "react-native-ios-utilities/Swift.h"
 
+#if __cplusplus
 #import <folly/dynamic.h>
 #import <React/RCTConversions.h>
 #import <React/RCTFollyConvert.h>
 
-#if __cplusplus
 #include <react/renderer/core/LayoutMetrics.h>
 #include <react/renderer/graphics/Rect.h>
 #include <react/renderer/graphics/RectangleEdges.h>

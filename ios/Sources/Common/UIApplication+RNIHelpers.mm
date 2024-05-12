@@ -8,6 +8,7 @@
 
 #import "UIApplication+RNIHelpers.h"
 
+#if __cplusplus
 #import "RCTAppDelegate.h"
 
 #import <React/RCTSurfacePresenter.h>
@@ -17,10 +18,10 @@
 #import <React/RCTScheduler.h>
 
 #import <react/renderer/uimanager/UIManager.h>
-
+#endif
 
 @implementation UIApplication (RNIHelpers)
-
+#if __cplusplus
 - (RCTAppDelegate *)reactAppDelegate
 {
   id<UIApplicationDelegate> appDelegate =
@@ -113,6 +114,6 @@
   
   return [reactScheduler uiManager].get();
 }
-
+#endif
 @end
 
