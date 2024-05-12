@@ -2,9 +2,9 @@
 import * as React from 'react';
 
 import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
-import { IosUtilitiesNativeView } from 'react-native-ios-utilities';
+import { RNIDummyTestNativeView } from 'react-native-ios-utilities';
 
-const someObject = {
+const TEST_OBJECT = {
   someBool: true,
   someString: "abc",
   someInt: 123,
@@ -79,15 +79,14 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>{`Counter: ${counter}`}</Text>
-      <IosUtilitiesNativeView 
+      <RNIDummyTestNativeView 
         style={[styles.box, boxStyle]}
-        color={"#32a852"}
-        someObject={someObject}
+        someObject={TEST_OBJECT}
       >
         {(counter % 4 === 0) && (
           <Text>{`Counter: ${counter}`}</Text>
         )}
-      </IosUtilitiesNativeView>
+      </RNIDummyTestNativeView>
     </View>
   );
 }
