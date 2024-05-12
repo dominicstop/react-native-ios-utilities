@@ -35,7 +35,7 @@ namespace folly {
 #if __cplusplus
 + (id)convertFollyDynamicToId:(const folly::dynamic*)dyn;
 
-+ (NSMutableDictionary *)convertFollyDynamicMapToMutableDict:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;
++ (NSMutableDictionary *)convertToMutableDictForFollyDynamicMap:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;
 
 + (RNILayoutMetrics *)createRNILayoutMetricsFrom: (facebook::react::LayoutMetrics)layoutMetrics;
 

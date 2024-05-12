@@ -75,7 +75,7 @@
   return nil;
 }
 
-+ (NSMutableDictionary *)convertFollyDynamicMapToMutableDict:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;
++ (NSMutableDictionary *)convertToMutableDictForFollyDynamicMap:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap
 {
   NSMutableDictionary *dict = [NSMutableDictionary new];
   for (auto& [key, value]: stringToDynMap) {
