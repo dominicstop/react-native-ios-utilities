@@ -14,13 +14,14 @@
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
 #import "RCTFabricComponentsPlugins.h"
+#import <React/RCTFollyConvert.h>
 
 #include "RNIBaseViewState.h"
+#include "RNIBaseViewProps.h"
 
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
-
 
 using namespace facebook;
 using namespace react;
@@ -162,6 +163,36 @@ using namespace react;
   }
   
   [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
+}
+
+- (void)updateProps:(Props::Shared const &)props
+           oldProps:(Props::Shared const &)oldProps
+{
+  const auto &basePropsOld = *std::static_pointer_cast<RNIBaseViewProps const>(_props);
+  const auto &basePropsNew = *std::static_pointer_cast<RNIBaseViewProps const>(props);
+
+  NSDictionary *dictPropsOld = ^{
+    if(oldProps == nullptr){
+      return @{};
+    };
+    
+    return [RNIObjcUtils convertToDictForFollyDynamicMap:basePropsNew.propsMap];
+  }();
+  
+  NSDictionary *dictPropsNew =
+    [RNIObjcUtils convertToDictForFollyDynamicMap:basePropsNew.propsMap];
+    
+  BOOL shouldNotifyDelegate =
+       self.lifecycleEventDelegate != nil
+    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUpdatePropsWithSender:oldProps:newProps:)];
+    
+  if(shouldNotifyDelegate){
+    [self.lifecycleEventDelegate notifyOnUpdatePropsWithSender:self
+                                                      oldProps:dictPropsOld
+                                                      newProps:dictPropsNew];
+  };
+
+  [super updateProps:props oldProps:oldProps];
 }
 
 - (void)updateState:(const State::Shared &)state
