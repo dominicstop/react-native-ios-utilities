@@ -8,6 +8,7 @@
 #pragma once
 
 #include <react-native-ios-utilities/RNIBaseViewShadowNode.h>
+#include <react-native-ios-utilities/RNIBaseViewProps.h>
 
 #include <react/renderer/components/RNIosUtilitiesViewSpec/EventEmitters.h>
 #include <react/renderer/components/RNIosUtilitiesViewSpec/Props.h>
@@ -22,7 +23,7 @@ JSI_EXPORT extern const char IosUtilitiesViewComponentName[] = "IosUtilitiesView
 
 class JSI_EXPORT IosUtilitiesViewShadowNode final : public RNIBaseViewShadowNode<
   IosUtilitiesViewComponentName,
-  IosUtilitiesViewProps,
+  RNIBaseViewProps,
   IosUtilitiesViewEventEmitter
 > {
 

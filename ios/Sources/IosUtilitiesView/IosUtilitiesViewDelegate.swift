@@ -92,6 +92,7 @@ extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
       "\n - oldLayoutMetric.frame:", oldLayoutMetrics.frame,
       "\n - oldLayoutMetric.frame:", newLayoutMetrics.frame,
       "\n - self.tag:", self.tag,
+      "\n - sender.tag:", sender.tag,
       "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
       "\n - self.window:", self.window?.debugDescription ?? "N/A",
       "\n"
@@ -116,6 +117,7 @@ extension IosUtilitiesViewDelegate: RNIViewLifecycleEventsNotifiable {
     updateMaskRaw: Int,
     updateMask: RNIComponentViewUpdateMask
   ) {
+    
     print(
       "IosUtilitiesViewDelegate.notifyOnFinalizeUpdates",
       "\n - updateMaskRaw:", updateMaskRaw,
