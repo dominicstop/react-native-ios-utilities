@@ -6,6 +6,9 @@
 //
 
 #if __cplusplus
+#include <string>
+#include <unordered_map> 
+
 #include <react/renderer/graphics/Float.h>
 #include <yoga/YGEnums.h>
 #endif
@@ -30,7 +33,9 @@ namespace folly {
 
 @interface RNIObjcUtils : NSObject
 #if __cplusplus
-+ (id)convertFollyDynamicToId: (const folly::dynamic*)dyn;
++ (id)convertFollyDynamicToId:(const folly::dynamic*)dyn;
+
++ (NSMutableDictionary *)convertFollyDynamicMapToMutableDict:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;
 
 + (RNILayoutMetrics *)createRNILayoutMetricsFrom: (facebook::react::LayoutMetrics)layoutMetrics;
 
@@ -39,6 +44,7 @@ namespace folly {
 + (facebook::react::RectangleEdges<facebook::react::Float>)convertToReactRectangleEdgesForEdgeInsets:(UIEdgeInsets)edgeInsets;
 
 + (YGPositionType)convertToYGPostionTypeForRNIPostionType:(RNIPositionType)positionType;
+
 #endif
 @end
 

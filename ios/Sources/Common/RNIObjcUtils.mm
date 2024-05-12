@@ -12,14 +12,16 @@
 
 #import <folly/dynamic.h>
 #import <React/RCTConversions.h>
+#import <React/RCTFollyConvert.h>
 
+#if __cplusplus
 #include <react/renderer/core/LayoutMetrics.h>
 #include <react/renderer/graphics/Rect.h>
 #include <react/renderer/graphics/RectangleEdges.h>
-
+#endif
 
 @implementation RNIObjcUtils
-
+#if __cplusplus
 + (id)convertFollyDynamicToId:(const folly::dynamic*)dyn
 {
   switch (dyn->type()) {
@@ -71,6 +73,19 @@
   
   NSLog(@"Unsupported data type in folly::dynamic");
   return nil;
+}
+
++ (NSMutableDictionary *)convertFollyDynamicMapToMutableDict:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;
+{
+  NSMutableDictionary *dict = [NSMutableDictionary new];
+  for (auto& [key, value]: stringToDynMap) {
+    NSString *keyAsObjcString = [NSString stringWithUTF8String:key.c_str()];
+    id valueAsId = facebook::react::convertFollyDynamicToId(value);
+    
+    dict[keyAsObjcString] = valueAsId;
+  };
+  
+  return dict;
 }
 
 + (RNILayoutMetrics *)createRNILayoutMetricsFrom:(facebook::react::LayoutMetrics)layoutMetrics
@@ -140,7 +155,7 @@
       NSAssert(NO, @"Unsupported RNIPositionType value");
   }
 }
-
+#endif
 
 + (id)alloc
 {
