@@ -58,22 +58,8 @@ using namespace facebook::react;
 // MARK: - Init
 // ------------
 
-#ifdef RCT_NEW_ARCH_ENABLED
-- (instancetype)initWithFrame:(CGRect)frame
-{
-  self = [super initWithFrame:frame];
-  return self;
-}
-#else
-- (instancetype)initWithBridge:(RCTBridge *)bridge
-{
-  self = [super initWithFrame:CGRectZero];
-  return self;
-}
-#endif
-
 - (void)initCommon {
-  // no-op
+  [super initCommon];
 }
 
 // MARK: - RNIBaseView

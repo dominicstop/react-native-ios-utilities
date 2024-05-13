@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (nonnull instancetype)initWithBridge:(nonnull RCTBridge *)bridge;
 #endif
 
-- (void) initCommon;
+- (void) initCommon NS_REQUIRES_SUPER;
 
 // MARK: - Methods
 // ---------------
