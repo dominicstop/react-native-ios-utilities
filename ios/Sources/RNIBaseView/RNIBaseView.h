@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 // ------------
 
 #if RCT_NEW_ARCH_ENABLED
-- (nonnull instancetype)initWithFrame:(nonnull CGRect)frame;
+- (nonnull instancetype)initWithFrame:(CGRect)frame;
 #else
 - (nonnull instancetype)initWithBridge:(nonnull RCTBridge *)bridge;
 #endif
