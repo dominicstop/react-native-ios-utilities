@@ -16,7 +16,7 @@
 #endif
 
 @protocol RNIViewLifecycleEventsNotifying;
-@protocol RNIViewLifecycleEventsNotifiable;
+@protocol RNIContentViewDelegate;
 
 @class RCTBridge;
 

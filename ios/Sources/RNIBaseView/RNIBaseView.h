@@ -17,7 +17,7 @@
 // ----------------------------
 
 @protocol RNIViewLifecycleEventsNotifying;
-@protocol RNIViewLifecycleEventsNotifiable;
+@protocol RNIContentViewDelegate;
 
 @class RCTBridge;
 @class RNILayoutMetrics;
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 @property (nonatomic, weak) RCTBridge *bridge;
 #endif
 
-@property (nonatomic, strong, nullable) NSObject<RNIViewLifecycleEventsNotifiable> *lifecycleEventDelegate;
+@property (nonatomic, strong, nullable) NSObject<RNIContentViewDelegate> *contentDelegate;
 
 @property (nonatomic, strong, nullable) RNILayoutMetrics *cachedLayoutMetrics;
 

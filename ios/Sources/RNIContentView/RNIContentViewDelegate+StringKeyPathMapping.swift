@@ -1,5 +1,5 @@
 //
-//  RNIViewLifecycleEventsNotifiable+StringKeyPathMapping.swift
+//  RNIContentViewDelegate+StringKeyPathMapping.swift
 //  react-native-ios-utilities
 //
 //  Created by Dominic Go on 5/13/24.
@@ -8,7 +8,7 @@
 import Foundation
 import DGSwiftUtilities
 
-public extension RNIViewLifecycleEventsNotifiable where Self: StringKeyPathMapping {
+public extension RNIContentViewDelegate where Self: StringKeyPathMapping {
 
   func setValues(withDict dict: NSDictionary){
     dict.allKeys.forEach {

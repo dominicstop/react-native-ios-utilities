@@ -1,5 +1,5 @@
 //
-//  RNIViewLifecycleEventsNotifiable.swift
+//  RNIContentViewDelegate.swift
 //  react-native-ios-utilities
 //
 //  Created by Dominic Go on 4/30/24.
@@ -9,7 +9,7 @@ import UIKit
 
 
 @objc
-public protocol RNIViewLifecycleEventsNotifiable where Self: UIView  {
+public protocol RNIContentViewDelegate where Self: UIView  {
   typealias KeyPathRoot = Self;
   
   @objc

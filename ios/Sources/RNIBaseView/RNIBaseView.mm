@@ -62,14 +62,14 @@ using namespace react;
     return nil;
   }
   
-  if(![viewDelegateClass conformsToProtocol:@protocol(RNIViewLifecycleEventsNotifiable)]) {
+  if(![viewDelegateClass conformsToProtocol:@protocol(RNIContentViewDelegate)]) {
     return nil;
   }
   
-  UIView<RNIViewLifecycleEventsNotifiable> *viewDelegate =
+  UIView<RNIContentViewDelegate> *viewDelegate =
     [[viewDelegateClass new] initWithFrame:frame];
   
-  self.lifecycleEventDelegate = viewDelegate;
+  self.contentDelegate = viewDelegate;
   self.contentView = viewDelegate;
   
   BOOL shouldNotifyDelegate =
@@ -156,11 +156,11 @@ using namespace react;
                          index:(NSInteger)index
 {
   BOOL shouldNotifyDelegate =
-       self.lifecycleEventDelegate != nil
-    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
   
   if(shouldNotifyDelegate){
-    [self.lifecycleEventDelegate notifyOnMountChildComponentViewWithSender:self
+    [self.contentDelegate notifyOnMountChildComponentViewWithSender:self
                                                         childComponentView:childComponentView
                                                                      index:index];
   }
@@ -170,11 +170,11 @@ using namespace react;
                             index:(NSInteger)index
 {
   BOOL shouldNotifyDelegate =
-       self.lifecycleEventDelegate != nil
-    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
   
   if(shouldNotifyDelegate){
-    [self.lifecycleEventDelegate notifyOnUnmountChildComponentViewWithSender:self
+    [self.contentDelegate notifyOnUnmountChildComponentViewWithSender:self
                                                           childComponentView:childComponentView
                                                                       index:index];
   }
@@ -187,13 +187,13 @@ using namespace react;
   self.cachedLayoutMetrics = layoutMetricsNew;
 
   BOOL shouldNotifyDelegate =
-       self.lifecycleEventDelegate != nil
-    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
   
   if (shouldNotifyDelegate) {
     RNILayoutMetrics *layoutMetricsOld = [RNIObjcUtils createRNILayoutMetricsFrom:oldLayoutMetrics];
     
-    [self.lifecycleEventDelegate notifyOnUpdateLayoutMetricsWithSender:self
+    [self.contentDelegate notifyOnUpdateLayoutMetricsWithSender:self
                                                       oldLayoutMetrics:layoutMetricsOld
                                                       newLayoutMetrics:layoutMetricsNew];
   }
@@ -219,11 +219,11 @@ using namespace react;
     [RNIObjcUtils convertToDictForFollyDynamicMap:basePropsNew.propsMap];
     
   BOOL shouldNotifyDelegate =
-       self.lifecycleEventDelegate != nil
-    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUpdatePropsWithSender:oldProps:newProps:)];
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdatePropsWithSender:oldProps:newProps:)];
     
   if(shouldNotifyDelegate){
-    [self.lifecycleEventDelegate notifyOnUpdatePropsWithSender:self
+    [self.contentDelegate notifyOnUpdatePropsWithSender:self
                                                       oldProps:dictPropsOld
                                                       newProps:dictPropsNew];
   };
@@ -264,11 +264,11 @@ using namespace react;
     : nil;
     
   BOOL shouldNotifyDelegate =
-       self.lifecycleEventDelegate != nil
-    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUpdateStateWithSender:oldState:newState:)];
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateStateWithSender:oldState:newState:)];
     
   if(shouldNotifyDelegate){
-    [self.lifecycleEventDelegate notifyOnUpdateStateWithSender:self
+    [self.contentDelegate notifyOnUpdateStateWithSender:self
                                                       oldState:oldStateDict
                                                       newState:newStateDict];
   };
@@ -279,14 +279,14 @@ using namespace react;
 - (void)finalizeUpdates:(RNComponentViewUpdateMask)updateMask
 {
   BOOL shouldNotifyDelegate =
-       self.lifecycleEventDelegate != nil
-    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnUnmountChildComponentViewWithSender:childComponentView:index:)];
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnUnmountChildComponentViewWithSender:childComponentView:index:)];
     
   if(shouldNotifyDelegate){
     RNIComponentViewUpdateMask *swiftMask =
       [[RNIComponentViewUpdateMask new] initWithRawValue:updateMask];
   
-    [self.lifecycleEventDelegate notifyOnFinalizeUpdatesWithSender:self
+    [self.contentDelegate notifyOnFinalizeUpdatesWithSender:self
                                                      updateMaskRaw:updateMask
                                                         updateMask:swiftMask];
   }
@@ -297,11 +297,11 @@ using namespace react;
 -(void) prepareForRecycle
 {
   BOOL shouldNotifyDelegate =
-       self.lifecycleEventDelegate != nil
-    && [self.lifecycleEventDelegate respondsToSelector:@selector(notifyOnPrepareForReuseWithSender:)];
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnPrepareForReuseWithSender:)];
   
   if(shouldNotifyDelegate){
-    [self.lifecycleEventDelegate notifyOnPrepareForReuseWithSender:self];
+    [self.contentDelegate notifyOnPrepareForReuseWithSender:self];
   }
   
   [super prepareForRecycle];

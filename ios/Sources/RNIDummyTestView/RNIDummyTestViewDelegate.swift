@@ -91,7 +91,7 @@ public final class RNIDummyTestViewDelegate: UIView, StringKeyPathMapping {
   };
 };
 
-extension RNIDummyTestViewDelegate: RNIViewLifecycleEventsNotifiable {
+extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
 
   public typealias KeyPathRoot = RNIDummyTestViewDelegate;
 
