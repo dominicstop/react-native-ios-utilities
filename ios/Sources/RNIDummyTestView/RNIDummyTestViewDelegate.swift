@@ -6,11 +6,60 @@
 //
 
 import UIKit
+import DGSwiftUtilities
 
 @objc
-public class RNIDummyTestViewDelegate: UIView {
-  public var reactProps: NSDictionary = [:];
+public final class RNIDummyTestViewDelegate: UIView, StringKeyPathMapping {
 
+  public var reactProps: NSDictionary = [:];
+  
+  public static var partialKeyPathMap: Dictionary<String, PartialKeyPath<RNIDummyTestViewDelegate>> {
+    return [
+      "someBool": \.someBool,
+      "someString": \.someString,
+      "someStringOptional": \.someStringOptional,
+      "someNumber": \.someNumber,
+      "someNumberOptional": \.someNumberOptional,
+      "someObject": \.someObject,
+      "someObjectOptional": \.someObjectOptional,
+      "someArray": \.someArray,
+      "someArrayOptional": \.someArrayOptional,
+    ];
+  };
+  
+  // MARK: Props
+  // -----------
+  
+  @objc
+  var someBool: Bool = false;
+  
+  @objc
+  var someString: String = "";
+  
+  @objc
+  var someStringOptional: String?;
+  
+  @objc
+  var someNumber: NSNumber = -1;
+  
+  @objc
+  var someNumberOptional: NSNumber?;
+  
+  @objc
+  var someObject: NSDictionary = [:];
+  
+  @objc
+  var someObjectOptional: NSDictionary?;
+  
+  @objc
+  var someArray: NSArray = [];
+  
+  @objc
+  var someArrayOptional: NSArray?;
+  
+  // MARK: Init
+  // ----------
+  
   public override init(frame: CGRect) {
     super.init(frame: frame);
   };
@@ -18,6 +67,9 @@ public class RNIDummyTestViewDelegate: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented");
   }
+  
+  // MARK: Functions
+  // ---------------
   
   func _setupContent(){
     self.backgroundColor = .systemPink;
@@ -40,6 +92,8 @@ public class RNIDummyTestViewDelegate: UIView {
 };
 
 extension RNIDummyTestViewDelegate: RNIViewLifecycleEventsNotifiable {
+
+  public typealias KeyPathRoot = RNIDummyTestViewDelegate;
 
   public func notifyOnInit(sender: RNIViewLifecycleEventsNotifying) {
     self._setupContent();
@@ -107,8 +161,25 @@ extension RNIDummyTestViewDelegate: RNIViewLifecycleEventsNotifiable {
     oldProps: NSDictionary,
     newProps: NSDictionary
   ) {
+  
+    self.setValues(withDict: newProps);
+  
     print(
-      "RNIDummyTestViewDelegate.notifyOnUpdateState",
+      "RNIDummyTestViewDelegate.notifyOnUpdateProps",
+      "\n - someBool:", self.someBool,
+      "\n - someString:", self.someString,
+      "\n - someStringOptional:", self.someStringOptional.debugDescription,
+      "\n - someNumber:", self.someNumber,
+      "\n - someNumberOptional:", self.someNumberOptional.debugDescription,
+      "\n - someObject:", self.someObject,
+      "\n - someObjectOptional:", self.someObjectOptional.debugDescription,
+      "\n - someArray:", self.someArray,
+      "\n - someArrayOptional:", self.someArrayOptional.debugDescription,
+      "\n"
+    );
+    
+    print(
+      "RNIDummyTestViewDelegate.notifyOnUpdateProps",
       "\n - oldProps:", oldProps.debugDescription,
       "\n - newProps:", newProps,
       "\n"

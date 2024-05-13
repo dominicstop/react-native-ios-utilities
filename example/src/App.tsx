@@ -81,7 +81,15 @@ export default function App() {
       <Text>{`Counter: ${counter}`}</Text>
       <RNIDummyTestNativeView 
         style={[styles.box, boxStyle]}
+        someBool={true}
+        someString={"abc"}
+        someStringOptional={'def'}
+        someNumber={123}
+        someNumberOptional={345}
         someObject={TEST_OBJECT}
+        someObjectOptional={{}}
+        someArray={[1,2,3]}
+        someArrayOptional={[4,5,6]}
       >
         {(counter % 4 === 0) && (
           <Text>{`Counter: ${counter}`}</Text>
