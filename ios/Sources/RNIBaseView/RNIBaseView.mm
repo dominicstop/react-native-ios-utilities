@@ -218,6 +218,9 @@ using namespace react;
   NSDictionary *dictPropsNew =
     [RNIObjcUtils convertToDictForFollyDynamicMap:basePropsNew.propsMap];
     
+  [self.contentDelegate notifyOnRequestToSetPropsWithSender:self
+                                                      props:dictPropsNew];
+  
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
     && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdatePropsWithSender:oldProps:newProps:)];

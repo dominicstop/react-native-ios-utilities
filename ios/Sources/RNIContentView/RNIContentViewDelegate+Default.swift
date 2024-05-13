@@ -5,16 +5,21 @@
 //  Created by Dominic Go on 5/13/24.
 //
 
+import UIKit
 import DGSwiftUtilities
 
 
-public extension RNIContentViewDelegate where Self: StringKeyPathMapping {
+@objc
+fileprivate extension UIView {
   
-  func notifyOnUpdateProps(
+  #if RCT_NEW_ARCH_ENABLED
+  func notifyOnRequestToSetProps(
     sender: RNIContentViewParentDelegate,
-    oldProps: NSDictionary,
-    newProps: NSDictionary
+    props: NSDictionary
   ) {
-    self.setValues(withDict: newProps);
+    guard let _self = self as? (any RNIContentView) else { return };
+    _self.setValues(withDict: props);
   };
+  #endif
 };
+

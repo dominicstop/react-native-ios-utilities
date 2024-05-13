@@ -165,8 +165,6 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     newProps: NSDictionary
   ) {
   
-    self.setValues(withDict: newProps);
-  
     print(
       "RNIDummyTestViewDelegate.notifyOnUpdateProps",
       "\n - someBool:", self.someBool,

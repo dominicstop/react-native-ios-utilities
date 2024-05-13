@@ -34,6 +34,7 @@ public protocol RNIContentViewDelegate where Self: UIView  {
     index: NSInteger
   );
   
+  #if RCT_NEW_ARCH_ENABLED
   @objc
   optional func notifyOnUpdateProps(
     sender: RNIContentViewParentDelegate,
@@ -66,4 +67,16 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   optional func notifyOnPrepareForReuse(
     sender: RNIContentViewParentDelegate
   );
+  #endif
+  
+  // MARK: Internal-Only
+  // -------------------
+  
+  #if RCT_NEW_ARCH_ENABLED
+  @objc
+  optional func notifyOnRequestToSetProps(
+    sender: RNIContentViewParentDelegate,
+    props: NSDictionary
+  );
+  #endif
 };
