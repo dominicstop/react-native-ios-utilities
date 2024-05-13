@@ -10,7 +10,8 @@ import UIKit
 
 @objc
 public protocol RNIViewLifecycleEventsNotifiable where Self: UIView  {
-
+  typealias KeyPathRoot = Self;
+  
   @objc
   var reactProps: NSDictionary { set get }
   
