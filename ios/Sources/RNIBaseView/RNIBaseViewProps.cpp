@@ -30,6 +30,8 @@ RNIBaseViewProps::RNIBaseViewProps(
     std::string propName(name);
     propsMap[propName] = (folly::dynamic)value;
   });
+  
+  this->propsMap = propsMap;
 }
 #endif
 
