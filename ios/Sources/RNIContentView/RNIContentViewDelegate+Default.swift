@@ -20,6 +20,33 @@ fileprivate extension UIView {
     guard let _self = self as? (any RNIContentView) else { return };
     _self.setValues(withDict: props);
   };
+  #else
+  func notifyOnRequestToSetupConstraints(
+    sender: RNIContentViewParentDelegate
+  ) {
+    guard let _self = self as? (any RNIContentView) else { return };
+    
+    _self.translatesAutoresizingMaskIntoConstraints = false;
+    sender.addSubview(_self);
+    
+    var constraints: [NSLayoutConstraint] = [];
+  
+    constraints += _self.horizontalAlignment.createHorizontalConstraints(
+      forView: _self,
+      attachingTo: sender,
+      enclosingView: sender,
+      preferredWidth: nil
+    );
+    
+    constraints += _self.verticalAlignment.createVerticalConstraints(
+      forView: _self,
+      attachingTo: sender,
+      enclosingView: sender,
+      preferredHeight: nil
+    );
+    
+    NSLayoutConstraint.activate(constraints);
+  };
   #endif
 };
 

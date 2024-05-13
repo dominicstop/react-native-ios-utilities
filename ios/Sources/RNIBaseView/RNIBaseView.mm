@@ -23,6 +23,8 @@
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
+#else
+#import <React/UIView+React.h>
 #endif
 
 #if __cplusplus
@@ -87,14 +89,23 @@ using namespace react;
   self.contentDelegate = viewDelegate;
   self.contentView = viewDelegate;
   
-  BOOL shouldNotifyDelegate =
+  BOOL shouldNotifyDelegateForInit =
        !self->_didNotifyForInit
     && [viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:)];
   
-  if(shouldNotifyDelegate) {
+  if(shouldNotifyDelegateForInit) {
     self->_didNotifyForInit = YES;
     [viewDelegate notifyOnInitWithSender:self];
-  }
+  };
+  
+#if !RCT_NEW_ARCH_ENABLED
+  BOOL shouldNotifyDelegateToSetupConstraints =
+    [viewDelegate respondsToSelector:@selector(notifyOnRequestToSetupConstraintsWithSender:)];
+    
+  if(shouldNotifyDelegateToSetupConstraints){
+     [viewDelegate notifyOnRequestToSetupConstraintsWithSender:self];
+  };
+#endif
 }
 
 // MARK: - Functions

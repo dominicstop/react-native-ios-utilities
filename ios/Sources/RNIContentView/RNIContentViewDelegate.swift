@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import DGSwiftUtilities
 
 @objc
 public protocol RNIContentViewDelegate where Self: UIView  {
@@ -78,5 +78,11 @@ public protocol RNIContentViewDelegate where Self: UIView  {
     sender: RNIContentViewParentDelegate,
     props: NSDictionary
   );
+  #else
+  @objc
+  optional func notifyOnRequestToSetupConstraints(
+    sender: RNIContentViewParentDelegate
+  );
   #endif
 };
+

@@ -9,6 +9,11 @@ import Foundation
 import DGSwiftUtilities
 
 
-protocol RNIContentView where Self:
+public protocol RNIContentView where Self:
   RNIContentViewDelegate & StringKeyPathMapping {
+  
+  #if !RCT_NEW_ARCH_ENABLED
+  var horizontalAlignment: HorizontalAlignmentPosition { get };
+  var verticalAlignment: VerticalAlignmentPosition { get }
+  #endif
 };
