@@ -212,7 +212,7 @@ using namespace react;
       return @{};
     };
     
-    return [RNIObjcUtils convertToDictForFollyDynamicMap:basePropsNew.propsMap];
+    return [RNIObjcUtils convertToDictForFollyDynamicMap:basePropsOld.propsMap];
   }();
   
   NSDictionary *dictPropsNew =
