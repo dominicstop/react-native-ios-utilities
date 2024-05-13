@@ -320,6 +320,25 @@ using namespace react;
   
   [super prepareForRecycle];
 }
+#else
+
+// MARK: - Paper Lifecycle
+// -----------------------
+
+- (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
+{
+  BOOL shouldNotifyDelegate =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
+  
+  if(shouldNotifyDelegate){
+    [self.contentDelegate notifyOnMountChildComponentViewWithSender:self
+                                                        childComponentView:subview
+                                                                     index:atIndex];
+  } else {
+    [super insertReactSubview:subview atIndex:atIndex];
+  };
+}
 #endif
 
 // MARK: - Dummy Impl.
