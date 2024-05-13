@@ -9,9 +9,10 @@ import UIKit
 import DGSwiftUtilities
 
 @objc
-public final class RNIDummyTestViewDelegate: UIView, StringKeyPathMapping {
-
-  public var reactProps: NSDictionary = [:];
+public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
+  
+  // MARK: StringKeyPathMapping
+  // --------------------------
   
   public static var partialKeyPathMap: Dictionary<String, PartialKeyPath<RNIDummyTestViewDelegate>> {
     return [
@@ -29,6 +30,8 @@ public final class RNIDummyTestViewDelegate: UIView, StringKeyPathMapping {
   
   // MARK: Props
   // -----------
+  
+  public var reactProps: NSDictionary = [:];
   
   @objc
   var someBool: Bool = false;

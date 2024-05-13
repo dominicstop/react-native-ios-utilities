@@ -8,5 +8,7 @@
 import Foundation
 import DGSwiftUtilities
 
-typealias RNIContentView =
-  RNIContentViewDelegate & StringKeyPathMapping;
+
+protocol RNIContentView where Self:
+  RNIContentViewDelegate & StringKeyPathMapping {
+};
