@@ -31,14 +31,16 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 #ifdef RCT_NEW_ARCH_ENABLED
   RCTViewComponentView<RNIContentViewParentDelegate>
 #else
-  RCTView<RNIViewLifecycleEventsNotifying>
+  RCTView<RNIContentViewParentDelegate>
 #endif
 
 // MARK: - Properties
 // ------------------
 
 #if !RCT_NEW_ARCH_ENABLED
-@property (nonatomic, weak) RCTBridge *bridge;
+@property (nonatomic, strong, nullable) UIView *contentView;
+
+@property (nonatomic, weak, nullable) RCTBridge *bridge;
 #endif
 
 @property (nonatomic, strong, nullable) NSObject<RNIContentViewDelegate> *contentDelegate;
@@ -49,9 +51,9 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 // ------------
 
 #if RCT_NEW_ARCH_ENABLED
-- (nonnull instancetype)initWithFrame:(CGRect)frame;
+- (nonnull instancetype)initWithFrame:(nonnull CGRect)frame;
 #else
-- (nonnull instancetype)initWithBridge:(RCTBridge *)bridge;
+- (nonnull instancetype)initWithBridge:(nonnull RCTBridge *)bridge;
 #endif
 
 - (void) initCommon;

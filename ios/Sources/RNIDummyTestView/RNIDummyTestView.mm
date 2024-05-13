@@ -33,6 +33,7 @@
 #import <react/renderer/components/RNIosUtilitiesViewSpec/RCTComponentViewHelpers.h>
 #else
 #import <React/RCTTouchHandler.h>
+#import <React/RCTInvalidating.h>
 #endif
 
 #ifdef RCT_NEW_ARCH_ENABLED
@@ -66,7 +67,7 @@ using namespace facebook::react;
 #else
 - (instancetype)initWithBridge:(RCTBridge *)bridge
 {
-  self = [super initWithFrame:frame];
+  self = [super initWithFrame:CGRectZero];
   return self;
 }
 #endif
@@ -96,8 +97,17 @@ Class<RCTComponentViewProtocol> RNIDummyTestViewCls(void)
 {
   return RNIDummyTestView.class;
 }
-#endif
+#else
 
+// MARK: - Paper
+// -------------
+
+- (void)invalidate
+{
+  // to be impl.
+}
+
+#endif
 @end
 
 

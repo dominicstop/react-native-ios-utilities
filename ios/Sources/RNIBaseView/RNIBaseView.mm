@@ -36,10 +36,10 @@ using namespace react;
 
 @implementation RNIBaseView {
   BOOL _didNotifyForInit;
+  NSMutableArray<UIView *> *_reactSubviews;
 #ifdef RCT_NEW_ARCH_ENABLED
   UIView * _view;
   RNIBaseViewState::SharedConcreteState _state;
-  NSMutableArray<UIView *> *_reactSubviews;
 #else
   CGRect _reactFrame;
 #endif
@@ -53,34 +53,6 @@ using namespace react;
 {
   self = [super initWithFrame:frame];
   
-  if(self == nil) {
-    return nil;
-  }
-  
-  Class viewDelegateClass = [self viewDelegateClass];
-  if(![viewDelegateClass isSubclassOfClass: [UIView class]]) {
-    return nil;
-  }
-  
-  if(![viewDelegateClass conformsToProtocol:@protocol(RNIContentViewDelegate)]) {
-    return nil;
-  }
-  
-  UIView<RNIContentViewDelegate> *viewDelegate =
-    [[viewDelegateClass new] initWithFrame:frame];
-  
-  self.contentDelegate = viewDelegate;
-  self.contentView = viewDelegate;
-  
-  BOOL shouldNotifyDelegate =
-       !self->_didNotifyForInit
-    && [viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:)];
-  
-  if (shouldNotifyDelegate) {
-    self->_didNotifyForInit = YES;
-    [viewDelegate notifyOnInitWithSender:self];
-  }
-  
   [self initCommon];
   return self;
 }
@@ -89,7 +61,7 @@ using namespace react;
 {
   if (self = [super init]) {
     self.bridge = bridge;
-    [self _reactSubviews];
+    //[self _reactSubviews];
   }
   
   [self initCommon];
@@ -97,10 +69,32 @@ using namespace react;
 }
 #endif
 
+// NOTE: to be overridden + impl. by child class
 - (void)initCommon
 {
-  // no-op
-  // NOTE: to be overridden + impl. by child class
+  Class viewDelegateClass = [self viewDelegateClass];
+  if(![viewDelegateClass isSubclassOfClass: [UIView class]]) {
+    return;
+  }
+  
+  if(![viewDelegateClass conformsToProtocol:@protocol(RNIContentViewDelegate)]) {
+    return;
+  }
+  
+  UIView<RNIContentViewDelegate> *viewDelegate =
+    [[viewDelegateClass new] initWithFrame:self.frame];
+  
+  self.contentDelegate = viewDelegate;
+  self.contentView = viewDelegate;
+  
+  BOOL shouldNotifyDelegate =
+       !self->_didNotifyForInit
+    && [viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:)];
+  
+  if(shouldNotifyDelegate) {
+    self->_didNotifyForInit = YES;
+    [viewDelegate notifyOnInitWithSender:self];
+  }
 }
 
 // MARK: - Functions
@@ -108,6 +102,7 @@ using namespace react;
 
 - (void)setSize:(CGSize)size
 {
+#if RCT_NEW_ARCH_ENABLED
   if(self->_state != nullptr){
     RNIBaseViewState prevState = self->_state->getData();
     RNIBaseViewState newState = RNIBaseViewState(prevState);
@@ -119,8 +114,12 @@ using namespace react;
     self->_state->updateState(std::move(newState));
     [self->_view setNeedsLayout];
   }
+#else
+  // TODO: WIP - to be implemented
+#endif
 };
 
+#if RCT_NEW_ARCH_ENABLED
 - (void)setPadding:(UIEdgeInsets)padding
 {
   RNIBaseViewState prevState = self->_state->getData();
@@ -147,11 +146,12 @@ using namespace react;
   self->_state->updateState(std::move(newState));
   [self->_view setNeedsLayout];
 }
-
+#endif
 
 // MARK: - Fabric Lifecycle
 // ------------------------
 
+#ifdef RCT_NEW_ARCH_ENABLED
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
                          index:(NSInteger)index
 {
@@ -306,6 +306,7 @@ using namespace react;
   
   [super prepareForRecycle];
 }
+#endif
 
 // MARK: - Dummy Impl.
 // -------------------
