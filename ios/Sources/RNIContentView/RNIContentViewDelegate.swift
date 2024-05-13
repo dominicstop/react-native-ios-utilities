@@ -17,53 +17,53 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   
   @objc
   optional func notifyOnInit(
-    sender: RNIViewLifecycleEventsNotifying
+    sender: RNIContentViewParentDelegate
   );
   
   @objc
   optional func notifyOnMountChildComponentView(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
     index: NSInteger
   );
   
   @objc
   optional func notifyOnUnmountChildComponentView(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
     index: NSInteger
   );
   
   @objc
   optional func notifyOnUpdateProps(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     oldProps: NSDictionary,
     newProps: NSDictionary
   );
   
   @objc
   optional func notifyOnUpdateState(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     oldState: NSDictionary?,
     newState: NSDictionary
   );
   
   @objc
   optional func notifyOnUpdateLayoutMetrics(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   );
   
   @objc
   optional func notifyOnFinalizeUpdates(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     updateMaskRaw: Int,
     updateMask: RNIComponentViewUpdateMask
   );
   
   @objc
   optional func notifyOnPrepareForReuse(
-    sender: RNIViewLifecycleEventsNotifying
+    sender: RNIContentViewParentDelegate
   );
 };

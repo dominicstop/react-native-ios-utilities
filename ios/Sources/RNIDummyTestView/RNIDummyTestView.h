@@ -15,7 +15,7 @@
 #import <React/RCTView.h>
 #endif
 
-@protocol RNIViewLifecycleEventsNotifying;
+@protocol RNIContentViewParentDelegate;
 @protocol RNIContentViewDelegate;
 
 @class RCTBridge;

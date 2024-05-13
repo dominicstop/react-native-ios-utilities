@@ -95,12 +95,12 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
 
   public typealias KeyPathRoot = RNIDummyTestViewDelegate;
 
-  public func notifyOnInit(sender: RNIViewLifecycleEventsNotifying) {
+  public func notifyOnInit(sender: RNIContentViewParentDelegate) {
     self._setupContent();
   };
   
   public func notifyOnMountChildComponentView(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
     index: NSInteger
   ) {
@@ -118,7 +118,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   };
   
   public func notifyOnUnmountChildComponentView(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
     index: NSInteger
   ) {
@@ -134,7 +134,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   }
   
   public func notifyOnUpdateLayoutMetrics(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   ) {
@@ -157,7 +157,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   };
   
   public func notifyOnUpdateProps(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     oldProps: NSDictionary,
     newProps: NSDictionary
   ) {
@@ -187,7 +187,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   };
   
   public func notifyOnUpdateState(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     oldState: NSDictionary?,
     newState: NSDictionary
   ) {
@@ -200,7 +200,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   };
   
   public func notifyOnFinalizeUpdates(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     updateMaskRaw: Int,
     updateMask: RNIComponentViewUpdateMask
   ) {
@@ -218,7 +218,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     );
   };
   
-  public func notifyOnPrepareForReuse(sender: RNIViewLifecycleEventsNotifying) {
+  public func notifyOnPrepareForReuse(sender: RNIContentViewParentDelegate) {
     print(
       "RNIDummyTestViewDelegate.notifyOnPrepareForReuse"
     );

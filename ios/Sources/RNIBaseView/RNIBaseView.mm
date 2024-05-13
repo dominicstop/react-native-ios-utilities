@@ -30,7 +30,7 @@ using namespace facebook;
 using namespace react;
 #endif
 
-@interface RNIBaseView () <RNIViewLifecycleEventsNotifying>
+@interface RNIBaseView () <RNIContentViewParentDelegate>
 @end
 
 

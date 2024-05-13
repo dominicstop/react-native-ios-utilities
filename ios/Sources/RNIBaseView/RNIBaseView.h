@@ -16,7 +16,7 @@
 // MARK: - Forward Declarations
 // ----------------------------
 
-@protocol RNIViewLifecycleEventsNotifying;
+@protocol RNIContentViewParentDelegate;
 @protocol RNIContentViewDelegate;
 
 @class RCTBridge;
@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 @interface RNIBaseView:
 #ifdef RCT_NEW_ARCH_ENABLED
-  RCTViewComponentView<RNIViewLifecycleEventsNotifying>
+  RCTViewComponentView<RNIContentViewParentDelegate>
 #else
   RCTView<RNIViewLifecycleEventsNotifying>
 #endif

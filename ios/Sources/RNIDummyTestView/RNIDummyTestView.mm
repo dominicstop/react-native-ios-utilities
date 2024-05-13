@@ -40,7 +40,7 @@ using namespace facebook::react;
 #endif
 
 @interface RNIDummyTestView () <
-  RNIViewLifecycleEventsNotifying,
+  RNIContentViewParentDelegate,
 #ifdef RCT_NEW_ARCH_ENABLED
   RCTRNIDummyTestViewViewProtocol
 #else

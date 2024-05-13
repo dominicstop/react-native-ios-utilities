@@ -11,7 +11,7 @@ import DGSwiftUtilities
 public extension RNIContentViewDelegate where Self: StringKeyPathMapping {
   
   func notifyOnUpdateProps(
-    sender: RNIViewLifecycleEventsNotifying,
+    sender: RNIContentViewParentDelegate,
     oldProps: NSDictionary,
     newProps: NSDictionary
   ) {
