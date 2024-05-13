@@ -10,15 +10,14 @@ import UIKit
 @objc
 public class RNIDummyTestViewDelegate: UIView {
   public var reactProps: NSDictionary = [:];
-  
+
   public override init(frame: CGRect) {
     super.init(frame: frame);
-    self._setupContent();
   };
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented");
-  };
+  }
   
   func _setupContent(){
     self.backgroundColor = .systemPink;
@@ -41,6 +40,10 @@ public class RNIDummyTestViewDelegate: UIView {
 };
 
 extension RNIDummyTestViewDelegate: RNIViewLifecycleEventsNotifiable {
+
+  public func notifyOnInit(sender: RNIViewLifecycleEventsNotifying) {
+    self._setupContent();
+  };
   
   public func notifyOnMountChildComponentView(
     sender: RNIViewLifecycleEventsNotifying,

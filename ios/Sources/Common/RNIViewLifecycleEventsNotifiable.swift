@@ -16,8 +16,7 @@ public protocol RNIViewLifecycleEventsNotifiable where Self: UIView  {
   
   @objc
   optional func notifyOnInit(
-    sender: RNIViewLifecycleEventsNotifying,
-    frame: CGRect
+    sender: RNIViewLifecycleEventsNotifying
   );
   
   @objc

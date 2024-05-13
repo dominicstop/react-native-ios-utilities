@@ -35,6 +35,7 @@ using namespace react;
 
 
 @implementation RNIBaseView {
+  BOOL _didNotifyForInit;
 #ifdef RCT_NEW_ARCH_ENABLED
   UIView * _view;
   RNIBaseViewState::SharedConcreteState _state;
@@ -70,9 +71,14 @@ using namespace react;
   
   self.lifecycleEventDelegate = viewDelegate;
   self.contentView = viewDelegate;
-    
-  if ([viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:frame:)]) {
-    [viewDelegate notifyOnInitWithSender:self frame:frame];
+  
+  BOOL shouldNotifyDelegate =
+       !self->_didNotifyForInit
+    && [viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:)];
+  
+  if (shouldNotifyDelegate) {
+    self->_didNotifyForInit = YES;
+    [viewDelegate notifyOnInitWithSender:self];
   }
   
   [self initCommon];
