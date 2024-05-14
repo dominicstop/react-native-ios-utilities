@@ -35,7 +35,6 @@ using namespace react;
 @interface RNIBaseView () <RNIContentViewParentDelegate>
 @end
 
-
 @implementation RNIBaseView {
   BOOL _didNotifyForInit;
   NSMutableArray<UIView *> *_reactSubviews;
@@ -71,7 +70,7 @@ using namespace react;
 }
 #endif
 
-// NOTE: to be overridden + impl. by child class
+// NOTE: To be overridden + impl. by child class
 - (void)initCommon
 {
   Class viewDelegateClass = [self viewDelegateClass];

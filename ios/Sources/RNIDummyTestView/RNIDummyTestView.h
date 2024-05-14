@@ -22,7 +22,7 @@
 
 #if RCT_NEW_ARCH_ENABLED
 namespace react = facebook::react;
-#endif // RCT_NEW_ARCH_ENABLED
+#endif
 
 @interface RNIDummyTestView : RNIBaseView
 

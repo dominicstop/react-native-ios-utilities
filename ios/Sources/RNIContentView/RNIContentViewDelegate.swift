@@ -12,8 +12,8 @@ import DGSwiftUtilities
 public protocol RNIContentViewDelegate where Self: UIView  {
   typealias KeyPathRoot = Self;
   
-  @objc
-  var reactProps: NSDictionary { set get }
+  // MARK: Fabric + Paper
+  // --------------------
   
   @objc
   optional func notifyOnInit(
@@ -36,7 +36,15 @@ public protocol RNIContentViewDelegate where Self: UIView  {
     superBlock: () -> Void
   );
   
+  // MARK: Fabric Only
+  // -----------------
+  
+  
   #if RCT_NEW_ARCH_ENABLED
+  
+  @objc
+  var reactProps: NSDictionary { set get }
+  
   @objc
   optional func notifyOnUpdateProps(
     sender: RNIContentViewParentDelegate,

@@ -14,6 +14,9 @@ public protocol RNIContentViewParentDelegate where Self: UIView  {
   
   func setSize(_ size: CGSize);
   
+  // MARK: Fabric Only
+  // -----------------
+  
   #if RCT_NEW_ARCH_ENABLED
   func setPadding(_ insets: UIEdgeInsets);
   

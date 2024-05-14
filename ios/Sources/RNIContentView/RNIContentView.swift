@@ -12,6 +12,9 @@ import DGSwiftUtilities
 public protocol RNIContentView where Self:
   RNIContentViewDelegate & StringKeyPathMapping {
   
+  // MARK: - Paper Only
+  // ------------------
+  
   #if !RCT_NEW_ARCH_ENABLED
   var horizontalAlignment: HorizontalAlignmentPosition { get };
   var verticalAlignment: VerticalAlignmentPosition { get }
