@@ -65,8 +65,10 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 - (void)setSize:(CGSize)size;
 
+#if RCT_NEW_ARCH_ENABLED
 - (void)setPadding:(UIEdgeInsets)padding;
 
 - (void)setPositionType:(RNIPositionType)positionType;
+#endif
 
 @end
