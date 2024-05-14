@@ -146,6 +146,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     );
   }
   
+  #if RCT_NEW_ARCH_ENABLED
   public func notifyOnUpdateLayoutMetrics(
     sender: RNIContentViewParentDelegate,
     oldLayoutMetrics: RNILayoutMetrics,
@@ -234,4 +235,5 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
       "RNIDummyTestViewDelegate.notifyOnPrepareForReuse"
     );
   };
+  #endif
 };
