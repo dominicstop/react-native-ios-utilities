@@ -26,13 +26,4 @@ namespace react = facebook::react;
 
 @interface RNIDummyTestView : RNIBaseView
 
-// MARK: - Init
-// ------------
-
-#if RCT_NEW_ARCH_ENABLED
-- (instancetype)initWithFrame:(CGRect)frame;
-#else
-- (instancetype)initWithBridge:(RCTBridge *)bridge;
-#endif
-
 @end
