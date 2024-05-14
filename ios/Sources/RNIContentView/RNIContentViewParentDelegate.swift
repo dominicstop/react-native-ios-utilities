@@ -6,9 +6,17 @@
 //
 
 import UIKit
+import React
+
+
+#if RCT_NEW_ARCH_ENABLED
+public typealias RNIContentViewParent = UIView
+#else
+public typealias RNIContentViewParent = RCTView;
+#endif
 
 @objc
-public protocol RNIContentViewParentDelegate where Self: UIView  {
+public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
 
   var cachedLayoutMetrics: RNILayoutMetrics { get };
   
