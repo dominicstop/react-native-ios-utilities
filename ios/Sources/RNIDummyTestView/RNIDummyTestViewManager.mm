@@ -6,6 +6,11 @@
 //
 #import "RNIDummyTestView.h"
 
+#import "react-native-ios-utilities/Swift.h"
+#import "react-native-ios-utilities/RNIBaseViewUtils.h"
+
+#import <objc/runtime.h>
+
 #import <React/RCTViewManager.h>
 #import <React/RCTUIManager.h>
 #import "RCTBridge.h"
@@ -23,12 +28,17 @@ RCT_EXPORT_MODULE(RNIDummyTestView)
 {
   return [[RNIDummyTestView new] initWithBridge:self.bridge];
 }
-
-
-// RCT_CUSTOM_VIEW_PROPERTY(color, NSString, UIView)
-// {
-//   [view setBackgroundColor: [Utils hexStringToColor:json]];
-// }
-
 #endif
+
+RNI_EXPORT_VIEW_PROPERTY(someBool, BOOL);
+RNI_EXPORT_VIEW_PROPERTY(someString, NSString);
+RNI_EXPORT_VIEW_PROPERTY(someStringOptional, NSString);
+RNI_EXPORT_VIEW_PROPERTY(someNumber, NSNumber);
+RNI_EXPORT_VIEW_PROPERTY(someNumberOptional, NSNumber);
+RNI_EXPORT_VIEW_PROPERTY(someObject, NSDictionary);
+RNI_EXPORT_VIEW_PROPERTY(someObjectOptional, NSDictionary);
+RNI_EXPORT_VIEW_PROPERTY(someArray, NSArray);
+RNI_EXPORT_VIEW_PROPERTY(someArrayOptional, NSArray);
+
 @end
+

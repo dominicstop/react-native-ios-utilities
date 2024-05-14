@@ -34,31 +34,35 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   public var reactProps: NSDictionary = [:];
   
   @objc
-  var someBool: Bool = false;
+  public var someBool: Bool = false {
+    willSet {
+      print("RNIDummyTestViewDelegate.someBool - newValue:", newValue);
+    }
+  };
   
   @objc
-  var someString: String = "";
+  public var someString: String = "";
   
   @objc
-  var someStringOptional: String?;
+  public var someStringOptional: String?;
   
   @objc
-  var someNumber: NSNumber = -1;
+  public var someNumber: NSNumber = -1;
   
   @objc
-  var someNumberOptional: NSNumber?;
+  public var someNumberOptional: NSNumber?;
   
   @objc
-  var someObject: NSDictionary = [:];
+  public var someObject: NSDictionary = [:];
   
   @objc
-  var someObjectOptional: NSDictionary?;
+  public var someObjectOptional: NSDictionary?;
   
   @objc
-  var someArray: NSArray = [];
+  public var someArray: NSArray = [];
   
   @objc
-  var someArrayOptional: NSArray?;
+  public var someArrayOptional: NSArray?;
   
   // MARK: Init
   // ----------
