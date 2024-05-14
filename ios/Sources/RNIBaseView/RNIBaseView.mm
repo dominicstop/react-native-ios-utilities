@@ -255,12 +255,15 @@ using namespace react;
   
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdatePropsWithSender:oldProps:newProps:)];
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnUpdatePropsWithSender:
+                                        oldProps:
+                                        newProps:)];
     
   if(shouldNotifyDelegate){
     [self.contentDelegate notifyOnUpdatePropsWithSender:self
-                                                      oldProps:dictPropsOld
-                                                      newProps:dictPropsNew];
+                                               oldProps:dictPropsOld
+                                               newProps:dictPropsNew];
   };
 
   [super updateProps:props oldProps:oldProps];
@@ -300,12 +303,15 @@ using namespace react;
     
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateStateWithSender:oldState:newState:)];
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnUpdateStateWithSender:
+                                        oldState:
+                                        newState:)];
     
   if(shouldNotifyDelegate){
     [self.contentDelegate notifyOnUpdateStateWithSender:self
-                                                      oldState:oldStateDict
-                                                      newState:newStateDict];
+                                               oldState:oldStateDict
+                                               newState:newStateDict];
   };
     
   [super updateState:state oldState:oldState];
@@ -315,15 +321,18 @@ using namespace react;
 {
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnFinalizeUpdatesWithSender:updateMaskRaw:updateMask:)];
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnFinalizeUpdatesWithSender:
+                                       updateMaskRaw:
+                                          updateMask:)];
     
   if(shouldNotifyDelegate){
     RNIComponentViewUpdateMask *swiftMask =
       [[RNIComponentViewUpdateMask new] initWithRawValue:updateMask];
   
     [self.contentDelegate notifyOnFinalizeUpdatesWithSender:self
-                                                     updateMaskRaw:updateMask
-                                                        updateMask:swiftMask];
+                                              updateMaskRaw:updateMask
+                                                 updateMask:swiftMask];
   }
   
   [super finalizeUpdates:updateMask];
@@ -333,7 +342,8 @@ using namespace react;
 {
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnPrepareForReuseWithSender:)];
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnPrepareForReuseWithSender:)];
   
   if(shouldNotifyDelegate){
     [self.contentDelegate notifyOnPrepareForReuseWithSender:self];
