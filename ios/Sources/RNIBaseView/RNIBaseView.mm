@@ -252,17 +252,26 @@ using namespace react;
   [self.contentDelegate _notifyOnRequestToSetPropsWithSender:self
                                                       props:dictPropsNew];
   
-  BOOL shouldNotifyDelegate =
+  BOOL shouldNotifyDelegateForOnUpdateProps =
        self.contentDelegate != nil
     && [self.contentDelegate respondsToSelector:
          @selector(notifyOnUpdatePropsWithSender:
                                         oldProps:
                                         newProps:)];
     
-  if(shouldNotifyDelegate){
+  if(shouldNotifyDelegateForOnUpdateProps){
     [self.contentDelegate notifyOnUpdatePropsWithSender:self
                                                oldProps:dictPropsOld
                                                newProps:dictPropsNew];
+  };
+  
+  BOOL shouldNotifyDelegateForDidSetProps =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyDidSetPropsWithSender:)];
+         
+  if(shouldNotifyDelegateForDidSetProps){
+    [self.contentDelegate notifyDidSetPropsWithSender:self];
   };
 
   [super updateProps:props oldProps:oldProps];
@@ -403,6 +412,19 @@ using namespace react;
                                        superBlock:superBlock];
   } else {
     [super removeReactSubview:subview];
+  };
+}
+
+- (void)didSetProps:(NSArray<NSString *> *)changedProps
+{
+  BOOL shouldNotifyDelegate =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyDidSetPropsWithSender:changedProps:)];
+         
+  if(shouldNotifyDelegate){
+    [self.contentDelegate notifyDidSetPropsWithSender:self
+                           changedProps:changedProps];
   };
 }
 #endif

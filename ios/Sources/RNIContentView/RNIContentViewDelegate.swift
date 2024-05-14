@@ -36,12 +36,15 @@ public protocol RNIContentViewDelegate where Self: UIView  {
     superBlock: () -> Void
   );
   
+  @objc
+  optional func notifyDidSetProps(
+    sender: RNIContentViewParentDelegate
+  );
+  
   // MARK: Fabric Only
   // -----------------
   
-  
   #if RCT_NEW_ARCH_ENABLED
-  
   @objc
   var reactProps: NSDictionary { set get }
   
@@ -76,6 +79,16 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   @objc
   optional func notifyOnPrepareForReuse(
     sender: RNIContentViewParentDelegate
+  );
+  #else
+  
+  // MARK: - Paper-Only
+  // ------------------
+  
+  @objc
+  optional func notifyDidSetProps(
+    sender: RNIContentViewParentDelegate,
+    changedProps: Array<String>
   );
   #endif
   

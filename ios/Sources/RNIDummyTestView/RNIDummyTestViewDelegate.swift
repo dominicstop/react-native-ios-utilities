@@ -102,10 +102,13 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
 
   public typealias KeyPathRoot = RNIDummyTestViewDelegate;
 
+  // MARK: Paper + Fabric
+  // --------------------
+  
   public func notifyOnInit(sender: RNIContentViewParentDelegate) {
     self._setupContent();
   };
-  
+    
   public func notifyOnMountChildComponentView(
     sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
@@ -150,6 +153,25 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     );
   }
   
+  public func notifyDidSetProps(sender: RNIContentViewParentDelegate) {
+    print(
+      "RNIDummyTestViewDelegate.notifyDidSetProps",
+      "\n - someBool:", self.someBool,
+      "\n - someString:", self.someString,
+      "\n - someStringOptional:", self.someStringOptional.debugDescription,
+      "\n - someNumber:", self.someNumber,
+      "\n - someNumberOptional:", self.someNumberOptional.debugDescription,
+      "\n - someObject:", self.someObject,
+      "\n - someObjectOptional:", self.someObjectOptional.debugDescription,
+      "\n - someArray:", self.someArray,
+      "\n - someArrayOptional:", self.someArrayOptional.debugDescription,
+      "\n"
+    );
+  };
+  
+  // MARK: Fabric Only
+  // -----------------
+
   #if RCT_NEW_ARCH_ENABLED
   public func notifyOnUpdateLayoutMetrics(
     sender: RNIContentViewParentDelegate,
@@ -179,21 +201,6 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     oldProps: NSDictionary,
     newProps: NSDictionary
   ) {
-  
-    print(
-      "RNIDummyTestViewDelegate.notifyOnUpdateProps",
-      "\n - someBool:", self.someBool,
-      "\n - someString:", self.someString,
-      "\n - someStringOptional:", self.someStringOptional.debugDescription,
-      "\n - someNumber:", self.someNumber,
-      "\n - someNumberOptional:", self.someNumberOptional.debugDescription,
-      "\n - someObject:", self.someObject,
-      "\n - someObjectOptional:", self.someObjectOptional.debugDescription,
-      "\n - someArray:", self.someArray,
-      "\n - someArrayOptional:", self.someArrayOptional.debugDescription,
-      "\n"
-    );
-    
     print(
       "RNIDummyTestViewDelegate.notifyOnUpdateProps",
       "\n - oldProps:", oldProps.debugDescription,
@@ -239,5 +246,10 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
       "RNIDummyTestViewDelegate.notifyOnPrepareForReuse"
     );
   };
+  #else
+  
+  // MARK: - Paper Only
+  // ------------------
+  
   #endif
 };
