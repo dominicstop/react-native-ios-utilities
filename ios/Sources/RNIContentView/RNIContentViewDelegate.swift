@@ -24,7 +24,8 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   optional func notifyOnMountChildComponentView(
     sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
-    index: NSInteger
+    index: NSInteger,
+    superBlock: () -> Void
   );
   
   @objc

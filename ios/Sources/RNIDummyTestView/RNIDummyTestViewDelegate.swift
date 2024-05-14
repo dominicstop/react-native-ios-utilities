@@ -105,8 +105,13 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   public func notifyOnMountChildComponentView(
     sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
-    index: NSInteger
+    index: NSInteger,
+    superBlock: () -> Void
   ) {
+    #if !RCT_NEW_ARCH_ENABLED
+    superBlock();
+    #endif
+    
     print(
       "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
       "\n - childComponentView:", childComponentView.debugDescription,

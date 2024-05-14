@@ -329,12 +329,23 @@ using namespace react;
 {
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnMountChildComponentViewWithSender:
+                                          childComponentView:
+                                                       index:
+                                                  superBlock:)];
   
   if(shouldNotifyDelegate){
+    id superBlock = ^{
+      [super insertReactSubview:subview atIndex:atIndex];
+    };
+    
     [self.contentDelegate notifyOnMountChildComponentViewWithSender:self
-                                                        childComponentView:subview
-                                                                     index:atIndex];
+                                                 childComponentView:subview
+                                                              index:atIndex
+                                                         superBlock:superBlock];
+                                     
+    
   } else {
     [super insertReactSubview:subview atIndex:atIndex];
   };
