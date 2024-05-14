@@ -168,13 +168,24 @@ using namespace react;
 {
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnMountChildComponentViewWithSender:
+                                          childComponentView:
+                                                       index:
+                                                  superBlock:)];
   
   if(shouldNotifyDelegate){
+    id superBlock = ^{
+      [super mountChildComponentView:childComponentView index:index];
+    };
+    
     [self.contentDelegate notifyOnMountChildComponentViewWithSender:self
                                                         childComponentView:childComponentView
-                                                                     index:index];
-  }
+                                                                     index:index
+                                                                superBlock:superBlock];
+  } else {
+    [super mountChildComponentView:childComponentView index:index];
+  };
 }
 
 - (void)unmountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
@@ -182,13 +193,23 @@ using namespace react;
 {
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnMountChildComponentViewWithSender:childComponentView:index:)];
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnMountChildComponentViewWithSender:
+                                          childComponentView:
+                                                       index:
+                                                  superBlock:)];
   
   if(shouldNotifyDelegate){
+    id superBlock = ^{
+      [super unmountChildComponentView:childComponentView index:index];
+    };
     [self.contentDelegate notifyOnUnmountChildComponentViewWithSender:self
                                                           childComponentView:childComponentView
-                                                                      index:index];
-  }
+                                                                      index:index
+                                                                  superBlock:superBlock];
+  } else {
+    [super unmountChildComponentView:childComponentView index:index];
+  };
 }
 
 - (void)updateLayoutMetrics:(const LayoutMetrics &)layoutMetrics
@@ -294,7 +315,7 @@ using namespace react;
 {
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnUnmountChildComponentViewWithSender:childComponentView:index:)];
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnFinalizeUpdatesWithSender:updateMaskRaw:updateMask:)];
     
   if(shouldNotifyDelegate){
     RNIComponentViewUpdateMask *swiftMask =
