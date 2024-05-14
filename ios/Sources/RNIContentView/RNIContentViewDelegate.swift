@@ -32,7 +32,8 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   optional func notifyOnUnmountChildComponentView(
     sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
-    index: NSInteger
+    index: NSInteger,
+    superBlock: () -> Void
   );
   
   #if RCT_NEW_ARCH_ENABLED

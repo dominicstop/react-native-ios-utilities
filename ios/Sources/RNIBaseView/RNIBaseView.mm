@@ -350,6 +350,31 @@ using namespace react;
     [super insertReactSubview:subview atIndex:atIndex];
   };
 }
+
+- (void)removeReactSubview:(UIView *)subview
+{
+  BOOL shouldNotifyDelegate =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnMountChildComponentViewWithSender:
+                                          childComponentView:
+                                                       index:
+                                                  superBlock:)];
+  
+  if(shouldNotifyDelegate){
+    id superBlock = ^{
+      [super removeReactSubview:subview];
+    };
+    
+    [self.contentDelegate
+      notifyOnUnmountChildComponentViewWithSender:self
+                               childComponentView:subview
+                                            index:-1
+                                       superBlock:superBlock];
+  } else {
+    [super removeReactSubview:subview];
+  };
+}
 #endif
 
 // MARK: - Dummy Impl.

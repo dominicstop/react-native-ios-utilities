@@ -128,8 +128,13 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   public func notifyOnUnmountChildComponentView(
     sender: RNIContentViewParentDelegate,
     childComponentView: UIView,
-    index: NSInteger
+    index: NSInteger,
+    superBlock: () -> Void
   ) {
+    #if !RCT_NEW_ARCH_ENABLED
+    superBlock();
+    #endif
+    
     childComponentView.removeFromSuperview();
     
     print(
