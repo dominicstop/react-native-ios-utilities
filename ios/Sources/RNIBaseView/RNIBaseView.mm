@@ -100,10 +100,10 @@ using namespace react;
   
 #if !RCT_NEW_ARCH_ENABLED
   BOOL shouldNotifyDelegateToSetupConstraints =
-    [viewDelegate respondsToSelector:@selector(notifyOnRequestToSetupConstraintsWithSender:)];
+    [viewDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
     
   if(shouldNotifyDelegateToSetupConstraints){
-     [viewDelegate notifyOnRequestToSetupConstraintsWithSender:self];
+     [viewDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
   };
 #endif
 }
@@ -250,7 +250,7 @@ using namespace react;
   NSDictionary *dictPropsNew =
     [RNIObjcUtils convertToDictForFollyDynamicMap:basePropsNew.propsMap];
     
-  [self.contentDelegate notifyOnRequestToSetPropsWithSender:self
+  [self.contentDelegate _notifyOnRequestToSetPropsWithSender:self
                                                       props:dictPropsNew];
   
   BOOL shouldNotifyDelegate =

@@ -76,13 +76,13 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   
   #if RCT_NEW_ARCH_ENABLED
   @objc
-  optional func notifyOnRequestToSetProps(
+  optional func _notifyOnRequestToSetProps(
     sender: RNIContentViewParentDelegate,
     props: NSDictionary
   );
   #else
   @objc
-  optional func notifyOnRequestToSetupConstraints(
+  optional func _notifyOnRequestToSetupConstraints(
     sender: RNIContentViewParentDelegate
   );
   #endif
