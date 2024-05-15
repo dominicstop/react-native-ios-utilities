@@ -1,8 +1,10 @@
 # TODO - `react-native-ios-utilities`
 
+<br><br>
+
 ## WIP
 
-- [ ] **Impl**: `RCTView` Lifecycle Events (Paper) 
+- [ ] **Impl**: `RCTView` Lifecycle Events (Paper) - Layout Metrics
 - [ ] **Impl**: Expose Common View Manipulation Methods (Paper)
 - [ ] **Impl**: Events (Fabric)
 - [ ] **Impl**: Events (Paper)
