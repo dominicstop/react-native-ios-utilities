@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class RCTBridge;
 
 typedef BOOL (^ ResponderPredicateBlock)(UIResponder * _Nonnull);
 
@@ -15,6 +16,12 @@ typedef BOOL (^ ResponderPredicateBlock)(UIResponder * _Nonnull);
 - (nullable UIResponder *)findParentResponderWhere:(nonnull ResponderPredicateBlock)predicateBlock;
 
 - (nonnull NSArray<UIView*> *)recursivelyGetAllSubviews;
+
+// MARK: - React-Native Related
+// ----------------------------
+
+- (nullable RCTBridge *)getClosestReactBridge;
+
 - (nullable NSString *)getReactNativeID;
 
 @end

@@ -8,7 +8,18 @@
 #import "UIView+RNIHelpers.h"
 #import <objc/runtime.h>
 
+#import "react-native-ios-utilities/Swift.h"
+#import "react-native-ios-utilities/RNIBaseView.h"
+#import "react-native-ios-utilities/RNIObjcUtils.h"
+
+#import <React/RCTBridge.h>
+#import <React/RCTRootView.h>
+
 #if RCT_NEW_ARCH_ENABLED
+#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
+#import "react-native-ios-utilities/UIView+RNIFabricHelpers.h"
+
+#import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <React/RCTViewComponentView.h>
 #else
 #import <React/RCTView.h>
@@ -43,6 +54,40 @@
   };
   
   return views;
+}
+
+// MARK: - React-Native Related
+// ----------------------------
+
+- (RCTBridge *)getClosestReactBridge
+{
+  
+  #if RCT_NEW_ARCH_ENABLED
+  RCTSurfacePresenterBridgeAdapter *reactBridgeAdapter =
+    [[UIApplication sharedApplication] reactBridgeAdapter];
+    
+  if(reactBridgeAdapter != nil){
+    return reactBridgeAdapter.bridge;
+  };
+  #endif
+
+  UIResponder *currentResponder = self;
+  
+  while (currentResponder != nil) {
+    if([currentResponder isKindOfClass: [RCTRootView class]]) {
+      RCTRootView *reactRootView = (RCTRootView *)currentResponder;
+      return reactRootView.bridge;
+    };
+    
+    if([currentResponder isKindOfClass:[RNIBaseView class]]){
+      RNIBaseView *baseView = (RNIBaseView *)currentResponder;
+      return baseView.bridge;
+    };
+    
+    currentResponder = [currentResponder nextResponder];
+  };
+  
+  return nil;
 }
 
 - (NSString *)getReactNativeID
