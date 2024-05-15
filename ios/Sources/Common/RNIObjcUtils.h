@@ -39,7 +39,7 @@ namespace folly {
 
 + (NSDictionary *)convertToDictForFollyDynamicMap:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;
 
-+ (RNILayoutMetrics *)createRNILayoutMetricsFrom: (facebook::react::LayoutMetrics)layoutMetrics;
++ (RNILayoutMetrics *)convertToRNILayoutMetricsForFabricLayoutMetrics: (facebook::react::LayoutMetrics)layoutMetrics;
 
 + (facebook::react::Size)convertToReactSizeForSize:(CGSize)size;
 

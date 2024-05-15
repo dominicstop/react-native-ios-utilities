@@ -225,7 +225,7 @@ using namespace react;
 - (void)updateLayoutMetrics:(const LayoutMetrics &)layoutMetrics
            oldLayoutMetrics:(const LayoutMetrics &)oldLayoutMetrics
 {
-  RNILayoutMetrics *layoutMetricsNew = [RNIObjcUtils createRNILayoutMetricsFrom:layoutMetrics];
+  RNILayoutMetrics *layoutMetricsNew = [RNIObjcUtils convertToRNILayoutMetricsForFabricLayoutMetrics:layoutMetrics];
   self.cachedLayoutMetrics = layoutMetricsNew;
 
   BOOL shouldNotifyDelegate =
@@ -233,7 +233,7 @@ using namespace react;
     && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
   
   if (shouldNotifyDelegate) {
-    RNILayoutMetrics *layoutMetricsOld = [RNIObjcUtils createRNILayoutMetricsFrom:oldLayoutMetrics];
+    RNILayoutMetrics *layoutMetricsOld = [RNIObjcUtils convertToRNILayoutMetricsForFabricLayoutMetrics:oldLayoutMetrics];
     
     [self.contentDelegate notifyOnUpdateLayoutMetricsWithSender:self
                                                       oldLayoutMetrics:layoutMetricsOld

@@ -93,7 +93,7 @@
   return (NSDictionary *)[[RNIObjcUtils convertToMutableDictForFollyDynamicMap:stringToDynMap] copy];
 }
 
-+ (RNILayoutMetrics *)createRNILayoutMetricsFrom:(facebook::react::LayoutMetrics)layoutMetrics
++ (RNILayoutMetrics *)convertToRNILayoutMetricsForFabricLayoutMetrics:(facebook::react::LayoutMetrics)layoutMetrics
 {
   RNILayoutMetrics *swiftLayoutMetrics = [RNILayoutMetrics new];
   
