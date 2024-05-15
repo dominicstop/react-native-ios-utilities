@@ -15,6 +15,7 @@
 
 #import <React/RCTSurfaceHostingView.h>
 #import <React/RCTFabricSurface.h>
+#import <React/RCTViewComponentView.h>
 #endif
 
 @implementation UIView (RNIFabricHelpers)
@@ -70,6 +71,26 @@
   };
   
   return &surfaceHandler->value();
+}
+
+- (facebook::react::LayoutMetrics *)reactGetFabricLayoutMetrics
+{
+  RCTViewComponentView *componentView = (RCTViewComponentView *)self;
+  if(componentView == nil){
+    return nullptr;
+  };
+  
+  Ivar ivar = class_getInstanceVariable([componentView class], "_layoutMetrics");
+  ptrdiff_t offset = ivar_getOffset(ivar);
+  
+  unsigned char* bytes = (unsigned char *)(__bridge void*)componentView;
+  auto layoutMetrics = ((facebook::react::LayoutMetrics *)(bytes+offset));
+  
+  if(layoutMetrics == nullptr){
+    return nullptr;
+  };
+  
+  return layoutMetrics;
 }
 #endif
 @end

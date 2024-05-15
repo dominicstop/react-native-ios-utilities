@@ -14,6 +14,7 @@
 #if __cplusplus
 namespace facebook::react {
   class SurfaceHandler;
+  struct LayoutMetrics;
 }
 #endif
 
@@ -25,6 +26,8 @@ namespace facebook::react {
 - (nullable RCTFabricSurface *)reactGetClosestFabricSurface;
 
 - (nullable facebook::react::SurfaceHandler *)reactGetSurfaceHandler;
+
+- (nullable facebook::react::LayoutMetrics *)reactGetFabricLayoutMetrics;
 #endif
 
 @end
