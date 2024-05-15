@@ -52,9 +52,15 @@ using namespace react;
 #ifdef RCT_NEW_ARCH_ENABLED
 - (instancetype)initWithFrame:(CGRect)frame
 {
-  self = [super initWithFrame:frame];
+  if (self = [super initWithFrame:frame]) {
+    static const auto defaultProps = std::make_shared<const react::RNIBaseViewProps>();
+    _props = defaultProps;
+    _reactSubviews = [NSMutableArray new];
+    
+    [self initCommon];
+  };
   
-  [self initCommon];
+  
   return self;
 }
 #else
@@ -63,9 +69,9 @@ using namespace react;
   if (self = [super init]) {
     self.bridge = bridge;
     //[self _reactSubviews];
+    [self initCommon];
   }
   
-  [self initCommon];
   return self;
 }
 #endif
@@ -185,6 +191,11 @@ using namespace react;
   } else {
     [super mountChildComponentView:childComponentView index:index];
   };
+  
+  RCTViewComponentView *viewComponent =
+    (RCTViewComponentView *)childComponentView;
+    
+  NSLog(@"childComponentView.nativeID: %@", viewComponent.nativeId);
 }
 
 - (void)unmountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
