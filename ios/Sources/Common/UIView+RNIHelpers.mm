@@ -10,6 +10,9 @@
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/RCTViewComponentView.h>
+#else
+#import <React/RCTView.h>
+#import <React/UIView+React.h>
 #endif
 
 
@@ -38,7 +41,7 @@
   #else
   if ([self isKindOfClass:[RCTView class]]) {
     RCTView *reactView = (RCTView *)self;
-    return RCTView.nativeId;
+    return reactView.nativeID;
   };
   #endif
   
