@@ -14,4 +14,6 @@ typedef BOOL (^ ResponderPredicateBlock)(UIResponder * _Nonnull);
 
 - (nullable UIResponder *)findParentResponderWhere:(nonnull ResponderPredicateBlock)predicateBlock;
 
+- (nullable NSString *)getReactNativeID;
+
 @end

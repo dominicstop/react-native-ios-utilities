@@ -80,6 +80,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>{`Counter: ${counter}`}</Text>
       <RNIDummyTestNativeView 
+        nativeID={'nativeID for RNIDummyTestNativeView'}
         style={[styles.box, boxStyle]}
         someBool={true}
         someString={"abc"}
@@ -92,7 +93,11 @@ export default function App() {
         someArrayOptional={[4,5,6]}
       >
         {(counter % 4 === 0) && (
-          <Text>{`Counter: ${counter}`}</Text>
+          <Text
+            nativeID={'nativeID for RNIDummyTestNativeView child'}
+          >
+            {`Counter: ${counter}`}
+          </Text>
         )}
       </RNIDummyTestNativeView>
     </View>
