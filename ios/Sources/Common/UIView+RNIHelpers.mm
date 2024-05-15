@@ -31,6 +31,20 @@
   return nil;
 }
 
+- (NSArray<UIView*> *)recursivelyGetAllSubviews
+{
+  NSMutableArray<UIView *> *views = [NSMutableArray new];
+  
+  for (UIView *subview in self.subviews) {
+    [views addObject:subview];
+    
+    NSArray *subviews = [subview recursivelyGetAllSubviews];
+    [views addObjectsFromArray:subviews];
+  };
+  
+  return views;
+}
+
 - (NSString *)getReactNativeID
 {
   #if RCT_NEW_ARCH_ENABLED

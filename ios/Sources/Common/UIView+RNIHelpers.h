@@ -14,6 +14,7 @@ typedef BOOL (^ ResponderPredicateBlock)(UIResponder * _Nonnull);
 
 - (nullable UIResponder *)findParentResponderWhere:(nonnull ResponderPredicateBlock)predicateBlock;
 
+- (nonnull NSArray<UIView*> *)recursivelyGetAllSubviews;
 - (nullable NSString *)getReactNativeID;
 
 @end
