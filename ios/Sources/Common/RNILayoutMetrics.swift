@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 @objc
 public class RNILayoutMetrics: NSObject {
 
@@ -15,24 +14,61 @@ public class RNILayoutMetrics: NSObject {
   // ----------------------
 
   @objc
-  public enum RNIDisplayType: Int {
+  public enum RNIDisplayType: Int, CustomStringConvertible {
     case none = 0;
     case flex = 1;
     case inline = 2;
+    
+    public var description: String {
+      switch self {
+        case .none:
+          return "none";
+          
+        case .flex:
+          return "flex";
+          
+        case .inline:
+          return "inline";
+      };
+    };
   };
 
   @objc
-  public enum RNIPositionType: Int {
+  public enum RNIPositionType: Int, CustomStringConvertible {
     case `static` = 0;
     case relative = 1;
     case absolute = 2;
+    
+    public var description: String {
+      switch self {
+        case .static:
+          return "static";
+        case .relative:
+          return "relative";
+        case .absolute:
+          return "absolute";
+      };
+    };
   };
   
   @objc
-  public enum RNILayoutDirection: Int {
+  public enum RNILayoutDirection: Int, CustomStringConvertible {
     case undefined = 0;
     case leftToRight = 1;
     case rightToLeft = 2;
+    
+    public var description: String {
+      switch self {
+        case .undefined:
+          return "undefined";
+          
+        case .leftToRight:
+          return "leftToRight";
+          
+        case .rightToLeft:
+          return "rightToLeft";
+      };
+    };
   };
   
   // MARK: - Properties
@@ -52,15 +88,31 @@ public class RNILayoutMetrics: NSObject {
   // MARK: - Computed Properties
   // ---------------------------
   
-  public var displayType: RNIDisplayType {
-    .init(rawValue: self.displayTypeRaw) ?? .flex;
+  public var displayType: RNIDisplayType? {
+    .init(rawValue: self.displayTypeRaw);
   };
   
   public var positionType: RNIPositionType? {
-    .init(rawValue: self.positionTypeRaw) ?? .relative;
+    .init(rawValue: self.positionTypeRaw);
   };
   
   public var layoutDirection: RNILayoutDirection? {
-    .init(rawValue: self.positionTypeRaw) ?? .leftToRight;
+    .init(rawValue: self.positionTypeRaw);
+  };
+  
+  public override var description: String {
+    let strings: [String] = [
+      "RNILayoutMetrics:",
+      "\n - frame:", self.frame.debugDescription,
+      "\n - contentFrame: ", self.contentFrame.debugDescription,
+      "\n - paddingFrame: ", self.paddingFrame.debugDescription,
+      "\n - displayType: ", self.displayType?.description ?? "N/A",
+      "\n - positionType: ", self.positionType?.description ?? "N/A",
+      "\n - layoutDirection: ", self.layoutDirection?.description ?? "N/A",
+    ];
+    
+    return strings.reduce(into: "") {
+      $0 = $0 + $1;
+    };
   };
 };
