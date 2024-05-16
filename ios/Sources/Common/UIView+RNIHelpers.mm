@@ -44,6 +44,27 @@
   return nil;
 }
 
+- (UIView *)recursivelyFindSubviewForPredicate:(RNIViewPredicateBlock)predicateBlock
+{
+  if([self.subviews count] == 0){
+    return nil;
+  };
+  
+  for (UIView *subview in self.subviews) {
+    BOOL isMatch = predicateBlock(subview);
+    if(isMatch){
+      return subview;
+    };
+    
+    UIView *match = [subview recursivelyFindSubviewForPredicate:predicateBlock];
+    if(match != nil){
+      return match;
+    };
+  };
+  
+  return nil;
+}
+
 - (NSArray<UIView*> *)recursivelyGetAllSubviews
 {
   NSMutableArray<UIView *> *views = [NSMutableArray new];

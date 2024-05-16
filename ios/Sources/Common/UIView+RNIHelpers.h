@@ -14,7 +14,7 @@ typedef BOOL (^ RNIResponderPredicateBlock)(UIResponder * _Nonnull);
 
 @interface UIView (RNIHelpers)
 
-- (nullable UIResponder *)findParentResponderWherePredicate:(nonnull RNIResponderPredicateBlock)predicateBlock;
+- (nullable UIResponder *)findParentResponderForPredicate:(nonnull RNIResponderPredicateBlock)predicateBlock;
 
 - (nonnull NSArray<UIView*> *)recursivelyGetAllSubviews;
 
