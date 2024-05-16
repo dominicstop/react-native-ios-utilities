@@ -28,6 +28,12 @@ namespace facebook::react {
 - (nonnull NSArray<UIWindowScene*> *)getAllWindowScenesWhereForegroundActive API_AVAILABLE(ios(13.0));
 
 - (nonnull NSArray<UIWindow *> *)getAllActiveWindows;
+
+- (nonnull NSArray<UIWindow *> *)getAllActiveKeyWindows;
+
+// MARK: React-Native Related
+// --------------------------
+
 #if __cplusplus
 - (nullable RCTAppDelegate * )reactAppDelegate;
 

@@ -68,6 +68,19 @@
   
   return [windows filteredArrayUsingPredicate:filterPredicate];
 }
+
+- (NSArray<UIWindow *> *)getAllActiveKeyWindows
+{
+  NSPredicate *filterPredicate = [NSPredicate predicateWithBlock:^BOOL(UIWindow *window, NSDictionary *bindings) {
+    return ![window isKeyWindow];
+  }];
+  
+  return [[self getAllActiveWindows] filteredArrayUsingPredicate:filterPredicate];
+}
+
+// MARK: React-Native Related
+// --------------------------
+
 #if __cplusplus
 - (RCTAppDelegate *)reactAppDelegate
 {
