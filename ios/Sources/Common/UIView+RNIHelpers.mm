@@ -85,7 +85,6 @@
 
 - (RCTBridge *)reactGetPaperBridge
 {
-  
   #if RCT_NEW_ARCH_ENABLED
   RCTSurfacePresenterBridgeAdapter *reactBridgeAdapter =
     [[UIApplication sharedApplication] reactBridgeAdapter];
@@ -95,8 +94,12 @@
   };
   #endif
 
+  RCTRootView *reactPaperRootView = [self reactGetPaperRootView];
+  if(reactPaperRootView != nil){
+    return reactPaperRootView.bridge;
+  };
+
   UIResponder *currentResponder = self;
-  
   while (currentResponder != nil) {
     if([currentResponder isKindOfClass: [RCTRootView class]]) {
       RCTRootView *reactRootView = (RCTRootView *)currentResponder;
