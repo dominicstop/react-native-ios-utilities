@@ -21,6 +21,22 @@
 #endif
 
 @implementation UIApplication (RNIHelpers)
+
+- (NSArray<UIScene*> *)getAllScenesWhereForegroundActive API_AVAILABLE(ios(13.0))
+{
+  NSArray<UIScene*> *connectedScenes =
+    [[[UIApplication sharedApplication] connectedScenes] allObjects];
+  
+  NSMutableArray *scenes = [NSMutableArray new];
+  for (UIScene *scene in connectedScenes) {
+    if(scene.activationState == UISceneActivationStateForegroundActive){
+      [scenes addObject:scene];
+    };
+  };
+  
+  return scenes;
+}
+
 #if __cplusplus
 - (RCTAppDelegate *)reactAppDelegate
 {

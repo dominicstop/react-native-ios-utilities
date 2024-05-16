@@ -23,6 +23,7 @@ namespace facebook::react {
 
 @interface UIApplication (RNIHelpers)
 
+- (nonnull NSArray<UIScene*> *)getAllScenesWhereForegroundActive API_AVAILABLE(ios(13.0));
 #if __cplusplus
 - (nullable RCTAppDelegate * )reactAppDelegate;
 
