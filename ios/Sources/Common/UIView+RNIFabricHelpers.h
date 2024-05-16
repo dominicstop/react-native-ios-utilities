@@ -35,7 +35,7 @@ namespace facebook::react {
 // ----------------------
 
 #if RCT_NEW_ARCH_ENABLED
-- (RNILayoutMetrics *)reactGetLayoutMetrics
+- (nullable RNILayoutMetrics *)reactGetLayoutMetrics;
 #endif
 
 @end

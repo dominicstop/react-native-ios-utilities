@@ -13,22 +13,20 @@
 #import "react-native-ios-utilities/RNIObjcUtils.h"
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 
+#import <React/RCTView.h>
+#import <React/UIView+React.h>
+#import <React/RCTUIManager.h>
+#import <React/RCTShadowView.h>
+
 #import <React/RCTBridge.h>
 #import <React/RCTRootView.h>
 #import <React/RCTLayout.h>
 #import <React/RCTUIManagerUtils.h>
 
 #if RCT_NEW_ARCH_ENABLED
-#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 #import "react-native-ios-utilities/UIView+RNIFabricHelpers.h"
-
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <React/RCTViewComponentView.h>
-#else
-#import <React/RCTView.h>
-#import <React/UIView+React.h>
-#import <React/RCTUIManager.h>
-#import <React/RCTShadowView.h>
 #endif
 
 
@@ -114,8 +112,7 @@
   if(reactBridgeAdapter != nil){
     return reactBridgeAdapter.bridge;
   };
-  #endif
-
+  #else
   RCTRootView *reactPaperRootView = [self reactGetPaperRootView];
   if(reactPaperRootView != nil){
     return reactPaperRootView.bridge;
@@ -135,6 +132,7 @@
     
     currentResponder = [currentResponder nextResponder];
   };
+  #endif
   
   return nil;
 }
