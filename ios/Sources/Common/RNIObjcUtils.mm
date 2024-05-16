@@ -20,6 +20,10 @@
 #include <react/renderer/graphics/RectangleEdges.h>
 #endif
 
+#import <React/RCTShadowView.h>
+#import <React/RCTShadowView+Layout.h>
+
+
 @implementation RNIObjcUtils
 #if __cplusplus
 + (id)convertFollyDynamicToId:(const folly::dynamic*)dyn
@@ -161,6 +165,40 @@
   }
 }
 #endif
+
++ (RNILayoutMetrics *)convertToRNILayoutMetricsForPaperLayoutMetrics:(RCTLayoutMetrics)layoutMetrics withShadowView:(RCTShadowView *)shadowView
+{
+  RNILayoutMetrics *swiftLayoutMetrics = [RNILayoutMetrics new];
+  
+  swiftLayoutMetrics.frame = layoutMetrics.frame;
+  swiftLayoutMetrics.contentFrame = layoutMetrics.contentFrame;
+  swiftLayoutMetrics.displayTypeRaw = layoutMetrics.displayType;
+  swiftLayoutMetrics.layoutDirectionRaw = layoutMetrics.layoutDirection;
+    
+  swiftLayoutMetrics.contentInsets = shadowView.paddingAsInsets;
+  swiftLayoutMetrics.positionTypeRaw = shadowView.position;
+  
+  swiftLayoutMetrics.overflowInset = ^{
+    CGSize size = layoutMetrics.frame.size;
+    UIEdgeInsets overflowInset = UIEdgeInsets();
+    
+    overflowInset.left =
+      MIN(CGRectGetMinX(layoutMetrics.contentFrame), 0);
+      
+    overflowInset.top =
+      MIN(CGRectGetMinY(layoutMetrics.contentFrame), 0);
+    
+    overflowInset.right =
+      -MAX(CGRectGetMaxX(layoutMetrics.contentFrame) - size.width, 0);
+      
+    overflowInset.bottom =
+      -MAX(CGRectGetMaxY(layoutMetrics.contentFrame) - size.height, 0);
+    
+    return overflowInset;
+  }();
+    
+  return swiftLayoutMetrics;
+}
 
 + (id)alloc
 {

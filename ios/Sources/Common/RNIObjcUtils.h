@@ -13,8 +13,12 @@
 #include <yoga/YGEnums.h>
 #endif
 
+#import <React/RCTLayout.h>
+
 
 @class RNILayoutMetrics;
+@class RCTShadowView;
+
 typedef NS_ENUM(NSInteger, RNIPositionType);
 
 #if __cplusplus
@@ -46,7 +50,9 @@ namespace folly {
 + (facebook::react::RectangleEdges<facebook::react::Float>)convertToReactRectangleEdgesForEdgeInsets:(UIEdgeInsets)edgeInsets;
 
 + (YGPositionType)convertToYGPostionTypeForRNIPostionType:(RNIPositionType)positionType;
-
 #endif
+
++ (RNILayoutMetrics *)convertToRNILayoutMetricsForPaperLayoutMetrics:(RCTLayoutMetrics)layoutMetrics
+                                                    withShadowView:(RCTShadowView *)shadowView;
 @end
 
