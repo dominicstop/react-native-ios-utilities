@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 
 @class RCTBridge;
+@class RNILayoutMetrics;
 
 typedef BOOL (^ ResponderPredicateBlock)(UIResponder * _Nonnull);
 
@@ -23,5 +24,7 @@ typedef BOOL (^ ResponderPredicateBlock)(UIResponder * _Nonnull);
 - (nullable RCTBridge *)reactGetPaperBridge;
 
 - (nullable NSString *)reactGetNativeID;
+
+- (nullable RNILayoutMetrics *)reactGetLayoutMetrics;
 
 @end

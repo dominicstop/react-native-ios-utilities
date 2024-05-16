@@ -109,4 +109,41 @@
   return nil;
 }
 
+- (RNILayoutMetrics *)reactGetLayoutMetrics
+{
+  #if RCT_NEW_ARCH_ENABLED
+  auto layoutMetrics = [self reactGetFabricLayoutMetrics];
+  if(layoutMetrics == nullptr){
+    return nil;
+  };
+  
+  return [RNIObjcUtils convertToRNILayoutMetricsForFabricLayoutMetrics:*layoutMetrics];
+  #else
+  
+  RCTBridge *reactBridge = [self reactGetPaperBridge];
+  if(reactBridge == nil){
+    return nil;
+  };
+  
+  RCTUIManager *uiManager = reactBridge.uiManager;
+  if(uiManager == nil){
+    return nil;
+  };
+  
+  NSNumber *reactTag = self.reactTag;
+  if(reactTag == nil || [reactTag intValue] <= 0){
+    return nil;
+  };
+  
+  RCTShadowView *shadowView = [uiManager shadowViewForReactTag:reactTag];
+  if(shadowView == nil){
+    return nil;
+  };
+  
+  return [RNIObjcUtils
+    convertToRNILayoutMetricsForPaperLayoutMetrics:shadowView.layoutMetrics
+                                    withShadowView:shadowView];
+  #endif
+}
+
 @end
