@@ -48,6 +48,26 @@
   return (NSArray<UIWindowScene*> *)[scenes filteredArrayUsingPredicate:filterPredicate];
 }
 
+- (NSArray<UIWindow *> *)getAllActiveWindows
+{
+  if (@available(iOS 13, *)) {
+    NSArray<UIWindowScene *> *windowScenes = [self getAllWindowScenesWhereForegroundActive];
+    
+    NSMutableArray<UIWindow *> *windows = [NSMutableArray new];
+    for (UIWindowScene *windowScene in windowScenes) {
+      [windows addObjectsFromArray:windowScene.windows];
+    };
+    
+    return windows;
+  };
+  
+  NSArray<UIWindow *> *windows = [[UIApplication sharedApplication] windows];
+  NSPredicate *filterPredicate = [NSPredicate predicateWithBlock:^BOOL(UIWindow *window, NSDictionary *bindings) {
+    return ![window isHidden];
+  }];
+  
+  return [windows filteredArrayUsingPredicate:filterPredicate];
+}
 #if __cplusplus
 - (RCTAppDelegate *)reactAppDelegate
 {
