@@ -15,6 +15,8 @@
 
 #import <React/RCTBridge.h>
 #import <React/RCTRootView.h>
+#import <React/RCTLayout.h>
+#import <React/RCTUIManagerUtils.h>
 
 #if RCT_NEW_ARCH_ENABLED
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
@@ -168,6 +170,36 @@
   };
   
   return nil;
+}
+
+- (void)reactGetPaperLayoutMetricsWithCompletionHandler:(RNIPaperLayoutMetricsCompletionBlock)completionBlock
+{
+  RCTBridge *reactBridge = [self reactGetPaperBridge];
+  if(reactBridge == nil){
+    completionBlock({-1}, NO);
+  };
+  
+  RCTUIManager *uiManager = reactBridge.uiManager;
+  if(uiManager == nil){
+   completionBlock({-1}, NO);
+  };
+  
+  NSNumber *reactTag = self.reactTag;
+  if(reactTag == nil || [reactTag intValue] <= 0){
+    completionBlock({-1}, NO);
+  };
+  
+  RCTExecuteOnUIManagerQueue(^{
+    RCTShadowView *shadowView = [uiManager shadowViewForReactTag:reactTag];
+    if(shadowView == nil){
+      RCTExecuteOnMainQueue(^{
+        completionBlock({-1}, NO);
+      });
+      
+    };
+      
+    completionBlock(shadowView.layoutMetrics, YES);
+  });
 }
 
 @end

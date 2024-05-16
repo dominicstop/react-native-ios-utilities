@@ -6,13 +6,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <React/RCTLayout.h>
 
 @class RCTBridge;
 @class RNILayoutMetrics;
 @class RCTRootView;
 
-typedef BOOL (^ RNIResponderPredicateBlock)(UIResponder * _Nonnull);
-typedef BOOL (^ RNIViewPredicateBlock)(UIView * _Nonnull);
+typedef BOOL (^RNIResponderPredicateBlock)(UIResponder * _Nonnull);
+typedef BOOL (^RNIViewPredicateBlock)(UIView * _Nonnull);
+typedef void (^RNIPaperLayoutMetricsCompletionBlock)(RCTLayoutMetrics layoutMetrics, BOOL isSuccessful);
 
 @interface UIView (RNIHelpers)
 
@@ -33,5 +35,7 @@ typedef BOOL (^ RNIViewPredicateBlock)(UIView * _Nonnull);
 - (nullable RCTBridge *)reactGetPaperBridge;
 
 - (nullable RCTRootView *)reactGetPaperRootView;
+
+- (void)reactGetPaperLayoutMetricsWithCompletionHandler:(nonnull RNIPaperLayoutMetricsCompletionBlock)completionBlock;
 
 @end
