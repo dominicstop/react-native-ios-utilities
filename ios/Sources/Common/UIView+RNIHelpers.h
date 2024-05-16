@@ -11,10 +11,13 @@
 @class RNILayoutMetrics;
 
 typedef BOOL (^ RNIResponderPredicateBlock)(UIResponder * _Nonnull);
+typedef BOOL (^ RNIViewPredicateBlock)(UIView * _Nonnull);
 
 @interface UIView (RNIHelpers)
 
 - (nullable UIResponder *)findParentResponderForPredicate:(nonnull RNIResponderPredicateBlock)predicateBlock;
+
+- (nullable UIView *)recursivelyFindSubviewForPredicate:(nonnull RNIViewPredicateBlock)predicateBlock;
 
 - (nonnull NSArray<UIView*> *)recursivelyGetAllSubviews;
 

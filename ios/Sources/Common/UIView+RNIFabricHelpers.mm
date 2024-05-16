@@ -22,6 +22,7 @@
 #if __cplusplus
 - (RCTSurfaceHostingView *)reactGetClosestParentSurfaceHostingView
 {
+  UIResponder *match = [self findParentResponderForPredicate:^BOOL(UIResponder *responder) {
     return [responder isKindOfClass:[RCTSurfaceHostingView class]];
   }];
   
