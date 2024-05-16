@@ -11,6 +11,7 @@
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/RNIBaseView.h"
 #import "react-native-ios-utilities/RNIObjcUtils.h"
+#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTRootView.h>
@@ -165,6 +166,42 @@
     convertToRNILayoutMetricsForPaperLayoutMetrics:shadowView.layoutMetrics
                                     withShadowView:shadowView];
   #endif
+}
+
+// MARK: React-Native - Paper-Related
+// ----------------------------------
+
+- (RCTRootView *)reactGetPaperRootView
+{
+  //UIView *view = [self paper]
+  
+  UIWindow *window = ^{
+    if(self.window != nil){
+      return self.window;
+    };
+    
+    return [[[UIApplication sharedApplication] getAllActiveKeyWindows] firstObject];
+  }();
+  
+  UIViewController *rootVC = window.rootViewController;
+  if(rootVC == nil){
+    return nil;
+  };
+  
+  UIView *rootView = rootVC.view;
+  if([rootView isKindOfClass:[RCTRootView class]]){
+    return (RCTRootView *)rootView;
+  };
+  
+  UIView *match = [rootView recursivelyFindSubviewForPredicate:^BOOL(UIView *subview) {
+    return [subview isKindOfClass:[RCTRootView class]];
+  }];
+  
+  if(match != nil){
+    return (RCTRootView *)match;
+  };
+  
+  return nil;
 }
 
 @end

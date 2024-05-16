@@ -9,6 +9,7 @@
 
 @class RCTBridge;
 @class RNILayoutMetrics;
+@class RCTRootView;
 
 typedef BOOL (^ RNIResponderPredicateBlock)(UIResponder * _Nonnull);
 typedef BOOL (^ RNIViewPredicateBlock)(UIView * _Nonnull);
@@ -29,5 +30,10 @@ typedef BOOL (^ RNIViewPredicateBlock)(UIView * _Nonnull);
 - (nullable NSString *)reactGetNativeID;
 
 - (nullable RNILayoutMetrics *)reactGetLayoutMetrics;
+
+// MARK: React-Native - Paper-Related
+// ----------------------------------
+
+- (nullable RCTRootView *)reactGetPaperRootView;
 
 @end
