@@ -10,6 +10,7 @@
 
 @class RCTSurfaceHostingView;
 @class RCTFabricSurface;
+@class RNILayoutMetrics;
 
 #if __cplusplus
 namespace facebook::react {
@@ -28,6 +29,13 @@ namespace facebook::react {
 - (nullable facebook::react::SurfaceHandler *)reactGetSurfaceHandler;
 
 - (nullable facebook::react::LayoutMetrics *)reactGetFabricLayoutMetrics;
+#endif
+
+// MARK: Visible To Swift
+// ----------------------
+
+#if RCT_NEW_ARCH_ENABLED
+- (RNILayoutMetrics *)reactGetLayoutMetrics
 #endif
 
 @end

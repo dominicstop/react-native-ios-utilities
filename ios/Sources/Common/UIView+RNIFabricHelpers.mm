@@ -5,10 +5,13 @@
 //  Created by Dominic Go on 5/9/24.
 //
 
+#import "UIView+RNIFabricHelpers.h"
+
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
-#import "UIView+RNIFabricHelpers.h"
+#import "react-native-ios-utilities/RNIObjcUtils.h"
+#import "react-native-ios-utilities/Swift.h"
 
 #if __cplusplus
 #import "UIView+RNIHelpers.h"
@@ -93,4 +96,20 @@
   return layoutMetrics;
 }
 #endif
+
+// MARK: Visible To Swift
+// ----------------------
+
+#if RCT_NEW_ARCH_ENABLED
+- (RNILayoutMetrics *)reactGetLayoutMetrics
+{
+  auto layoutMetrics = [self reactGetFabricLayoutMetrics];
+  if(layoutMetrics == nullptr){
+    return nil;
+  };
+  
+  return [RNIObjcUtils convertToRNILayoutMetricsForFabricLayoutMetrics:*layoutMetrics];
+};
+#endif
+
 @end

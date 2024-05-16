@@ -27,8 +27,6 @@ typedef BOOL (^ RNIViewPredicateBlock)(UIView * _Nonnull);
 
 - (nullable NSString *)reactGetNativeID;
 
-- (nullable RNILayoutMetrics *)reactGetLayoutMetrics;
-
 // MARK: React-Native - Paper-Related
 // ----------------------------------
 
