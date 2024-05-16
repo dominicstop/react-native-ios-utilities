@@ -31,7 +31,7 @@
 
 @implementation UIView (RNIHelpers)
 
-- (UIResponder *)findParentResponderWhere:(ResponderPredicateBlock)predicateBlock
+- (UIResponder *)findParentResponderWhere:(RNIResponderPredicateBlock)predicateBlock
 {
   UIResponder *responder = self;
   while ((responder = [responder nextResponder])) {

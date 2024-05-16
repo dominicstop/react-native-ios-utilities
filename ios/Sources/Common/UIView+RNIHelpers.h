@@ -10,11 +10,11 @@
 @class RCTBridge;
 @class RNILayoutMetrics;
 
-typedef BOOL (^ ResponderPredicateBlock)(UIResponder * _Nonnull);
+typedef BOOL (^ RNIResponderPredicateBlock)(UIResponder * _Nonnull);
 
 @interface UIView (RNIHelpers)
 
-- (nullable UIResponder *)findParentResponderWhere:(nonnull ResponderPredicateBlock)predicateBlock;
+- (nullable UIResponder *)findParentResponderWhere:(nonnull RNIResponderPredicateBlock)predicateBlock;
 
 - (nonnull NSArray<UIView*> *)recursivelyGetAllSubviews;
 
