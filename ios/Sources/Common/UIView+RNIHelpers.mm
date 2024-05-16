@@ -83,40 +83,6 @@
 // MARK: - React-Native Related
 // ----------------------------
 
-- (RCTBridge *)reactGetPaperBridge
-{
-  #if RCT_NEW_ARCH_ENABLED
-  RCTSurfacePresenterBridgeAdapter *reactBridgeAdapter =
-    [[UIApplication sharedApplication] reactBridgeAdapter];
-    
-  if(reactBridgeAdapter != nil){
-    return reactBridgeAdapter.bridge;
-  };
-  #endif
-
-  RCTRootView *reactPaperRootView = [self reactGetPaperRootView];
-  if(reactPaperRootView != nil){
-    return reactPaperRootView.bridge;
-  };
-
-  UIResponder *currentResponder = self;
-  while (currentResponder != nil) {
-    if([currentResponder isKindOfClass: [RCTRootView class]]) {
-      RCTRootView *reactRootView = (RCTRootView *)currentResponder;
-      return reactRootView.bridge;
-    };
-    
-    if([currentResponder isKindOfClass:[RNIBaseView class]]){
-      RNIBaseView *baseView = (RNIBaseView *)currentResponder;
-      return baseView.bridge;
-    };
-    
-    currentResponder = [currentResponder nextResponder];
-  };
-  
-  return nil;
-}
-
 - (NSString *)reactGetNativeID
 {
   #if RCT_NEW_ARCH_ENABLED
@@ -173,6 +139,40 @@
 
 // MARK: React-Native - Paper-Related
 // ----------------------------------
+
+- (RCTBridge *)reactGetPaperBridge
+{
+  #if RCT_NEW_ARCH_ENABLED
+  RCTSurfacePresenterBridgeAdapter *reactBridgeAdapter =
+    [[UIApplication sharedApplication] reactBridgeAdapter];
+    
+  if(reactBridgeAdapter != nil){
+    return reactBridgeAdapter.bridge;
+  };
+  #endif
+
+  RCTRootView *reactPaperRootView = [self reactGetPaperRootView];
+  if(reactPaperRootView != nil){
+    return reactPaperRootView.bridge;
+  };
+
+  UIResponder *currentResponder = self;
+  while (currentResponder != nil) {
+    if([currentResponder isKindOfClass: [RCTRootView class]]) {
+      RCTRootView *reactRootView = (RCTRootView *)currentResponder;
+      return reactRootView.bridge;
+    };
+    
+    if([currentResponder isKindOfClass:[RNIBaseView class]]){
+      RNIBaseView *baseView = (RNIBaseView *)currentResponder;
+      return baseView.bridge;
+    };
+    
+    currentResponder = [currentResponder nextResponder];
+  };
+  
+  return nil;
+}
 
 - (RCTRootView *)reactGetPaperRootView
 {

@@ -25,14 +25,14 @@ typedef BOOL (^ RNIViewPredicateBlock)(UIView * _Nonnull);
 // MARK: - React-Native Related
 // ----------------------------
 
-- (nullable RCTBridge *)reactGetPaperBridge;
-
 - (nullable NSString *)reactGetNativeID;
 
 - (nullable RNILayoutMetrics *)reactGetLayoutMetrics;
 
 // MARK: React-Native - Paper-Related
 // ----------------------------------
+
+- (nullable RCTBridge *)reactGetPaperBridge;
 
 - (nullable RCTRootView *)reactGetPaperRootView;
 
