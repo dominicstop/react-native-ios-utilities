@@ -24,6 +24,8 @@
 #else
 #import <React/RCTView.h>
 #import <React/UIView+React.h>
+#import <React/RCTUIManager.h>
+#import <React/RCTShadowView.h>
 #endif
 
 
@@ -59,7 +61,7 @@
 // MARK: - React-Native Related
 // ----------------------------
 
-- (RCTBridge *)getClosestReactBridge
+- (RCTBridge *)reactGetPaperBridge
 {
   
   #if RCT_NEW_ARCH_ENABLED
@@ -90,7 +92,7 @@
   return nil;
 }
 
-- (NSString *)getReactNativeID
+- (NSString *)reactGetNativeID
 {
   #if RCT_NEW_ARCH_ENABLED
   if ([self isKindOfClass:[RCTViewComponentView class]]) {

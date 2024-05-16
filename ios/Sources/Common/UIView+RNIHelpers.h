@@ -20,8 +20,8 @@ typedef BOOL (^ ResponderPredicateBlock)(UIResponder * _Nonnull);
 // MARK: - React-Native Related
 // ----------------------------
 
-- (nullable RCTBridge *)getClosestReactBridge;
+- (nullable RCTBridge *)reactGetPaperBridge;
 
-- (nullable NSString *)getReactNativeID;
+- (nullable NSString *)reactGetNativeID;
 
 @end
