@@ -16,6 +16,8 @@ typedef BOOL (^RNIResponderPredicateBlock)(UIResponder * _Nonnull);
 typedef BOOL (^RNIViewPredicateBlock)(UIView * _Nonnull);
 typedef void (^RNILayoutMetricsCompletionBlock)(RNILayoutMetrics * _Nullable);
 typedef void (^RNIPaperLayoutMetricsCompletionBlock)(RCTLayoutMetrics layoutMetrics, BOOL isSuccessful);
+typedef void (^RNIPaperShadowViewCompletionBlock)(RCTShadowView * _Nullable shadowView);
+
 
 @interface UIView (RNIHelpers)
 
@@ -40,5 +42,7 @@ typedef void (^RNIPaperLayoutMetricsCompletionBlock)(RCTLayoutMetrics layoutMetr
 - (nullable RCTRootView *)reactGetPaperRootView;
 
 - (void)reactGetPaperLayoutMetricsWithCompletionHandler:(nonnull RNIPaperLayoutMetricsCompletionBlock)completionBlock;
+
+- (void)reactGetShadowViewWithCompletionHandler:(nonnull RNIPaperShadowViewCompletionBlock)completionBlock;
 
 @end

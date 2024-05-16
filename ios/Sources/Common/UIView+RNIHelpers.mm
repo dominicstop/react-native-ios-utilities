@@ -244,4 +244,36 @@
   });
 }
 
+- (void)reactGetShadowViewWithCompletionHandler:(RNIPaperShadowViewCompletionBlock)completionBlock
+{
+  RCTBridge *reactBridge = [self reactGetPaperBridge];
+  if(reactBridge == nil){
+    completionBlock(nil);
+  };
+  
+  RCTUIManager *uiManager = reactBridge.uiManager;
+  if(uiManager == nil){
+   completionBlock(nil);
+  };
+  
+  NSNumber *reactTag = self.reactTag;
+  if(reactTag == nil || [reactTag intValue] <= 0){
+   completionBlock(nil);
+  };
+  
+  RCTExecuteOnUIManagerQueue(^{
+    RCTShadowView *shadowView = [uiManager shadowViewForReactTag:reactTag];
+    if(shadowView == nil){
+      RCTExecuteOnMainQueue(^{
+        completionBlock(nil);
+      });
+      
+    } else {
+      RCTExecuteOnMainQueue(^{
+        completionBlock(shadowView);
+      });
+    };
+  });
+}
+
 @end
