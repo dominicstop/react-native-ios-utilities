@@ -101,6 +101,7 @@
 // ----------------------
 
 #if RCT_NEW_ARCH_ENABLED
+/// Works on fabric only
 - (RNILayoutMetrics *)reactGetLayoutMetrics
 {
   auto layoutMetrics = [self reactGetFabricLayoutMetrics];

@@ -119,12 +119,19 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     superBlock();
     #endif
     
+    self.reactGetLayoutMetrics {
+      print(
+        "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
+        "\n - childComponentView.reactGetLayoutMetrics:", $0?.description ?? "N/A",
+        "\n"
+      );
+    };
+    
     print(
       "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
       "\n - childComponentView:", childComponentView.debugDescription,
       "\n - childComponentView.tag:", childComponentView.tag,
       "\n - childComponentView.reactGetNativeID:", childComponentView.reactGetNativeID() ?? "N/A",
-      //"\n - childComponentView.reactGetLayoutMetrics:", childComponentView.reactGetLayoutMetrics()?.description ?? "N/A",
       "\n - index:", index,
       "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
       "\n - self.window:", self.window?.debugDescription ?? "N/A",

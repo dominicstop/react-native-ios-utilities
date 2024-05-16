@@ -100,6 +100,46 @@
   return nil;
 }
 
+/// Works on fabric + paper
+- (void)reactGetLayoutMetricsWithCompletionHandler:(nonnull RNILayoutMetricsCompletionBlock)completionBlock
+{
+  #if RCT_NEW_ARCH_ENABLED
+  RNILayoutMetrics *layoutMetrics = [self reactGetLayoutMetrics];
+  completionBlock(layoutMetrics);
+  #else
+  RCTBridge *reactBridge = [self reactGetPaperBridge];
+  if(reactBridge == nil){
+    completionBlock(nil);
+  };
+  
+  RCTUIManager *uiManager = reactBridge.uiManager;
+  if(uiManager == nil){
+   completionBlock(nil);
+  };
+  
+  NSNumber *reactTag = self.reactTag;
+  if(reactTag == nil || [reactTag intValue] <= 0){
+    completionBlock(nil);
+  };
+  
+  RCTExecuteOnUIManagerQueue(^{
+    RCTShadowView *shadowView = [uiManager shadowViewForReactTag:reactTag];
+    if(shadowView == nil){
+      RCTExecuteOnMainQueue(^{
+        completionBlock(nil);
+      });
+      
+    };
+    
+    RNILayoutMetrics *layoutMetrics = [RNIObjcUtils
+      convertToRNILayoutMetricsForPaperLayoutMetrics:shadowView.layoutMetrics
+                                      withShadowView:shadowView];
+      
+    completionBlock(layoutMetrics);
+  });
+  #endif
+}
+
 // MARK: React-Native - Paper-Related
 // ----------------------------------
 

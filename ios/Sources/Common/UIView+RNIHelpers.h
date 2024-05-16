@@ -14,6 +14,7 @@
 
 typedef BOOL (^RNIResponderPredicateBlock)(UIResponder * _Nonnull);
 typedef BOOL (^RNIViewPredicateBlock)(UIView * _Nonnull);
+typedef void (^RNILayoutMetricsCompletionBlock)(RNILayoutMetrics * _Nullable);
 typedef void (^RNIPaperLayoutMetricsCompletionBlock)(RCTLayoutMetrics layoutMetrics, BOOL isSuccessful);
 
 @interface UIView (RNIHelpers)
@@ -28,6 +29,8 @@ typedef void (^RNIPaperLayoutMetricsCompletionBlock)(RCTLayoutMetrics layoutMetr
 // ----------------------------
 
 - (nullable NSString *)reactGetNativeID;
+
+- (void)reactGetLayoutMetricsWithCompletionHandler:(nonnull RNILayoutMetricsCompletionBlock)completionBlock;
 
 // MARK: React-Native - Paper-Related
 // ----------------------------------
