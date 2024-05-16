@@ -37,6 +37,17 @@
   return scenes;
 }
 
+- (NSArray<UIWindowScene*> *)getAllWindowScenesWhereForegroundActive API_AVAILABLE(ios(13.0))
+{
+  NSArray<UIScene *> *scenes = [self getAllScenesWhereForegroundActive];
+  
+  NSPredicate *filterPredicate = [NSPredicate predicateWithBlock:^BOOL(UIScene *scene, NSDictionary *bindings) {
+    return [scene isKindOfClass:[UIWindowScene class]];
+  }];
+  
+  return (NSArray<UIWindowScene*> *)[scenes filteredArrayUsingPredicate:filterPredicate];
+}
+
 #if __cplusplus
 - (RCTAppDelegate *)reactAppDelegate
 {
