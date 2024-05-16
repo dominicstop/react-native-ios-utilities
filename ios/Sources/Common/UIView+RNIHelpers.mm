@@ -129,13 +129,15 @@
         completionBlock(nil);
       });
       
+    } else {
+      RCTExecuteOnMainQueue(^{
+        RNILayoutMetrics *layoutMetrics = [RNIObjcUtils
+          convertToRNILayoutMetricsForPaperLayoutMetrics:shadowView.layoutMetrics
+                                          withShadowView:shadowView];
+          
+        completionBlock(layoutMetrics);
+      });
     };
-    
-    RNILayoutMetrics *layoutMetrics = [RNIObjcUtils
-      convertToRNILayoutMetricsForPaperLayoutMetrics:shadowView.layoutMetrics
-                                      withShadowView:shadowView];
-      
-    completionBlock(layoutMetrics);
   });
   #endif
 }
@@ -234,9 +236,11 @@
         completionBlock({-1}, NO);
       });
       
+    } else {
+      RCTExecuteOnMainQueue(^{
+        completionBlock(shadowView.layoutMetrics, YES);
+      });
     };
-      
-    completionBlock(shadowView.layoutMetrics, YES);
   });
 }
 
