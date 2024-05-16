@@ -72,7 +72,7 @@
 - (NSArray<UIWindow *> *)getAllActiveKeyWindows
 {
   NSPredicate *filterPredicate = [NSPredicate predicateWithBlock:^BOOL(UIWindow *window, NSDictionary *bindings) {
-    return ![window isKeyWindow];
+    return [window isKeyWindow];
   }];
   
   return [[self getAllActiveWindows] filteredArrayUsingPredicate:filterPredicate];
