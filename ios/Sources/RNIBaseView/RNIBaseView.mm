@@ -11,7 +11,6 @@
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 #import "react-native-ios-utilities/UIView+RNIHelpers.h"
-
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
 #ifdef RCT_NEW_ARCH_ENABLED
@@ -25,6 +24,8 @@
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
 #else
+#import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
+
 #import <React/UIView+React.h>
 #import <React/RCTShadowView.h>
 #endif

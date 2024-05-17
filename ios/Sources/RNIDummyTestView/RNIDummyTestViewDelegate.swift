@@ -131,7 +131,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
       "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
       "\n - childComponentView:", childComponentView.debugDescription,
       "\n - childComponentView.tag:", childComponentView.tag,
-      "\n - childComponentView.reactGetNativeID:", childComponentView.reactGetNativeID() ?? "N/A",
+      "\n - childComponentView.reactNativeID:", childComponentView.reactNativeID ?? "N/A",
       "\n - index:", index,
       "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
       "\n - self.window:", self.window?.debugDescription ?? "N/A",
