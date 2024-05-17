@@ -15,6 +15,10 @@
 #include <react/renderer/core/ConcreteState.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 
+#if DEBUG
+#include <iostream>
+#endif
+
 
 namespace facebook::react {
 
@@ -64,6 +68,17 @@ public:
     if(stateData.shouldSetPositionType){
       layoutableShadowNode.setPositionType(stateData.positionType);
     };
+    
+    #if DEBUG
+    std::cout
+      << "RNIBaseViewComponentDescriptor.adopt"
+      << "\n - getComponentName: " << layoutableShadowNode.getComponentName()
+      << "\n - getComponentHandle: " << layoutableShadowNode.getComponentHandle()
+      << "\n - getTag: " << layoutableShadowNode.getTag()
+      << "\n - getSurfaceId: " << layoutableShadowNode.getSurfaceId()
+      << std::endl;
+    #endif
+    
     ConcreteComponentDescriptor<ShadowNodeT>::adopt(shadowNode);
   }
 };
