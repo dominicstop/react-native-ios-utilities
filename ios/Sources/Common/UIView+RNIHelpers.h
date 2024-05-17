@@ -30,7 +30,7 @@ typedef void (^RNIPaperShadowViewCompletionBlock)(RCTShadowView * _Nullable shad
 // MARK: - React-Native Related
 // ----------------------------
 
-- (nullable NSString *)reactGetNativeID;
+@property (nullable, readonly, nonatomic) NSString *reactNativeID;
 
 - (void)reactGetLayoutMetricsWithCompletionHandler:(nonnull RNILayoutMetricsCompletionBlock)completionBlock;
 

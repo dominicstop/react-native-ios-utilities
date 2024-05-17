@@ -83,8 +83,7 @@
 // MARK: - React-Native Related
 // ----------------------------
 
-- (NSString *)reactGetNativeID
-{
+- (NSString *)reactNativeID {
   #if RCT_NEW_ARCH_ENABLED
   if ([self isKindOfClass:[RCTViewComponentView class]]) {
     RCTViewComponentView *componentView = (RCTViewComponentView *)self;
