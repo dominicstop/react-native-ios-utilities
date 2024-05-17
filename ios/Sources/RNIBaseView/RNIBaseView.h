@@ -41,7 +41,9 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 // MARK: - Properties - Fabric + Paper
 // -----------------------------------
 
+#if !RCT_NEW_ARCH_ENABLED
 @property (nonatomic, strong, nullable) UIView *contentView;
+#endif
 
 @property (nonatomic, strong, nullable) NSObject<RNIContentViewDelegate> *contentDelegate;
 
