@@ -22,6 +22,10 @@
 @class RCTBridge;
 @class RNILayoutMetrics;
 
+#if !RCT_NEW_ARCH_ENABLED
+@class RCTShadowView;
+#endif
+
 typedef NS_ENUM(NSInteger, RNIPositionType);
 
 // MARK: - RNIBaseView
@@ -34,18 +38,23 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
   RCTView<RNIContentViewParentDelegate>
 #endif
 
-// MARK: - Properties
-// ------------------
+// MARK: - Properties - Fabric + Paper
+// -----------------------------------
 
-#if !RCT_NEW_ARCH_ENABLED
 @property (nonatomic, strong, nullable) UIView *contentView;
-
-@property (nonatomic, weak, nullable) RCTBridge *bridge;
-#endif
 
 @property (nonatomic, strong, nullable) NSObject<RNIContentViewDelegate> *contentDelegate;
 
 @property (nonatomic, strong, nullable) RNILayoutMetrics *cachedLayoutMetrics;
+
+// MARK: - Properties - Paper Only
+// -------------------------------
+
+#if !RCT_NEW_ARCH_ENABLED
+@property (nonatomic, weak, nullable) RCTBridge *bridge;
+
+@property (nonatomic, weak, nullable) RCTShadowView *cachedShadowView;
+#endif
 
 // MARK: - Init
 // ------------

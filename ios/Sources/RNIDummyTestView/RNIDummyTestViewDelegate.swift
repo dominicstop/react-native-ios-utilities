@@ -179,10 +179,6 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     );
   };
   
-  // MARK: Fabric Only
-  // -----------------
-
-  #if RCT_NEW_ARCH_ENABLED
   public func notifyOnUpdateLayoutMetrics(
     sender: RNIContentViewParentDelegate,
     oldLayoutMetrics: RNILayoutMetrics,
@@ -206,6 +202,10 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     );
   };
   
+  // MARK: Fabric Only
+  // -----------------
+
+  #if RCT_NEW_ARCH_ENABLED
   public func notifyOnUpdateProps(
     sender: RNIContentViewParentDelegate,
     oldProps: NSDictionary,

@@ -10,6 +10,7 @@
 
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
+#import "react-native-ios-utilities/UIView+RNIHelpers.h"
 
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
@@ -25,6 +26,7 @@
 #include <react/renderer/core/graphicsConversions.h>
 #else
 #import <React/UIView+React.h>
+#import <React/RCTShadowView.h>
 #endif
 
 #if __cplusplus
@@ -68,9 +70,18 @@ using namespace react;
 {
   if (self = [super init]) {
     self.bridge = bridge;
-    //[self _reactSubviews];
+    [self reactSubviews];
+    
+    NSLog(
+      @"%@\n%@ %d\n%@ %@\n%@ %@",
+      @"RNIBaseView.layoutSubviews",
+      @" - self.reactSubviews count:", (int)[self.reactSubviews count],
+      @" - self.cachedShadowView:", self.cachedShadowView,
+      @" - self.frame:", NSStringFromCGRect(self.frame)
+    );
+    
     [self initCommon];
-  }
+  };
   
   return self;
 }
@@ -164,8 +175,8 @@ using namespace react;
 }
 #endif
 
-// MARK: - Fabric Lifecycle
-// ------------------------
+// MARK: - Fabric Only
+// -------------------
 
 #ifdef RCT_NEW_ARCH_ENABLED
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
@@ -372,8 +383,73 @@ using namespace react;
 }
 #else
 
-// MARK: - Paper Lifecycle
-// -----------------------
+// MARK: - Paper Only
+// ------------------
+
+- (void)notifyDelegateForLayoutMetricsUpdate
+{
+  if(self.cachedShadowView == nil){
+    return;
+  };
+  
+  RNILayoutMetrics *oldLayoutMetrics = self.cachedLayoutMetrics == nil
+    ? [RNILayoutMetrics new]
+    : self.cachedLayoutMetrics;
+  
+  RNILayoutMetrics *newLayoutMetrics = [RNIObjcUtils
+      convertToRNILayoutMetricsForPaperLayoutMetrics:self.cachedShadowView.layoutMetrics
+                                      withShadowView:self.cachedShadowView];
+  
+  self.cachedLayoutMetrics = newLayoutMetrics;
+
+  BOOL shouldNotifyDelegate =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
+  
+  if (shouldNotifyDelegate) {
+    [self.contentDelegate notifyOnUpdateLayoutMetricsWithSender:self
+                                                      oldLayoutMetrics:oldLayoutMetrics
+                                                      newLayoutMetrics:newLayoutMetrics];
+  };
+}
+
+- (void)didMoveToWindow
+{
+  [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
+    self.cachedShadowView = shadowView;
+    if(shadowView == nil){
+      return;
+    };
+  }];
+}
+
+- (void)layoutSubviews
+{
+  [super layoutSubviews];
+  
+  if(self.cachedShadowView == nil){
+    [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
+      self.cachedShadowView = shadowView;
+      if(shadowView == nil){
+        return;
+      };
+      
+      [self notifyDelegateForLayoutMetricsUpdate];
+    }];
+    
+  } else {
+    [self notifyDelegateForLayoutMetricsUpdate];
+  };
+  
+  NSLog(
+    @"%@\n%@ %d\n%@ %@\n%@ %@\n%@ %@",
+    @"RNIBaseView.layoutSubviews",
+    @" - self.reactSubviews count:", (int)[self.reactSubviews count],
+    @" - self.cachedShadowView:", self.cachedShadowView,
+    @" - self.frame:", NSStringFromCGRect(self.frame),
+    @" - self.cachedLayoutMetrics:", self.cachedLayoutMetrics
+  );
+}
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
 {
@@ -394,8 +470,7 @@ using namespace react;
                                                  childComponentView:subview
                                                               index:atIndex
                                                          superBlock:superBlock];
-                                     
-    
+                          
   } else {
     [super insertReactSubview:subview atIndex:atIndex];
   };

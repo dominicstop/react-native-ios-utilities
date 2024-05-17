@@ -41,6 +41,13 @@ public protocol RNIContentViewDelegate where Self: UIView  {
     sender: RNIContentViewParentDelegate
   );
   
+  @objc
+  optional func notifyOnUpdateLayoutMetrics(
+    sender: RNIContentViewParentDelegate,
+    oldLayoutMetrics: RNILayoutMetrics,
+    newLayoutMetrics: RNILayoutMetrics
+  );
+  
   // MARK: Fabric Only
   // -----------------
   
@@ -60,13 +67,6 @@ public protocol RNIContentViewDelegate where Self: UIView  {
     sender: RNIContentViewParentDelegate,
     oldState: NSDictionary?,
     newState: NSDictionary
-  );
-  
-  @objc
-  optional func notifyOnUpdateLayoutMetrics(
-    sender: RNIContentViewParentDelegate,
-    oldLayoutMetrics: RNILayoutMetrics,
-    newLayoutMetrics: RNILayoutMetrics
   );
   
   @objc
