@@ -130,7 +130,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     print(
       "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
       "\n - childComponentView:", childComponentView.debugDescription,
-      "\n - childComponentView.tag:", childComponentView.tag,
+      "\n - childComponentView.reactNativeTag:", childComponentView.reactNativeTag?.stringValue ?? "N/A",
       "\n - childComponentView.reactNativeID:", childComponentView.reactNativeID ?? "N/A",
       "\n - index:", index,
       "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
@@ -194,8 +194,8 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
       "RNIDummyTestViewDelegate.notifyOnUpdateLayoutMetrics",
       "\n - oldLayoutMetric.frame:", oldLayoutMetrics.frame,
       "\n - oldLayoutMetric.frame:", newLayoutMetrics.frame,
-      "\n - self.tag:", self.tag,
-      "\n - sender.tag:", sender.tag,
+      "\n - self.reactNativeTag:", self.reactNativeTag?.stringValue ?? "N/A",
+      "\n - sender.reactNativeTag:", sender.reactNativeTag?.stringValue ?? "N/A",
       "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
       "\n - self.window:", self.window?.debugDescription ?? "N/A",
       "\n"

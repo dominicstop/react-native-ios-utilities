@@ -93,6 +93,19 @@
   return nil;
 }
 
+- (NSNumber *)reactNativeTag
+{
+  #if RCT_NEW_ARCH_ENABLED
+  if([self isKindOfClass:[RCTViewComponentView class]]){
+    return [[NSNumber new] initWithInteger:self.tag];
+  };
+  
+  return nil;
+  #else
+  return self.reactTag;
+  #endif
+}
+
 /// Works on fabric + paper
 - (void)reactGetLayoutMetricsWithCompletionHandler:(nonnull RNILayoutMetricsCompletionBlock)completionBlock
 {

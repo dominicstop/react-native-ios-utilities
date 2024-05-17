@@ -26,6 +26,8 @@ typedef void (^RNILayoutMetricsCompletionBlock)(RNILayoutMetrics * _Nullable);
 
 @property (nullable, readonly, nonatomic) NSString *reactNativeID;
 
+@property (nullable, readonly, nonatomic) NSNumber *reactNativeTag;
+
 - (void)reactGetLayoutMetricsWithCompletionHandler:(nonnull RNILayoutMetricsCompletionBlock)completionBlock;
 
 @end
