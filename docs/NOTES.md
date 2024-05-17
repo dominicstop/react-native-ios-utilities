@@ -2,8 +2,15 @@
 
 <br><br>
 
-* Expose fabric methods to swift: `handleCommand`, `updateEventEmitter`.
-* Expose in Fabric via ivar: `NSMutableArray<UIView *> *_reactSubviews;`
+* Expos methods/properties from react to swift:
+
+  * Expose fabric methods to swift: `handleCommand`, `updateEventEmitter`.
+
+  * Expose paper methods to swift: `didUpdateReactSubviews`
+
+  * Expose in Fabric via ivar: `NSMutableArray<UIView *> *_reactSubviews;`
+  * Expose methods to add + remove items in `_reactSubviews`/`reactSubviews`.
+  * Bridge `tag` (fabric), and `reactTag`(paper) into a common property for swift.
 
 <br><br>
 
