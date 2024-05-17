@@ -27,6 +27,9 @@ public:
   using ConcreteState = ConcreteState<RNIBaseViewState>;
   using SharedConcreteState = std::shared_ptr<const ConcreteState>;
   
+  // MARK: Properties
+  // ----------------
+  
   bool shouldSetSize = false;
   bool shouldSetPadding = false;
   bool shouldSetPositionType = false;
