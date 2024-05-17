@@ -83,14 +83,11 @@
     RCTViewComponentView *componentView = (RCTViewComponentView *)self;
     return componentView.nativeId;
   };
-  #else
-  if ([self isKindOfClass:[RCTView class]]) {
-    RCTView *reactView = (RCTView *)self;
-    return reactView.nativeID;
-  };
-  #endif
   
   return nil;
+  #else
+  return self.nativeID;
+  #endif
 }
 
 - (NSNumber *)reactNativeTag
