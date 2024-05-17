@@ -107,7 +107,7 @@
 - (void)reactGetLayoutMetricsWithCompletionHandler:(nonnull RNILayoutMetricsCompletionBlock)completionBlock
 {
   #if RCT_NEW_ARCH_ENABLED
-  RNILayoutMetrics *layoutMetrics = [self reactGetLayoutMetrics];
+  RNILayoutMetrics *layoutMetrics = [self reactLayoutMetrics];
   completionBlock(layoutMetrics);
   #else
   RCTBridge *reactBridge = [self reactGetPaperBridge];

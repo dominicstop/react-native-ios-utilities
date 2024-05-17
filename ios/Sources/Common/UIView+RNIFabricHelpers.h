@@ -7,12 +7,13 @@
 
 #import <UIKit/UIKit.h>
 
-
+#if RCT_NEW_ARCH_ENABLED
 @class RCTSurfaceHostingView;
 @class RCTFabricSurface;
 @class RNILayoutMetrics;
+#endif
 
-#if __cplusplus
+#if __cplusplus && RCT_NEW_ARCH_ENABLED
 namespace facebook::react {
   class SurfaceHandler;
   struct LayoutMetrics;
@@ -21,7 +22,7 @@ namespace facebook::react {
 
 @interface UIView (RNIFabricHelpers)
 
-#if __cplusplus
+#if __cplusplus && RCT_NEW_ARCH_ENABLED
 - (nullable RCTSurfaceHostingView *)reactGetClosestParentSurfaceHostingView;
 
 - (nullable RCTFabricSurface *)reactGetClosestFabricSurface;
@@ -35,7 +36,7 @@ namespace facebook::react {
 // ----------------------
 
 #if RCT_NEW_ARCH_ENABLED
-- (nullable RNILayoutMetrics *)reactGetLayoutMetrics;
+@property (nullable, readonly, nonatomic) RNILayoutMetrics *reactLayoutMetrics;
 #endif
 
 @end

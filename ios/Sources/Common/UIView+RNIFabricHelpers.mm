@@ -13,7 +13,7 @@
 #import "react-native-ios-utilities/RNIObjcUtils.h"
 #import "react-native-ios-utilities/Swift.h"
 
-#if __cplusplus
+#if __cplusplus && RCT_NEW_ARCH_ENABLED
 #import "UIView+RNIHelpers.h"
 
 #import <React/RCTSurfaceHostingView.h>
@@ -22,7 +22,7 @@
 #endif
 
 @implementation UIView (RNIFabricHelpers)
-#if __cplusplus
+#if __cplusplus && RCT_NEW_ARCH_ENABLED
 - (RCTSurfaceHostingView *)reactGetClosestParentSurfaceHostingView
 {
   UIResponder *match = [self findParentResponderForPredicate:^BOOL(UIResponder *responder) {
@@ -102,7 +102,7 @@
 
 #if RCT_NEW_ARCH_ENABLED
 /// Works on fabric only
-- (RNILayoutMetrics *)reactGetLayoutMetrics
+- (RNILayoutMetrics *)reactLayoutMetrics
 {
   auto layoutMetrics = [self reactGetFabricLayoutMetrics];
   if(layoutMetrics == nullptr){
