@@ -14,10 +14,9 @@ void RNIBaseViewEventEmitter::dispatchEvent(
   std::string eventName,
   folly::dynamic &dynamic
 ) const {
-  EventEmitter::dispatchEvent(eventName, [&](jsi::Runtime &runtime) {
-    auto $payload = jsi::Object(runtime);
-    jsi::valueFromDynamic(runtime, dynamic);
-    return $payload;
+
+  EventEmitter::dispatchEvent(std::move(eventName), [dynamic=std::move(dynamic)](jsi::Runtime &runtime) {
+    return jsi::valueFromDynamic(runtime, dynamic);;
   });
 }
 

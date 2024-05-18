@@ -1,6 +1,9 @@
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type { DirectEventHandler, BubblingEventHandler } from 'react-native/Libraries/Types/CodegenTypes';
 import type { HostComponent, ViewProps } from 'react-native';
 
+
+// stubs
 interface NativeProps extends ViewProps {
   someBool: string;
   someString: string;
@@ -11,6 +14,11 @@ interface NativeProps extends ViewProps {
   someObjectOptional: string;
   someArray: string;
   someArrayOptional: string;
+
+  onSomeDirectEventWithEmptyPayload: DirectEventHandler<{}>;
+  onSomeDirectEventWithObjectPayload: DirectEventHandler<{}>;
+  onSomeBubblingEventWithEmptyPayload: BubblingEventHandler<{}>;
+  onSomeBubblingEventWithObjectPayload: DirectEventHandler<{}>;
 }
 
 export default codegenNativeComponent<NativeProps>('RNIDummyTestView', {

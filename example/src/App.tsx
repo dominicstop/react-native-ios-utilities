@@ -89,8 +89,32 @@ export default function App() {
         someNumberOptional={345}
         someObject={TEST_OBJECT}
         someObjectOptional={{}}
-        someArray={[1,2,3]}
-        someArrayOptional={[4,5,6]}
+        someArray={[1, 2, 3]}
+        someArrayOptional={[4, 5, 6]} 
+        onSomeDirectEventWithEmptyPayload={({nativeEvent}) => {
+          console.log(
+            "RNIDummyTestNativeView.onSomeDirectEventWithEmptyPayload",
+            "\n - nativeEvent:", nativeEvent
+          );
+        }}
+        onSomeDirectEventWithObjectPayload={({nativeEvent}) => {
+          console.log(
+            "RNIDummyTestNativeView.onSomeDirectEventWithObjectPayload",
+            "\n - nativeEvent:", nativeEvent
+          );
+        }}
+        onSomeBubblingEventWithEmptyPayload={({nativeEvent}) => {
+          console.log(
+            "RNIDummyTestNativeView.onSomeBubblingEventWithEmptyPayload",
+            "\n - nativeEvent:", nativeEvent
+          );
+        }}
+        onSomeBubblingEventWithObjectPayload={({nativeEvent}) => {
+          console.log(
+            "RNIDummyTestNativeView.onSomeBubblingEventWithObjectPayload",
+            "\n - nativeEvent:", nativeEvent
+          );
+        }}
       >
         {(counter % 4 === 0) && (
           <Text

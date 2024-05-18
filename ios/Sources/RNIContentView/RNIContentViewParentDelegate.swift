@@ -29,5 +29,11 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   func setPadding(_ insets: UIEdgeInsets);
   
   func setPositionType(_ positionType: RNILayoutMetrics.RNIPositionType);
+  
+  func dispatchViewEvent(
+    forEventName eventName: String,
+    withPayload payload: Dictionary<String, Any>
+  );
+  
   #endif
 };

@@ -80,6 +80,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (void)setPadding:(UIEdgeInsets)padding;
 
 - (void)setPositionType:(RNIPositionType)positionType;
-#endif
 
+- (void)dispatchViewEventForEventName:(nonnull NSString *)eventName
+                          withPayload:(nonnull NSDictionary *)eventPayload NS_SWIFT_NAME(dispatchViewEvent(forEventName:withPayload:));
+#endif
 @end

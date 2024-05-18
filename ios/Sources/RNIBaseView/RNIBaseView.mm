@@ -14,11 +14,12 @@
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
 #ifdef RCT_NEW_ARCH_ENABLED
-#import "RCTFabricComponentsPlugins.h"
-#import <React/RCTFollyConvert.h>
-
 #include "RNIBaseViewState.h"
 #include "RNIBaseViewProps.h"
+#include "RNIBaseViewEventEmitter.h"
+
+#import "RCTFabricComponentsPlugins.h"
+#import <React/RCTFollyConvert.h>
 
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 #include <react/renderer/graphics/Float.h>
@@ -62,7 +63,6 @@ using namespace react;
     
     [self initCommon];
   };
-  
   
   return self;
 }
@@ -176,8 +176,24 @@ using namespace react;
 }
 #endif
 
-// MARK: - Fabric Only
-// -------------------
+- (void)dispatchViewEventForEventName:(NSString *)eventName
+                          withPayload:(NSDictionary *)eventPayload
+{
+  if (self->_eventEmitter == nullptr){
+    return;
+  };
+  
+  auto eventEmitter =
+    std::dynamic_pointer_cast<const react::RNIBaseViewEventEmitter>(_eventEmitter);
+  
+  auto eventNameCxxString = [RNIObjcUtils convertToCxxStringForObjcString:eventName];
+  auto eventPayloadDynamic = react::convertIdToFollyDynamic(eventPayload);
+  
+  eventEmitter->dispatchEvent(eventNameCxxString, eventPayloadDynamic);
+}
+
+// MARK: - View Lifecycle - Fabric Only
+// ------------------------------------
 
 #ifdef RCT_NEW_ARCH_ENABLED
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
@@ -384,8 +400,8 @@ using namespace react;
 }
 #else
 
-// MARK: - Paper Only
-// ------------------
+// MARK: - View Lifecycle - Paper Only
+// -----------------------------------
 
 - (void)notifyDelegateForLayoutMetricsUpdate
 {

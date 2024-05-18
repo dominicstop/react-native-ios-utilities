@@ -78,6 +78,10 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   // MARK: Functions
   // ---------------
   
+  public override func didMoveToWindow() {
+    guard self.window != nil else { return };
+  };
+  
   func _setupContent(){
     self.backgroundColor = .systemPink;
   
@@ -118,6 +122,37 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     #if !RCT_NEW_ARCH_ENABLED
     superBlock();
     #endif
+    
+    let eventPayload: [String: Any] = [
+      "someBool": true,
+      "someString": "abc",
+      "someNumber": 123,
+      "someObject": [
+        "someBool": true,
+        "someString": "abc",
+      ],
+      "someArray": [],
+    ];
+    
+    sender.dispatchViewEvent(
+      forEventName: "onSomeDirectEventWithEmptyPayload",
+      withPayload: [:]
+    );
+    
+    sender.dispatchViewEvent(
+      forEventName: "onSomeDirectEventWithObjectPayload",
+      withPayload: eventPayload
+    );
+    
+    sender.dispatchViewEvent(
+      forEventName: "onSomeBubblingEventWithEmptyPayload",
+      withPayload: [:]
+    );
+    
+    sender.dispatchViewEvent(
+      forEventName: "onSomeBubblingEventWithObjectPayload",
+      withPayload: eventPayload
+    );
     
     self.reactGetLayoutMetrics {
       print(
