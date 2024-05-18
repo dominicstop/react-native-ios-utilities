@@ -77,7 +77,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
   BOOL shouldAddMethodForSelector =
     ![self->_eventHolderInstance respondsToSelector:aSelector];
     
-  #if DEBUG
+#if DEBUG
   NSLog(
     @"%@\n%@ %@\n%@ %@\n%@ %d\n%@ %d",
     @"RNIBaseViewEventHandler.forwardingTargetForSelector",
@@ -86,7 +86,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
     @" - shouldForwardToEventHolder:", shouldForwardToEventHolder,
     @" - shouldAddMethodForSelector:", shouldAddMethodForSelector
   );
-  #endif
+#endif
   
   if(!shouldForwardToEventHolder){
     return self->_parentView;
@@ -124,7 +124,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
 }
 
 void handleSetterInvocation(RNIBaseViewEventHolder *_self, SEL _cmd, id _arg) {
-  #if DEBUG
+#if DEBUG
   NSLog(
     @"%@\n%@ %@\n%@ %@\n%@ %@",
     @"RNIBaseViewEventHolder.registerEventEmitterForSelector",
@@ -132,11 +132,10 @@ void handleSetterInvocation(RNIBaseViewEventHolder *_self, SEL _cmd, id _arg) {
     @" - arg _cmd:", NSStringFromSelector(_cmd),
     @" - arg _arg:", _arg
   );
-  #endif
+#endif
 
   [_self registerEventEmitterForSelector:_cmd
                         withEventEmitter:_arg];
-                        
 }
 
 @end

@@ -69,7 +69,7 @@ public:
       layoutableShadowNode.setPositionType(stateData.positionType);
     };
     
-    #if DEBUG
+#if DEBUG
     std::cout
       << "RNIBaseViewComponentDescriptor.adopt"
       << "\n - getComponentName: " << layoutableShadowNode.getComponentName()
@@ -77,7 +77,7 @@ public:
       << "\n - getTag: " << layoutableShadowNode.getTag()
       << "\n - getSurfaceId: " << layoutableShadowNode.getSurfaceId()
       << std::endl;
-    #endif
+#endif
     
     ConcreteComponentDescriptor<ShadowNodeT>::adopt(shadowNode);
   }
