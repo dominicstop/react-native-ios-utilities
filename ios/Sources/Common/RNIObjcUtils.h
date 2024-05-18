@@ -37,6 +37,8 @@ namespace folly {
 
 @interface RNIObjcUtils : NSObject
 #if __cplusplus
++ (std::string)convertToCxxStringForObjcString:(NSString *)string;
+
 + (id)convertFollyDynamicToId:(const folly::dynamic*)dyn;
 
 + (NSMutableDictionary *)convertToMutableDictForFollyDynamicMap:(const std::unordered_map<std::string, folly::dynamic>&)stringToDynMap;

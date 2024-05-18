@@ -26,6 +26,14 @@
 
 @implementation RNIObjcUtils
 #if __cplusplus
++ (std::string)convertToCxxStringForObjcString:(NSString *)string
+{
+  return std::string(
+    [string UTF8String],
+    [string lengthOfBytesUsingEncoding: NSUTF8StringEncoding]
+  );
+}
+
 + (id)convertFollyDynamicToId:(const folly::dynamic*)dyn
 {
   switch (dyn->type()) {
