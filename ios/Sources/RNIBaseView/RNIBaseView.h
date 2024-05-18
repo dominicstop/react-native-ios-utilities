@@ -19,11 +19,12 @@
 @protocol RNIContentViewParentDelegate;
 @protocol RNIContentViewDelegate;
 
-@class RCTBridge;
 @class RNILayoutMetrics;
 
 #if !RCT_NEW_ARCH_ENABLED
+@class RCTBridge;
 @class RCTShadowView;
+@class RNIBaseViewEventHandler;
 #endif
 
 typedef NS_ENUM(NSInteger, RNIPositionType);
@@ -56,6 +57,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 @property (nonatomic, weak, nullable) RCTBridge *bridge;
 
 @property (nonatomic, weak, nullable) RCTShadowView *cachedShadowView;
+
+@property (nonatomic, strong, nonnull) RNIBaseViewEventHandler *reactEventHandler;
 #endif
 
 // MARK: - Init

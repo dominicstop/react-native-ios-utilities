@@ -5,8 +5,9 @@
 //  Created by Dominic Go on 4/30/24.
 //
 
-
 #import "RNIBaseView.h"
+
+#import <objc/runtime.h>
 
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
@@ -25,6 +26,7 @@
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
 #else
+#import "RNIBaseViewEventHandler.h"
 #import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
 
 #import <React/UIView+React.h>
@@ -71,8 +73,9 @@ using namespace react;
 {
   if (self = [super init]) {
     self.bridge = bridge;
-    [self reactSubviews];
+    self.reactEventHandler = [[RNIBaseViewEventHandler new] initWithParentRef:self];
     
+#if DEBUG
     NSLog(
       @"%@\n%@ %d\n%@ %@\n%@ %@",
       @"RNIBaseView.layoutSubviews",
@@ -80,6 +83,7 @@ using namespace react;
       @" - self.cachedShadowView:", self.cachedShadowView,
       @" - self.frame:", NSStringFromCGRect(self.frame)
     );
+#endif
     
     [self initCommon];
   };
@@ -123,13 +127,21 @@ using namespace react;
      [viewDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
   };
 #endif
+  
+#if DEBUG
+  NSLog(
+    @"%@\n%@ %@\n%@ %@",
+    @"RNIBaseView.initCommon",
+    @" - className:", NSStringFromClass([self class]),
+    @" - _cmd:", NSStringFromSelector(_cmd)
+  );
+#endif
 }
 
-// MARK: Internal Functions
-// ------------------------
+// MARK: Functions
+// ---------------
 
-#if RCT_NEW_ARCH_ENABLED
-#else
+#if !RCT_NEW_ARCH_ENABLED
 - (void)_notifyDelegateForLayoutMetricsUpdate
 {
   if(self.cachedShadowView == nil){
@@ -196,7 +208,8 @@ using namespace react;
   
   eventEmitter->dispatchEvent(eventNameCxxString, eventPayloadDynamic);
 #else
-  // TODO: WIP - to be implemented
+  [self.reactEventHandler invokeEventBlockForEventName:eventName
+                                           withPayload:eventPayload];
 #endif
 }
 

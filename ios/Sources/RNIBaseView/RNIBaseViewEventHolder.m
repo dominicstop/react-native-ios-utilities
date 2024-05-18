@@ -55,7 +55,7 @@
 
   [self.eventMap setValue:eventEmitter forKey:eventName];
   
-  #if DEBUG
+#if DEBUG
   NSString *parentViewClassName = ^{
     if(self->_parentEventHandler == nil){
       return @"N/A";
@@ -77,7 +77,7 @@
     @" - eventName:", eventName,
     @" - parentViewClassName:", parentViewClassName
   );
-  #endif
+#endif
 }
 
 @end

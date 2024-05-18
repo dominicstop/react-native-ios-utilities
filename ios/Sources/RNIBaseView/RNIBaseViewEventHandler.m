@@ -100,8 +100,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
       (IMP)handleSetterInvocation,
       method_getTypeEncoding(method)
     );
-    
-    object_setClass(self->_eventHolderInstance, self->_eventHolderClass);
+    //object_setClass(self->_eventHolderInstance, self->_eventHolderClass);
   };
   
   return self->_eventHolderInstance;
