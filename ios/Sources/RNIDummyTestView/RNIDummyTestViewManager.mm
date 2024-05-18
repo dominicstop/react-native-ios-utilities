@@ -39,6 +39,11 @@ RNI_EXPORT_VIEW_PROPERTY(someObject, NSDictionary);
 RNI_EXPORT_VIEW_PROPERTY(someObjectOptional, NSDictionary);
 RNI_EXPORT_VIEW_PROPERTY(someArray, NSArray);
 RNI_EXPORT_VIEW_PROPERTY(someArrayOptional, NSArray);
+  
+RNI_EXPORT_VIEW_EVENT(onSomeDirectEventWithEmptyPayload, RCTDirectEventBlock);
+RNI_EXPORT_VIEW_EVENT(onSomeDirectEventWithObjectPayload, RCTDirectEventBlock);
+RNI_EXPORT_VIEW_EVENT(onSomeBubblingEventWithEmptyPayload, RCTBubblingEventBlock);
+RNI_EXPORT_VIEW_EVENT(onSomeBubblingEventWithObjectPayload, RCTBubblingEventBlock);
 
 @end
 
