@@ -129,7 +129,7 @@
   },
   "codegenConfig": {
     "name": "RNIosUtilitiesViewSpec",
-    "type": "components",
+    "type": "all",
     "jsSrcsDir": "src"
   }
 }
