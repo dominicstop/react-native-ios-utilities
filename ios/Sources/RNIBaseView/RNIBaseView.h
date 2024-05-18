@@ -69,19 +69,19 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 - (void) initCommon NS_REQUIRES_SUPER;
 
-// MARK: - Methods
-// ---------------
-
 - (nonnull Class) viewDelegateClass;
 
+// MARK: - RNIContentViewParentDelegate Commands
+// ---------------------------------------------
+
 - (void)setSize:(CGSize)size;
+
+- (void)dispatchViewEventForEventName:(nonnull NSString *)eventName
+                          withPayload:(nonnull NSDictionary *)eventPayload NS_SWIFT_NAME(dispatchViewEvent(forEventName:withPayload:));
 
 #if RCT_NEW_ARCH_ENABLED
 - (void)setPadding:(UIEdgeInsets)padding;
 
 - (void)setPositionType:(RNIPositionType)positionType;
-
-- (void)dispatchViewEventForEventName:(nonnull NSString *)eventName
-                          withPayload:(nonnull NSDictionary *)eventPayload NS_SWIFT_NAME(dispatchViewEvent(forEventName:withPayload:));
 #endif
 @end

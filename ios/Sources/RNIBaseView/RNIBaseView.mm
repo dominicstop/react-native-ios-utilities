@@ -125,8 +125,41 @@ using namespace react;
 #endif
 }
 
-// MARK: - Functions
-// -----------------
+// MARK: Internal Functions
+// ------------------------
+
+#if RCT_NEW_ARCH_ENABLED
+#else
+- (void)_notifyDelegateForLayoutMetricsUpdate
+{
+  if(self.cachedShadowView == nil){
+    return;
+  };
+  
+  RNILayoutMetrics *oldLayoutMetrics = self.cachedLayoutMetrics == nil
+    ? [RNILayoutMetrics new]
+    : self.cachedLayoutMetrics;
+  
+  RNILayoutMetrics *newLayoutMetrics = [RNIObjcUtils
+      convertToRNILayoutMetricsForPaperLayoutMetrics:self.cachedShadowView.layoutMetrics
+                                      withShadowView:self.cachedShadowView];
+  
+  self.cachedLayoutMetrics = newLayoutMetrics;
+
+  BOOL shouldNotifyDelegate =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
+  
+  if (shouldNotifyDelegate) {
+    [self.contentDelegate notifyOnUpdateLayoutMetricsWithSender:self
+                                                      oldLayoutMetrics:oldLayoutMetrics
+                                                      newLayoutMetrics:newLayoutMetrics];
+  };
+}
+#endif
+
+// MARK: - RNIContentViewParentDelegate Commands
+// ---------------------------------------------
 
 - (void)setSize:(CGSize)size
 {
@@ -146,6 +179,26 @@ using namespace react;
   // TODO: WIP - to be implemented
 #endif
 };
+
+- (void)dispatchViewEventForEventName:(NSString *)eventName
+                          withPayload:(NSDictionary *)eventPayload
+{
+#if RCT_NEW_ARCH_ENABLED
+  if (self->_eventEmitter == nullptr){
+    return;
+  };
+  
+  auto eventEmitter =
+    std::dynamic_pointer_cast<const react::RNIBaseViewEventEmitter>(_eventEmitter);
+  
+  auto eventNameCxxString = [RNIObjcUtils convertToCxxStringForObjcString:eventName];
+  auto eventPayloadDynamic = react::convertIdToFollyDynamic(eventPayload);
+  
+  eventEmitter->dispatchEvent(eventNameCxxString, eventPayloadDynamic);
+#else
+  // TODO: WIP - to be implemented
+#endif
+}
 
 #if RCT_NEW_ARCH_ENABLED
 - (void)setPadding:(UIEdgeInsets)padding
@@ -176,24 +229,8 @@ using namespace react;
 }
 #endif
 
-- (void)dispatchViewEventForEventName:(NSString *)eventName
-                          withPayload:(NSDictionary *)eventPayload
-{
-  if (self->_eventEmitter == nullptr){
-    return;
-  };
-  
-  auto eventEmitter =
-    std::dynamic_pointer_cast<const react::RNIBaseViewEventEmitter>(_eventEmitter);
-  
-  auto eventNameCxxString = [RNIObjcUtils convertToCxxStringForObjcString:eventName];
-  auto eventPayloadDynamic = react::convertIdToFollyDynamic(eventPayload);
-  
-  eventEmitter->dispatchEvent(eventNameCxxString, eventPayloadDynamic);
-}
-
-// MARK: - View Lifecycle - Fabric Only
-// ------------------------------------
+// MARK: - View/React Lifecycle - Fabric Only
+// ------------------------------------------
 
 #ifdef RCT_NEW_ARCH_ENABLED
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
@@ -400,35 +437,8 @@ using namespace react;
 }
 #else
 
-// MARK: - View Lifecycle - Paper Only
-// -----------------------------------
-
-- (void)notifyDelegateForLayoutMetricsUpdate
-{
-  if(self.cachedShadowView == nil){
-    return;
-  };
-  
-  RNILayoutMetrics *oldLayoutMetrics = self.cachedLayoutMetrics == nil
-    ? [RNILayoutMetrics new]
-    : self.cachedLayoutMetrics;
-  
-  RNILayoutMetrics *newLayoutMetrics = [RNIObjcUtils
-      convertToRNILayoutMetricsForPaperLayoutMetrics:self.cachedShadowView.layoutMetrics
-                                      withShadowView:self.cachedShadowView];
-  
-  self.cachedLayoutMetrics = newLayoutMetrics;
-
-  BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
-  
-  if (shouldNotifyDelegate) {
-    [self.contentDelegate notifyOnUpdateLayoutMetricsWithSender:self
-                                                      oldLayoutMetrics:oldLayoutMetrics
-                                                      newLayoutMetrics:newLayoutMetrics];
-  };
-}
+// MARK: - View/React Lifecycle - Paper Only
+// -----------------------------------------
 
 - (void)didMoveToWindow
 {
@@ -451,11 +461,11 @@ using namespace react;
         return;
       };
       
-      [self notifyDelegateForLayoutMetricsUpdate];
+      [self _notifyDelegateForLayoutMetricsUpdate];
     }];
     
   } else {
-    [self notifyDelegateForLayoutMetricsUpdate];
+    [self _notifyDelegateForLayoutMetricsUpdate];
   };
   
   NSLog(
