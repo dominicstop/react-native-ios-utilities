@@ -5,14 +5,15 @@
 //  Created by Dominic Go on 5/19/24.
 //
 
+#if !RCT_NEW_ARCH_ENABLED
 #import "RNIBaseViewEventHandler.h"
 #import "RNIBaseViewEventHolder.h"
 #import "RNIBaseView.h"
 
 #import <objc/runtime.h>
 
-
 static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
+
 
 @implementation RNIBaseViewEventHandler {
   __weak RNIBaseView *_parentView;
@@ -139,6 +140,4 @@ void handleSetterInvocation(RNIBaseViewEventHolder *_self, SEL _cmd, id _arg) {
 }
 
 @end
-
-
-
+#endif

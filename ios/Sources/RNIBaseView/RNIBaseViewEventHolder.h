@@ -5,6 +5,7 @@
 //  Created by Dominic Go on 5/19/24.
 //
 
+#if !RCT_NEW_ARCH_ENABLED
 #import <Foundation/Foundation.h>
 
 @class RNIBaseViewEventHandler;
@@ -19,3 +20,4 @@
                        withEventEmitter:(nonnull id)eventEmitter;
 
 @end
+#endif

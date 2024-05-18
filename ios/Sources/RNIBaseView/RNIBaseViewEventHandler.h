@@ -5,6 +5,7 @@
 //  Created by Dominic Go on 5/19/24.
 //
 
+#if !RCT_NEW_ARCH_ENABLED
 #import <Foundation/Foundation.h>
 
 @class RNIBaseView;
@@ -21,3 +22,4 @@
                          withPayload:(nonnull NSDictionary *)eventPayload;
 
 @end
+#endif

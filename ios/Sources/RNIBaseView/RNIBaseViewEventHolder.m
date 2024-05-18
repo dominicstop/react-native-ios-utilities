@@ -5,6 +5,7 @@
 //  Created by Dominic Go on 5/19/24.
 //
 
+#if !RCT_NEW_ARCH_ENABLED
 #import "RNIBaseViewEventHolder.h"
 #import "RNIBaseViewEventHandler.h"
 
@@ -81,3 +82,4 @@
 }
 
 @end
+#endif
