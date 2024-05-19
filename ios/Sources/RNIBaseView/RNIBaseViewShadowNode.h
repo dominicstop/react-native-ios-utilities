@@ -10,8 +10,8 @@
 
 #include <react-native-ios-utilities/RNIBaseViewState.h>
 
-#include <react/renderer/components/RNIosUtilitiesViewSpec/EventEmitters.h>
-#include <react/renderer/components/RNIosUtilitiesViewSpec/Props.h>
+#include <react/renderer/components/RNIUtilitiesSpec/EventEmitters.h>
+#include <react/renderer/components/RNIUtilitiesSpec/Props.h>
 
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>

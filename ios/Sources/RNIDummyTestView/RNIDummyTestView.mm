@@ -28,9 +28,9 @@
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
 
-#import <react/renderer/components/RNIosUtilitiesViewSpec/EventEmitters.h>
-#import <react/renderer/components/RNIosUtilitiesViewSpec/Props.h>
-#import <react/renderer/components/RNIosUtilitiesViewSpec/RCTComponentViewHelpers.h>
+#import <react/renderer/components/RNIUtilitiesSpec/EventEmitters.h>
+#import <react/renderer/components/RNIUtilitiesSpec/Props.h>
+#import <react/renderer/components/RNIUtilitiesSpec/RCTComponentViewHelpers.h>
 #else
 #import <React/RCTTouchHandler.h>
 #import <React/RCTInvalidating.h>

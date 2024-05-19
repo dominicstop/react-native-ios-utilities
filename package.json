@@ -128,7 +128,7 @@
     ]
   },
   "codegenConfig": {
-    "name": "RNIosUtilitiesViewSpec",
+    "name": "RNIUtilitiesSpec",
     "type": "all",
     "jsSrcsDir": "src"
   }
