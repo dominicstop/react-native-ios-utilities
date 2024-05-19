@@ -3,11 +3,8 @@
 <br><br>
 
 * Expos methods/properties from react to swift:
-
   * Expose fabric methods to swift: `handleCommand`, `updateEventEmitter`.
-
   * Expose paper methods to swift: `didUpdateReactSubviews`
-
   * Expose in Fabric via ivar: `NSMutableArray<UIView *> *_reactSubviews;`
   * Expose methods to add + remove items in `_reactSubviews`/`reactSubviews`.
   * Bridge `tag` (fabric), and `reactTag`(paper) into a common property for swift.
@@ -26,3 +23,9 @@
   * On fabric, the `nativeID` is a property in [Props.h](https://github.com/facebook/react-native/blob/d0bb396ddb0c738524099b034276e0c3fb031347/packages/react-native/ReactCommon/react/renderer/core/Props.h#L58), and can be read in native via the props event.
     * The `props` property is required in `ComponentViewProtocol`, but the default impl. does nothing, as such the implementor of  `ComponentViewProtocol` might not set the `props` property properly?
   * On fabric, `nativeID` is a property in `RCTViewComponentView` ([link to code snippet](https://github.com/facebook/react-native/blob/13dff7cdf2635cb39f70effe3dc1ae2f3dd0131f/packages/react-native/React/Fabric/Mounting/ComponentViews/View/RCTViewComponentView.h#L49)).
+
+<br>
+
+* Expose "view commands" to fabric + paper.
+  * Fabric - 
+
