@@ -106,6 +106,8 @@ using namespace react;
   
   UIView<RNIContentViewDelegate> *viewDelegate =
     [[viewDelegateClass new] initWithFrame:self.frame];
+    
+  viewDelegate.parentReactView = self;
   
   self.contentDelegate = viewDelegate;
   self.contentView = viewDelegate;

@@ -28,10 +28,17 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
     ];
   };
   
+  // MARK: - Properties - RNIContentViewDelegate
+  // -------------------------------------------
+  
+  public weak var parentReactView: RNIContentViewParentDelegate?;
+  
+  #if RCT_NEW_ARCH_ENABLED
+  public var reactProps: NSDictionary = [:];
+  #endif
+  
   // MARK: Props
   // -----------
-  
-  public var reactProps: NSDictionary = [:];
   
   @objc
   public var someBool: Bool = false {

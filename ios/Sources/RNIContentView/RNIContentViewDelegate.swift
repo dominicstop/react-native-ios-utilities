@@ -16,6 +16,9 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   // --------------------
   
   @objc
+  weak var parentReactView: RNIContentViewParentDelegate? { set get }
+  
+  @objc
   optional func notifyOnInit(
     sender: RNIContentViewParentDelegate
   );
