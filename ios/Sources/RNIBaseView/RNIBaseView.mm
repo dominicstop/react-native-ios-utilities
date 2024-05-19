@@ -31,6 +31,8 @@
 
 #import <React/UIView+React.h>
 #import <React/RCTShadowView.h>
+#import <React/RCTBridge.h>
+#import <React/RCTUIManager.h>
 #endif
 
 #if __cplusplus
@@ -190,7 +192,16 @@ using namespace react;
     [self->_view setNeedsLayout];
   }
 #else
-  // TODO: WIP - to be implemented
+  if(self.bridge == nil){
+    return;
+  };
+  
+  RCTUIManager *uiManager = self.bridge.uiManager;
+  if(uiManager == nil){
+    return;
+  };
+  
+  [uiManager setSize:size forView:self];
 #endif
 };
 

@@ -86,7 +86,13 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   // ---------------
   
   public override func didMoveToWindow() {
-    guard self.window != nil else { return };
+    guard self.window != nil,
+          let parentReactView = self.parentReactView
+    else { return };
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 10){
+      parentReactView.setSize(.init(width: 300, height: 300));
+    };
   };
   
   func _setupContent(){
