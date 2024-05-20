@@ -9,5 +9,4 @@ export interface Spec extends TurboModule {
 // RNIDummyTestViewModule
 // NativeRNIDummyTestViewModuleSpec 
 
-
 export default TurboModuleRegistry.get<Spec>("RNIUtilitiesModule") as Spec | null;

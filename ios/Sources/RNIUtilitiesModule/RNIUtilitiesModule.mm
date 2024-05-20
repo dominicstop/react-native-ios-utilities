@@ -14,19 +14,54 @@
 #include "RNIUtilitiesTurboModule.h"
 #include <jsi/jsi.h>
 
+#if DEBUG
+#include <string>
+#include <iostream>
+#endif
+
 using namespace facebook;
 #endif
 
+BOOL _RNIUtilitiesModuleDidInstallHostObject = NO;
+
 @implementation RNIUtilitiesModule {
 }
-
-RCT_EXPORT_MODULE()
 
 #ifdef RCT_NEW_ARCH_ENABLED
 @synthesize viewRegistry_DEPRECATED = _viewRegistry_DEPRECATED;
 #endif
 
 @synthesize bridge = _bridge;
+
+/// Note: Only gets invoked in paper
+- (instancetype)init
+{
+  self = [super init];
+  if (self) {
+    #if !RCT_NEW_ARCH_ENABLED
+    [[self class] installHostObjectIfNeeded];
+    #endif
+  };
+  
+  return self;
+}
+
+// RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install){
+//   NSLog(@"[RNIUtilitiesModule install]");
+//   return nil;
+// };
+
+// #if RCT_NEW_ARCH_ENABLED
+// - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
+//     (const facebook::react::ObjCTurboModule::InitParams &)params
+// {
+//   [self installHostObjectIfNeeded];
+//   return std::make_shared<facebook::react::NativeRNIUtilitiesModuleSpecJSI>(params);
+// }
+// #endif
+
+// MARK: RCTBridgeModule
+// ---------------------
 
 - (dispatch_queue_t)methodQueue
 {
@@ -35,29 +70,47 @@ RCT_EXPORT_MODULE()
 
 - (NSDictionary *)constantsToExport
 {
-  #if !RCT_NEW_ARCH_ENABLED
-  [self installHostObject];
-  #endif
   return @{};
 }
 
 + (BOOL)requiresMainQueueSetup
 {
-  return NO;
+  return YES;
 }
 
-#if RCT_NEW_ARCH_ENABLED && __cplusplus
-- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
-    (const facebook::react::ObjCTurboModule::InitParams &)params
-{
-  [self installHostObject];
-  return std::make_shared<facebook::react::NativeRNIUtilitiesModuleSpecJSI>(params);
-}
-#endif
+// MARK: RCT_EXPORT_MODULE
+// -----------------------
 
-#if __cplusplus
-- (void)installHostObject
+RCT_EXTERN void RCTRegisterModule(Class);
++(NSString *)moduleName
 {
+  return @"RNIUtilitiesModule";
+}
+
++(void)load
+{
+  #if RCT_NEW_ARCH_ENABLED
+  dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, 0.1);
+  dispatch_after(delay, dispatch_get_main_queue(), ^{
+    [[self class] installHostObjectIfNeeded];
+  });
+  #endif
+}
+
+// MARK: Static Members
+// --------------------
+
++ (BOOL)isHostObjectRegistered
+{
+  return _RNIUtilitiesModuleDidInstallHostObject;
+}
+
++ (void)installHostObjectIfNeeded
+{
+  if(_RNIUtilitiesModuleDidInstallHostObject){
+    return;
+  };
+  
   RCTBridge *bridge = [RCTBridge currentBridge];
   
   RCTCxxBridge *cxxBridge = (RCTCxxBridge *)bridge;
@@ -74,20 +127,33 @@ RCT_EXPORT_MODULE()
   __weak auto weakSelf = self;
   
   auto moduleName = RNIUtilities::RNIUtilitiesTurboModule::MODULE_NAME;
+  
+  #if DEBUG
+  std::cout << "[RNIUtilitiesModule installHostObject]"
+    << "\n - moduleName:" << moduleName
+    << std::endl;
+  #endif
+  
+  const auto &dummyFunction = [weakSelf](int someInt) {
+    #if DEBUG
+    std::cout << "[RNIUtilitiesModule dummyFunction]"
+      << "\n - someInt:" << someInt
+      << std::endl;
+    #endif
+  };
 
   auto moduleHostObject =
-    std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>();
+    std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(dummyFunction);
           
   auto moduleObject = jsi::Object::createFromHostObject(runtime, moduleHostObject);
-  
-  //Runtime& , const char* , T&& value
   
   runtime.global().setProperty(
     /* runtime: */ runtime,
     /* name   : */ moduleName,
     /* value  : */ std::move(moduleObject)
   );
+  
+  _RNIUtilitiesModuleDidInstallHostObject = YES;
 }
-#endif
 
 @end

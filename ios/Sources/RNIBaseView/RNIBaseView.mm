@@ -12,7 +12,10 @@
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 #import "react-native-ios-utilities/UIView+RNIHelpers.h"
+#import "react-native-ios-utilities/RNIUtilitiesModule.h"
+
 #import <react-native-ios-utilities/RNIObjcUtils.h>
+
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #include "RNIBaseViewState.h"
@@ -122,6 +125,8 @@ using namespace react;
     self->_didNotifyForInit = YES;
     [viewDelegate notifyOnInitWithSender:self];
   };
+  
+  [RNIUtilitiesModule installHostObjectIfNeeded];
   
 #if !RCT_NEW_ARCH_ENABLED
   BOOL shouldNotifyDelegateToSetupConstraints =

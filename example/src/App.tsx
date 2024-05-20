@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 
-import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
-import { RNIDummyTestNativeView } from 'react-native-ios-utilities';
+import { NativeModules, StyleSheet, Text, View, type ViewStyle } from 'react-native';
+import { RNIDummyTestNativeView, RNIUtilitiesModule } from 'react-native-ios-utilities';
 
 const TEST_OBJECT = {
   someBool: true,
@@ -50,6 +50,11 @@ export default function App() {
     const isUsingNewArch = nativeFabricUIManager != null;
 
     console.log(`isUsingNewArch: ${isUsingNewArch}`);
+    console.log(Object.keys(global));
+    console.log('global.RNIUtilitiesModule', global.RNIUtilitiesModule);
+    console.log('global.RNIUtilitiesModule.dummyFunction', global.RNIUtilitiesModule.dummyFunction);
+    console.log('global.RNIUtilitiesModule.dummyFunction()', global.RNIUtilitiesModule.dummyFunction(0));
+    console.log('global.NativeModules.RNIUtilitiesModule:', NativeModules.RNIUtilitiesModule);
   }, []);
 
   const [counter, setCounter] = React.useState(0);
@@ -62,6 +67,7 @@ export default function App() {
 
     const intervalID = setInterval(() => {
       setCounter((prevValue) => prevValue + 1);
+      //RNIUtilitiesModule.dummyFunction(counter);
     }, 2000);
 
     intervalRef.current = intervalID;
