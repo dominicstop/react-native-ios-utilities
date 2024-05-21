@@ -54,7 +54,15 @@ export default function App() {
     console.log('global.RNIUtilitiesModule', global.RNIUtilitiesModule);
     console.log('global.RNIUtilitiesModule.dummyFunction', global.RNIUtilitiesModule.dummyFunction);
     console.log('global.RNIUtilitiesModule.dummyFunction()', global.RNIUtilitiesModule.dummyFunction(0));
+    console.log('global.RNIUtilitiesModule.functionThatReturnsPromise', global.RNIUtilitiesModule.functionThatReturnsPromise);
     console.log('global.NativeModules.RNIUtilitiesModule:', NativeModules.RNIUtilitiesModule);
+    console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule));
+
+    
+    (async () => {
+      const result = await RNIUtilitiesModule.functionThatReturnsPromise();
+      console.log("functionThatReturnsPromise - await result:", result);
+    })();
   }, []);
 
   const [counter, setCounter] = React.useState(0);

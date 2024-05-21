@@ -100,6 +100,8 @@ using namespace react;
 // NOTE: To be overridden + impl. by child class
 - (void)initCommon
 {
+  [RNIUtilitiesModule installHostObjectIfNeeded];
+  
   Class viewDelegateClass = [self viewDelegateClass];
   if(![viewDelegateClass isSubclassOfClass: [UIView class]]) {
     return;
@@ -125,8 +127,6 @@ using namespace react;
     self->_didNotifyForInit = YES;
     [viewDelegate notifyOnInitWithSender:self];
   };
-  
-  [RNIUtilitiesModule installHostObjectIfNeeded];
   
 #if !RCT_NEW_ARCH_ENABLED
   BOOL shouldNotifyDelegateToSetupConstraints =

@@ -8,7 +8,7 @@
 #import <React/RCTBridgeModule.h>
 
 #ifdef RCT_NEW_ARCH_ENABLED
-//#include <RNIUtilitiesSpec/RNIUtilitiesSpec.h>
+#include <RNIUtilitiesSpec/RNIUtilitiesSpec.h>
 #import <ReactCommon/RCTTurboModule.h>
 
 #else

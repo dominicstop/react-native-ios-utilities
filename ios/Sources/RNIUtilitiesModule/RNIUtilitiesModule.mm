@@ -12,7 +12,11 @@
 
 #if __cplusplus
 #include "RNIUtilitiesTurboModule.h"
+
 #include <jsi/jsi.h>
+#import <folly/dynamic.h>
+#import <React/RCTConversions.h>
+#import <React/RCTFollyConvert.h>
 
 #if DEBUG
 #include <string>
@@ -20,6 +24,7 @@
 #endif
 
 using namespace facebook;
+using namespace react;
 #endif
 
 BOOL _RNIUtilitiesModuleDidInstallHostObject = NO;
@@ -51,15 +56,6 @@ BOOL _RNIUtilitiesModuleDidInstallHostObject = NO;
 //   return nil;
 // };
 
-// #if RCT_NEW_ARCH_ENABLED
-// - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
-//     (const facebook::react::ObjCTurboModule::InitParams &)params
-// {
-//   [self installHostObjectIfNeeded];
-//   return std::make_shared<facebook::react::NativeRNIUtilitiesModuleSpecJSI>(params);
-// }
-// #endif
-
 // MARK: RCTBridgeModule
 // ---------------------
 
@@ -77,6 +73,15 @@ BOOL _RNIUtilitiesModuleDidInstallHostObject = NO;
 {
   return YES;
 }
+
+#if RCT_NEW_ARCH_ENABLED
+/// Doesn't get called...
+- (std::shared_ptr<TurboModule>)getTurboModule:(const ObjCTurboModule::InitParams &)params
+{
+ [[self class] installHostObjectIfNeeded];
+ return std::make_shared<react::NativeRNIUtilitiesModuleSpecJSI>(params);
+}
+#endif
 
 // MARK: RCT_EXPORT_MODULE
 // -----------------------
@@ -128,12 +133,6 @@ RCT_EXTERN void RCTRegisterModule(Class);
   
   auto moduleName = RNIUtilities::RNIUtilitiesTurboModule::MODULE_NAME;
   
-  #if DEBUG
-  std::cout << "[RNIUtilitiesModule installHostObject]"
-    << "\n - moduleName:" << moduleName
-    << std::endl;
-  #endif
-  
   const auto &dummyFunction = [weakSelf](int someInt) {
     #if DEBUG
     std::cout << "[RNIUtilitiesModule dummyFunction]"
@@ -141,11 +140,32 @@ RCT_EXTERN void RCTRegisterModule(Class);
       << std::endl;
     #endif
   };
+  
+  const RNIUtilities::Promise &functionThatReturnsPromise = [weakSelf](
+    RNIUtilities::Resolve resolve,
+    RNIUtilities::Reject reject
+  ) {
+    NSLog(@"functionThatReturnsPromise");
+    
+    NSDictionary *resultDict = @{
+      @"someString": @"abc",
+      @"someInt": @123,
+      @"someDouble": @3.14,
+      @"someBool": @NO,
+    };
+    
+    folly::dynamic resultDyn = react::convertIdToFollyDynamic(resultDict);
+    resolve(resultDyn);
+    return;
+  };
 
-  auto moduleHostObject =
-    std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(dummyFunction);
+  auto moduleHostObject = std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(
+    dummyFunction,
+    functionThatReturnsPromise
+  );
           
-  auto moduleObject = jsi::Object::createFromHostObject(runtime, moduleHostObject);
+  auto moduleObject =
+    jsi::Object::createFromHostObject(runtime, moduleHostObject);
   
   runtime.global().setProperty(
     /* runtime: */ runtime,

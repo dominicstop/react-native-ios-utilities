@@ -2,6 +2,7 @@ import { NativeModules } from "react-native";
 
 export type RNIUtilitiesModuleCommands = {
   dummyFunction: (someNumber: number) => void;
+  functionThatReturnsPromise: () => Promise<void>;
 };
 
 export const RNIUtilitiesModuleName = "RNIUtilitiesModule";
@@ -14,5 +15,5 @@ export const RNIUtilitiesModuleName = "RNIUtilitiesModule";
 //export const module = NativeModules.RNIUtilitiesModule;
 
 export const RNIUtilitiesModule: 
-     RNIUtilitiesModuleCommands = (global as any)[RNIUtilitiesModuleName]
+  RNIUtilitiesModuleCommands = (global as any)[RNIUtilitiesModuleName]
 //  ?? NativeModules[RNIUtilitiesModuleName];

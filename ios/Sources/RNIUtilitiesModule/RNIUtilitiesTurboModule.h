@@ -8,20 +8,28 @@
 #if __cplusplus
 #pragma once
 #include <jsi/jsi.h>
+#include <folly/dynamic.h>
+
 
 using namespace facebook;
 
 namespace RNIUtilities {
 
+using Resolve = std::function<void(folly::dynamic)>;
+using Reject = std::function<void(const std::string&)>;
+using Promise = std::function<void(Resolve, Reject)>;
+
 class RNIUtilitiesTurboModule : public jsi::HostObject {
 
 static std::function<void(int)> dummyFunction_;
+static Promise functionThatReturnsPromise_;
 
  public:
   static const char MODULE_NAME[];
   
   RNIUtilitiesTurboModule(
-    std::function<void(int)> dummyFunction
+    std::function<void(int)> dummyFunction,
+    Promise functionThatReturnsPromise
   );
   
   ~RNIUtilitiesTurboModule() override;
@@ -42,6 +50,13 @@ static std::function<void(int)> dummyFunction_;
   ) override;
   
   static jsi::Value dummyFunction(
+    jsi::Runtime &rt,
+    const jsi::Value &thisValue,
+    const jsi::Value *arguments,
+    size_t count
+  );
+  
+  static jsi::Value functionThatReturnsPromise(
     jsi::Runtime &rt,
     const jsi::Value &thisValue,
     const jsi::Value *arguments,
