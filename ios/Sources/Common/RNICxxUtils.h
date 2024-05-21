@@ -10,7 +10,16 @@
 
 namespace RNIUtilities {
 
-#define RNI_DEBUG_STRING(debugMessage) ( \
+#define RNI_DEBUG_STRING (               \
+    "Function: "                         \
+  + std::string(__FUNCTION__)            \
+  + " - File: "                          \
+  + std::string(__FILE_NAME__)           \
+  + " - Line: "                          \
+  + std::to_string(__LINE__)             \
+)                                        \
+
+#define RNI_DEBUG_MESSAGE(debugMessage) ( \
     "Function: "                         \
   + std::string(__FUNCTION__)            \
   + " - Message: " + debugMessage        \
