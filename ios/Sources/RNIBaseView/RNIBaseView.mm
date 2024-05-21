@@ -53,6 +53,7 @@ using namespace react;
 #ifdef RCT_NEW_ARCH_ENABLED
   UIView * _view;
   RNIBaseViewState::SharedConcreteState _state;
+  BOOL _didDispatchEventOnDidSetViewID;
 #else
   CGRect _reactFrame;
 #endif
@@ -182,6 +183,30 @@ using namespace react;
   };
 }
 #endif
+
+- (void)dispatchOnDidSetViewIDEventIfNeeded
+{
+  BOOL shouldDispatchEvent =
+       !self->_didDispatchEventOnDidSetViewID
+#if RCT_NEW_ARCH_ENABLED
+    && self->_eventEmitter != nil;
+#else
+    && self.window != nil;
+#endif
+
+  if(!shouldDispatchEvent){
+    return;
+  };
+
+  self->_didDispatchEventOnDidSetViewID = YES;
+  NSDictionary *dict = @{
+    @"viewID": self.viewID,
+    @"reactTag": [self reactNativeTag],
+  };
+  
+  [self dispatchViewEventForEventName:@"onDidSetViewID"
+                          withPayload:dict];
+}
 
 // MARK: - RNIContentViewParentDelegate Commands
 // ---------------------------------------------
@@ -315,6 +340,12 @@ using namespace react;
   } else {
     [super unmountChildComponentView:childComponentView index:index];
   };
+}
+
+- (void)updateEventEmitter:(const facebook::react::EventEmitter::Shared &)eventEmitter
+{
+  [super updateEventEmitter:eventEmitter];
+  [self dispatchOnDidSetViewIDEventIfNeeded];
 }
 
 - (void)updateLayoutMetrics:(const LayoutMetrics &)layoutMetrics

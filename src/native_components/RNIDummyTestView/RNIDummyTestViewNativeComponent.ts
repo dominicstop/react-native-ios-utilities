@@ -19,6 +19,7 @@ interface NativeProps extends ViewProps {
   onSomeDirectEventWithObjectPayload: DirectEventHandler<{}>;
   onSomeBubblingEventWithEmptyPayload: BubblingEventHandler<{}>;
   onSomeBubblingEventWithObjectPayload: DirectEventHandler<{}>;
+  onDidSetViewID: BubblingEventHandler<{}>;
 }
 
 export default codegenNativeComponent<NativeProps>('RNIDummyTestView', {

@@ -1,6 +1,4 @@
 import type { HostComponent, ViewProps } from 'react-native';
-import { default as RNIDummyTestViewNativeComponent } from './RNIDummyTestViewNativeComponent';
-
 import type {
   DirectEventHandler,
   BubblingEventHandler,
@@ -8,6 +6,10 @@ import type {
   Float,
   Double
 } from 'react-native/Libraries/Types/CodegenTypes';
+
+import { default as RNIDummyTestViewNativeComponent } from './RNIDummyTestViewNativeComponent';
+import type { SharedViewEvents } from '../../types/SharedViewEvents';
+
 
 type SomeEventObjectWithEmptyPayload = Readonly<{}>;
 
@@ -23,7 +25,7 @@ type SomeEventObjectWithObjectPayload = Readonly<{
   someDoubleOptional?: Double;
 }>;
 
-export interface RNIDummyTestNativeViewProps extends ViewProps {
+export interface RNIDummyTestNativeViewBaseProps extends ViewProps {
   someBool: boolean;
 
   someString: string;
@@ -43,6 +45,10 @@ export interface RNIDummyTestNativeViewProps extends ViewProps {
   onSomeBubblingEventWithEmptyPayload: BubblingEventHandler<SomeEventObjectWithEmptyPayload>;
   onSomeBubblingEventWithObjectPayload: BubblingEventHandler<SomeEventObjectWithObjectPayload>;
 };
+
+export type RNIDummyTestNativeViewProps = 
+    SharedViewEvents
+  & RNIDummyTestNativeViewBaseProps;
 
 export const RNIDummyTestNativeView = 
   RNIDummyTestViewNativeComponent as unknown as HostComponent<RNIDummyTestNativeViewProps>;
