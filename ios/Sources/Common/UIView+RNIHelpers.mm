@@ -94,7 +94,7 @@
 {
   #if RCT_NEW_ARCH_ENABLED
   if([self isKindOfClass:[RCTViewComponentView class]]){
-    return [[NSNumber new] initWithInteger:self.tag];
+    return @(self.tag);
   };
   
   return nil;
