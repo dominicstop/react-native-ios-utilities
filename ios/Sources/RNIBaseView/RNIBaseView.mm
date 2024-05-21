@@ -49,11 +49,11 @@ using namespace react;
 
 @implementation RNIBaseView {
   BOOL _didNotifyForInit;
+  BOOL _didDispatchEventOnDidSetViewID;
   NSMutableArray<UIView *> *_reactSubviews;
 #ifdef RCT_NEW_ARCH_ENABLED
   UIView * _view;
   RNIBaseViewState::SharedConcreteState _state;
-  BOOL _didDispatchEventOnDidSetViewID;
 #else
   CGRect _reactFrame;
 #endif
@@ -183,7 +183,7 @@ using namespace react;
 }
 #endif
 
-- (void)dispatchOnDidSetViewIDEventIfNeeded
+- (void)_dispatchOnDidSetViewIDEventIfNeeded
 {
   BOOL shouldDispatchEvent =
        !self->_didDispatchEventOnDidSetViewID
@@ -344,7 +344,7 @@ using namespace react;
 - (void)updateEventEmitter:(const facebook::react::EventEmitter::Shared &)eventEmitter
 {
   [super updateEventEmitter:eventEmitter];
-  [self dispatchOnDidSetViewIDEventIfNeeded];
+  [self _dispatchOnDidSetViewIDEventIfNeeded];
 }
 
 - (void)updateLayoutMetrics:(const LayoutMetrics &)layoutMetrics
@@ -502,6 +502,7 @@ using namespace react;
 
 - (void)didMoveToWindow
 {
+  [self _dispatchOnDidSetViewIDEventIfNeeded];
   [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
     self.cachedShadowView = shadowView;
     if(shadowView == nil){

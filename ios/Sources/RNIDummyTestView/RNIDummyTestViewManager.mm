@@ -44,6 +44,7 @@ RNI_EXPORT_VIEW_EVENT(onSomeDirectEventWithEmptyPayload, RCTDirectEventBlock);
 RNI_EXPORT_VIEW_EVENT(onSomeDirectEventWithObjectPayload, RCTDirectEventBlock);
 RNI_EXPORT_VIEW_EVENT(onSomeBubblingEventWithEmptyPayload, RCTBubblingEventBlock);
 RNI_EXPORT_VIEW_EVENT(onSomeBubblingEventWithObjectPayload, RCTBubblingEventBlock);
+RNI_EXPORT_VIEW_EVENT(onDidSetViewID, RCTBubblingEventBlock);
 
 @end
 

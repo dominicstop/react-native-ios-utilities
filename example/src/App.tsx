@@ -129,6 +129,12 @@ export default function App() {
             "\n - nativeEvent:", nativeEvent
           );
         }}
+        onDidSetViewID={({nativeEvent}) => {
+          console.log(
+            "RNIDummyTestNativeView.onDidSetViewID",
+            "\n - nativeEvent:", nativeEvent
+          );
+        }}
       >
         {(counter % 4 === 0) && (
           <Text
