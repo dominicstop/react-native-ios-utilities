@@ -13,6 +13,7 @@
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 #import "react-native-ios-utilities/UIView+RNIHelpers.h"
 #import "react-native-ios-utilities/RNIUtilitiesModule.h"
+#import "react-native-ios-utilities/RNIViewRegistry.h"
 
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
@@ -56,6 +57,8 @@ using namespace react;
   CGRect _reactFrame;
 #endif
 }
+
+@synthesize viewID;
 
 // MARK: - Init
 // ------------
@@ -101,6 +104,7 @@ using namespace react;
 - (void)initCommon
 {
   [RNIUtilitiesModule installHostObjectIfNeeded];
+  [[RNIViewRegistry shared] registerView:self];
   
   Class viewDelegateClass = [self viewDelegateClass];
   if(![viewDelegateClass isSubclassOfClass: [UIView class]]) {
@@ -287,11 +291,6 @@ using namespace react;
   } else {
     [super mountChildComponentView:childComponentView index:index];
   };
-  
-  RCTViewComponentView *viewComponent =
-    (RCTViewComponentView *)childComponentView;
-    
-  NSLog(@"childComponentView.nativeID: %@", viewComponent.nativeId);
 }
 
 - (void)unmountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
