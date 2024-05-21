@@ -104,7 +104,7 @@ export default function App() {
         someObject={TEST_OBJECT}
         someObjectOptional={{}}
         someArray={[1, 2, 3]}
-        someArrayOptional={[4, 5, 6]} 
+        someArrayOptional={[4, 5, 6]}
         onSomeDirectEventWithEmptyPayload={({nativeEvent}) => {
           console.log(
             "RNIDummyTestNativeView.onSomeDirectEventWithEmptyPayload",

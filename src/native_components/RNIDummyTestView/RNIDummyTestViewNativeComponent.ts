@@ -15,6 +15,7 @@ interface NativeProps extends ViewProps {
   someArray: string;
   someArrayOptional: string;
 
+  // event stubs
   onSomeDirectEventWithEmptyPayload: DirectEventHandler<{}>;
   onSomeDirectEventWithObjectPayload: DirectEventHandler<{}>;
   onSomeBubblingEventWithEmptyPayload: BubblingEventHandler<{}>;

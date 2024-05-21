@@ -13,6 +13,7 @@ import DGSwiftUtilities
 fileprivate extension UIView {
   
   #if RCT_NEW_ARCH_ENABLED
+  // @objc(_RNIContentViewDelegate_notifyOnRequestToSetPropsWithSender:props:)
   func _notifyOnRequestToSetProps(
     sender: RNIContentViewParentDelegate,
     props: NSDictionary
