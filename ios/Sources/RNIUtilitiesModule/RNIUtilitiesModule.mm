@@ -94,12 +94,10 @@ RCT_EXTERN void RCTRegisterModule(Class);
 
 +(void)load
 {
-  #if RCT_NEW_ARCH_ENABLED
   dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, 0.1);
   dispatch_after(delay, dispatch_get_main_queue(), ^{
     [[self class] installHostObjectIfNeeded];
   });
-  #endif
 }
 
 // MARK: Static Members

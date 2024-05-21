@@ -104,7 +104,6 @@ using namespace react;
 // NOTE: To be overridden + impl. by child class
 - (void)initCommon
 {
-  [RNIUtilitiesModule installHostObjectIfNeeded];
   [[RNIViewRegistry shared] registerView:self];
   
   Class viewDelegateClass = [self viewDelegateClass];

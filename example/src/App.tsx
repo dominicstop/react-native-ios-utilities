@@ -52,16 +52,16 @@ export default function App() {
     console.log(`isUsingNewArch: ${isUsingNewArch}`);
     console.log(Object.keys(global));
     console.log('global.RNIUtilitiesModule', global.RNIUtilitiesModule);
-    console.log('global.RNIUtilitiesModule.dummyFunction', global.RNIUtilitiesModule.dummyFunction);
-    console.log('global.RNIUtilitiesModule.dummyFunction()', global.RNIUtilitiesModule.dummyFunction(0));
-    console.log('global.RNIUtilitiesModule.functionThatReturnsPromise', global.RNIUtilitiesModule.functionThatReturnsPromise);
-    console.log('global.NativeModules.RNIUtilitiesModule:', NativeModules.RNIUtilitiesModule);
-    console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule));
+    console.log('global.RNIUtilitiesModule.dummyFunction', global.RNIUtilitiesModule?.dummyFunction);
+    console.log('global.RNIUtilitiesModule.dummyFunction()', global.RNIUtilitiesModule?.dummyFunction?.(0));
+    console.log('global.RNIUtilitiesModule.viewCommandRequest', global.RNIUtilitiesModule?.viewCommandRequest);
+    //console.log('global.NativeModules.RNIUtilitiesModule:', NativeModules.RNIUtilitiesModule);
+    console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule ?? []));
 
     
     (async () => {
-      const result = await RNIUtilitiesModule.functionThatReturnsPromise();
-      console.log("functionThatReturnsPromise - await result:", result);
+      const result = await RNIUtilitiesModule?.viewCommandRequest?.();
+      console.log("viewCommandRequest - await result:", result);
     })();
   }, []);
 
