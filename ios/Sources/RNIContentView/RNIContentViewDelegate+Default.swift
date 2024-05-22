@@ -48,6 +48,14 @@ fileprivate extension UIView {
     
     NSLayoutConstraint.activate(constraints);
   };
+  
+  func _getSupportedReactEvents() -> [String] {
+    guard let _self = self as? (any RNIContentView) else {
+      return [];
+    };
+    
+    return _self.allSupportedEventsAsStrings;
+  };
   #endif
 };
 

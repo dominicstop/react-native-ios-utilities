@@ -118,6 +118,9 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   optional func _notifyOnRequestToSetupConstraints(
     sender: RNIContentViewParentDelegate
   );
+  
+  @objc
+  optional func _getSupportedReactEvents() -> [String];
   #endif
 };
 

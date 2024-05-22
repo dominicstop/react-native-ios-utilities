@@ -140,6 +140,14 @@ using namespace react;
   if(shouldNotifyDelegateToSetupConstraints){
      [viewDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
   };
+  
+  [self.reactEventHandler createSettersForEvents:^(){
+    NSMutableArray *events =
+      [NSMutableArray arrayWithArray:[self.contentDelegate _getSupportedReactEvents]];
+      
+    [events addObject:@"onDidSetViewID"];
+    return events;
+  }()];
 #endif
   
 #if DEBUG

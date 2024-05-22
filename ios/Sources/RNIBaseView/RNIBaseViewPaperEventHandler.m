@@ -68,6 +68,46 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
   return self;
 }
 
+- (void)createSettersForEvents:(NSArray *)events
+{
+  for (NSString *eventName in events) {
+    NSMutableString *setterName = [NSMutableString stringWithString:@"set"];
+    
+    [setterName appendString:^(){
+      NSString *firstLetter = [eventName substringToIndex:1];
+      return [firstLetter capitalizedString];
+    }()];
+    
+    [setterName appendString: [eventName substringFromIndex:1]];
+    [setterName appendString:@":"];
+    
+    SEL setterSelector = NSSelectorFromString(setterName);
+    [self createSetterForSelector: setterSelector];
+    
+#if DEBUG
+    NSLog(
+      @"%@\n%@ %@\n%@ %@\n%@ %@\n%@ %@",
+      @"RNIBaseViewPaperEventHandler.createSettersForEvents",
+      @" - self._eventHolderClass:", NSStringFromClass(self->_eventHolderClass),
+      @" - eventName:", eventName,
+      @" - setterName:", setterName,
+      @" - setterSelector:", NSStringFromSelector(setterSelector)
+    );
+#endif
+  };
+};
+
+- (void)createSetterForSelector:(SEL)selector
+{
+  Method method = class_getInstanceMethod(self->_eventHolderClass, selector);
+    
+  class_addMethod(
+    self->_eventHolderClass, selector,
+    (IMP)handleSetterInvocation,
+    method_getTypeEncoding(method)
+  );
+}
+
 - (id)forwardingTargetForSelector:(SEL)aSelector;
 {
   BOOL shouldForwardToEventHolder = ^{
@@ -75,16 +115,22 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
     return [selectorString containsString:@":"];
   }();
   
+  BOOL shouldForwardToBaseView =
+       !shouldForwardToEventHolder
+    && [self->_parentView respondsToSelector:aSelector];
+  
   BOOL shouldAddMethodForSelector =
-    ![self->_eventHolderInstance respondsToSelector:aSelector];
+       !shouldForwardToBaseView
+    && ![self->_eventHolderInstance respondsToSelector:aSelector];
     
 #if DEBUG
   NSLog(
-    @"%@\n%@ %@\n%@ %@\n%@ %d\n%@ %d",
+    @"%@\n%@ %@\n%@ %@\n%@ %d\n%@ %d\n%@ %d",
     @"RNIBaseViewEventHandler.forwardingTargetForSelector",
     @" - arg aSelector:", NSStringFromSelector(aSelector),
-    @" - self. _eventHolderClass:", NSStringFromClass(self->_eventHolderClass),
+    @" - self._eventHolderClass:", NSStringFromClass(self->_eventHolderClass),
     @" - shouldForwardToEventHolder:", shouldForwardToEventHolder,
+    @" - shouldForwardToBaseView:", shouldForwardToBaseView,
     @" - shouldAddMethodForSelector:", shouldAddMethodForSelector
   );
 #endif
@@ -94,14 +140,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
   };
   
   if(shouldAddMethodForSelector){
-    Method method = class_getInstanceMethod(self->_eventHolderClass, aSelector);
-    
-    class_addMethod(
-      self->_eventHolderClass, aSelector,
-      (IMP)handleSetterInvocation,
-      method_getTypeEncoding(method)
-    );
-    //object_setClass(self->_eventHolderInstance, self->_eventHolderClass);
+    [self createSetterForSelector: aSelector];
   };
   
   return self->_eventHolderInstance;

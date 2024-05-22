@@ -10,6 +10,12 @@ import DGSwiftUtilities
 
 
 public extension RNIContentViewDelegate where Self: RNIContentView  {
+  
+  var allSupportedEventsAsStrings: [String] {
+    Events.allCases.map {
+      $0.rawValue;
+    };
+  };
 
   func dispatchEvent(
     for event: Events,
