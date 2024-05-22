@@ -6,6 +6,8 @@
 //
 
 #import "RNIUtilitiesModule.h"
+#import "react-native-ios-utilities/RNIViewRegistry.h"
+#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 
 #import <React/RCTBridge+Private.h>
 #import <React/RCTBridge.h>
@@ -27,9 +29,10 @@ using namespace facebook;
 using namespace react;
 #endif
 
-BOOL _RNIUtilitiesModuleDidInstallHostObject = NO;
+static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
 
 @implementation RNIUtilitiesModule {
+  BOOL _didInstallHostObject;
 }
 
 #ifdef RCT_NEW_ARCH_ENABLED
@@ -38,11 +41,20 @@ BOOL _RNIUtilitiesModuleDidInstallHostObject = NO;
 
 @synthesize bridge = _bridge;
 
++ (nonnull instancetype)shared
+{
+  return RNIUtilitiesModuleShared;
+}
+
+// MARK: Init + Setup
+// ------------------
+
 /// Note: Only gets invoked in paper
 - (instancetype)init
 {
   self = [super init];
   if (self) {
+    RNIUtilitiesModuleShared = self;
     #if !RCT_NEW_ARCH_ENABLED
     [[self class] installHostObjectIfNeeded];
     #endif
@@ -51,66 +63,9 @@ BOOL _RNIUtilitiesModuleDidInstallHostObject = NO;
   return self;
 }
 
-// RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install){
-//   NSLog(@"[RNIUtilitiesModule install]");
-//   return nil;
-// };
-
-// MARK: RCTBridgeModule
-// ---------------------
-
-- (dispatch_queue_t)methodQueue
+- (void)installHostObjectIfNeeded
 {
-  return dispatch_get_main_queue();
-}
-
-- (NSDictionary *)constantsToExport
-{
-  return @{};
-}
-
-+ (BOOL)requiresMainQueueSetup
-{
-  return YES;
-}
-
-#if RCT_NEW_ARCH_ENABLED
-/// Doesn't get called...
-- (std::shared_ptr<TurboModule>)getTurboModule:(const ObjCTurboModule::InitParams &)params
-{
- [[self class] installHostObjectIfNeeded];
- return std::make_shared<react::NativeRNIUtilitiesModuleSpecJSI>(params);
-}
-#endif
-
-// MARK: RCT_EXPORT_MODULE
-// -----------------------
-
-RCT_EXTERN void RCTRegisterModule(Class);
-+(NSString *)moduleName
-{
-  return @"RNIUtilitiesModule";
-}
-
-+(void)load
-{
-  dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, 0.1);
-  dispatch_after(delay, dispatch_get_main_queue(), ^{
-    [[self class] installHostObjectIfNeeded];
-  });
-}
-
-// MARK: Static Members
-// --------------------
-
-+ (BOOL)isHostObjectRegistered
-{
-  return _RNIUtilitiesModuleDidInstallHostObject;
-}
-
-+ (void)installHostObjectIfNeeded
-{
-  if(_RNIUtilitiesModuleDidInstallHostObject){
+  if(self->_didInstallHostObject){
     return;
   };
   
@@ -139,27 +94,37 @@ RCT_EXTERN void RCTRegisterModule(Class);
     #endif
   };
   
-  const RNIUtilities::Promise &functionThatReturnsPromise = [weakSelf](
+  const RNIUtilities::ViewCommandRequestFunction &viewCommandRequest = [weakSelf](
+    std::string viewID,
+    folly::dynamic commandArgs,
     RNIUtilities::Resolve resolve,
     RNIUtilities::Reject reject
   ) {
-    NSLog(@"functionThatReturnsPromise");
-    
-    NSDictionary *resultDict = @{
-      @"someString": @"abc",
-      @"someInt": @123,
-      @"someDouble": @3.14,
-      @"someBool": @NO,
+    if(weakSelf == nil){
+      reject("Reference to RNIUtilitiesModule is nil");
     };
     
-    folly::dynamic resultDyn = react::convertIdToFollyDynamic(resultDict);
-    resolve(resultDyn);
-    return;
+    RNIPromiseResolveBlock resolveBlock = ^(NSDictionary *result) {
+      folly::dynamic resultDyn = react::convertIdToFollyDynamic(result);
+      resolve(resultDyn);
+    };
+    
+    RNIPromiseRejectBlock rejectBlock = ^(NSString *errorMessage) {
+      reject([errorMessage UTF8String]);
+    };
+    
+    NSDictionary *commandArgsDict = react::convertFollyDynamicToId(commandArgs);
+    
+    [weakSelf
+      viewCommandRequestForViewID:[NSString stringWithUTF8String:viewID.c_str()]
+                  withCommandArgs:commandArgsDict
+                          resolve:resolveBlock
+                           reject:rejectBlock];
   };
 
   auto moduleHostObject = std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(
     dummyFunction,
-    functionThatReturnsPromise
+    viewCommandRequest
   );
           
   auto moduleObject =
@@ -171,7 +136,97 @@ RCT_EXTERN void RCTRegisterModule(Class);
     /* value  : */ std::move(moduleObject)
   );
   
-  _RNIUtilitiesModuleDidInstallHostObject = YES;
+  self->_didInstallHostObject = YES;
+}
+
+// MARK: Module Commands
+// ---------------------
+
+- (void)viewCommandRequestForViewID:(NSString *)viewID
+                    withCommandArgs:(NSDictionary *)commandArgs
+                            resolve:(RNIPromiseResolveBlock)resolveBlock
+                             reject:(RNIPromiseRejectBlock)rejectBlock
+{
+  UIView *match = [[RNIViewRegistry shared] getViewForViewID:viewID];
+  if(match == nil){
+    rejectBlock(
+      [@"No corresponding view found for viewID: " stringByAppendingString:viewID]
+    );
+  };
+  
+  if(![match conformsToProtocol:@protocol(RNIViewCommandRequestHandling)]){
+    NSString *className = NSStringFromClass([match class]);
+    NSString *protocolName = NSStringFromProtocol(@protocol(RNIViewCommandRequestHandling));
+    
+    NSString *message = @"The associated view for viewID: ";
+    message = [message stringByAppendingString:viewID];
+    message = [message stringByAppendingString:@"of type: "];
+    message = [message stringByAppendingString:className];
+    message = [message stringByAppendingString:@"does not conform to: "];
+    message = [message stringByAppendingString:protocolName];
+    
+    rejectBlock(message);
+  };
+  
+  if(![match respondsToSelector:@selector(handleViewRequestWithArguments:resolve:reject:)]){
+    NSString *className = NSStringFromClass([match class]);
+    NSString *selectorName = NSStringFromSelector(@selector(handleViewRequestWithArguments:resolve:reject:));
+    
+    NSString *message = @"The associated view for viewID: ";
+    message = [message stringByAppendingString:viewID];
+    message = [message stringByAppendingString:@"of type: "];
+    message = [message stringByAppendingString:className];
+    message = [message stringByAppendingString:@"does not implement: "];
+    message = [message stringByAppendingString:selectorName];
+    
+    rejectBlock(message);
+  };
+  
+  UIView<RNIViewCommandRequestHandling> *view = (UIView<RNIViewCommandRequestHandling> *)match;
+  [view handleViewRequestWithArguments:commandArgs
+                               resolve:resolveBlock
+                                reject:rejectBlock];
+}
+
+// MARK: RCTBridgeModule
+// ---------------------
+
+- (dispatch_queue_t)methodQueue
+{
+  return dispatch_get_main_queue();
+}
+
+- (NSDictionary *)constantsToExport
+{
+  return @{};
+}
+
++ (BOOL)requiresMainQueueSetup
+{
+  return YES;
+}
+
+#if RCT_NEW_ARCH_ENABLED
+/// Doesn't get called...
+- (std::shared_ptr<TurboModule>)getTurboModule:(const ObjCTurboModule::InitParams &)params
+{
+ [self installHostObjectIfNeeded];
+ return std::make_shared<react::NativeRNIUtilitiesModuleSpecJSI>(params);
+}
+#endif
+
+// MARK: RCT_EXPORT_MODULE
+// -----------------------
+
+RCT_EXTERN void RCTRegisterModule(Class);
++(NSString *)moduleName
+{
+  return @"RNIUtilitiesModule";
+}
+
++(void)load
+{
+  RCTRegisterModule(self);
 }
 
 @end

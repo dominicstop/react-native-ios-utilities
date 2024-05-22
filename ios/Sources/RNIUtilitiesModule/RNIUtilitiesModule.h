@@ -15,7 +15,8 @@
 #import <React/RCTBridge.h>
 #endif
 
-NS_ASSUME_NONNULL_BEGIN
+typedef void (^RNIPromiseResolveBlock)(NSDictionary * _Nonnull);
+typedef void (^RNIPromiseRejectBlock)(NSString * _Nonnull);
 
 @interface RNIUtilitiesModule : NSObject
 #ifdef RCT_NEW_ARCH_ENABLED
@@ -24,8 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
   <RCTBridgeModule>
 #endif
 
-+ (void)installHostObjectIfNeeded;
++ (nonnull instancetype)shared;
+
+- (void)installHostObjectIfNeeded;
 
 @end
-
-NS_ASSUME_NONNULL_END

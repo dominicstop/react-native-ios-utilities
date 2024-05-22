@@ -44,6 +44,8 @@ const TEST_OBJECT = {
 
 
 export default function App() {
+  const viewID = React.useRef<string | undefined>();
+
   React.useEffect(() => {
     // @ts-ignore
     const nativeFabricUIManager = global?.nativeFabricUIManager;
@@ -57,12 +59,11 @@ export default function App() {
     console.log('global.RNIUtilitiesModule.viewCommandRequest', global.RNIUtilitiesModule?.viewCommandRequest);
     //console.log('global.NativeModules.RNIUtilitiesModule:', NativeModules.RNIUtilitiesModule);
     console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule ?? []));
-
     
-    (async () => {
-      const result = await RNIUtilitiesModule?.viewCommandRequest?.();
-      console.log("viewCommandRequest - await result:", result);
-    })();
+    setTimeout(async () => {
+      const result = await RNIUtilitiesModule?.viewCommandRequest?.(viewID.current!, TEST_OBJECT);
+      console.log("viewCommandRequest:", result);
+    }, 1000);
   }, []);
 
   const [counter, setCounter] = React.useState(0);
@@ -130,6 +131,7 @@ export default function App() {
           );
         }}
         onDidSetViewID={({nativeEvent}) => {
+          viewID.current = nativeEvent.viewID;
           console.log(
             "RNIDummyTestNativeView.onDidSetViewID",
             "\n - nativeEvent:", nativeEvent

@@ -17,19 +17,25 @@ namespace RNIUtilities {
 
 using Resolve = std::function<void(folly::dynamic)>;
 using Reject = std::function<void(const std::string&)>;
-using Promise = std::function<void(Resolve, Reject)>;
+
+using ViewCommandRequestFunction = std::function<void(
+  /* viewID     : */ std::string,
+  /* commandArgs: */ folly::dynamic,
+  /* resolve    : */ Resolve,
+  /* reject     : */ Reject
+)>;
 
 class RNIUtilitiesTurboModule : public jsi::HostObject {
 
 static std::function<void(int)> dummyFunction_;
-static Promise functionThatReturnsPromise_;
+static ViewCommandRequestFunction viewCommandRequest_;
 
  public:
   static const char MODULE_NAME[];
   
   RNIUtilitiesTurboModule(
     std::function<void(int)> dummyFunction,
-    Promise functionThatReturnsPromise
+    ViewCommandRequestFunction viewCommandRequest
   );
   
   ~RNIUtilitiesTurboModule() override;
@@ -56,7 +62,7 @@ static Promise functionThatReturnsPromise_;
     size_t count
   );
   
-  static jsi::Value functionThatReturnsPromise(
+  static jsi::Value viewCommandRequest(
     jsi::Runtime &rt,
     const jsi::Value &thisValue,
     const jsi::Value *arguments,
