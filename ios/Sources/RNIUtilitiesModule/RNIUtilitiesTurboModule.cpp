@@ -140,7 +140,7 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
   
   folly::dynamic commandArgs = [&rt, &arguments]{
     if (arguments[2].isObject()){
-      return jsi::dynamicFromValue(rt, arguments[1]);
+      return jsi::dynamicFromValue(rt, arguments[2]);
     };
     
     throw jsi::JSError(rt,
