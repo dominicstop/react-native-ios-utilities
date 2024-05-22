@@ -12,14 +12,14 @@
 
 #import <objc/runtime.h>
 
-static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
-
 
 @implementation RNIBaseViewPaperEventHandler {
   __weak RNIBaseView *_parentView;
   Class  _eventHolderClass;
   RNIBaseViewPaperEventHolder *_eventHolderInstance;
 };
+
+static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
 
 + (NSMutableDictionary *)sharedClassRegistry
 {
@@ -68,6 +68,9 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
   return self;
 }
 
+// MARK: Functions - Public
+// ------------------------
+
 - (void)createSettersForEvents:(NSArray *)events
 {
   for (NSString *eventName in events) {
@@ -96,6 +99,26 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
 #endif
   };
 };
+
+- (void)invokeEventBlockForEventName:(NSString *)eventName
+                         withPayload:(NSDictionary *)eventPayload
+{
+  if(self->_eventHolderInstance == nil){
+    return;
+  };
+  
+  void (^eventBlock)(NSDictionary *body) =
+    [self->_eventHolderInstance.eventMap objectForKey:eventName];
+    
+  if(eventBlock == nil){
+    return;
+  };
+
+  eventBlock(eventPayload);
+}
+
+// MARK: Functions - Internal
+// --------------------------
 
 - (void)createSetterForSelector:(SEL)selector
 {
@@ -144,23 +167,6 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
   };
   
   return self->_eventHolderInstance;
-}
-
-- (void)invokeEventBlockForEventName:(NSString *)eventName
-                         withPayload:(NSDictionary *)eventPayload
-{
-  if(self->_eventHolderInstance == nil){
-    return;
-  };
-  
-  void (^eventBlock)(NSDictionary *body) =
-    [self->_eventHolderInstance.eventMap objectForKey:eventName];
-    
-  if(eventBlock == nil){
-    return;
-  };
-
-  eventBlock(eventPayload);
 }
 
 void handleSetterInvocation(RNIBaseViewPaperEventHolder *_self, SEL _cmd, id _arg) {
