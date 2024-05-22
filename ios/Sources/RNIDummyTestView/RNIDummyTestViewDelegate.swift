@@ -250,6 +250,28 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     );
   };
   
+  public func notifyOnViewCommandRequest(
+    forCommandArguments commandArguments: NSDictionary,
+    resolve resolveBlock: (NSDictionary) -> Void,
+    reject rejectBlock: (String) -> Void
+  ) {
+  
+    print(
+      "RNIDummyTestViewDelegate.notifyOnViewCommandRequest",
+      "\n - commandArguments.count:", commandArguments.count,
+      "\n - commandArguments.keys:", commandArguments.allKeys,
+      "\n - commandArguments:", commandArguments,
+      "\n"
+    );
+    
+    resolveBlock([
+      "someString": "abc",
+      "someInt": 123,
+      "someDouble": 3.14,
+      "someBool": true
+    ]);
+  };
+  
   // MARK: Fabric Only
   // -----------------
 

@@ -51,6 +51,13 @@ public protocol RNIContentViewDelegate where Self: UIView  {
     newLayoutMetrics: RNILayoutMetrics
   );
   
+  @objc
+  optional func notifyOnViewCommandRequest(
+    forCommandArguments commandArguments: NSDictionary,
+    resolve resolveBlock: (NSDictionary) -> Void,
+    reject rejectBlock: (String) -> Void
+  );
+  
   // MARK: Fabric Only
   // -----------------
   
