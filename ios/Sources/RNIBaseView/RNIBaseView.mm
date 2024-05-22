@@ -622,16 +622,17 @@ using namespace react;
                                  reject:(RNIPromiseRejectBlock)rejectBlock
 {
   if(!self.contentDelegate){
-    NSString *className = NSStringFromClass([self class]);
+    NSString *messageRaw =
+      @"Unable to forward command request: '%@' "
+      @" because the associated view for viewID: '%@'"
+      @" of class type: '%@'"
+      @" does not have a contentDelegate (self.contentDelegate is nil)";
   
-    NSString *message = @"Unable to forward command request: ";
-    message = [message stringByAppendingString:commandName];
-    message = [message stringByAppendingString:@"because the associated view for viewID: "];
-    message = [message stringByAppendingString:viewID];
-    message = [message stringByAppendingString:@"of type: "];
-    message = [message stringByAppendingString:className];
-    message = [message stringByAppendingString:@"does not have a contentDelegate"];
+    NSString *className = NSStringFromClass([self class]);
     
+    NSString *message =
+      [NSString stringWithFormat: messageRaw, commandName, viewID, className];
+  
     rejectBlock(message);
   };
   
@@ -639,20 +640,19 @@ using namespace react;
     @selector(notifyOnViewCommandRequestWithSender:forCommandName:withCommandArguments:resolve:reject:);
     
   if(![self.contentDelegate respondsToSelector:targetSelector]){
+    NSString *messageRaw =
+      @"Unable to forward command request: '%@' "
+      @" because the associated view for viewID: '%@'"
+      @" of class type: '%@'"
+      @" with parent class type: '%@'"
+      @" does not implement selector: '%@'";
+  
     NSString *className = NSStringFromClass([self class]);
     NSString *contentViewClassName = NSStringFromClass([self.contentView class]);
     NSString *selectorName = NSStringFromSelector(targetSelector);
     
-    NSString *message = @"Unable to forward command request: ";
-    message = [message stringByAppendingString:commandName];
-    message = [message stringByAppendingString:@"because the associated view for viewID: "];
-    message = [message stringByAppendingString:viewID];
-    message = [message stringByAppendingString:@"of type: "];
-    message = [message stringByAppendingString:contentViewClassName];
-    message = [message stringByAppendingString:@"with parent type: "];
-    message = [message stringByAppendingString:className];
-    message = [message stringByAppendingString:@"does not implement: "];
-    message = [message stringByAppendingString:selectorName];
+    NSString *message =
+      [NSString stringWithFormat: messageRaw, commandName, viewID, contentViewClassName, className, selectorName];
     
     rejectBlock(message);
   };

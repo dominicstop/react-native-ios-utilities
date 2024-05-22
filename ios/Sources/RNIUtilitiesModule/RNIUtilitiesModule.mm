@@ -164,25 +164,26 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
 
   UIView *match = [[RNIViewRegistry shared] getViewForViewID:viewID];
   if(match == nil){
-    NSString *message = @"Unable to execute command: ";
-    message = [message stringByAppendingString:commandName];
-    message = [message stringByAppendingString:@"Because there is no corresponding view found for viewID: "];
-    message = [message stringByAppendingString:viewID];
+    NSString *messageRaw =
+      @"Unable to execute command: '%@'"
+      @" because there is no corresponding view found for viewID: '%@'";
+  
+    NSString *message = [NSString stringWithFormat: messageRaw, commandName, viewID];
     rejectBlock(message);
   };
   
   if(![match conformsToProtocol:@protocol(RNIViewCommandRequestHandling)]){
+    NSString *messageRaw =
+      @"Unable to execute command: '%@' "
+      @" because the associated view for viewID: '%@'"
+      @" of class type: '%@'"
+      @" does not conform to protocol: %@";
+      
     NSString *className = NSStringFromClass([match class]);
     NSString *protocolName = NSStringFromProtocol(@protocol(RNIViewCommandRequestHandling));
-    
-    NSString *message = @"Unable to execute command: ";
-    message = [message stringByAppendingString:commandName];
-    message = [message stringByAppendingString:@"Because the associated view for viewID: "];
-    message = [message stringByAppendingString:viewID];
-    message = [message stringByAppendingString:@"of type: "];
-    message = [message stringByAppendingString:className];
-    message = [message stringByAppendingString:@"does not conform to: "];
-    message = [message stringByAppendingString:protocolName];
+      
+    NSString *message =
+      [NSString stringWithFormat: messageRaw, commandName, viewID, className, protocolName];
     
     rejectBlock(message);
   };
