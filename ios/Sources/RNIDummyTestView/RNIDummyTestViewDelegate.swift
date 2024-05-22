@@ -35,6 +35,11 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
     ];
   };
   
+  // MARK: Properties
+  // ----------------
+  
+  var _didSendEvents = false;
+  
   // MARK: - Properties - RNIContentViewDelegate
   // -------------------------------------------
   
@@ -44,8 +49,8 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   public var reactProps: NSDictionary = [:];
   #endif
   
-  // MARK: Props
-  // -----------
+  // MARK: Properties - Props
+  // ------------------------
   
   @objc
   public var someBool: Bool = false {
@@ -143,36 +148,40 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     superBlock();
     #endif
     
-    let eventPayload: [String: Any] = [
-      "someBool": true,
-      "someString": "abc",
-      "someNumber": 123,
-      "someObject": [
+    if(!self._didSendEvents){
+      self._didSendEvents = true;
+      
+      let eventPayload: [String: Any] = [
         "someBool": true,
         "someString": "abc",
-      ],
-      "someArray": [],
-    ];
-    
-    sender.dispatchViewEvent(
-      forEventName: "onSomeDirectEventWithEmptyPayload",
-      withPayload: [:]
-    );
-    
-    sender.dispatchViewEvent(
-      forEventName: "onSomeDirectEventWithObjectPayload",
-      withPayload: eventPayload
-    );
-    
-    sender.dispatchViewEvent(
-      forEventName: "onSomeBubblingEventWithEmptyPayload",
-      withPayload: [:]
-    );
-    
-    sender.dispatchViewEvent(
-      forEventName: "onSomeBubblingEventWithObjectPayload",
-      withPayload: eventPayload
-    );
+        "someNumber": 123,
+        "someObject": [
+          "someBool": true,
+          "someString": "abc",
+        ],
+        "someArray": [],
+      ];
+      
+      self.dispatchEvent(
+        for: .onSomeDirectEventWithEmptyPayload,
+        withPayload: [:]
+      );
+      
+      self.dispatchEvent(
+        for: .onSomeDirectEventWithObjectPayload,
+        withPayload: eventPayload
+      );
+      
+      self.dispatchEvent(
+        for: .onSomeBubblingEventWithEmptyPayload,
+        withPayload: [:]
+      );
+      
+      self.dispatchEvent(
+        for: .onSomeBubblingEventWithObjectPayload,
+        withPayload: eventPayload
+      );
+    };
     
     self.reactGetLayoutMetrics {
       print(
