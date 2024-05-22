@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 #import "react-native-ios-utilities/RNIRegistrableView.h"
+#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
+
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/RCTViewComponentView.h>
@@ -35,10 +37,13 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 @interface RNIBaseView:
 #if  RCT_NEW_ARCH_ENABLED
-  RCTViewComponentView<RNIContentViewParentDelegate, RNIRegistrableView>
+  RCTViewComponentView<
 #else
-  RCTView<RNIContentViewParentDelegate, RNIRegistrableView>
+  RCTView<
 #endif
+    RNIContentViewParentDelegate,
+    RNIRegistrableView,
+    RNIViewCommandRequestHandling>
 
 // MARK: - Properties - Fabric + Paper
 // -----------------------------------

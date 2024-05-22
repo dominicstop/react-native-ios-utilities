@@ -14,6 +14,7 @@
 #import "react-native-ios-utilities/UIView+RNIHelpers.h"
 #import "react-native-ios-utilities/RNIUtilitiesModule.h"
 #import "react-native-ios-utilities/RNIViewRegistry.h"
+#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
@@ -610,6 +611,49 @@ using namespace react;
 - (Class _Nonnull)viewDelegateClass {
   return [UIView class];
 }
+
+// MARK: RNIViewCommandRequestHandling
+// -----------------------------------
+
+- (void)handleViewRequestWithArguments:(NSDictionary *)commandArguments
+                               resolve:(RNIPromiseResolveBlock)resolveBlock
+                                reject:(RNIPromiseRejectBlock)rejectBlock
+{
+  if(!self.contentDelegate){
+    NSString *className = NSStringFromClass([self class]);
+    
+    NSString *message = @"Unable to forward command request because the associated view for viewID: ";
+    message = [message stringByAppendingString:viewID];
+    message = [message stringByAppendingString:@"of type: "];
+    message = [message stringByAppendingString:className];
+    message = [message stringByAppendingString:@"does not have a contentDelegate"];
+    
+    rejectBlock(message);
+  };
+  
+  SEL targetSelector = @selector(notifyOnViewCommandRequestForCommandArguments:resolve:reject:);
+  if(![self.contentDelegate respondsToSelector:targetSelector]){
+    NSString *className = NSStringFromClass([self class]);
+    NSString *contentViewClassName = NSStringFromClass([self.contentView class]);
+    NSString *selectorName = NSStringFromSelector(targetSelector);
+    
+    NSString *message = @"The associated contentDelegate for viewID: ";
+    message = [message stringByAppendingString:viewID];
+    message = [message stringByAppendingString:@"of type: "];
+    message = [message stringByAppendingString:contentViewClassName];
+    message = [message stringByAppendingString:@"with parent type: "];
+    message = [message stringByAppendingString:className];
+    message = [message stringByAppendingString:@"does not implement: "];
+    message = [message stringByAppendingString:selectorName];
+    
+    rejectBlock(message);
+  };
+  
+  [self.contentDelegate
+    notifyOnViewCommandRequestForCommandArguments:commandArguments
+                                          resolve:resolveBlock
+                                           reject:rejectBlock];
+};
 
 @end
 
