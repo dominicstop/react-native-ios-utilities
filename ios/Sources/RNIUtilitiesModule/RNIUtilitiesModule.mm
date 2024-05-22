@@ -96,6 +96,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   
   const RNIUtilities::ViewCommandRequestFunction &viewCommandRequest = [weakSelf](
     std::string viewID,
+    std::string commandName,
     folly::dynamic commandArgs,
     RNIUtilities::Resolve resolve,
     RNIUtilities::Reject reject
@@ -117,6 +118,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     
     [weakSelf
       viewCommandRequestForViewID:[NSString stringWithUTF8String:viewID.c_str()]
+                      commandName:[NSString stringWithUTF8String:commandName.c_str()]
                   withCommandArgs:commandArgsDict
                           resolve:resolveBlock
                            reject:rejectBlock];
@@ -143,15 +145,17 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
 // ---------------------
 
 - (void)viewCommandRequestForViewID:(NSString *)viewID
+                        commandName:(NSString *)commandName
                     withCommandArgs:(NSDictionary *)commandArgs
                             resolve:(RNIPromiseResolveBlock)resolveBlock
                              reject:(RNIPromiseRejectBlock)rejectBlock
 {
 #if DEBUG
     NSLog(
-      @"%@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
+      @"%@\n%@ %@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
       @"[RNIUtilitiesModule viewCommandRequestForViewID]",
       @" - arg viewID:", viewID,
+      @" - arg commandName:", commandName,
       @" - arg [commandArgs count]:", [commandArgs count],
       @" - arg [commandArgs allKeys]:", [commandArgs allKeys],
       @" - arg commandArgs:", commandArgs
@@ -160,16 +164,20 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
 
   UIView *match = [[RNIViewRegistry shared] getViewForViewID:viewID];
   if(match == nil){
-    rejectBlock(
-      [@"No corresponding view found for viewID: " stringByAppendingString:viewID]
-    );
+    NSString *message = @"Unable to execute command: ";
+    message = [message stringByAppendingString:commandName];
+    message = [message stringByAppendingString:@"Because there is no corresponding view found for viewID: "];
+    message = [message stringByAppendingString:viewID];
+    rejectBlock(message);
   };
   
   if(![match conformsToProtocol:@protocol(RNIViewCommandRequestHandling)]){
     NSString *className = NSStringFromClass([match class]);
     NSString *protocolName = NSStringFromProtocol(@protocol(RNIViewCommandRequestHandling));
     
-    NSString *message = @"The associated view for viewID: ";
+    NSString *message = @"Unable to execute command: ";
+    message = [message stringByAppendingString:commandName];
+    message = [message stringByAppendingString:@"Because the associated view for viewID: "];
     message = [message stringByAppendingString:viewID];
     message = [message stringByAppendingString:@"of type: "];
     message = [message stringByAppendingString:className];
@@ -180,9 +188,10 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   };
   
   UIView<RNIViewCommandRequestHandling> *view = (UIView<RNIViewCommandRequestHandling> *)match;
-  [view handleViewRequestWithArguments:commandArgs
-                               resolve:resolveBlock
-                                reject:rejectBlock];
+  [view handleViewRequestForCommandName:commandName
+                          withArguments:commandArgs
+                                resolve:resolveBlock
+                                 reject:rejectBlock];
 }
 
 // MARK: RCTBridgeModule

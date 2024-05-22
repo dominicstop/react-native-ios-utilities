@@ -53,7 +53,9 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   
   @objc
   optional func notifyOnViewCommandRequest(
-    forCommandArguments commandArguments: NSDictionary,
+    sender: RNIContentViewParentDelegate,
+    forCommandName commandName: String,
+    withCommandArguments commandArguments: NSDictionary,
     resolve resolveBlock: (NSDictionary) -> Void,
     reject rejectBlock: (String) -> Void
   );

@@ -251,13 +251,16 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   };
   
   public func notifyOnViewCommandRequest(
-    forCommandArguments commandArguments: NSDictionary,
+    sender: RNIContentViewParentDelegate,
+    forCommandName commandName: String,
+    withCommandArguments commandArguments: NSDictionary,
     resolve resolveBlock: (NSDictionary) -> Void,
     reject rejectBlock: (String) -> Void
   ) {
   
     print(
       "RNIDummyTestViewDelegate.notifyOnViewCommandRequest",
+      "\n - commandName:", commandName,
       "\n - commandArguments.count:", commandArguments.count,
       "\n - commandArguments.keys:", commandArguments.allKeys,
       "\n - commandArguments:", commandArguments,

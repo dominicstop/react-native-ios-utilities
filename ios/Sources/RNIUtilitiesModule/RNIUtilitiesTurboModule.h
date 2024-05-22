@@ -20,6 +20,7 @@ using Reject = std::function<void(const std::string&)>;
 
 using ViewCommandRequestFunction = std::function<void(
   /* viewID     : */ std::string,
+  /* commandName: */ std::string,
   /* commandArgs: */ folly::dynamic,
   /* resolve    : */ Resolve,
   /* reject     : */ Reject

@@ -615,14 +615,18 @@ using namespace react;
 // MARK: RNIViewCommandRequestHandling
 // -----------------------------------
 
-- (void)handleViewRequestWithArguments:(NSDictionary *)commandArguments
-                               resolve:(RNIPromiseResolveBlock)resolveBlock
-                                reject:(RNIPromiseRejectBlock)rejectBlock
+
+- (void)handleViewRequestForCommandName:(NSString *)commandName
+                          withArguments:(NSDictionary *)commandArguments
+                                resolve:(RNIPromiseResolveBlock)resolveBlock
+                                 reject:(RNIPromiseRejectBlock)rejectBlock
 {
   if(!self.contentDelegate){
     NSString *className = NSStringFromClass([self class]);
-    
-    NSString *message = @"Unable to forward command request because the associated view for viewID: ";
+  
+    NSString *message = @"Unable to forward command request: ";
+    message = [message stringByAppendingString:commandName];
+    message = [message stringByAppendingString:@"because the associated view for viewID: "];
     message = [message stringByAppendingString:viewID];
     message = [message stringByAppendingString:@"of type: "];
     message = [message stringByAppendingString:className];
@@ -631,13 +635,17 @@ using namespace react;
     rejectBlock(message);
   };
   
-  SEL targetSelector = @selector(notifyOnViewCommandRequestForCommandArguments:resolve:reject:);
+  SEL targetSelector =
+    @selector(notifyOnViewCommandRequestWithSender:forCommandName:withCommandArguments:resolve:reject:);
+    
   if(![self.contentDelegate respondsToSelector:targetSelector]){
     NSString *className = NSStringFromClass([self class]);
     NSString *contentViewClassName = NSStringFromClass([self.contentView class]);
     NSString *selectorName = NSStringFromSelector(targetSelector);
     
-    NSString *message = @"The associated contentDelegate for viewID: ";
+    NSString *message = @"Unable to forward command request: ";
+    message = [message stringByAppendingString:commandName];
+    message = [message stringByAppendingString:@"because the associated view for viewID: "];
     message = [message stringByAppendingString:viewID];
     message = [message stringByAppendingString:@"of type: "];
     message = [message stringByAppendingString:contentViewClassName];
@@ -650,9 +658,11 @@ using namespace react;
   };
   
   [self.contentDelegate
-    notifyOnViewCommandRequestForCommandArguments:commandArguments
-                                          resolve:resolveBlock
-                                           reject:rejectBlock];
+    notifyOnViewCommandRequestWithSender:self
+                          forCommandName:commandName
+                    withCommandArguments:commandArguments
+                                 resolve:resolveBlock
+                                  reject:rejectBlock];
 };
 
 @end

@@ -61,7 +61,11 @@ export default function App() {
     console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule ?? []));
     
     setTimeout(async () => {
-      const result = await RNIUtilitiesModule?.viewCommandRequest?.(viewID.current!, TEST_OBJECT);
+      const result = await RNIUtilitiesModule?.viewCommandRequest?.(
+        viewID.current!,
+        'someViewCommand',
+        TEST_OBJECT
+      );
       console.log("viewCommandRequest:", result);
     }, 1000);
   }, []);

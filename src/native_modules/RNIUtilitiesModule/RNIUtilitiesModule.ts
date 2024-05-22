@@ -8,6 +8,7 @@ export type RNIUtilitiesModuleCommands = {
   dummyFunction: (someNumber: number) => void;
   viewCommandRequest: (
     viewID: string,
+    commandName: string,
     commandArgs: Record<string, any>
   ) => Promise<void>;
 };

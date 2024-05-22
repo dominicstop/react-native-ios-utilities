@@ -48,7 +48,7 @@ jsi::Value RNIUtilitiesTurboModule::get(
   };
   
   if(propName == "viewCommandRequest"){
-    return jsi::Function::createFromHostFunction(rt, name, 2, viewCommandRequest);
+    return jsi::Function::createFromHostFunction(rt, name, 3, viewCommandRequest);
   };
   
   return jsi::Value::undefined();
@@ -110,9 +110,9 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
   #endif
 
 
-  if (count < 2) {
+  if (count < 3) {
     throw jsi::JSError(rt,
-      RNI_DEBUG_MESSAGE("Requires 2 arguments")
+      RNI_DEBUG_MESSAGE("Requires 3 arguments")
     );
   }
   
@@ -127,8 +127,19 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
     );
   }();
   
+  std::string commandName = [&rt, &arguments]{
+    if (arguments[1].isString()){
+      auto jsString = arguments[1].asString(rt);
+      return jsString.utf8(rt);
+    };
+    
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Argument passed to `commandName` param must be a string literal")
+    );
+  }();
+  
   folly::dynamic commandArgs = [&rt, &arguments]{
-    if (arguments[1].isObject()){
+    if (arguments[2].isObject()){
       return jsi::dynamicFromValue(rt, arguments[1]);
     };
     
@@ -138,8 +149,7 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
   }();
   
   auto promise = rt.global().getPropertyAsFunction(rt, "Promise");
-  
-  auto promiseBody = [&viewID, &commandArgs](
+  auto promiseBody = [&viewID, &commandName, &commandArgs](
     jsi::Runtime &rt,
     const jsi::Value &thisValue,
     const jsi::Value *args,
@@ -158,6 +168,7 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
     
     viewCommandRequest_(
       viewID,
+      commandName,
       commandArgs,
       [&rt, &resolve](folly::dynamic resultDyn){
         auto resultValue = jsi::valueFromDynamic(rt, resultDyn);
