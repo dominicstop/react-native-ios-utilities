@@ -31,7 +31,7 @@
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
 #else
-#import "RNIBaseViewEventHandler.h"
+#import "RNIBaseViewPaperEventHandler.h"
 #import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
 
 #import <React/UIView+React.h>
@@ -83,7 +83,7 @@ using namespace react;
 {
   if (self = [super init]) {
     self.bridge = bridge;
-    self.reactEventHandler = [[RNIBaseViewEventHandler new] initWithParentRef:self];
+    self.reactEventHandler = [[RNIBaseViewPaperEventHandler new] initWithParentRef:self];
     
 #if DEBUG
     NSLog(

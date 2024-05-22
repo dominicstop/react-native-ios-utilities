@@ -1,12 +1,12 @@
 //
-//  RNIBaseViewEventHandler.m
+//  RNIBaseViewPaperEventHandler.m
 //  react-native-ios-utilities
 //
 //  Created by Dominic Go on 5/19/24.
 //
 
 #if !RCT_NEW_ARCH_ENABLED
-#import "RNIBaseViewEventHandler.h"
+#import "RNIBaseViewPaperEventHandler.h"
 #import "RNIBaseViewEventHolder.h"
 #import "RNIBaseView.h"
 
@@ -15,7 +15,7 @@
 static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
 
 
-@implementation RNIBaseViewEventHandler {
+@implementation RNIBaseViewPaperEventHandler {
   __weak RNIBaseView *_parentView;
   Class  _eventHolderClass;
   RNIBaseViewEventHolder *_eventHolderInstance;

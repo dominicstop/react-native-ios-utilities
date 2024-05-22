@@ -7,7 +7,7 @@
 
 #if !RCT_NEW_ARCH_ENABLED
 #import "RNIBaseViewEventHolder.h"
-#import "RNIBaseViewEventHandler.h"
+#import "RNIBaseViewPaperEventHandler.h"
 
 #if DEBUG
 #import "RNIBaseView.h"
@@ -16,10 +16,10 @@
 
 @implementation RNIBaseViewEventHolder {
   NSMutableDictionary *_eventMap;
-  __weak RNIBaseViewEventHandler *_parentEventHandler;
+  __weak RNIBaseViewPaperEventHandler *_parentEventHandler;
 };
 
-- (instancetype)initWithParentEventHandler:(RNIBaseViewEventHandler *)eventHandler
+- (instancetype)initWithParentEventHandler:(RNIBaseViewPaperEventHandler *)eventHandler
 {
   self = [super init];
   if (self) {

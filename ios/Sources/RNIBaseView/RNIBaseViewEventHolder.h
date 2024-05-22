@@ -8,13 +8,13 @@
 #if !RCT_NEW_ARCH_ENABLED
 #import <Foundation/Foundation.h>
 
-@class RNIBaseViewEventHandler;
+@class RNIBaseViewPaperEventHandler;
 
 @interface RNIBaseViewEventHolder : NSObject
 
 @property (nonatomic, strong, nonnull) NSMutableDictionary *eventMap;
 
-- (nonnull instancetype)initWithParentEventHandler:(nonnull RNIBaseViewEventHandler *)eventHandler;
+- (nonnull instancetype)initWithParentEventHandler:(nonnull RNIBaseViewPaperEventHandler *)eventHandler;
 
 - (void)registerEventEmitterForSelector:(nonnull SEL)selector
                        withEventEmitter:(nonnull id)eventEmitter;

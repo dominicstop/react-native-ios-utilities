@@ -1,5 +1,5 @@
 //
-//  RNIBaseViewEventHandler.h
+//  RNIBaseViewPaperEventHandler.h
 //  react-native-ios-utilities
 //
 //  Created by Dominic Go on 5/19/24.
@@ -10,7 +10,7 @@
 
 @class RNIBaseView;
 
-@interface RNIBaseViewEventHandler : NSObject
+@interface RNIBaseViewPaperEventHandler : NSObject
 
 @property (nonatomic, weak, nullable) RNIBaseView *parentView;
 
