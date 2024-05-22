@@ -27,10 +27,7 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    self->_viewRegistry = [NSMapTable
-      mapTableWithKeyOptions:NSPointerFunctionsStrongMemory
-                valueOptions:NSPointerFunctionsWeakMemory];
-      
+    self->_viewRegistry = [NSMapTable strongToWeakObjectsMapTable];
     self->_counterViewID = 0;
   }
   return self;
@@ -55,7 +52,8 @@
 
 - (UIView *)getViewForViewID:(NSString *)viewID
 {
-  return [self->_viewRegistry valueForKey:viewID];
+  NSDictionary *viewRegistryDict = [self->_viewRegistry dictionaryRepresentation];
+  return [viewRegistryDict valueForKey:viewID];
 }
 
 @end
