@@ -11,11 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 @protocol RNIViewCommandRequestHandling <NSObject>
 
-@optional
 - (void)handleViewRequestWithArguments:(NSDictionary *)commandArguments
                                resolve:(RNIPromiseResolveBlock)resolveBlock
                                 reject:(RNIPromiseRejectBlock)rejectBlock NS_SWIFT_NAME(handleViewRequest(forCommandArguments:resolve:reject:));
-
 
 @end
 NS_ASSUME_NONNULL_END

@@ -147,6 +147,17 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                             resolve:(RNIPromiseResolveBlock)resolveBlock
                              reject:(RNIPromiseRejectBlock)rejectBlock
 {
+#if DEBUG
+    NSLog(
+      @"%@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
+      @"[RNIUtilitiesModule viewCommandRequestForViewID]",
+      @" - arg viewID:", viewID,
+      @" - arg [commandArgs count]:", [commandArgs count],
+      @" - arg [commandArgs allKeys]:", [commandArgs allKeys],
+      @" - arg commandArgs:", commandArgs
+    );
+#endif
+
   UIView *match = [[RNIViewRegistry shared] getViewForViewID:viewID];
   if(match == nil){
     rejectBlock(
@@ -164,20 +175,6 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     message = [message stringByAppendingString:className];
     message = [message stringByAppendingString:@"does not conform to: "];
     message = [message stringByAppendingString:protocolName];
-    
-    rejectBlock(message);
-  };
-  
-  if(![match respondsToSelector:@selector(handleViewRequestWithArguments:resolve:reject:)]){
-    NSString *className = NSStringFromClass([match class]);
-    NSString *selectorName = NSStringFromSelector(@selector(handleViewRequestWithArguments:resolve:reject:));
-    
-    NSString *message = @"The associated view for viewID: ";
-    message = [message stringByAppendingString:viewID];
-    message = [message stringByAppendingString:@"of type: "];
-    message = [message stringByAppendingString:className];
-    message = [message stringByAppendingString:@"does not implement: "];
-    message = [message stringByAppendingString:selectorName];
     
     rejectBlock(message);
   };
