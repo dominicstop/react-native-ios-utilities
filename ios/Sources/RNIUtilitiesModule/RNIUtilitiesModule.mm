@@ -56,7 +56,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   if (self) {
     RNIUtilitiesModuleShared = self;
     #if !RCT_NEW_ARCH_ENABLED
-    [[self class] installHostObjectIfNeeded];
+    [self installHostObjectIfNeeded];
     #endif
   };
   
