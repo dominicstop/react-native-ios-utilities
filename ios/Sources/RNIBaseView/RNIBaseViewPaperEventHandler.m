@@ -7,7 +7,7 @@
 
 #if !RCT_NEW_ARCH_ENABLED
 #import "RNIBaseViewPaperEventHandler.h"
-#import "RNIBaseViewEventHolder.h"
+#import "RNIBaseViewPaperEventHolder.h"
 #import "RNIBaseView.h"
 
 #import <objc/runtime.h>
@@ -18,7 +18,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
 @implementation RNIBaseViewPaperEventHandler {
   __weak RNIBaseView *_parentView;
   Class  _eventHolderClass;
-  RNIBaseViewEventHolder *_eventHolderInstance;
+  RNIBaseViewPaperEventHolder *_eventHolderInstance;
 };
 
 + (NSMutableDictionary *)sharedClassRegistry
@@ -50,7 +50,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
       };
       
       Class newClass = objc_allocateClassPair(
-        [RNIBaseViewEventHolder class],
+        [RNIBaseViewPaperEventHolder class],
         [className UTF8String],
         0
       );
@@ -124,7 +124,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
   eventBlock(eventPayload);
 }
 
-void handleSetterInvocation(RNIBaseViewEventHolder *_self, SEL _cmd, id _arg) {
+void handleSetterInvocation(RNIBaseViewPaperEventHolder *_self, SEL _cmd, id _arg) {
 #if DEBUG
   NSLog(
     @"%@\n%@ %@\n%@ %@\n%@ %@",
