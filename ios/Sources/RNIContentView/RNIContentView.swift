@@ -12,6 +12,8 @@ import DGSwiftUtilities
 public protocol RNIContentView where Self:
   RNIContentViewDelegate & StringKeyPathMapping {
   
+  associatedtype Events: RawRepresentable<String> & CaseIterable;
+  
   // MARK: - Paper Only
   // ------------------
   

@@ -11,6 +11,13 @@ import DGSwiftUtilities
 @objc
 public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   
+  public enum Events: String, CaseIterable {
+    case onSomeDirectEventWithEmptyPayload;
+    case onSomeDirectEventWithObjectPayload;
+    case onSomeBubblingEventWithEmptyPayload;
+    case onSomeBubblingEventWithObjectPayload;
+  }
+  
   // MARK: StringKeyPathMapping
   // --------------------------
   
