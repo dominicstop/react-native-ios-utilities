@@ -38,7 +38,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
     
     NSString *className = ^{
       NSString *refClassName = NSStringFromClass([parentView class]);
-      return [refClassName stringByAppendingString:@"EventHandler"];
+      return [refClassName stringByAppendingString:@"EventHolder"];
     }();
     
     Class associatedClass = ^{
@@ -133,13 +133,13 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
 
 - (id)forwardingTargetForSelector:(SEL)aSelector;
 {
-  BOOL shouldForwardToEventHolder = ^{
+  BOOL isSelectorSetter = ^{
     NSString *selectorString = NSStringFromSelector(aSelector);
     return [selectorString containsString:@":"];
   }();
   
   BOOL shouldForwardToBaseView =
-       !shouldForwardToEventHolder
+       !isSelectorSetter
     && [self->_parentView respondsToSelector:aSelector];
   
   BOOL shouldAddMethodForSelector =
@@ -152,13 +152,13 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
     @"RNIBaseViewEventHandler.forwardingTargetForSelector",
     @" - arg aSelector:", NSStringFromSelector(aSelector),
     @" - self._eventHolderClass:", NSStringFromClass(self->_eventHolderClass),
-    @" - shouldForwardToEventHolder:", shouldForwardToEventHolder,
+    @" - isSelectorSetter:", isSelectorSetter,
     @" - shouldForwardToBaseView:", shouldForwardToBaseView,
     @" - shouldAddMethodForSelector:", shouldAddMethodForSelector
   );
 #endif
   
-  if(!shouldForwardToEventHolder){
+  if(shouldForwardToBaseView){
     return self->_parentView;
   };
   

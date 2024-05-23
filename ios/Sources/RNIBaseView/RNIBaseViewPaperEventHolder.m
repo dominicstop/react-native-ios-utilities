@@ -9,6 +9,8 @@
 #import "RNIBaseViewPaperEventHolder.h"
 #import "RNIBaseViewPaperEventHandler.h"
 
+#import "react-native-ios-utilities/RNIObjcUtils.h"
+
 #if DEBUG
 #import "RNIBaseView.h"
 #endif
@@ -35,24 +37,8 @@
 {
   /// Extract event name from selector
   /// E.g. `setOnEvent:` -> `onEvent`
-  NSString *eventName = ^{
-    NSString *eventName = NSStringFromSelector(selector);
-    
-    eventName = [eventName stringByReplacingOccurrencesOfString:@"set"
-                                                    withString:@""];
-    
-    eventName = [eventName stringByReplacingOccurrencesOfString:@":"
-                                                     withString:@""];
-                                           
-    NSString *firstLetterLowercased =
-      [[eventName substringToIndex:1] lowercaseString];
-      
-    eventName = [eventName
-      stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                              withString:firstLetterLowercased];
-    
-    return eventName;
-  }();
+  NSString *eventName =
+    [RNIObjcUtils extractPropertyNameForSetterSelector:selector];
 
   [self.eventMap setValue:eventEmitter forKey:eventName];
   
