@@ -64,6 +64,17 @@ fileprivate extension UIView {
     
     return _self.allSupportedPropsAsStrings;
   };
+  
+  func _notifyOnRequestToSetProp(
+    sender: RNIContentViewParentDelegate,
+    propName: String,
+    propValue: Any
+  ) {
+    guard let _self = self as? (any RNIContentView)
+    else { return };
+    
+    _self.setValue(forKey: propName, value: propValue);
+  };
   #endif
 };
 
