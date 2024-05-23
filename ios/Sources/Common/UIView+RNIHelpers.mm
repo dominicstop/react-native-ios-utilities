@@ -111,10 +111,7 @@
   completionBlock(layoutMetrics);
   #else
   RCTBridge *reactBridge = [self reactGetPaperBridge];
-  if(reactBridge == nil){
-    completionBlock(nil);
-  };
-  
+
   RCTUIManager *uiManager = reactBridge.uiManager;
   if(uiManager == nil){
    completionBlock(nil);

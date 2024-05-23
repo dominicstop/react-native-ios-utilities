@@ -16,7 +16,7 @@ typedef void (^RNIPaperShadowViewCompletionBlock)(RCTShadowView * _Nullable shad
 
 @interface UIView (RNIPaperHelpers)
 
-- (nullable RCTBridge *)reactGetPaperBridge;
+- (nonnull RCTBridge *)reactGetPaperBridge;
 
 - (nullable RCTRootView *)reactGetPaperRootView;
 

@@ -12,6 +12,7 @@
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 
 #import <React/RCTBridge.h>
+#import <React/RCTBridge+Private.h>
 #import <React/RCTUIManager.h>
 #import <React/RCTUIManagerUtils.h>
 #import <React/RCTShadowView.h>
@@ -54,7 +55,7 @@
   };
   #endif
   
-  return nil;
+  return [RCTBridge currentBridge];
 }
 
 - (RCTRootView *)reactGetPaperRootView
@@ -93,9 +94,6 @@
 - (void)reactGetPaperLayoutMetricsWithCompletionHandler:(RNIPaperLayoutMetricsCompletionBlock)completionBlock
 {
   RCTBridge *reactBridge = [self reactGetPaperBridge];
-  if(reactBridge == nil){
-    completionBlock({-1}, NO);
-  };
   
   RCTUIManager *uiManager = reactBridge.uiManager;
   if(uiManager == nil){
@@ -125,9 +123,6 @@
 - (void)reactGetShadowViewWithCompletionHandler:(RNIPaperShadowViewCompletionBlock)completionBlock
 {
   RCTBridge *reactBridge = [self reactGetPaperBridge];
-  if(reactBridge == nil){
-    completionBlock(nil);
-  };
   
   RCTUIManager *uiManager = reactBridge.uiManager;
   if(uiManager == nil){
