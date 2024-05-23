@@ -109,11 +109,40 @@ using namespace react;
   
   Class viewDelegateClass = [[self class] viewDelegateClass];
   if(![viewDelegateClass isSubclassOfClass: [UIView class]]) {
-    return;
+    NSString *errorMessage =
+      @"[RNIBaseView %@] Error"
+      @" - The class returned by getter `[%@ viewDelegateClass]` (i.e. '%@')"
+      @" must be a `UIView` subclass";
+    
+    NSString *currentSelector = NSStringFromSelector(_cmd);
+    NSString *className = NSStringFromClass([self class]);
+    NSString *delegateClassName = NSStringFromClass([[self class] viewDelegateClass]);
+    
+    errorMessage =
+      [NSString stringWithFormat: errorMessage, currentSelector, className, delegateClassName];
+    
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:errorMessage
+                                 userInfo:nil];
   }
   
   if(![viewDelegateClass conformsToProtocol:@protocol(RNIContentViewDelegate)]) {
-    return;
+    NSString *errorMessage =
+      @"[RNIBaseView %@] Error"
+      @" - The class returned by getter `[%@ viewDelegateClass]` (i.e. '%@')"
+      @" does not conform to protocol: '%@'";
+    
+    NSString *currentSelector = NSStringFromSelector(_cmd);
+    NSString *className = NSStringFromClass([self class]);
+    NSString *delegateClassName = NSStringFromClass([[self class] viewDelegateClass]);
+    NSString *protocolName = NSStringFromProtocol(@protocol(RNIContentViewDelegate));
+    
+    errorMessage =
+      [NSString stringWithFormat: errorMessage, currentSelector, className, delegateClassName, protocolName];
+    
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:errorMessage
+                                 userInfo:nil];
   }
   
   UIView<RNIContentViewDelegate> *viewDelegate =
