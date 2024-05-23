@@ -6,7 +6,7 @@
 //
 
 #define RNI_EXPORT_VIEW_PROPERTY(propName, type) \
-  RCT_REMAP_VIEW_PROPERTY(propName, contentDelegate.propName, type)
+  RCT_REMAP_VIEW_PROPERTY(propName, reactPropHandler.propName, type)
   
 #define RNI_EXPORT_VIEW_EVENT(eventName, type) \
   RCT_REMAP_VIEW_PROPERTY(eventName, reactEventHandler.eventName, type)

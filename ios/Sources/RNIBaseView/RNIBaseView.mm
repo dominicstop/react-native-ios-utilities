@@ -32,6 +32,7 @@
 #include <react/renderer/core/graphicsConversions.h>
 #else
 #import "RNIBaseViewPaperEventHandler.h"
+#import "RNIBaseViewPaperPropHandler.h"
 #import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
 
 #import <React/UIView+React.h>
@@ -83,7 +84,12 @@ using namespace react;
 {
   if (self = [super init]) {
     self.bridge = bridge;
-    self.reactEventHandler = [[RNIBaseViewPaperEventHandler new] initWithParentRef:self];
+    
+    self.reactEventHandler =
+      [[RNIBaseViewPaperEventHandler new] initWithParentRef:self];
+    
+    self.reactPropHandler =
+      [[RNIBaseViewPaperPropHandler new] initWithParentRef:self];
     
 #if DEBUG
     NSLog(
@@ -198,10 +204,50 @@ using namespace react;
 #endif
 }
 
-// MARK: Functions
-// ---------------
+// MARK: Methods
+// -------------
+
+- (void)_dispatchOnDidSetViewIDEventIfNeeded
+{
+  BOOL shouldDispatchEvent =
+       !self->_didDispatchEventOnDidSetViewID
+#if RCT_NEW_ARCH_ENABLED
+    && self->_eventEmitter != nil;
+#else
+    && self.window != nil;
+#endif
+
+  if(!shouldDispatchEvent){
+    return;
+  };
+
+  self->_didDispatchEventOnDidSetViewID = YES;
+  NSDictionary *dict = @{
+    @"viewID": self.viewID,
+    @"reactTag": [self reactNativeTag],
+  };
+  
+  [self dispatchViewEventForEventName:@"onDidSetViewID"
+                          withPayload:dict];
+}
+
+// MARK: Methods - Paper-Only
+// --------------------------
 
 #if !RCT_NEW_ARCH_ENABLED
+- (void)notifyOnPaperSetProp:(NSString *)propName
+                   withValue:(id)propValue;
+{
+  if(!self.contentDelegate) {
+    return;
+  };
+  
+  [self.contentDelegate
+    _notifyOnRequestToSetPropWithSender:self
+                               propName:propName
+                              propValue:propValue];
+}
+
 - (void)_notifyDelegateForLayoutMetricsUpdate
 {
   if(self.cachedShadowView == nil){
@@ -229,30 +275,6 @@ using namespace react;
   };
 }
 #endif
-
-- (void)_dispatchOnDidSetViewIDEventIfNeeded
-{
-  BOOL shouldDispatchEvent =
-       !self->_didDispatchEventOnDidSetViewID
-#if RCT_NEW_ARCH_ENABLED
-    && self->_eventEmitter != nil;
-#else
-    && self.window != nil;
-#endif
-
-  if(!shouldDispatchEvent){
-    return;
-  };
-
-  self->_didDispatchEventOnDidSetViewID = YES;
-  NSDictionary *dict = @{
-    @"viewID": self.viewID,
-    @"reactTag": [self reactNativeTag],
-  };
-  
-  [self dispatchViewEventForEventName:@"onDidSetViewID"
-                          withPayload:dict];
-}
 
 // MARK: - RNIContentViewParentDelegate Commands
 // ---------------------------------------------

@@ -33,6 +33,19 @@
   return self;
 }
 
+- (RNIBaseView *)parentView
+{
+  if(self->_parentPropHandler == nil){
+    return nil;
+  };
+  
+  if(self->_parentPropHandler.parentView == nil){
+    return nil;
+  }
+  
+  return self->_parentPropHandler.parentView;
+}
+
 - (void)handlePropSetterCallForSelector:(SEL)selector
                           withPropValue:(id)propValue
 {
@@ -42,18 +55,22 @@
     [RNIObjcUtils extractPropertyNameForSetterSelector:selector];
     
   // WIP TBA - store prop and notify
+  [self->_propsMap setValue:propValue forKey:propName];
+  
+  if(!self.parentView){
+    return;
+  };
+  
+  [self.parentView notifyOnPaperSetProp:propName
+                              withValue:propValue];
 
 #if DEBUG
   NSString *parentViewClassName = ^{
-    if(self->_parentPropHandler == nil){
-      return @"N/A";
+    if(!self.parentView){
+      return NSStringFromClass([self.parentView class]);
     }
     
-    if(self->_parentPropHandler.parentView == nil){
-      return @"N/A";
-    }
-    
-    return NSStringFromClass([self->_parentPropHandler.parentView class]);
+    return @"N/A";
   }();
   
   NSLog(

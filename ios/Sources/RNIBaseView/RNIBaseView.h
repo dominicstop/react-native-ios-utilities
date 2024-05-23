@@ -27,7 +27,9 @@
 #if !RCT_NEW_ARCH_ENABLED
 @class RCTBridge;
 @class RCTShadowView;
+
 @class RNIBaseViewPaperEventHandler;
+@class RNIBaseViewPaperPropHandler;
 #endif
 
 typedef NS_ENUM(NSInteger, RNIPositionType);
@@ -67,6 +69,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 @property (nonatomic, weak, nullable) RCTShadowView *cachedShadowView;
 
 @property (nonatomic, strong, nonnull) RNIBaseViewPaperEventHandler *reactEventHandler;
+
+@property (nonatomic, strong, nonnull) RNIBaseViewPaperPropHandler *reactPropHandler;
 #endif
 
 // MARK: - Init
@@ -79,6 +83,14 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 #endif
 
 - (void) initCommon NS_REQUIRES_SUPER;
+
+// MARK: - Methods (Paper-Only)
+// ----------------------------
+
+#if !RCT_NEW_ARCH_ENABLED
+- (void)notifyOnPaperSetProp:(nonnull NSString *)propName
+                   withValue:(nullable id)propValue;
+#endif
 
 // MARK: - RNIContentViewParentDelegate Commands
 // ---------------------------------------------

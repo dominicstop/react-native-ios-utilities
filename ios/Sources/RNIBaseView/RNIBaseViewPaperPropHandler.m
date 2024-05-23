@@ -124,19 +124,35 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
   return self->_propHolderInstance;
 }
 
-void _handleReactPropSetterInvocation(RNIBaseViewPaperPropHolder *_self, SEL _cmd, id _arg) {
+
+
+void _handleReactPropSetterInvocation(
+  RNIBaseViewPaperPropHolder *_self,
+  SEL _cmd,
+  void *_arg
+) {
+  id boxedValue = ^{
+    if((size_t)_arg > 1){
+      return (__bridge id)_arg;
+    };
+    
+    // assume _arg is a BOOL?
+    return (id)[NSNumber numberWithInt:(int)(size_t)_arg];
+  }();
+
 #if DEBUG
   NSLog(
     @"%@\n%@ %@\n%@ %@\n%@ %@",
     @"RNIBaseViewPaperPropHolder._handleReactPropSetterInvocation",
     @" - arg _self:", _self,
     @" - arg _cmd:", NSStringFromSelector(_cmd),
-    @" - arg _arg:", _arg
+    @" - arg _arg:", boxedValue
   );
+  
 #endif
 
   [_self handlePropSetterCallForSelector:_cmd
-                           withPropValue:_arg];
+                           withPropValue:boxedValue];
 }
 
 @end
