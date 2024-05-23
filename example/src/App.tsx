@@ -61,6 +61,8 @@ export default function App() {
     console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule ?? []));
     
     setTimeout(async () => {
+      console.log("viewID.current:", viewID.current);
+
       const result = await RNIUtilitiesModule?.viewCommandRequest?.(
         viewID.current!,
         'someViewCommand',
@@ -101,11 +103,11 @@ export default function App() {
       <RNIDummyTestNativeView 
         nativeID={'nativeID for RNIDummyTestNativeView'}
         style={[styles.box, boxStyle]}
-        someBool={true}
+        someBool={false}
         someString={"abc"}
         someStringOptional={'def'}
         someNumber={123}
-        someNumberOptional={345}
+        someNumberOptional={undefined}
         someObject={TEST_OBJECT}
         someObjectOptional={{}}
         someArray={[1, 2, 3]}

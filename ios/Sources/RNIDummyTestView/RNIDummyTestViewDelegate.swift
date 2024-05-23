@@ -57,28 +57,72 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   };
   
   @objc
-  public var someString: String = "";
+  public var someString: String = "" {
+    willSet {
+      print("RNIDummyTestViewDelegate.someString - newValue:", newValue);
+    }
+  };
   
   @objc
-  public var someStringOptional: String?;
+  public var someStringOptional: String? {
+    willSet {
+      print(
+        "RNIDummyTestViewDelegate.someStringOptional - newValue:",
+        newValue?.debugDescription ?? "N/A"
+      );
+    }
+  };
   
   @objc
-  public var someNumber: NSNumber = -1;
+  public var someNumber: NSNumber = -1 {
+    willSet {
+      print("RNIDummyTestViewDelegate.someNumber - newValue:", newValue);
+    }
+  };
   
   @objc
-  public var someNumberOptional: NSNumber?;
+  public var someNumberOptional: NSNumber? {
+    willSet {
+      print(
+        "RNIDummyTestViewDelegate.someNumberOptional - newValue:",
+        newValue?.debugDescription ?? "N/A"
+      );
+    }
+  };
   
   @objc
-  public var someObject: NSDictionary = [:];
+  public var someObject: NSDictionary = [:] {
+    willSet {
+      print("RNIDummyTestViewDelegate.someObject - newValue:", newValue);
+    }
+  };
   
   @objc
-  public var someObjectOptional: NSDictionary?;
+  public var someObjectOptional: NSDictionary? {
+    willSet {
+      print(
+        "RNIDummyTestViewDelegate.someObjectOptional - newValue:",
+         newValue?.debugDescription ?? "N/A"
+      );
+    }
+  };
   
   @objc
-  public var someArray: NSArray = [];
+  public var someArray: NSArray = [] {
+    willSet {
+      print("RNIDummyTestViewDelegate.someArray - newValue:", newValue);
+    }
+  };
   
   @objc
-  public var someArrayOptional: NSArray?;
+  public var someArrayOptional: NSArray? {
+    willSet {
+      print(
+        "RNIDummyTestViewDelegate.someArrayOptional - newValue:",
+        newValue?.debugDescription ?? "N/A"
+      );
+    }
+  };
   
   // MARK: Init
   // ----------
