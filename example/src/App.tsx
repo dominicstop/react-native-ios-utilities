@@ -104,14 +104,14 @@ export default function App() {
         nativeID={'nativeID for RNIDummyTestNativeView'}
         style={[styles.box, boxStyle]}
         someBool={false}
-        someString={"abc"}
-        someStringOptional={'def'}
+        someString={(counter % 2 === 0) ? "abc" : "def"}
+        someStringOptional={(counter % 2 === 0) ? 'def' : undefined}
         someNumber={123}
-        someNumberOptional={undefined}
+        someNumberOptional={(counter % 2 === 0) ? 3.14 : undefined}
         someObject={TEST_OBJECT}
-        someObjectOptional={{}}
+        someObjectOptional={(counter % 2 === 0) ? {} : undefined}
         someArray={[1, 2, 3]}
-        someArrayOptional={[4, 5, 6]}
+        someArrayOptional={(counter % 2 === 0) ? [4, 5, 6] : undefined}
         onSomeDirectEventWithEmptyPayload={({nativeEvent}) => {
           console.log(
             "RNIDummyTestNativeView.onSomeDirectEventWithEmptyPayload",

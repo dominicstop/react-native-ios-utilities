@@ -23,7 +23,10 @@ public extension RNIContentViewDelegate where Self: StringKeyPathMapping {
             let keyPath = try? Self.getPartialKeyPath(forKey: key)
       else { return };
       
-      let newValue = dict[$0];
+      let newValue = dict[$0] is NSNull
+        ? nil
+        : dict[$0];
+      
       self.setValue(withKeyPath: keyPath, value: newValue);
     };
   };
