@@ -208,6 +208,32 @@
   return swiftLayoutMetrics;
 }
 
+/// Extract property name from setter selector
+/// E.g. `setOnEvent:` -> `onEvent`
++ (NSString *)extractPropertyNameForSetterSelector:(SEL)selector
+{
+  NSMutableString *string =
+    [NSMutableString stringWithString: NSStringFromSelector(selector)];
+  
+  [string replaceOccurrencesOfString:@"set"
+                             withString:@""
+                                options:NSLiteralSearch
+                                  range:NSMakeRange(0, 3)];
+  
+  [string replaceOccurrencesOfString:@":"
+                             withString:@""
+                                options:NSLiteralSearch
+                                  range:NSMakeRange(0, string.length)];
+  
+  NSString *firstLetterLowercased =
+    [[string substringToIndex:1] lowercaseString];
+    
+  [string replaceCharactersInRange:NSMakeRange(0,1)
+                           withString:firstLetterLowercased];
+  
+  return string;
+};
+
 + (id)alloc
 {
   [NSException raise:@"Cannot be instantiated!"

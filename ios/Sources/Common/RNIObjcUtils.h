@@ -56,5 +56,8 @@ namespace folly {
 
 + (RNILayoutMetrics *)convertToRNILayoutMetricsForPaperLayoutMetrics:(RCTLayoutMetrics)layoutMetrics
                                                     withShadowView:(RCTShadowView *)shadowView;
+                                                    
++ (NSString *)extractPropertyNameForSetterSelector:(SEL)selector;
+
 @end
 
