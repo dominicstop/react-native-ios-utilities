@@ -11,17 +11,7 @@ import DGSwiftUtilities
 @objc
 public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   
-  public enum Events: String, CaseIterable {
-    case onSomeDirectEventWithEmptyPayload;
-    case onSomeDirectEventWithObjectPayload;
-    case onSomeBubblingEventWithEmptyPayload;
-    case onSomeBubblingEventWithObjectPayload;
-  }
-  
-  // MARK: StringKeyPathMapping
-  // --------------------------
-  
-  public static var partialKeyPathMap: Dictionary<String, PartialKeyPath<RNIDummyTestViewDelegate>> {
+  public static var propKeyPathMap: Dictionary<String, PartialKeyPath<RNIDummyTestViewDelegate>> {
     return [
       "someBool": \.someBool,
       "someString": \.someString,
@@ -34,6 +24,13 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
       "someArrayOptional": \.someArrayOptional,
     ];
   };
+  
+  public enum Events: String, CaseIterable {
+    case onSomeDirectEventWithEmptyPayload;
+    case onSomeDirectEventWithObjectPayload;
+    case onSomeBubblingEventWithEmptyPayload;
+    case onSomeBubblingEventWithObjectPayload;
+  }
   
   // MARK: Properties
   // ----------------

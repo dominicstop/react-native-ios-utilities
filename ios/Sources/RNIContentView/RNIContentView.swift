@@ -14,6 +14,8 @@ public protocol RNIContentView where Self:
   
   associatedtype Events: RawRepresentable<String> & CaseIterable;
   
+  static var propKeyPathMap: Dictionary<String, PartialKeyPath<KeyPathRoot>> { get };
+  
   // MARK: - Paper Only
   // ------------------
   
