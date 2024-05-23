@@ -174,20 +174,27 @@ using namespace react;
     NSMutableArray *events =
       [NSMutableArray arrayWithArray:[self.contentDelegate _getSupportedReactEvents]];
       
+#if DEBUG
+  NSLog(
+    @"%@\n%@ %@\n%@ %@",
+    @"[RNIBaseView initCommon]",
+    @" - Class Name:", NSStringFromClass([self class]),
+    @" - Supported Events:", events
+  );
+#endif
+
     [events addObject:@"onDidSetViewID"];
     return events;
   }()];
-  
-  NSLog(@"_getSupportedReactProps: %@", [self.contentDelegate _getSupportedReactProps]);
-#endif
   
 #if DEBUG
   NSLog(
     @"%@\n%@ %@\n%@ %@",
     @"RNIBaseView.initCommon",
-    @" - className:", NSStringFromClass([self class]),
-    @" - _cmd:", NSStringFromSelector(_cmd)
+    @" - Class Name:", NSStringFromClass([self class]),
+    @" - Supported Props:", [self.contentDelegate _getSupportedReactProps]
   );
+#endif
 #endif
 }
 
