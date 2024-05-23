@@ -48,6 +48,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 // MARK: - Properties - Fabric + Paper
 // -----------------------------------
 
++ (nonnull Class<RNIContentViewDelegate>) viewDelegateClass;
+
 #if !RCT_NEW_ARCH_ENABLED
 @property (nonatomic, strong, nullable) UIView *contentView;
 #endif
@@ -77,8 +79,6 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 #endif
 
 - (void) initCommon NS_REQUIRES_SUPER;
-
-- (nonnull Class) viewDelegateClass;
 
 // MARK: - RNIContentViewParentDelegate Commands
 // ---------------------------------------------

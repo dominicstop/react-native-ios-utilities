@@ -107,7 +107,7 @@ using namespace react;
 {
   [[RNIViewRegistry shared] registerView:self];
   
-  Class viewDelegateClass = [self viewDelegateClass];
+  Class viewDelegateClass = [[self class] viewDelegateClass];
   if(![viewDelegateClass isSubclassOfClass: [UIView class]]) {
     return;
   }
@@ -616,8 +616,13 @@ using namespace react;
 // -------------------
 
 // This is meant to be overridden by the subclass
-- (Class _Nonnull)viewDelegateClass {
-  return [UIView class];
++ (Class _Nonnull)viewDelegateClass {
+  NSString *errorMessage = [NSString stringWithFormat:
+    @"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+  
+  throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                reason:errorMessage
+                              userInfo:nil];
 }
 
 // MARK: RNIViewCommandRequestHandling

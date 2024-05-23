@@ -65,7 +65,7 @@ using namespace facebook::react;
 // MARK: - RNIBaseView
 // -------------------
 
-- (Class)viewDelegateClass
++ (Class)viewDelegateClass
 {
   return [RNIDummyTestViewDelegate class];
 }
