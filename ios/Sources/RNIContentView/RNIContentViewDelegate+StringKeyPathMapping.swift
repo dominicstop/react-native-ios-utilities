@@ -10,6 +10,13 @@ import DGSwiftUtilities
 
 public extension RNIContentViewDelegate where Self: StringKeyPathMapping {
 
+  func setValue(forKey key: String, value: Any){
+    guard let keyPath = try? Self.getPartialKeyPath(forKey: key)
+    else { return };
+    
+    return self.setValue(withKeyPath: keyPath, value: value);
+  };
+
   func setValues(withDict dict: NSDictionary){
     dict.allKeys.forEach {
       guard let key = $0 as? String,
