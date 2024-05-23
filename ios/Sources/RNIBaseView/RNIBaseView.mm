@@ -177,6 +177,8 @@ using namespace react;
     [events addObject:@"onDidSetViewID"];
     return events;
   }()];
+  
+  NSLog(@"_getSupportedReactProps: %@", [self.contentDelegate _getSupportedReactProps]);
 #endif
   
 #if DEBUG

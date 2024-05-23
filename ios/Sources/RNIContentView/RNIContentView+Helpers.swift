@@ -16,6 +16,12 @@ public extension RNIContentViewDelegate where Self: RNIContentView  {
       $0.rawValue;
     };
   };
+  
+  var allSupportedPropsAsStrings: [String] {
+    Self.propKeyPathMap.map {
+      $0.key;
+    };
+  };
 
   func dispatchEvent(
     for event: Events,

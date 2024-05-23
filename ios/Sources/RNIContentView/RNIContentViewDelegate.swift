@@ -121,6 +121,9 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   
   @objc
   optional func _getSupportedReactEvents() -> [String];
+  
+  @objc
+  optional func _getSupportedReactProps() -> [String];
   #endif
 };
 
