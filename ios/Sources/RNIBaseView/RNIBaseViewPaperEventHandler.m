@@ -126,7 +126,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
     
   class_addMethod(
     self->_eventHolderClass, selector,
-    (IMP)handleSetterInvocation,
+    (IMP)_handleReactEventSetterInvocation,
     method_getTypeEncoding(method)
   );
 }
@@ -169,7 +169,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
   return self->_eventHolderInstance;
 }
 
-void handleSetterInvocation(RNIBaseViewPaperEventHolder *_self, SEL _cmd, id _arg) {
+void _handleReactEventSetterInvocation(RNIBaseViewPaperEventHolder *_self, SEL _cmd, id _arg) {
 #if DEBUG
   NSLog(
     @"%@\n%@ %@\n%@ %@\n%@ %@",
