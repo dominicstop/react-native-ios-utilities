@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RNIBaseViewPaperPropHolder : NSObject
 
-- (instancetype)initWithParentPropHandler:(RNIBaseViewPaperPropHandler *)eventHandler;
+@property (nonatomic, weak, nullable) RNIBaseViewPaperPropHandler *parentPropHandler;
+
+- (instancetype)initWithParentPropHandler:(RNIBaseViewPaperPropHandler *)propHandler;
 
 - (void)handlePropSetterCallForSelector:(SEL)selector
                           withPropValue:(id)propValue;

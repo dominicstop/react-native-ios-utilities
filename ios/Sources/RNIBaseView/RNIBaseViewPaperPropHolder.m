@@ -19,14 +19,13 @@
 
 @implementation RNIBaseViewPaperPropHolder {
   NSMutableDictionary *_propsMap;
-  __weak RNIBaseViewPaperPropHandler *_parentPropHandler;
 };
 
 - (instancetype)initWithParentPropHandler:(RNIBaseViewPaperPropHandler *)propHandler
 {
   self = [super init];
   if (self) {
-    self->_parentPropHandler = propHandler;
+    self.parentPropHandler = propHandler;
     self->_propsMap = [NSMutableDictionary new];
   };
   
