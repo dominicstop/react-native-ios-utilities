@@ -16,6 +16,9 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   // --------------------
   
   @objc
+  var reactProps: NSDictionary { set get }
+  
+  @objc
   weak var parentReactView: RNIContentViewParentDelegate? { set get }
   
   @objc
@@ -64,9 +67,6 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   // -----------------
   
   #if RCT_NEW_ARCH_ENABLED
-  @objc
-  var reactProps: NSDictionary { set get }
-  
   @objc
   optional func notifyOnUpdateProps(
     sender: RNIContentViewParentDelegate,

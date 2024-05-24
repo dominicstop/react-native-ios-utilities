@@ -65,7 +65,7 @@
 
 #if DEBUG
   NSString *parentViewClassName = ^{
-    if(!self.parentView){
+    if(self.parentView != nil){
       return NSStringFromClass([self.parentView class]);
     }
     

@@ -42,12 +42,14 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   
   public weak var parentReactView: RNIContentViewParentDelegate?;
   
-  #if RCT_NEW_ARCH_ENABLED
-  public var reactProps: NSDictionary = [:];
-  #endif
-  
   // MARK: Properties - Props
   // ------------------------
+  
+  public var reactProps: NSDictionary = [:] {
+    willSet {
+      print("RNIDummyTestViewDelegate.reactProps - newValue:", newValue);
+    }
+  };
   
   @objc
   public var someBool: Bool = false {

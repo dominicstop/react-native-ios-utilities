@@ -15,6 +15,7 @@
 #import "react-native-ios-utilities/RNIUtilitiesModule.h"
 #import "react-native-ios-utilities/RNIViewRegistry.h"
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
+#import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
@@ -462,6 +463,8 @@ using namespace react;
   NSDictionary *dictPropsNew =
     [RNIObjcUtils convertToDictForFollyDynamicMap:basePropsNew.propsMap];
     
+  self.contentDelegate.reactProps = [dictPropsNew copy];
+    
   [self.contentDelegate _notifyOnRequestToSetPropsWithSender:self
                                                       props:dictPropsNew];
   
@@ -668,6 +671,9 @@ using namespace react;
 
 - (void)didSetProps:(NSArray<NSString *> *)changedProps
 {
+  self.contentDelegate.reactProps =
+    [self.reactPropHandler.propHolder.propsMap copy];
+    
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
     && [self.contentDelegate respondsToSelector:
