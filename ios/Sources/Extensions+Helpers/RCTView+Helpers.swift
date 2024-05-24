@@ -5,8 +5,7 @@
 //  Created by Dominic Go on 11/2/23.
 //
 
-import ExpoModulesCore
-
+import React
 
 public extension RCTView {
   
