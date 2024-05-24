@@ -10,6 +10,8 @@
 #import "RNIBaseViewPaperPropHolder.h"
 #import "RNIBaseView.h"
 
+#import "react-native-ios-utilities/RNIObjcUtils.h"
+
 #import <objc/runtime.h>
 
 
@@ -72,6 +74,21 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
 
 // TBI: createSettersForProps
 
+- (void)setPropTypeMap:(NSDictionary *)propTypeMap
+{
+  [propTypeMap enumerateKeysAndObjectsUsingBlock:^(NSString *propName, NSString *propType, BOOL *stop) {
+    BOOL isTypeBool =
+      [propType localizedCaseInsensitiveContainsString:@"bool"];
+      
+    if(isTypeBool){
+      NSString *setterName =
+        [RNIObjcUtils createSetterSelectorStringForPropertyName:propName];
+        
+      [self->_boolSettersToPropNameMap setObject:propName
+                                          forKey:setterName];
+    };
+  }];
+}
 // MARK: Functions - Internal
 // --------------------------
 

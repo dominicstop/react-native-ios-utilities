@@ -193,6 +193,11 @@ using namespace react;
     return events;
   }()];
   
+  NSDictionary *propTypeMap =
+    [self.contentDelegate _getSupportedReactPropsTypeMap];
+    
+  [self.reactPropHandler setPropTypeMap:propTypeMap];
+  
 #if DEBUG
   NSLog(
     @"%@\n%@ %@\n%@ %@",

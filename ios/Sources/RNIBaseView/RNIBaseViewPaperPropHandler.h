@@ -15,4 +15,6 @@
 
 - (nonnull instancetype)initWithParentRef:(nonnull RNIBaseView *)parentView;
 
+- (void)setPropTypeMap:(nonnull NSDictionary *)propTypeMap;
+
 @end
