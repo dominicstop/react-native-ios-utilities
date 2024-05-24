@@ -19,6 +19,8 @@
   __weak RNIBaseView *_parentView;
   Class  _propHolderClass;
   RNIBaseViewPaperPropHolder *_propHolderInstance;
+  
+  NSMutableDictionary *_boolSettersToPropNameMap;
 };
 
 static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
@@ -36,6 +38,7 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
   self = [[self class] new];
   if(self){
     self->_parentView = parentView;
+    self->_boolSettersToPropNameMap = [NSMutableDictionary new];
     
     NSString *className = ^{
       NSString *refClassName = NSStringFromClass([parentView class]);
@@ -89,6 +92,15 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
     };
   }];
 }
+
+- (BOOL)isBoolSetterForSelector:(SEL)selector
+{
+  NSString *selectorString = NSStringFromSelector(selector);
+  id match = [self->_boolSettersToPropNameMap valueForKey:selectorString];
+  
+  return match != nil;
+}
+
 // MARK: Functions - Internal
 // --------------------------
 
@@ -153,6 +165,13 @@ void _handleReactPropSetterInvocation(
       return (__bridge id)_arg;
     };
     
+    BOOL isSettingBoolProperty =
+      [_self.parentPropHandler isBoolSetterForSelector:_cmd];
+      
+    if(!isSettingBoolProperty){
+      return (__bridge id)_arg;
+    };
+    
     // assume _arg is a BOOL?
     return (id)[NSNumber numberWithInt:(int)(size_t)_arg];
   }();
@@ -165,7 +184,6 @@ void _handleReactPropSetterInvocation(
     @" - arg _cmd:", NSStringFromSelector(_cmd),
     @" - arg _arg:", boxedValue
   );
-  
 #endif
 
   [_self handlePropSetterCallForSelector:_cmd
