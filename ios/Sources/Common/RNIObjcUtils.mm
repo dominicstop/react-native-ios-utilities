@@ -234,6 +234,21 @@
   return string;
 };
 
++ (NSString *)createSetterSelectorStringForPropertyName:(NSString *)propertyName
+{
+  NSMutableString *setterName = [NSMutableString stringWithString:@"set"];
+    
+  [setterName appendString:^(){
+    NSString *firstLetter = [propertyName substringToIndex:1];
+    return [firstLetter capitalizedString];
+  }()];
+  
+  [setterName appendString: [propertyName substringFromIndex:1]];
+  [setterName appendString:@":"];
+  
+  return setterName;
+}
+
 + (id)alloc
 {
   [NSException raise:@"Cannot be instantiated!"

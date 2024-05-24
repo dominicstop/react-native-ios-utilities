@@ -59,5 +59,7 @@ namespace folly {
                                                     
 + (NSString *)extractPropertyNameForSetterSelector:(SEL)selector;
 
++ (NSString *)createSetterSelectorStringForPropertyName:(NSString *)propertyName;
+
 @end
 

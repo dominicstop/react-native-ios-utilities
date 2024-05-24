@@ -10,6 +10,8 @@
 #import "RNIBaseViewPaperEventHolder.h"
 #import "RNIBaseView.h"
 
+#import "react-native-ios-utilities/RNIObjcUtils.h"
+
 #import <objc/runtime.h>
 
 
@@ -74,15 +76,8 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
 - (void)createSettersForEvents:(NSArray *)events
 {
   for (NSString *eventName in events) {
-    NSMutableString *setterName = [NSMutableString stringWithString:@"set"];
-    
-    [setterName appendString:^(){
-      NSString *firstLetter = [eventName substringToIndex:1];
-      return [firstLetter capitalizedString];
-    }()];
-    
-    [setterName appendString: [eventName substringFromIndex:1]];
-    [setterName appendString:@":"];
+    NSString *setterName =
+      [RNIObjcUtils createSetterSelectorStringForPropertyName:eventName];
     
     SEL setterSelector = NSSelectorFromString(setterName);
     [self createSetterForSelector: setterSelector];
