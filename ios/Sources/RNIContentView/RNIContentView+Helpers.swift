@@ -22,6 +22,12 @@ public extension RNIContentViewDelegate where Self: RNIContentView  {
       $0.key;
     };
   };
+  
+  var allSupportedPropsTypeMap: [String: String] {
+    return Self.propKeyPathMap.reduce(into: [:]) { (result, tuple) in
+      result[tuple.key] = tuple.value.valueTypeAsString;
+    }
+  };
 
   func dispatchEvent(
     for event: Events,

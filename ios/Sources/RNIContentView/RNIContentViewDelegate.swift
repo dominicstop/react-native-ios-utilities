@@ -126,6 +126,9 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   optional func _getSupportedReactProps() -> [String];
   
   @objc
+  optional func _getSupportedReactPropsTypeMap() -> [String: String];
+  
+  @objc
   optional func _notifyOnRequestToSetProp(
     sender: RNIContentViewParentDelegate,
     propName: String,

@@ -65,6 +65,14 @@ fileprivate extension UIView {
     return _self.allSupportedPropsAsStrings;
   };
   
+  func _getSupportedReactPropsTypeMap() -> [String: String] {
+    guard let _self = self as? (any RNIContentView) else {
+      return [:];
+    };
+    
+    return _self.allSupportedPropsTypeMap;
+  };
+  
   func _notifyOnRequestToSetProp(
     sender: RNIContentViewParentDelegate,
     propName: String,
