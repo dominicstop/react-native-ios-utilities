@@ -198,12 +198,15 @@ using namespace react;
     
   [self.reactPropHandler setPropTypeMap:propTypeMap];
   
+  NSArray *propList = [self.contentDelegate _getSupportedReactProps];
+  [self.reactPropHandler createSettersForProps:propList];
+  
 #if DEBUG
   NSLog(
     @"%@\n%@ %@\n%@ %@",
     @"RNIBaseView.initCommon",
     @" - Class Name:", NSStringFromClass([self class]),
-    @" - Supported Props:", [self.contentDelegate _getSupportedReactProps]
+    @" - Supported Props:", propList
   );
 #endif
 #endif

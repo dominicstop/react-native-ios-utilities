@@ -75,7 +75,27 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
 // MARK: Functions - Public
 // ------------------------
 
-// TBI: createSettersForProps
+- (void)createSettersForProps:(NSArray *)props
+{
+  for (NSString *propName in props) {
+    NSString *setterName =
+      [RNIObjcUtils createSetterSelectorStringForPropertyName:propName];
+    
+    SEL setterSelector = NSSelectorFromString(setterName);
+    [self createSetterForSelector: setterSelector];
+    
+#if DEBUG
+    NSLog(
+      @"%@\n%@ %@\n%@ %@\n%@ %@\n%@ %@",
+      @"[RNIBaseViewPaperEventHandler createSettersForProps]",
+      @" - self._propHolderClass:", NSStringFromClass(self->_propHolderClass),
+      @" - propName:", propName,
+      @" - setterName:", setterName,
+      @" - setterSelector:", NSStringFromSelector(setterSelector)
+    );
+#endif
+  };
+};
 
 - (void)setPropTypeMap:(NSDictionary *)propTypeMap
 {
@@ -152,8 +172,6 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
   
   return self->_propHolderInstance;
 }
-
-
 
 void _handleReactPropSetterInvocation(
   RNIBaseViewPaperPropHolder *_self,
