@@ -18,8 +18,6 @@
 @implementation RNIBaseViewPaperPropHandler {
   __weak RNIBaseView *_parentView;
   Class  _propHolderClass;
-  RNIBaseViewPaperPropHolder *_propHolderInstance;
-  
   NSMutableDictionary *_boolSettersToPropNameMap;
 };
 
@@ -66,7 +64,7 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
     }();
     
     self->_propHolderClass = associatedClass;
-    self->_propHolderInstance = [[associatedClass new] initWithParentPropHandler:self];
+    self.propHolder = [[associatedClass new] initWithParentPropHandler:self];
   };
   
   return self;
@@ -148,7 +146,7 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
   
   BOOL shouldAddMethodForSelector =
        isSelectorSetter
-    && ![self->_propHolderInstance respondsToSelector:aSelector];
+    && ![self.propHolder respondsToSelector:aSelector];
     
 #if DEBUG
   NSLog(
@@ -170,7 +168,7 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
     [self createSetterForSelector: aSelector];
   };
   
-  return self->_propHolderInstance;
+  return self.propHolder;
 }
 
 void _handleReactPropSetterInvocation(

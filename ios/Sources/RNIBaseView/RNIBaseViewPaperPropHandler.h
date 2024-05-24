@@ -7,11 +7,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class RNIBaseViewPaperPropHolder;
 @class RNIBaseView;
 
 @interface RNIBaseViewPaperPropHandler : NSObject
 
 @property (nonatomic, weak, nullable) RNIBaseView *parentView;
+
+@property (nonatomic, strong, nonnull) RNIBaseViewPaperPropHolder *propHolder;
 
 - (nonnull instancetype)initWithParentRef:(nonnull RNIBaseView *)parentView;
 
