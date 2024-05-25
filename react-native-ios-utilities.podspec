@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   s.dependency 'React-RCTAppDelegate' if reactNativeTargetVersion >= 71
   s.dependency 'React-NativeModulesApple' if reactNativeTargetVersion >= 72
 
-  s.dependency 'DGSwiftUtilities', '~> 0.20'
+  s.dependency 'DGSwiftUtilities', '~> 0.21'
   s.dependency 'ComputableLayout', '~> 0.7'
 
   if fabric_enabled
