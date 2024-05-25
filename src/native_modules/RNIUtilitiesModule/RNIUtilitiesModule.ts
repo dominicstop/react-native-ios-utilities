@@ -75,6 +75,24 @@ export function getModuleSharedValue(
 
   return RNIUtilitiesModule.getModuleSharedValue(moduleName, key);
 };
+
+export function setModuleSharedValue(
+  moduleName: string,
+  key: string,
+  newValue: SupportedNativeValue
+){
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.getModuleSharedValue == null){
+    throw "RNIUtilitiesModule.setModuleSharedValue is null";
+  };
+
+  return RNIUtilitiesModule.setModuleSharedValue(moduleName, key, newValue);
+};
+  
+};
 export default {
   viewCommandRequest,
   moduleCommandRequest,
