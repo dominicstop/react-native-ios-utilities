@@ -89,6 +89,7 @@ std::vector<jsi::PropNameID> RNIUtilitiesTurboModule::getPropertyNames(
   properties.push_back(jsi::PropNameID::forUtf8(rt, "dummyFunction"));
   properties.push_back(jsi::PropNameID::forUtf8(rt, "viewCommandRequest"));
   properties.push_back(jsi::PropNameID::forUtf8(rt, "moduleCommandRequest"));
+  properties.push_back(jsi::PropNameID::forUtf8(rt, "getModuleSharedValue"));
 
   return properties;
 }
@@ -321,9 +322,9 @@ jsi::Value RNIUtilitiesTurboModule::getModuleSharedValue(
   size_t count
 ) {
 
-  if (count < 2) {
+  if (count < 2 || count > 2) {
     throw jsi::JSError(rt,
-      RNI_DEBUG_MESSAGE("Requires 3 arguments")
+      RNI_DEBUG_MESSAGE("Requires 2 arguments")
     );
   }
   
@@ -349,12 +350,12 @@ jsi::Value RNIUtilitiesTurboModule::getModuleSharedValue(
     );
   }();
 
-  auto value = getModuleSharedValue_(
+  auto resultDyn = getModuleSharedValue_(
     /* moduleName : */ moduleName,
     /* key:       : */ key
   );
   
-  return jsi::Value::undefined();
+  return jsi::valueFromDynamic(rt, resultDyn);
 };
 
 } // namespace RNScreens
