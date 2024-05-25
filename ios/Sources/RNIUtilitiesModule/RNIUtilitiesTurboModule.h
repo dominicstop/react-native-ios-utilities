@@ -26,20 +26,36 @@ using ViewCommandRequestFunction = std::function<void(
   /* reject     : */ Reject
 )>;
 
+using ModuleCommandRequestFunction = std::function<void(
+  /* moduleName : */ std::string,
+  /* commandName: */ std::string,
+  /* commandArgs: */ folly::dynamic,
+  /* resolve    : */ Resolve,
+  /* reject     : */ Reject
+)>;
+
 class RNIUtilitiesTurboModule : public jsi::HostObject {
 
-static std::function<void(int)> dummyFunction_;
-static ViewCommandRequestFunction viewCommandRequest_;
+  static std::function<void(int)> dummyFunction_;
+  static ViewCommandRequestFunction viewCommandRequest_;
+  static ModuleCommandRequestFunction moduleCommandRequest_;
 
- public:
+  public:
   static const char MODULE_NAME[];
+  
+// MARK: - Init + Deinit
+// ---------------------
   
   RNIUtilitiesTurboModule(
     std::function<void(int)> dummyFunction,
-    ViewCommandRequestFunction viewCommandRequest
+    ViewCommandRequestFunction viewCommandRequest,
+    ModuleCommandRequestFunction moduleCommandRequest
   );
   
   ~RNIUtilitiesTurboModule() override;
+  
+// MARK: - JSI Conformance
+// -----------------------
   
   void set(
     jsi::Runtime &,
@@ -56,6 +72,9 @@ static ViewCommandRequestFunction viewCommandRequest_;
     jsi::Runtime &rt
   ) override;
   
+// MARK: - Commands
+// ----------------
+  
   static jsi::Value dummyFunction(
     jsi::Runtime &rt,
     const jsi::Value &thisValue,
@@ -64,6 +83,13 @@ static ViewCommandRequestFunction viewCommandRequest_;
   );
   
   static jsi::Value viewCommandRequest(
+    jsi::Runtime &rt,
+    const jsi::Value &thisValue,
+    const jsi::Value *arguments,
+    size_t count
+  );
+  
+  static jsi::Value moduleCommandRequest(
     jsi::Runtime &rt,
     const jsi::Value &thisValue,
     const jsi::Value *arguments,

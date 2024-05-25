@@ -123,10 +123,41 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                           resolve:resolveBlock
                            reject:rejectBlock];
   };
+  
+  const RNIUtilities::ModuleCommandRequestFunction &moduleCommandRequest = [weakSelf](
+    std::string moduleName,
+    std::string commandName,
+    folly::dynamic commandArgs,
+    RNIUtilities::Resolve resolve,
+    RNIUtilities::Reject reject
+  ) {
+    if(weakSelf == nil){
+      reject("Reference to RNIUtilitiesModule is nil");
+    };
+    
+    RNIPromiseResolveBlock resolveBlock = ^(NSDictionary *result) {
+      folly::dynamic resultDyn = react::convertIdToFollyDynamic(result);
+      resolve(resultDyn);
+    };
+    
+    RNIPromiseRejectBlock rejectBlock = ^(NSString *errorMessage) {
+      reject([errorMessage UTF8String]);
+    };
+    
+    NSDictionary *commandArgsDict = react::convertFollyDynamicToId(commandArgs);
+    
+    [weakSelf
+      moduleCommandForModuleName:[NSString stringWithUTF8String:moduleName.c_str()]
+                     commandName:[NSString stringWithUTF8String:commandName.c_str()]
+                 withCommandArgs:commandArgsDict
+                         resolve:resolveBlock
+                          reject:rejectBlock];
+  };
 
   auto moduleHostObject = std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(
     dummyFunction,
-    viewCommandRequest
+    viewCommandRequest,
+    moduleCommandRequest
   );
           
   auto moduleObject =
@@ -193,6 +224,25 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                           withArguments:commandArgs
                                 resolve:resolveBlock
                                  reject:rejectBlock];
+}
+
+- (void)moduleCommandForModuleName:(NSString *)moduleName
+                       commandName:(NSString *)commandName
+                   withCommandArgs:(NSDictionary *)commandArgs
+                           resolve:(RNIPromiseResolveBlock)resolveBlock
+                            reject:(RNIPromiseRejectBlock)rejectBlock
+{
+#if DEBUG
+  NSLog(
+      @"%@\n%@ %@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
+      @"[RNIUtilitiesModule moduleCommandForModuleName]",
+      @" - arg commandName:", commandName,
+      @" - arg commandName:", commandName,
+      @" - arg [commandArgs count]:", [commandArgs count],
+      @" - arg [commandArgs allKeys]:", [commandArgs allKeys],
+      @" - arg commandArgs:", commandArgs
+  );
+#endif
 }
 
 // MARK: RCTBridgeModule
