@@ -8,9 +8,11 @@
 import Foundation
 import DGSwiftUtilities
 
+
 public let RNIUtilitiesManagerShared = RNIUtilitiesManager.shared;
 
-public final class RNIUtilitiesManager {
+@objc
+public final class RNIUtilitiesManager: NSObject {
   
   public static let shared: RNIUtilitiesManager = .init();
   
@@ -102,5 +104,13 @@ public final class RNIUtilitiesManager {
         oldEntries: oldSharedEnv
       );
     };
+  };
+  
+  // MARK: Visible in Obj-C
+  // ----------------------
+  
+  @objc(shared)
+  public static var sharedInstance: RNIUtilitiesManager {
+    return Self.shared;
   };
 };

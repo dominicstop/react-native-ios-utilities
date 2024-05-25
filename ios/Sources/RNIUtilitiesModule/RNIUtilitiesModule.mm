@@ -6,6 +6,7 @@
 //
 
 #import "RNIUtilitiesModule.h"
+#import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/RNIViewRegistry.h"
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 
@@ -284,6 +285,7 @@ RCT_EXTERN void RCTRegisterModule(Class);
 +(void)load
 {
   RCTRegisterModule(self);
+  [[RNIUtilitiesManager class] shared];
 }
 
 @end
