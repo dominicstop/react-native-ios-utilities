@@ -39,6 +39,7 @@ public final class RNIUtilitiesManager: NSObject {
   public override init(){
     super.init();
     self._setupRegisterEventDelegates();
+    self._setupRegisterModuleRequestHandlers();
     
     #if DEBUG
     self._setupDebugObservers();
@@ -157,11 +158,18 @@ public final class RNIUtilitiesManager: NSObject {
   ) {
     do {
       guard let moduleDelegate = self.commandRequestDelegateMap[moduleName] else {
+        let commandRequestDelegates = self.commandRequestDelegateMap.allDelegates.map {
+          "\($0.self)"
+        };
+        
         throw RNIUtilitiesError(
           errorCode: .unexpectedNilValue,
-          description: "No associated command found for the provided `commandName`",
+          description: "No associated module found for the provided `moduleName`",
           extraDebugValues: [
+            "moduleName": moduleName,
             "commandName": commandName,
+            "commandRequestDelegateMap": commandRequestDelegates,
+            "commandRequestDelegateMap.delegateCount": self.commandRequestDelegateMap.delegateCount
           ]
         );
       };

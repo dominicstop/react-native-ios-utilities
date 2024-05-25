@@ -4,22 +4,52 @@ import { default as NativeRNIUtilitiesModule } from './NativeRNIUtilitiesModule'
 // the module to load in the native side.
 NativeRNIUtilitiesModule;
 
-export type RNIUtilitiesModuleCommands = {
-  dummyFunction: (someNumber: number) => void;
-  viewCommandRequest: (
-    viewID: string,
-    commandName: string,
-    commandArgs: Record<string, any>
-  ) => Promise<void>;
+const RNIUtilitiesModuleName = "RNIUtilitiesModule";
+const RNIUtilitiesModule = (global as any)[RNIUtilitiesModuleName];
 
-  moduleCommandRequest: (
-    moduleName: string,
-    commandName: string,
-    commandArgs: Record<string, any>
-  ) => Promise<void>;
+async function viewCommandRequest<T = Record<string, unknown>>(
+  viewID: string,
+  commandName: string,
+  commandArgs: Record<string, any>
+): Promise<T> {
+
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.viewCommandRequest == null){
+    throw "RNIUtilitiesModule.viewCommandRequest is null";
+  };
+
+  return await RNIUtilitiesModule.viewCommandRequest(
+    viewID,
+    commandName,
+    commandArgs
+  );
 };
 
-export const RNIUtilitiesModuleName = "RNIUtilitiesModule";
+async function moduleCommandRequest<T = Record<string, unknown>>(
+  moduleName: string,
+  commandName: string,
+  commandArgs: Record<string, any>
+): Promise<T> {
 
-export const RNIUtilitiesModule: 
-  RNIUtilitiesModuleCommands = (global as any)[RNIUtilitiesModuleName];
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.moduleCommandRequest == null){
+    throw "RNIUtilitiesModule.moduleCommandRequest is null";
+  };
+
+  return await RNIUtilitiesModule.moduleCommandRequest(
+    moduleName,
+    commandName,
+    commandArgs
+  );
+};
+
+export default {
+  viewCommandRequest,
+  moduleCommandRequest
+};
