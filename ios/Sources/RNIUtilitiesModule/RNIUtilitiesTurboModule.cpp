@@ -22,6 +22,8 @@ namespace RNIUtilities {
 std::function<void(int)> RNIUtilitiesTurboModule::dummyFunction_;
 ViewCommandRequestFunction RNIUtilitiesTurboModule::viewCommandRequest_;
 ModuleCommandRequestFunction RNIUtilitiesTurboModule::moduleCommandRequest_;
+GetModuleSharedValueFunction RNIUtilitiesTurboModule::getModuleSharedValue_;
+
 
 const char RNIUtilitiesTurboModule::MODULE_NAME[] = "RNIUtilitiesModule";
 
@@ -31,11 +33,13 @@ const char RNIUtilitiesTurboModule::MODULE_NAME[] = "RNIUtilitiesModule";
 RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
   std::function<void(int)> dummyFunction,
   ViewCommandRequestFunction viewCommandRequest,
-  ModuleCommandRequestFunction moduleCommandRequest
+  ModuleCommandRequestFunction moduleCommandRequest,
+  GetModuleSharedValueFunction getModuleSharedValue
 ) {
   dummyFunction_ = dummyFunction;
   viewCommandRequest_ = viewCommandRequest;
   moduleCommandRequest_ = moduleCommandRequest;
+  getModuleSharedValue_ = getModuleSharedValue;
 }
 
 RNIUtilitiesTurboModule::~RNIUtilitiesTurboModule(){
@@ -61,6 +65,10 @@ jsi::Value RNIUtilitiesTurboModule::get(
   
   if(propName == "moduleCommandRequest"){
     return jsi::Function::createFromHostFunction(rt, name, 3, moduleCommandRequest);
+  };
+  
+  if(propName == "getModuleSharedValue"){
+    return jsi::Function::createFromHostFunction(rt, name, 2, getModuleSharedValue);
   };
   
   return jsi::Value::undefined();
@@ -304,6 +312,49 @@ jsi::Value RNIUtilitiesTurboModule::moduleCommandRequest(
   );
   
   return promise.callAsConstructor(rt, promiseFunction);
+};
+
+jsi::Value RNIUtilitiesTurboModule::getModuleSharedValue(
+  jsi::Runtime &rt,
+  const jsi::Value &thisValue,
+  const jsi::Value *arguments,
+  size_t count
+) {
+
+  if (count < 2) {
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Requires 3 arguments")
+    );
+  }
+  
+  std::string moduleName = [&rt, &arguments]{
+    if (arguments[0].isString()){
+      auto jsString = arguments[0].asString(rt);
+      return jsString.utf8(rt);
+    };
+    
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Argument passed to `moduleName` param must be a string literal")
+    );
+  }();
+  
+  std::string key = [&rt, &arguments]{
+    if (arguments[1].isString()){
+      auto jsString = arguments[1].asString(rt);
+      return jsString.utf8(rt);
+    };
+    
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Argument passed to `key` param must be a string literal")
+    );
+  }();
+
+  auto value = getModuleSharedValue_(
+    /* moduleName : */ moduleName,
+    /* key:       : */ key
+  );
+  
+  return jsi::Value::undefined();
 };
 
 } // namespace RNScreens

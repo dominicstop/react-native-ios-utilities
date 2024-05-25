@@ -154,11 +154,20 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                          resolve:resolveBlock
                           reject:rejectBlock];
   };
+  
+  const RNIUtilities::GetModuleSharedValueFunction &getModuleSharedValue = [weakSelf](
+    std::string moduleName,
+    std::string key
+  ) {
+    folly::dynamic dyn = folly::dynamic();
+    return dyn;
+  };
 
   auto moduleHostObject = std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(
     dummyFunction,
     viewCommandRequest,
-    moduleCommandRequest
+    moduleCommandRequest,
+    getModuleSharedValue
   );
           
   auto moduleObject =

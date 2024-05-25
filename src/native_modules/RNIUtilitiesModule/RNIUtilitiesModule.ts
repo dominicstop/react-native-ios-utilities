@@ -7,6 +7,18 @@ NativeRNIUtilitiesModule;
 const RNIUtilitiesModuleName = "RNIUtilitiesModule";
 const RNIUtilitiesModule = (global as any)[RNIUtilitiesModuleName];
 
+type SupportedNativePrimitiveValue = 
+  | string
+  | number
+  | boolean;
+
+type SupportedNativeValue = 
+  | SupportedNativePrimitiveValue
+  | Record<string, SupportedNativePrimitiveValue>
+  | Array<SupportedNativePrimitiveValue>;
+
+type SharedNativeValueMap = Record<string, SupportedNativeValue>;
+
 async function viewCommandRequest<T = Record<string, unknown>>(
   viewID: string,
   commandName: string,
@@ -49,7 +61,22 @@ async function moduleCommandRequest<T = Record<string, unknown>>(
   );
 };
 
+export function getModuleSharedValue(
+  moduleName: string,
+  key: string,
+): SupportedNativeValue{
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.getModuleSharedValue == null){
+    throw "RNIUtilitiesModule.getModuleSharedValue is null";
+  };
+
+  return RNIUtilitiesModule.getModuleSharedValue(moduleName, key);
+};
 export default {
   viewCommandRequest,
-  moduleCommandRequest
+  moduleCommandRequest,
+  getModuleSharedValue
 };
