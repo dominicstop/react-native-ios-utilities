@@ -30,11 +30,11 @@ using namespace facebook;
 using namespace react;
 #endif
 
-static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
-
 @implementation RNIUtilitiesModule {
   BOOL _didInstallHostObject;
 }
+
+static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
 
 #ifdef RCT_NEW_ARCH_ENABLED
 @synthesize viewRegistry_DEPRECATED = _viewRegistry_DEPRECATED;
@@ -183,15 +183,15 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                              reject:(RNIPromiseRejectBlock)rejectBlock
 {
 #if DEBUG
-    NSLog(
-      @"%@\n%@ %@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
-      @"[RNIUtilitiesModule viewCommandRequestForViewID]",
-      @" - arg viewID:", viewID,
-      @" - arg commandName:", commandName,
-      @" - arg [commandArgs count]:", [commandArgs count],
-      @" - arg [commandArgs allKeys]:", [commandArgs allKeys],
-      @" - arg commandArgs:", commandArgs
-    );
+  NSLog(
+    @"%@\n%@ %@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
+    @"[RNIUtilitiesModule viewCommandRequestForViewID]",
+    @" - arg viewID:", viewID,
+    @" - arg commandName:", commandName,
+    @" - arg [commandArgs count]:", [commandArgs count],
+    @" - arg [commandArgs allKeys]:", [commandArgs allKeys],
+    @" - arg commandArgs:", commandArgs
+  );
 #endif
 
   UIView *match = [[RNIViewRegistry shared] getViewForViewID:viewID];
