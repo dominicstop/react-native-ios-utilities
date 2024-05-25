@@ -13,6 +13,10 @@ public let RNIUtilitiesManagerShared = RNIUtilitiesManager.shared;
 
 @objc
 public final class RNIUtilitiesManager: NSObject {
+
+  public typealias Resolve = RNIModuleCommandRequestHandling.Resolve;
+  
+  public typealias Reject = RNIModuleCommandRequestHandling.Reject;
   
   public static let shared: RNIUtilitiesManager = .init();
   
@@ -23,21 +27,25 @@ public final class RNIUtilitiesManager: NSObject {
   
   public var eventDelegates =
     MulticastDelegate<RNIUtilitiesManagerEventsNotifiable>();
+    
+  public var commandRequestDelegateMap =
+    MappedMulticastDelegate<String, any RNIModuleCommandRequestHandling>();
   
   public var _debugBridgeReloadCounter = 0;
   
   // MARK: - Init + Setup
   // --------------------
   
-  public init(){
-    self._setupRegisterDelegates();
+  public override init(){
+    super.init();
+    self._setupRegisterEventDelegates();
     
     #if DEBUG
     self._setupDebugObservers();
     #endif
   };
   
-  func _setupRegisterDelegates(){
+  func _setupRegisterEventDelegates(){
     let singletonClasses =
       ClassRegistry.allClasses.getClasses(ofType: Singleton.Type.self);
       
@@ -51,6 +59,31 @@ public final class RNIUtilitiesManager: NSObject {
     
     delegateSingletons.forEach {
       self.eventDelegates.add($0);
+    };
+    
+    self.eventDelegates.add(self);
+  };
+  
+  func _setupRegisterModuleRequestHandlers(){
+    let singletonClasses =
+      ClassRegistry.allClasses.getClasses(ofType: Singleton.Type.self);
+      
+    let conformingSingletons: [
+      any RNIModuleCommandRequestHandling
+    ] = singletonClasses.compactMap {
+    
+      guard let delegateType = $0 as? any RNIModuleCommandRequestHandling.Type,
+            delegateType != RNIUtilitiesManager.self
+      else { return nil };
+      
+      return delegateType.shared;
+    };
+    
+    conformingSingletons.forEach {
+      self.commandRequestDelegateMap.add(
+        forKey: type(of: $0).moduleName,
+        withDelegate: $0
+      );
     };
     
     self.eventDelegates.add(self);
@@ -112,5 +145,35 @@ public final class RNIUtilitiesManager: NSObject {
   @objc(shared)
   public static var sharedInstance: RNIUtilitiesManager {
     return Self.shared;
+  };
+  
+  @objc(notifyForModuleCommandRequestForModuleName:commandName:withArguments:resolve:reject:)
+  public func notifyForModuleCommandRequest(
+    forModuleName moduleName: String,
+    commandName: String,
+    withArguments commandArgs: [String: Any],
+    resolve resolveBlock: Resolve,
+    reject rejectBlock: Reject
+  ) {
+    do {
+      guard let moduleDelegate = self.commandRequestDelegateMap[moduleName] else {
+        throw RNIUtilitiesError(
+          errorCode: .unexpectedNilValue,
+          description: "No associated command found for the provided `commandName`",
+          extraDebugValues: [
+            "commandName": commandName,
+          ]
+        );
+      };
+      
+      try moduleDelegate.invokePromiseCommand(
+        named: commandName,
+        withCommandArguments: commandArgs,
+        resolve: resolveBlock
+      );
+      
+    } catch {
+      rejectBlock(error.localizedDescription);
+    };
   };
 };

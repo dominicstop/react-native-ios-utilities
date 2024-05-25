@@ -15,12 +15,17 @@ public protocol RNIModuleCommandRequestHandling: Singleton {
   // -----------
 
   associatedtype ClassType = Self;
+  
+  typealias CommandArguments = Dictionary<String, Any>;
 
-  typealias Resolve = (_ payload: Dictionary<String, Any>) -> Void;
+  typealias Resolve = (_ payload: CommandArguments) -> Void;
   
   typealias Reject = (_ errorMessage: String) -> Void;
   
-  typealias Promise = (_ resolve: Resolve, _ reject: Reject) -> Void;
+  typealias Promise = (
+    _ payload: CommandArguments,
+    _ resolve: Resolve
+  ) throws -> Void;
   
   typealias PromiseCommand = (_ instance: ClassType) -> Promise;
   

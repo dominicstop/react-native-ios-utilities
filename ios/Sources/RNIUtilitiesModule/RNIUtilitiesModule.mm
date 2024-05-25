@@ -244,6 +244,12 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
       @" - arg commandArgs:", commandArgs
   );
 #endif
+  RNIUtilitiesManager *manager = [[RNIUtilitiesManager class] shared];
+  [manager notifyForModuleCommandRequestForModuleName:moduleName
+                                          commandName:commandName
+                                        withArguments:commandArgs
+                                              resolve:resolveBlock
+                                               reject:rejectBlock];
 }
 
 // MARK: RCTBridgeModule

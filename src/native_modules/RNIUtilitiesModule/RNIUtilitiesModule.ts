@@ -11,6 +11,12 @@ export type RNIUtilitiesModuleCommands = {
     commandName: string,
     commandArgs: Record<string, any>
   ) => Promise<void>;
+
+  moduleCommandRequest: (
+    moduleName: string,
+    commandName: string,
+    commandArgs: Record<string, any>
+  ) => Promise<void>;
 };
 
 export const RNIUtilitiesModuleName = "RNIUtilitiesModule";

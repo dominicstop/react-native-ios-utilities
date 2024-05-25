@@ -60,7 +60,7 @@ jsi::Value RNIUtilitiesTurboModule::get(
   };
   
   if(propName == "moduleCommandRequest"){
-    return jsi::Function::createFromHostFunction(rt, name, 3, viewCommandRequest);
+    return jsi::Function::createFromHostFunction(rt, name, 3, moduleCommandRequest);
   };
   
   return jsi::Value::undefined();
@@ -279,7 +279,7 @@ jsi::Value RNIUtilitiesTurboModule::moduleCommandRequest(
       return rejectValue->asObject(rt).asFunction(rt);
     }();
     
-    viewCommandRequest_(
+    moduleCommandRequest_(
       moduleName,
       commandName,
       commandArgs,
