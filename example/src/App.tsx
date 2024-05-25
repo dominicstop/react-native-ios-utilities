@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 
-import { NativeModules, StyleSheet, Text, View, type ViewStyle } from 'react-native';
-import { RNIDummyTestNativeView, RNIUtilitiesModule } from 'react-native-ios-utilities';
+import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
+import { RNIDummyTestNativeView, RNIUtilitiesModule, RNIDummyTestViewModule } from 'react-native-ios-utilities';
 
 const TEST_OBJECT = {
   someBool: true,
@@ -11,10 +11,12 @@ const TEST_OBJECT = {
   someDouble: 3.14,
 
   someArrayEmpty: [],
+  someArrayNull: null,
+  someArrayUndefined: undefined,
   someArrayString: ['abc', 'def', 'ghi'],
   someArrayInt: [123, 456, 789],
   someArrayDouble: [3.14, 0.25, 0.5],
-  someArrayMixed: ['abc', 123, 3.14, true, {}, []],
+  someArrayMixed: ['abc', 123, 3.14, true, {}, [], null, undefined],
 
   someObjectEmpty: {},
   someObjectString: {
@@ -33,14 +35,29 @@ const TEST_OBJECT = {
     key3: 0.5,
   },
   someObjectMixed: {
-    key1: 'abc',
-    key2: 123,
-    key3: 3.14,
-    key4: true,
-    key5: [],
-    key6: {},
+    key1WithStringValue: 'abc',
+    key2WithIntValue: 123,
+    key3WithDoubleValue: 3.14,
+    key4WithBooleanValue: true,
+    key5WithEmptyObjectValue: [],
+    key6WithEmptyObjectValue: {},
+    key7WithNullValue: null,
+    key7WithUndefinedValue: undefined,
   },
 };
+
+const TEST_ARRAY = [
+  true,
+  false,
+  123,
+  3.14,
+  -100,
+  "hello world",
+  "abc",
+  null,
+  undefined,
+  TEST_OBJECT,
+];
 
 
 export default function App() {
@@ -52,11 +69,11 @@ export default function App() {
     const isUsingNewArch = nativeFabricUIManager != null;
 
     console.log(`isUsingNewArch: ${isUsingNewArch}`);
-    console.log(Object.keys(global));
-    console.log('global.RNIUtilitiesModule', global.RNIUtilitiesModule);
-    console.log('global.RNIUtilitiesModule.dummyFunction', global.RNIUtilitiesModule?.dummyFunction);
-    console.log('global.RNIUtilitiesModule.dummyFunction()', global.RNIUtilitiesModule?.dummyFunction?.(0));
-    console.log('global.RNIUtilitiesModule.viewCommandRequest', global.RNIUtilitiesModule?.viewCommandRequest);
+    console.log('global: ', Object.keys(global));
+    // console.log('global.RNIUtilitiesModule', global.RNIUtilitiesModule);
+    // console.log('global.RNIUtilitiesModule.dummyFunction', global.RNIUtilitiesModule?.dummyFunction);
+    // console.log('global.RNIUtilitiesModule.dummyFunction()', global.RNIUtilitiesModule?.dummyFunction?.(0));
+    // console.log('global.RNIUtilitiesModule.viewCommandRequest', global.RNIUtilitiesModule?.viewCommandRequest);
     //console.log('global.NativeModules.RNIUtilitiesModule:', NativeModules.RNIUtilitiesModule);
     console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule ?? []));
     
@@ -70,6 +87,27 @@ export default function App() {
       );
       console.log("viewCommandRequest:", result);
     }, 1000);
+
+    setTimeout(async () => {
+
+      console.log(
+        "Module.somePromiseCommandThatWillAlwaysResolve",
+        "\n - invoking..."
+      );
+
+      const result = await RNIDummyTestViewModule.somePromiseCommandThatWillAlwaysResolve(
+        /* someString: */ "abc",
+        /* someNumber: */ 123,
+        /* someBool  : */ true,
+        /* someObject: */ TEST_OBJECT,
+        /* someArray : */ TEST_ARRAY,
+      );
+
+      console.log(
+        "Module.somePromiseCommandThatWillAlwaysResolve",
+        "\n - result:", result
+      );
+    }, 500);
   }, []);
 
   const [counter, setCounter] = React.useState(0);
@@ -110,7 +148,7 @@ export default function App() {
         someNumberOptional={(counter % 2 === 0) ? 3.14 : undefined}
         someObject={TEST_OBJECT}
         someObjectOptional={(counter % 2 === 0) ? {} : undefined}
-        someArray={[1, 2, 3]}
+        someArray={TEST_ARRAY}
         someArrayOptional={(counter % 2 === 0) ? [4, 5, 6] : undefined}
         onSomeDirectEventWithEmptyPayload={({nativeEvent}) => {
           console.log(
