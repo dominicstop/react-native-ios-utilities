@@ -91,10 +91,25 @@ export function setModuleSharedValue(
 
   return RNIUtilitiesModule.setModuleSharedValue(moduleName, key, newValue);
 };
-  
+
+export function getModuleSharedValues(
+  moduleName: string,
+  key: string,
+): SharedNativeValueMap {
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.getModuleSharedValues == null){
+    throw "RNIUtilitiesModule.getModuleSharedValues is null";
+  };
+
+  return RNIUtilitiesModule.getModuleSharedValues(moduleName, key);
 };
 export default {
   viewCommandRequest,
   moduleCommandRequest,
-  getModuleSharedValue
+  getModuleSharedValue,
+  setModuleSharedValue,
+  getModuleSharedValues,
 };

@@ -24,7 +24,7 @@ ViewCommandRequestFunction RNIUtilitiesTurboModule::viewCommandRequest_;
 ModuleCommandRequestFunction RNIUtilitiesTurboModule::moduleCommandRequest_;
 GetModuleSharedValueFunction RNIUtilitiesTurboModule::getModuleSharedValue_;
 SetModuleSharedValueFunction RNIUtilitiesTurboModule::setModuleSharedValue_;
-
+GetModuleSharedValuesFunction RNIUtilitiesTurboModule::getModuleSharedValues_;
 
 const char RNIUtilitiesTurboModule::MODULE_NAME[] = "RNIUtilitiesModule";
 
@@ -36,13 +36,15 @@ RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
   ViewCommandRequestFunction viewCommandRequest,
   ModuleCommandRequestFunction moduleCommandRequest,
   GetModuleSharedValueFunction getModuleSharedValue,
-  SetModuleSharedValueFunction setModuleSharedValue
+  SetModuleSharedValueFunction setModuleSharedValue,
+  GetModuleSharedValuesFunction getModuleSharedValues
 ) {
   dummyFunction_ = dummyFunction;
   viewCommandRequest_ = viewCommandRequest;
   moduleCommandRequest_ = moduleCommandRequest;
   getModuleSharedValue_ = getModuleSharedValue;
-  setModuleSharedValue_ = setModuleSharedValue_;
+  setModuleSharedValue_ = setModuleSharedValue;
+  getModuleSharedValues_ = getModuleSharedValues;
 }
 
 RNIUtilitiesTurboModule::~RNIUtilitiesTurboModule(){
@@ -78,6 +80,10 @@ jsi::Value RNIUtilitiesTurboModule::get(
     return jsi::Function::createFromHostFunction(rt, name, 3, setModuleSharedValue);
   };
   
+  if(propName == "getModuleSharedValues"){
+    return jsi::Function::createFromHostFunction(rt, name, 2, getModuleSharedValues);
+  };
+  
   return jsi::Value::undefined();
 }
 
@@ -98,6 +104,7 @@ std::vector<jsi::PropNameID> RNIUtilitiesTurboModule::getPropertyNames(
   properties.push_back(jsi::PropNameID::forUtf8(rt, "moduleCommandRequest"));
   properties.push_back(jsi::PropNameID::forUtf8(rt, "getModuleSharedValue"));
   properties.push_back(jsi::PropNameID::forUtf8(rt, "setModuleSharedValue"));
+  properties.push_back(jsi::PropNameID::forUtf8(rt, "getModuleSharedValues"));
 
   return properties;
 }
@@ -413,6 +420,55 @@ jsi::Value RNIUtilitiesTurboModule::setModuleSharedValue(
   );
   
   return jsi::Value::undefined();
+};
+
+jsi::Value RNIUtilitiesTurboModule::getModuleSharedValues(
+  jsi::Runtime &rt,
+  const jsi::Value &thisValue,
+  const jsi::Value *arguments,
+  size_t count
+) {
+
+  if (count < 2 || count > 2) {
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Requires 2 arguments")
+    );
+  }
+  
+  std::string moduleName = [&rt, &arguments]{
+    if (arguments[0].isString()){
+      auto jsString = arguments[0].asString(rt);
+      return jsString.utf8(rt);
+    };
+    
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Argument passed to `moduleName` param must be a string literal")
+    );
+  }();
+  
+  std::string key = [&rt, &arguments]{
+    if (arguments[1].isString()){
+      auto jsString = arguments[1].asString(rt);
+      return jsString.utf8(rt);
+    };
+    
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Argument passed to `key` param must be a string literal")
+    );
+  }();
+
+  auto resultDyn = getModuleSharedValues_(
+    /* moduleName : */ moduleName,
+    /* key:       : */ key
+  );
+  
+  if(resultDyn.type() != folly::dynamic::OBJECT){
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("The value returned by the module is not an object")
+    );
+  };
+  
+  return jsi::valueFromDynamic(rt, resultDyn);
 };
 
 } // namespace RNScreens
