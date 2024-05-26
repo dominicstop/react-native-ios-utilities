@@ -33,6 +33,9 @@ public final class RNIUtilitiesManager: NSObject {
   
   public var _debugBridgeReloadCounter = 0;
   
+  
+  public var moduleNameToSharedValuesMap: NSMutableDictionary = [:];
+  
   // MARK: - Init + Setup
   // --------------------
   
@@ -138,6 +141,19 @@ public final class RNIUtilitiesManager: NSObject {
         oldEntries: oldSharedEnv
       );
     };
+  };
+  
+  func getModuleSharedValues(forModuleName moduleName: String) -> NSMutableDictionary {
+    if let match = self.moduleNameToSharedValuesMap[moduleName],
+       let sharedValues = match as? NSMutableDictionary {
+       
+      return sharedValues;
+    };
+      
+    let sharedValues = NSMutableDictionary();
+    self.moduleNameToSharedValuesMap[moduleName] = sharedValues;
+    
+    return sharedValues;
   };
   
   // MARK: Visible in Obj-C
