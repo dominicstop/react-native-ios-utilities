@@ -106,6 +106,23 @@ export function getModuleSharedValues(
 
   return RNIUtilitiesModule.getModuleSharedValues(moduleName, key);
 };
+
+export function setModuleSharedValues(
+  moduleName: string,
+  key: string,
+  newValues: SharedNativeValueMap
+) {
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.getModuleSharedValues == null){
+    throw "RNIUtilitiesModule.setModuleSharedValues is null";
+  };
+
+  return RNIUtilitiesModule.setModuleSharedValues(moduleName, key, newValues);
+};
+
 export default {
   viewCommandRequest,
   moduleCommandRequest,

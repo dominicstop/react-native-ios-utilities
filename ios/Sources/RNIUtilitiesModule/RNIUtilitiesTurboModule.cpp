@@ -25,6 +25,7 @@ ModuleCommandRequestFunction RNIUtilitiesTurboModule::moduleCommandRequest_;
 GetModuleSharedValueFunction RNIUtilitiesTurboModule::getModuleSharedValue_;
 SetModuleSharedValueFunction RNIUtilitiesTurboModule::setModuleSharedValue_;
 GetModuleSharedValuesFunction RNIUtilitiesTurboModule::getModuleSharedValues_;
+SetModuleSharedValuesFunction RNIUtilitiesTurboModule::setModuleSharedValues_;
 
 const char RNIUtilitiesTurboModule::MODULE_NAME[] = "RNIUtilitiesModule";
 
@@ -37,7 +38,8 @@ RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
   ModuleCommandRequestFunction moduleCommandRequest,
   GetModuleSharedValueFunction getModuleSharedValue,
   SetModuleSharedValueFunction setModuleSharedValue,
-  GetModuleSharedValuesFunction getModuleSharedValues
+  GetModuleSharedValuesFunction getModuleSharedValues,
+  SetModuleSharedValuesFunction setModuleSharedValues
 ) {
   dummyFunction_ = dummyFunction;
   viewCommandRequest_ = viewCommandRequest;
@@ -45,6 +47,7 @@ RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
   getModuleSharedValue_ = getModuleSharedValue;
   setModuleSharedValue_ = setModuleSharedValue;
   getModuleSharedValues_ = getModuleSharedValues;
+  setModuleSharedValues_ = setModuleSharedValues;
 }
 
 RNIUtilitiesTurboModule::~RNIUtilitiesTurboModule(){
@@ -469,6 +472,63 @@ jsi::Value RNIUtilitiesTurboModule::getModuleSharedValues(
   };
   
   return jsi::valueFromDynamic(rt, resultDyn);
+};
+
+jsi::Value RNIUtilitiesTurboModule::setModuleSharedValues(
+  jsi::Runtime &rt,
+  const jsi::Value &thisValue,
+  const jsi::Value *arguments,
+  size_t count
+) {
+
+  if (count < 3 || count > 3) {
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Requires 3 arguments")
+    );
+  }
+  
+  std::string moduleName = [&rt, &arguments]{
+    if (arguments[0].isString()){
+      auto jsString = arguments[0].asString(rt);
+      return jsString.utf8(rt);
+    };
+    
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Argument passed to `moduleName` param must be a string literal")
+    );
+  }();
+  
+  std::string key = [&rt, &arguments]{
+    if (arguments[1].isString()){
+      auto jsString = arguments[1].asString(rt);
+      return jsString.utf8(rt);
+    };
+    
+    throw jsi::JSError(rt,
+      RNI_DEBUG_MESSAGE("Argument passed to `key` param must be a string literal")
+    );
+  }();
+  
+  folly::dynamic valueDyn = [&rt, &arguments]{
+    auto value = jsi::Value(rt, arguments[2]);
+    auto valueDyn = jsi::dynamicFromValue(rt, value);
+    
+    if(valueDyn.type() != folly::dynamic::OBJECT){
+      throw jsi::JSError(rt,
+        RNI_DEBUG_MESSAGE("Argument passed to `values` param must be an object")
+      );
+    };
+    
+    return valueDyn;
+  }();
+  
+  setModuleSharedValues_(
+    /* moduleName : */ moduleName,
+    /* key        : */ key,
+    /* values     : */ valueDyn
+  );
+  
+  return jsi::Value::undefined();
 };
 
 } // namespace RNScreens

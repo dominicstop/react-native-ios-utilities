@@ -180,6 +180,14 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     folly::dynamic dyn = folly::dynamic();
     return dyn;
   };
+  
+  const RNIUtilities::SetModuleSharedValuesFunction &setModuleSharedValues = [weakSelf](
+    std::string moduleName,
+    std::string key,
+    folly::dynamic valueDyn
+  ) {
+    // TODO: WIP - Stub/Dummy Impl.
+  };
 
   auto moduleHostObject = std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(
     dummyFunction,
@@ -187,7 +195,8 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     moduleCommandRequest,
     getModuleSharedValue,
     setModuleSharedValue,
-    getModuleSharedValues
+    getModuleSharedValues,
+    setModuleSharedValues
   );
           
   auto moduleObject =

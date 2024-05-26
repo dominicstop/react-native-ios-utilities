@@ -50,6 +50,12 @@ using GetModuleSharedValuesFunction = std::function<folly::dynamic(
   /* key        : */ std::string
 )>;
 
+using SetModuleSharedValuesFunction = std::function<void(
+  /* moduleName : */ std::string,
+  /* key        : */ std::string,
+  /* values     : */ folly::dynamic
+)>;
+
 
 class RNIUtilitiesTurboModule : public jsi::HostObject {
 
@@ -59,6 +65,7 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
   static GetModuleSharedValueFunction getModuleSharedValue_;
   static SetModuleSharedValueFunction setModuleSharedValue_;
   static GetModuleSharedValuesFunction getModuleSharedValues_;
+  static SetModuleSharedValuesFunction setModuleSharedValues_;
 
   public:
   static const char MODULE_NAME[];
@@ -72,7 +79,8 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
     ModuleCommandRequestFunction moduleCommandRequest,
     GetModuleSharedValueFunction getModuleSharedValue,
     SetModuleSharedValueFunction setModuleSharedValue,
-    GetModuleSharedValuesFunction getModuleSharedValues
+    GetModuleSharedValuesFunction getModuleSharedValues,
+    SetModuleSharedValuesFunction setModuleSharedValues
   );
   
   ~RNIUtilitiesTurboModule() override;
@@ -134,6 +142,13 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
   );
   
   static jsi::Value getModuleSharedValues(
+    jsi::Runtime &rt,
+    const jsi::Value &thisValue,
+    const jsi::Value *arguments,
+    size_t count
+  );
+  
+  static jsi::Value setModuleSharedValues(
     jsi::Runtime &rt,
     const jsi::Value &thisValue,
     const jsi::Value *arguments,
