@@ -161,11 +161,19 @@ public final class RNIUtilitiesManager: NSObject {
   public func getModuleSharedValues(
     forModuleName moduleName: String
   ) -> NSMutableDictionary {
-  
-    if let match = self.moduleNameToSharedValuesMap[moduleName],
-       let sharedValues = match as? NSMutableDictionary {
-       
-      return sharedValues;
+    
+    var sharedValuesForModule: NSMutableDictionary?;
+    
+    self.serialQueue.sync {
+      guard let match = self.moduleNameToSharedValuesMap[moduleName],
+            let sharedValues = match as? NSMutableDictionary
+      else { return };
+    
+      sharedValuesForModule = sharedValues;
+    };
+    
+    if let sharedValuesForModule = sharedValuesForModule {
+      return sharedValuesForModule;
     };
 
     let initialValues = {
@@ -199,7 +207,6 @@ public final class RNIUtilitiesManager: NSObject {
     reject rejectBlock: Reject
   ) {
     do {
-    
       guard let moduleDelegate = self.getModuleDelegate(forKey: moduleName) else {
         let commandRequestDelegates = self.commandRequestDelegateMap.allDelegates.map {
           "\($0.self)"
