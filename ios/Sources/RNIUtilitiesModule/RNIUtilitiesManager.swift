@@ -20,6 +20,8 @@ public final class RNIUtilitiesManager: NSObject {
   
   public static let shared: RNIUtilitiesManager = .init();
   
+  public let serialQueue = DispatchQueue(label: "RNIUtilitiesManagerQueue");
+  
   // MARK: - Properties
   // ------------------
   
@@ -143,15 +145,42 @@ public final class RNIUtilitiesManager: NSObject {
     };
   };
   
-  func getModuleSharedValues(forModuleName moduleName: String) -> NSMutableDictionary {
+  func getModuleDelegate(forKey key: String) -> (any RNIModuleCommandRequestHandling)? {
+    var match: (any RNIModuleCommandRequestHandling)?;
+    
+    self.serialQueue.sync {
+      match = self.commandRequestDelegateMap[key];
+    };
+    
+    return match;
+  };
+  
+  func setModuleSharedValues(forKey key: String, value: NSMutableDictionary){
+    self.serialQueue.sync {
+      self.moduleNameToSharedValuesMap[key] = value;
+    };
+  };
+  
+  public func getModuleSharedValues(
+    forModuleName moduleName: String
+  ) -> NSMutableDictionary {
+  
     if let match = self.moduleNameToSharedValuesMap[moduleName],
        let sharedValues = match as? NSMutableDictionary {
        
       return sharedValues;
     };
+
+    let initialValues = {
+      guard let moduleDelegate = self.getModuleDelegate(forKey: moduleName) else {
+        return [:];
+      };
       
-    let sharedValues = NSMutableDictionary();
-    self.moduleNameToSharedValuesMap[moduleName] = sharedValues;
+      return type(of: moduleDelegate).initialSharedValues;
+    }();
+    
+    let sharedValues = NSMutableDictionary(dictionary: initialValues);
+    self.setModuleSharedValues(forKey: moduleName, value: sharedValues);
     
     return sharedValues;
   };
@@ -173,7 +202,8 @@ public final class RNIUtilitiesManager: NSObject {
     reject rejectBlock: Reject
   ) {
     do {
-      guard let moduleDelegate = self.commandRequestDelegateMap[moduleName] else {
+    
+      guard let moduleDelegate = self.getModuleDelegate(forKey: moduleName) else {
         let commandRequestDelegates = self.commandRequestDelegateMap.allDelegates.map {
           "\($0.self)"
         };

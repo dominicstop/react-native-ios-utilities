@@ -35,4 +35,6 @@ public protocol RNIModuleCommandRequestHandling: Singleton {
   static var moduleName: String { get };
   
   static var commandMapPromise: [String: PromiseCommand] { get };
+  
+  static var initialSharedValues: [String: Any] { get };
 };

@@ -11,17 +11,22 @@ import DGSwiftUtilities
 
 final class RNIDummyTestViewModuleRequestHandler: RNIModuleCommandRequestHandling {
 
- static let moduleName = "RNIDummyTestViewModule";
+  static let moduleName = "RNIDummyTestViewModule";
 
- static let commandMapPromise = [
+  static let commandMapPromise = [
    "somePromiseCommandThatWillAlwaysResolve":
       ClassType.somePromiseCommandThatWillAlwaysResolve,
       
    "somePromiseCommandThatWillAlwaysReject":
       ClassType.somePromiseCommandThatWillAlwaysReject,
- ];
-
- static var shared: ClassType = .init();
+  ];
+  
+  static var initialSharedValues: [String : Any] {
+    return [
+      "someNumber": 1,
+    ];
+  };
+  
 
   func somePromiseCommandThatWillAlwaysResolve(
     commandArgs: CommandArguments,
