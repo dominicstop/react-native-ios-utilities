@@ -33,17 +33,17 @@ public extension RNIModuleCommandRequestHandling {
   // MARK: "Shared Values"-Related
   // -----------------------------
   
-  var sharedValues: FauxDictionary<String, Any> {
-    .init { key, value in
-      self.setSharedValue(forKey: key, withValue: value);
-      
-    } getter: { key in
-      self.getSharedValue(forKey: key);
-    };
+  var sharedValues: NSMutableDictionary {
+    let shared =  RNIUtilitiesManager.shared;
+    let result = shared.getModuleSharedValues(
+      forModuleName: Self.moduleName
+    );
+    
+    return result;
   };
   
   func getSharedValue(forKey key: String) -> Any? {
-    let sharedValues = RNIUtilitiesManagerShared.getModuleSharedValues(
+    let sharedValues = RNIUtilitiesManager.shared.getModuleSharedValues(
       forModuleName: Self.moduleName
     );
     
@@ -51,7 +51,7 @@ public extension RNIModuleCommandRequestHandling {
   };
   
   func setSharedValue(forKey key: String, withValue value: Any?){
-    let sharedValues = RNIUtilitiesManagerShared.getModuleSharedValues(
+    let sharedValues = RNIUtilitiesManager.shared.getModuleSharedValues(
       forModuleName: Self.moduleName
     );
     
@@ -59,7 +59,7 @@ public extension RNIModuleCommandRequestHandling {
   };
   
   func overwriteSharedValues(withDict dict: Dictionary<String, Any>){
-    let sharedValues = RNIUtilitiesManagerShared.getModuleSharedValues(
+    let sharedValues = RNIUtilitiesManager.shared.getModuleSharedValues(
       forModuleName: Self.moduleName
     );
     
@@ -68,7 +68,7 @@ public extension RNIModuleCommandRequestHandling {
   };
   
   func clearSharedValues(){
-    let sharedValues = RNIUtilitiesManagerShared.getModuleSharedValues(
+    let sharedValues = RNIUtilitiesManager.shared.getModuleSharedValues(
       forModuleName: Self.moduleName
     );
     

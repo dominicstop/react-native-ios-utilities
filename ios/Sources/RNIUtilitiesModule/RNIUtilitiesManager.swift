@@ -9,8 +9,6 @@ import Foundation
 import DGSwiftUtilities
 
 
-public let RNIUtilitiesManagerShared = RNIUtilitiesManager.shared;
-
 @objc
 public final class RNIUtilitiesManager: NSObject {
 
@@ -34,7 +32,6 @@ public final class RNIUtilitiesManager: NSObject {
     MappedMulticastDelegate<String, any RNIModuleCommandRequestHandling>();
   
   public var _debugBridgeReloadCounter = 0;
-  
   
   public var moduleNameToSharedValuesMap: NSMutableDictionary = [:];
   
