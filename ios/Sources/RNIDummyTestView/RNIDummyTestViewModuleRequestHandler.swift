@@ -27,6 +27,18 @@ final class RNIDummyTestViewModuleRequestHandler: RNIModuleCommandRequestHandlin
     ];
   };
   
+  static let shared: ClassType = .init();
+  
+  init(){
+    let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+      let someNumber =
+        self.getSharedValue(forKey: "someNumber") as? Int ?? 0;
+      self.setSharedValue(
+        forKey: "someNumber",
+        withValue: someNumber + 1
+      );
+    }
+  };
 
   func somePromiseCommandThatWillAlwaysResolve(
     commandArgs: CommandArguments,

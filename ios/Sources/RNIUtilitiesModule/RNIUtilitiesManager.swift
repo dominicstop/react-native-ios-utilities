@@ -227,4 +227,14 @@ public final class RNIUtilitiesManager: NSObject {
       rejectBlock(error.localizedDescription);
     };
   };
+  
+  @objc(getModuleSharedValueForModuleNamed:forKey:)
+  public func getModuleSharedValue(
+    forModuleNamed moduleName: String,
+    forKey key: String
+  ) -> Any {
+  
+    let sharedValues = self.getModuleSharedValues(forModuleName: moduleName);
+    return sharedValues[key] as Any;
+  };
 };

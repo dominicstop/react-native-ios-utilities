@@ -89,7 +89,14 @@ export default function App() {
     }, 1000);
 
     setTimeout(async () => {
+    }, 500);
 
+    const intervalID = setInterval(() => {
+      const result = RNIDummyTestViewModule.getSharedValueSomeNumber();
+      console.log("RNIDummyTestViewModule.getSharedValueSomeNumber:", result);
+    }, 500);
+
+    setTimeout(async () => {
       console.log(
         "Module.somePromiseCommandThatWillAlwaysResolve",
         "\n - invoking..."

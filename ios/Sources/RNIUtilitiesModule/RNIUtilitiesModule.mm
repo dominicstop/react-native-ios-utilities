@@ -159,9 +159,17 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     std::string moduleName,
     std::string key
   ) {
-    // TODO: WIP - Stub/Dummy Impl.
-    folly::dynamic dyn = folly::dynamic();
-    return dyn;
+    
+    if(weakSelf == nil){
+      folly::dynamic resultDyn = nullptr;
+      return resultDyn;
+    };
+    
+    id result =
+      [weakSelf getModuleSharedValueForModuleName:[NSString stringWithUTF8String:moduleName.c_str()]
+                                          withKey:[NSString stringWithUTF8String:key.c_str()]];
+    
+    return react::convertIdToFollyDynamic(result);
   };
   
   const RNIUtilities::SetModuleSharedValueFunction &setModuleSharedValue = [weakSelf](
@@ -290,6 +298,14 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                                                reject:rejectBlock];
 }
 
+- (id)getModuleSharedValueForModuleName:(NSString *)moduleName
+                                withKey:(NSString *)key
+{
+  RNIUtilitiesManager *manager = [RNIUtilitiesManager shared];
+  return [manager getModuleSharedValueForModuleNamed:moduleName
+                                              forKey:key];
+}
+
 // MARK: RCTBridgeModule
 // ---------------------
 
@@ -329,7 +345,6 @@ RCT_EXTERN void RCTRegisterModule(Class);
 +(void)load
 {
   RCTRegisterModule(self);
-  [[RNIUtilitiesManager class] shared];
 }
 
 @end

@@ -33,7 +33,15 @@ async function somePromiseCommandThatWillAlwaysReject(){
   );
 };
 
+export function getSharedValueSomeNumber(){
+  return RNIUtilitiesModule.getModuleSharedValue(
+    MODULE_NAME,  
+    "someNumber"
+  );
+};
+
 export default {
   somePromiseCommandThatWillAlwaysResolve,
-  somePromiseCommandThatWillAlwaysReject
+  somePromiseCommandThatWillAlwaysReject,
+  getSharedValueSomeNumber
 };
