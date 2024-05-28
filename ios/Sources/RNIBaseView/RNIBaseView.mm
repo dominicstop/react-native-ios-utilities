@@ -17,8 +17,7 @@
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 #import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 
-#import <react-native-ios-utilities/RNIObjcUtils.h>
-
+#import "react-native-ios-utilities/RNIObjcUtils.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #include "RNIBaseViewState.h"
@@ -46,6 +45,8 @@
 using namespace facebook;
 using namespace react;
 #endif
+
+static BOOL SHOULD_LOG = NO;
 
 @interface RNIBaseView () <RNIContentViewParentDelegate>
 @end
@@ -92,15 +93,13 @@ using namespace react;
     self.reactPropHandler =
       [[RNIBaseViewPaperPropHandler new] initWithParentRef:self];
     
-#if DEBUG
-    NSLog(
+    RNILog(
       @"%@\n%@ %d\n%@ %@\n%@ %@",
       @"RNIBaseView.layoutSubviews",
       @" - self.reactSubviews count:", (int)[self.reactSubviews count],
       @" - self.cachedShadowView:", self.cachedShadowView,
       @" - self.frame:", NSStringFromCGRect(self.frame)
     );
-#endif
     
     [self initCommon];
   };
@@ -181,14 +180,12 @@ using namespace react;
     NSMutableArray *events =
       [NSMutableArray arrayWithArray:[self.contentDelegate _getSupportedReactEvents]];
       
-#if DEBUG
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@",
     @"[RNIBaseView initCommon]",
     @" - Class Name:", NSStringFromClass([self class]),
     @" - Supported Events:", events
   );
-#endif
 
     [events addObject:@"onDidSetViewID"];
     return events;
@@ -202,14 +199,12 @@ using namespace react;
   NSArray *propList = [self.contentDelegate _getSupportedReactProps];
   [self.reactPropHandler createSettersForProps:propList];
   
-#if DEBUG
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@",
     @"RNIBaseView.initCommon",
     @" - Class Name:", NSStringFromClass([self class]),
     @" - Supported Props:", propList
   );
-#endif
 #endif
 }
 
@@ -609,7 +604,7 @@ using namespace react;
     [self _notifyDelegateForLayoutMetricsUpdate];
   };
   
-  NSLog(
+  RNILog(
     @"%@\n%@ %d\n%@ %@\n%@ %@\n%@ %@",
     @"RNIBaseView.layoutSubviews",
     @" - self.reactSubviews count:", (int)[self.reactSubviews count],

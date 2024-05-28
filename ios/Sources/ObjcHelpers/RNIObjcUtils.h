@@ -35,6 +35,17 @@ namespace folly {
 }
 #endif
 
+#ifdef DEBUG
+#define RNILog(...)     \
+  if(SHOULD_LOG){       \
+    NSLog(__VA_ARGS__); \
+  };
+#else
+#define RNILog(...) /* no-op */
+#endif
+
+
+
 @interface RNIObjcUtils : NSObject
 #if __cplusplus
 + (std::string)convertToCxxStringForObjcString:(NSString *)string;

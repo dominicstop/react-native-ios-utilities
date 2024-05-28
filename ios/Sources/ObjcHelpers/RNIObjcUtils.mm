@@ -24,6 +24,8 @@
 #import <React/RCTShadowView+Layout.h>
 
 
+static BOOL SHOULD_LOG = NO;
+
 @implementation RNIObjcUtils
 #if __cplusplus
 + (std::string)convertToCxxStringForObjcString:(NSString *)string
@@ -83,7 +85,7 @@
     }
   }
   
-  NSLog(@"Unsupported data type in folly::dynamic");
+  RNILog(@"Unsupported data type in folly::dynamic");
   return nil;
 }
 

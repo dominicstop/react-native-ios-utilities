@@ -15,6 +15,7 @@
 #import "RNIBaseView.h"
 #endif
 
+static BOOL SHOULD_LOG = NO;
 
 @implementation RNIBaseViewPaperEventHolder {
   NSMutableDictionary *_eventMap;
@@ -55,7 +56,7 @@
     return NSStringFromClass([self->_parentEventHandler.parentView class]);
   }();
   
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@\n%@ %@\n%@ %@\n%@ %@",
     @"RNIBaseViewEventHolder.registerEventEmitterForSelector",
     @" - arg selector:", NSStringFromSelector(selector),

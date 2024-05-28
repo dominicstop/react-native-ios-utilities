@@ -16,6 +16,7 @@
 #import "RNIBaseView.h"
 #endif
 
+static BOOL SHOULD_LOG = NO;
 
 @implementation RNIBaseViewPaperPropHolder {
   NSMutableDictionary *_propsMap;
@@ -72,7 +73,7 @@
     return @"N/A";
   }();
   
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@\n%@ %@\n%@ %@\n%@ %@\n%@ %@",
     @"RNIBaseViewPaperPropHolder.handlePropSetterCallForSelector",
     @" - arg selector:", NSStringFromSelector(selector),

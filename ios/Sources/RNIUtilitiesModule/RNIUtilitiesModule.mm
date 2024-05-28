@@ -9,6 +9,7 @@
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/RNIViewRegistry.h"
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
+#import <react-native-ios-utilities/RNIObjcUtils.h>
 
 #import <React/RCTBridge+Private.h>
 #import <React/RCTBridge.h>
@@ -29,6 +30,8 @@
 using namespace facebook;
 using namespace react;
 #endif
+
+static BOOL SHOULD_LOG = NO;
 
 @implementation RNIUtilitiesModule {
   BOOL _didInstallHostObject;
@@ -235,8 +238,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                             resolve:(RNIPromiseResolveBlock)resolveBlock
                              reject:(RNIPromiseRejectBlock)rejectBlock
 {
-#if DEBUG
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
     @"[RNIUtilitiesModule viewCommandRequestForViewID]",
     @" - arg viewID:", viewID,
@@ -245,7 +247,6 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     @" - arg [commandArgs allKeys]:", [commandArgs allKeys],
     @" - arg commandArgs:", commandArgs
   );
-#endif
 
   UIView *match = [[RNIViewRegistry shared] getViewForViewID:viewID];
   if(match == nil){
@@ -286,17 +287,16 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                            resolve:(RNIPromiseResolveBlock)resolveBlock
                             reject:(RNIPromiseRejectBlock)rejectBlock
 {
-#if DEBUG
-  NSLog(
-      @"%@\n%@ %@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
-      @"[RNIUtilitiesModule moduleCommandForModuleName]",
-      @" - arg commandName:", commandName,
-      @" - arg commandName:", commandName,
-      @" - arg [commandArgs count]:", [commandArgs count],
-      @" - arg [commandArgs allKeys]:", [commandArgs allKeys],
-      @" - arg commandArgs:", commandArgs
+  RNILog(
+    @"%@\n%@ %@\n%@ %@\n%@ %lu\n%@ %@\n%@ %@",
+    @"[RNIUtilitiesModule moduleCommandForModuleName]",
+    @" - arg commandName:", commandName,
+    @" - arg commandName:", commandName,
+    @" - arg [commandArgs count]:", [commandArgs count],
+    @" - arg [commandArgs allKeys]:", [commandArgs allKeys],
+    @" - arg commandArgs:", commandArgs
   );
-#endif
+
   RNIUtilitiesManager *manager = [[RNIUtilitiesManager class] shared];
   [manager notifyForModuleCommandRequestForModuleName:moduleName
                                           commandName:commandName

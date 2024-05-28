@@ -14,6 +14,7 @@
 
 #import <objc/runtime.h>
 
+static BOOL SHOULD_LOG = NO;
 
 @implementation RNIBaseViewPaperEventHandler {
   __weak RNIBaseView *_parentView;
@@ -82,8 +83,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
     SEL setterSelector = NSSelectorFromString(setterName);
     [self createSetterForSelector: setterSelector];
     
-#if DEBUG
-    NSLog(
+    RNILog(
       @"%@\n%@ %@\n%@ %@\n%@ %@\n%@ %@",
       @"RNIBaseViewPaperEventHandler.createSettersForEvents",
       @" - self._eventHolderClass:", NSStringFromClass(self->_eventHolderClass),
@@ -91,7 +91,6 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
       @" - setterName:", setterName,
       @" - setterSelector:", NSStringFromSelector(setterSelector)
     );
-#endif
   };
 };
 
@@ -141,8 +140,7 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
        !shouldForwardToBaseView
     && ![self->_eventHolderInstance respondsToSelector:aSelector];
     
-#if DEBUG
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@\n%@ %d\n%@ %d\n%@ %d",
     @"RNIBaseViewEventHandler.forwardingTargetForSelector",
     @" - arg aSelector:", NSStringFromSelector(aSelector),
@@ -151,7 +149,6 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
     @" - shouldForwardToBaseView:", shouldForwardToBaseView,
     @" - shouldAddMethodForSelector:", shouldAddMethodForSelector
   );
-#endif
   
   if(shouldForwardToBaseView){
     return self->_parentView;
@@ -165,15 +162,13 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
 }
 
 void _handleReactEventSetterInvocation(RNIBaseViewPaperEventHolder *_self, SEL _cmd, id _arg) {
-#if DEBUG
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@\n%@ %@",
     @"RNIBaseViewEventHolder.registerEventEmitterForSelector",
     @" - arg _self:", _self,
     @" - arg _cmd:", NSStringFromSelector(_cmd),
     @" - arg _arg:", _arg
   );
-#endif
 
   [_self registerEventEmitterForSelector:_cmd
                         withEventEmitter:_arg];

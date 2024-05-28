@@ -8,6 +8,9 @@
 #import "RNIViewRegistry.h"
 #import "RNIRegistrableView.h"
 
+#import "react-native-ios-utilities/RNIObjcUtils.h"
+
+static BOOL SHOULD_LOG = NO;
 
 @implementation RNIViewRegistry {
   NSMapTable *_viewRegistry;
@@ -39,15 +42,13 @@
   view.viewID = viewID;
   [self->_viewRegistry setObject:view forKey:viewID];
   
-#if DEBUG
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@\n%@ %lu",
     @"RNIViewRegistry.registerView",
     @" - Class Name:", NSStringFromClass([view class]),
     @" - viewID:", viewID,
     @" - View Registry Count:", [self->_viewRegistry count]
   );
-#endif
 }
 
 - (UIView *)getViewForViewID:(NSString *)viewID

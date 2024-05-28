@@ -14,6 +14,7 @@
 
 #import <objc/runtime.h>
 
+static BOOL SHOULD_LOG = NO;
 
 @implementation RNIBaseViewPaperPropHandler {
   __weak RNIBaseView *_parentView;
@@ -82,8 +83,7 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
     SEL setterSelector = NSSelectorFromString(setterName);
     [self createSetterForSelector: setterSelector];
     
-#if DEBUG
-    NSLog(
+    RNILog(
       @"%@\n%@ %@\n%@ %@\n%@ %@\n%@ %@",
       @"[RNIBaseViewPaperEventHandler createSettersForProps]",
       @" - self._propHolderClass:", NSStringFromClass(self->_propHolderClass),
@@ -91,7 +91,6 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
       @" - setterName:", setterName,
       @" - setterSelector:", NSStringFromSelector(setterSelector)
     );
-#endif
   };
 };
 
@@ -148,8 +147,7 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
        isSelectorSetter
     && ![self.propHolder respondsToSelector:aSelector];
     
-#if DEBUG
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@\n%@ %d\n%@ %d\n%@ %d",
     @"RNIBaseViewPaperPropHandler.forwardingTargetForSelector",
     @" - arg aSelector:", NSStringFromSelector(aSelector),
@@ -158,7 +156,6 @@ static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
     @" - shouldForwardToBaseView:", shouldForwardToBaseView,
     @" - shouldAddMethodForSelector:", shouldAddMethodForSelector
   );
-#endif
   
   if(shouldForwardToBaseView){
     return self->_parentView;
@@ -192,15 +189,13 @@ void _handleReactPropSetterInvocation(
     return (id)[NSNumber numberWithInt:(int)(size_t)_arg];
   }();
 
-#if DEBUG
-  NSLog(
+  RNILog(
     @"%@\n%@ %@\n%@ %@\n%@ %@",
     @"RNIBaseViewPaperPropHolder._handleReactPropSetterInvocation",
     @" - arg _self:", _self,
     @" - arg _cmd:", NSStringFromSelector(_cmd),
     @" - arg _arg:", boxedValue
   );
-#endif
 
   [_self handlePropSetterCallForSelector:_cmd
                            withPropValue:boxedValue];

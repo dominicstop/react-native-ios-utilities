@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
     RNIContentViewParentDelegate,
     RNIRegistrableView,
     RNIViewCommandRequestHandling>
-
+    
 // MARK: - Properties - Fabric + Paper
 // -----------------------------------
 
