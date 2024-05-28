@@ -191,11 +191,13 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   };
   
   const RNIUtilities::GetAllModuleSharedValuesFunction &getAllModuleSharedValues = [weakSelf](
-    std::string moduleName
+    std::string moduleNameCxx
   ) {
-    // TODO: WIP - Stub/Dummy Impl.
-    folly::dynamic dyn = folly::dynamic();
-    return dyn;
+    NSString *moduleNameObjc =
+      [NSString stringWithUTF8String:moduleNameCxx.c_str()];
+      
+    id values = [weakSelf getAllModuleSharedValuesForModuleName:moduleNameObjc];
+    return react::convertIdToFollyDynamic(values);
   };
   
   const RNIUtilities::OverwriteModuleSharedValuesFunction &overwriteModuleSharedValues = [weakSelf](
@@ -319,6 +321,12 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   [manager setModuleSharedValueForModuleNamed:moduleName
                                        forKey:key
                                     withValue:value];
+}
+
+- (id)getAllModuleSharedValuesForModuleName:(NSString *)moduleName
+{
+  RNIUtilitiesManager *manager = [RNIUtilitiesManager shared];
+  return [manager getAllModuleSharedValueForModuleName:moduleName];
 }
 
 // MARK: RCTBridgeModule

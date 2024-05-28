@@ -34,8 +34,7 @@ public extension RNIModuleCommandRequestHandling {
   // -----------------------------
   
   var sharedValues: NSMutableDictionary {
-    let shared =  RNIUtilitiesManager.shared;
-    let result = shared.getAllModuleSharedValues(
+    let result = RNIUtilitiesManager.shared.getAllModuleSharedValues(
       forModuleName: Self.moduleName
     );
     

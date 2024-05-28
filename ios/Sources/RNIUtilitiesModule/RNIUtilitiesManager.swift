@@ -156,38 +156,6 @@ public final class RNIUtilitiesManager: NSObject {
     self.moduleNameToSharedValuesMap[key] = value;
   };
   
-  public func getAllModuleSharedValues(
-    forModuleName moduleName: String
-  ) -> NSMutableDictionary {
-    
-    var sharedValuesForModule: NSMutableDictionary?;
-    
-    self.serialQueue.sync {
-      guard let match = self.moduleNameToSharedValuesMap[moduleName],
-            let sharedValues = match as? NSMutableDictionary
-      else { return };
-    
-      sharedValuesForModule = sharedValues;
-    };
-    
-    if let sharedValuesForModule = sharedValuesForModule {
-      return sharedValuesForModule;
-    };
-
-    let initialValues = {
-      guard let moduleDelegate = self.getModuleDelegate(forKey: moduleName) else {
-        return [:];
-      };
-      
-      return type(of: moduleDelegate).initialSharedValues;
-    }();
-    
-    let sharedValues = NSMutableDictionary(dictionary: initialValues);
-    self.overwriteModuleSharedValues(forKey: moduleName, value: sharedValues);
-    
-    return sharedValues;
-  };
-  
   // MARK: Visible in Obj-C
   // ----------------------
   
@@ -231,6 +199,39 @@ public final class RNIUtilitiesManager: NSObject {
     } catch {
       rejectBlock(error.localizedDescription);
     };
+  };
+  
+  @objc(getAllModuleSharedValueForModuleName:)
+  public func getAllModuleSharedValues(
+    forModuleName moduleName: String
+  ) -> NSMutableDictionary {
+    
+    var sharedValuesForModule: NSMutableDictionary?;
+    
+    self.serialQueue.sync {
+      guard let match = self.moduleNameToSharedValuesMap[moduleName],
+            let sharedValues = match as? NSMutableDictionary
+      else { return };
+    
+      sharedValuesForModule = sharedValues;
+    };
+    
+    if let sharedValuesForModule = sharedValuesForModule {
+      return sharedValuesForModule;
+    };
+
+    let initialValues = {
+      guard let moduleDelegate = self.getModuleDelegate(forKey: moduleName) else {
+        return [:];
+      };
+      
+      return type(of: moduleDelegate).initialSharedValues;
+    }();
+    
+    let sharedValues = NSMutableDictionary(dictionary: initialValues);
+    self.overwriteModuleSharedValues(forKey: moduleName, value: sharedValues);
+    
+    return sharedValues;
   };
   
   @objc(getModuleSharedValueForModuleNamed:forKey:)

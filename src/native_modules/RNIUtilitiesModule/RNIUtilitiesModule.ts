@@ -95,9 +95,9 @@ function setModuleSharedValue(
 };
 
 function getAllModuleSharedValues(
-  moduleName: string,
-  key: string,
+  moduleName: string
 ): SharedNativeValueMap {
+
   if(RNIUtilitiesModule == null){
     throw "RNIUtilitiesModule is null";
   };
@@ -106,7 +106,7 @@ function getAllModuleSharedValues(
     throw "RNIUtilitiesModule.getAllModuleSharedValues is null";
   };
 
-  return RNIUtilitiesModule.getAllModuleSharedValues(moduleName, key);
+  return RNIUtilitiesModule.getAllModuleSharedValues(moduleName);
 };
 
 function overwriteModuleSharedValues(
