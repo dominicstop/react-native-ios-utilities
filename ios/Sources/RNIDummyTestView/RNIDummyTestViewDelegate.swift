@@ -47,82 +47,82 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   
   public var reactProps: NSDictionary = [:] {
     willSet {
-      print("RNIDummyTestViewDelegate.reactProps - newValue:", newValue);
+      // print("RNIDummyTestViewDelegate.reactProps - newValue:", newValue);
     }
   };
   
   @objc
   public var someBool: Bool = false {
     willSet {
-      print("RNIDummyTestViewDelegate.someBool - newValue:", newValue);
+      // print("RNIDummyTestViewDelegate.someBool - newValue:", newValue);
     }
   };
   
   @objc
   public var someString: String = "" {
     willSet {
-      print("RNIDummyTestViewDelegate.someString - newValue:", newValue);
+      // print("RNIDummyTestViewDelegate.someString - newValue:", newValue);
     }
   };
   
   @objc
   public var someStringOptional: String? {
     willSet {
-      print(
-        "RNIDummyTestViewDelegate.someStringOptional - newValue:",
-        newValue?.debugDescription ?? "N/A"
-      );
+      // print(
+      //   "RNIDummyTestViewDelegate.someStringOptional - newValue:",
+      //   newValue?.debugDescription ?? "N/A"
+      // );
     }
   };
   
   @objc
   public var someNumber: NSNumber = -1 {
     willSet {
-      print("RNIDummyTestViewDelegate.someNumber - newValue:", newValue);
+      // print("RNIDummyTestViewDelegate.someNumber - newValue:", newValue);
     }
   };
   
   @objc
   public var someNumberOptional: NSNumber? {
     willSet {
-      print(
-        "RNIDummyTestViewDelegate.someNumberOptional - newValue:",
-        newValue?.debugDescription ?? "N/A"
-      );
+      // print(
+      //   "RNIDummyTestViewDelegate.someNumberOptional - newValue:",
+      //   newValue?.debugDescription ?? "N/A"
+      // );
     }
   };
   
   @objc
   public var someObject: NSDictionary = [:] {
     willSet {
-      print("RNIDummyTestViewDelegate.someObject - newValue:", newValue);
+      // print("RNIDummyTestViewDelegate.someObject - newValue:", newValue);
     }
   };
   
   @objc
   public var someObjectOptional: NSDictionary? {
     willSet {
-      print(
-        "RNIDummyTestViewDelegate.someObjectOptional - newValue:",
-         newValue?.debugDescription ?? "N/A"
-      );
+      // print(
+      //   "RNIDummyTestViewDelegate.someObjectOptional - newValue:",
+      //    newValue?.debugDescription ?? "N/A"
+      // );
     }
   };
   
   @objc
   public var someArray: NSArray = [] {
     willSet {
-      print("RNIDummyTestViewDelegate.someArray - newValue:", newValue);
+      // print("RNIDummyTestViewDelegate.someArray - newValue:", newValue);
     }
   };
   
   @objc
   public var someArrayOptional: NSArray? {
     willSet {
-      print(
-        "RNIDummyTestViewDelegate.someArrayOptional - newValue:",
-        newValue?.debugDescription ?? "N/A"
-      );
+      // print(
+      //   "RNIDummyTestViewDelegate.someArrayOptional - newValue:",
+      //   newValue?.debugDescription ?? "N/A"
+      // );
     }
   };
   
@@ -226,24 +226,24 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
       );
     };
     
-    self.reactGetLayoutMetrics {
-      print(
-        "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
-        "\n - childComponentView.reactGetLayoutMetrics:", $0?.description ?? "N/A",
-        "\n"
-      );
+    self.reactGetLayoutMetrics { _ in
+      // print(
+      //   "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
+      //   "\n - childComponentView.reactGetLayoutMetrics:", $0?.description ?? "N/A",
+      //   "\n"
+      // );
     };
     
-    print(
-      "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
-      "\n - childComponentView:", childComponentView.debugDescription,
-      "\n - childComponentView.reactNativeTag:", childComponentView.reactNativeTag?.stringValue ?? "N/A",
-      "\n - childComponentView.reactNativeID:", childComponentView.reactNativeID ?? "N/A",
-      "\n - index:", index,
-      "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
-      "\n - self.window:", self.window?.debugDescription ?? "N/A",
-      "\n"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
+    //   "\n - childComponentView:", childComponentView.debugDescription,
+    //   "\n - childComponentView.reactNativeTag:", childComponentView.reactNativeTag?.stringValue ?? "N/A",
+    //   "\n - childComponentView.reactNativeID:", childComponentView.reactNativeID ?? "N/A",
+    //   "\n - index:", index,
+    //   "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
+    //   "\n - self.window:", self.window?.debugDescription ?? "N/A",
+    //   "\n"
+    // );
     
     // Note: Window might not be available yet
     self.addSubview(childComponentView);
@@ -261,29 +261,29 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     
     childComponentView.removeFromSuperview();
     
-    print(
-      "RNIDummyTestViewDelegate.notifyOnUnmountChildComponentView",
-      "\n - childComponentView:", childComponentView.debugDescription,
-      "\n - index:", index,
-      "\n - self.window:", self.window?.debugDescription ?? "N/A",
-      "\n"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyOnUnmountChildComponentView",
+    //   "\n - childComponentView:", childComponentView.debugDescription,
+    //   "\n - index:", index,
+    //   "\n - self.window:", self.window?.debugDescription ?? "N/A",
+    //   "\n"
+    // );
   }
   
   public func notifyDidSetProps(sender: RNIContentViewParentDelegate) {
-    print(
-      "RNIDummyTestViewDelegate.notifyDidSetProps",
-      "\n - someBool:", self.someBool,
-      "\n - someString:", self.someString,
-      "\n - someStringOptional:", self.someStringOptional.debugDescription,
-      "\n - someNumber:", self.someNumber,
-      "\n - someNumberOptional:", self.someNumberOptional.debugDescription,
-      "\n - someObject:", self.someObject,
-      "\n - someObjectOptional:", self.someObjectOptional.debugDescription,
-      "\n - someArray:", self.someArray,
-      "\n - someArrayOptional:", self.someArrayOptional.debugDescription,
-      "\n"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyDidSetProps",
+    //   "\n - someBool:", self.someBool,
+    //   "\n - someString:", self.someString,
+    //   "\n - someStringOptional:", self.someStringOptional.debugDescription,
+    //   "\n - someNumber:", self.someNumber,
+    //   "\n - someNumberOptional:", self.someNumberOptional.debugDescription,
+    //   "\n - someObject:", self.someObject,
+    //   "\n - someObjectOptional:", self.someObjectOptional.debugDescription,
+    //   "\n - someArray:", self.someArray,
+    //   "\n - someArrayOptional:", self.someArrayOptional.debugDescription,
+    //   "\n"
+    // );
   };
   
   public func notifyOnUpdateLayoutMetrics(
@@ -291,22 +291,22 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   ) {
-    #if RN_FABRIC_ENABLED
-    print("Hello Fabric");
-    #else
-    print("Hello Paper");
-    #endif
+    // #if RN_FABRIC_ENABLED
+    // print("Hello Fabric");
+    // #else
+    // print("Hello Paper");
+    // #endif
     
-    print(
-      "RNIDummyTestViewDelegate.notifyOnUpdateLayoutMetrics",
-      "\n - oldLayoutMetric.frame:", oldLayoutMetrics.frame,
-      "\n - oldLayoutMetric.frame:", newLayoutMetrics.frame,
-      "\n - self.reactNativeTag:", self.reactNativeTag?.stringValue ?? "N/A",
-      "\n - sender.reactNativeTag:", sender.reactNativeTag?.stringValue ?? "N/A",
-      "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
-      "\n - self.window:", self.window?.debugDescription ?? "N/A",
-      "\n"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyOnUpdateLayoutMetrics",
+    //   "\n - oldLayoutMetric.frame:", oldLayoutMetrics.frame,
+    //   "\n - oldLayoutMetric.frame:", newLayoutMetrics.frame,
+    //   "\n - self.reactNativeTag:", self.reactNativeTag?.stringValue ?? "N/A",
+    //   "\n - sender.reactNativeTag:", sender.reactNativeTag?.stringValue ?? "N/A",
+    //   "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
+    //   "\n - self.window:", self.window?.debugDescription ?? "N/A",
+    //   "\n"
+    // );
   };
   
   public func notifyOnViewCommandRequest(
@@ -317,14 +317,14 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     reject rejectBlock: (String) -> Void
   ) {
   
-    print(
-      "RNIDummyTestViewDelegate.notifyOnViewCommandRequest",
-      "\n - commandName:", commandName,
-      "\n - commandArguments.count:", commandArguments.count,
-      "\n - commandArguments.keys:", commandArguments.allKeys,
-      "\n - commandArguments:", commandArguments,
-      "\n"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyOnViewCommandRequest",
+    //   "\n - commandName:", commandName,
+    //   "\n - commandArguments.count:", commandArguments.count,
+    //   "\n - commandArguments.keys:", commandArguments.allKeys,
+    //   "\n - commandArguments:", commandArguments,
+    //   "\n"
+    // );
     
     resolveBlock([
       "someString": "abc",
@@ -343,12 +343,12 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     oldProps: NSDictionary,
     newProps: NSDictionary
   ) {
-    print(
-      "RNIDummyTestViewDelegate.notifyOnUpdateProps",
-      "\n - oldProps:", oldProps.debugDescription,
-      "\n - newProps:", newProps,
-      "\n"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyOnUpdateProps",
+    //   "\n - oldProps:", oldProps.debugDescription,
+    //   "\n - newProps:", newProps,
+    //   "\n"
+    // );
   };
   
   public func notifyOnUpdateState(
@@ -356,12 +356,12 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     oldState: NSDictionary?,
     newState: NSDictionary
   ) {
-    print(
-      "RNIDummyTestViewDelegate.notifyOnUpdateState",
-      "\n - oldState:", oldState.debugDescription,
-      "\n - newState:", newState,
-      "\n"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyOnUpdateState",
+    //   "\n - oldState:", oldState.debugDescription,
+    //   "\n - newState:", newState,
+    //   "\n"
+    // );
   };
   
   public func notifyOnFinalizeUpdates(
@@ -370,23 +370,23 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     updateMask: RNIComponentViewUpdateMask
   ) {
     
-    print(
-      "RNIDummyTestViewDelegate.notifyOnFinalizeUpdates",
-      "\n - updateMaskRaw:", updateMaskRaw,
-      "\n - updateMask.contains(.eventEmitter):", updateMask.contains(.eventEmitter),
-      "\n - updateMask.contains(.layoutMetrics):", updateMask.contains(.layoutMetrics),
-      "\n - updateMask.contains(.props):", updateMask.contains(.props),
-      "\n - updateMask.contains(.state):", updateMask.contains(.state),
-      "\n - updateMask.contains(.all):", updateMask.contains(.all),
-      "\n - updateMask.isNone:", updateMask.isNone,
-      "\n"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyOnFinalizeUpdates",
+    //   "\n - updateMaskRaw:", updateMaskRaw,
+    //   "\n - updateMask.contains(.eventEmitter):", updateMask.contains(.eventEmitter),
+    //   "\n - updateMask.contains(.layoutMetrics):", updateMask.contains(.layoutMetrics),
+    //   "\n - updateMask.contains(.props):", updateMask.contains(.props),
+    //   "\n - updateMask.contains(.state):", updateMask.contains(.state),
+    //   "\n - updateMask.contains(.all):", updateMask.contains(.all),
+    //   "\n - updateMask.isNone:", updateMask.isNone,
+    //   "\n"
+    // );
   };
   
   public func notifyOnPrepareForReuse(sender: RNIContentViewParentDelegate) {
-    print(
-      "RNIDummyTestViewDelegate.notifyOnPrepareForReuse"
-    );
+    // print(
+    //   "RNIDummyTestViewDelegate.notifyOnPrepareForReuse"
+    // );
   };
   #else
   
