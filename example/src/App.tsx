@@ -91,9 +91,23 @@ export default function App() {
     setTimeout(async () => {
     }, 500);
 
-    const intervalID = setInterval(() => {
+    setInterval(() => {
       const result = RNIDummyTestViewModule.getSharedValueSomeNumber();
-      console.log("RNIDummyTestViewModule.getSharedValueSomeNumber:", result);
+      console.log(
+        "JS - RNIDummyTestViewModule.getSharedValueSomeNumber:",
+        "\n - result:", result
+      );
+
+      const oldValue = RNIDummyTestViewModule.getSharedValueSomeNumber();
+      const newValue = (oldValue ?? 0) + 0.1;
+
+      console.log(
+        "JS - RNIDummyTestViewModule.setSharedValueSomeNumber:",
+        "\n - oldValue:", oldValue,
+        "\n - newValue:", newValue,
+      );
+
+      RNIDummyTestViewModule.setSharedValueSomeNumber(newValue);
     }, 500);
 
     setTimeout(async () => {

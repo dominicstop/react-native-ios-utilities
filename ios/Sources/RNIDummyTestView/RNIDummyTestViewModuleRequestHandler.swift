@@ -30,12 +30,22 @@ final class RNIDummyTestViewModuleRequestHandler: RNIModuleCommandRequestHandlin
   static let shared: ClassType = .init();
   
   init(){
-    let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-      let someNumber =
-        self.getSharedValue(forKey: "someNumber") as? Int ?? 0;
+    let _ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+    
+      let rawValue = self.getSharedValue(forKey: "someNumber");
+      let someNumber = (rawValue as? NSNumber) ?? 0.0;
+        
+      print(
+        "NATIVE - RNIDummyTestViewModuleRequestHandler.getSharedValue",
+        "\n - key: someNumber",
+        "\n - rawValue:", rawValue,
+        "\n - someNumber:", someNumber,
+        "\n"
+      );
+        
       self.setSharedValue(
         forKey: "someNumber",
-        withValue: someNumber + 1
+        withValue: someNumber.doubleValue + 1.0
       );
     }
   };

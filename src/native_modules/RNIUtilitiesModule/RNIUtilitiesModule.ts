@@ -10,7 +10,9 @@ const RNIUtilitiesModule = (global as any)[RNIUtilitiesModuleName];
 type SupportedNativePrimitiveValue = 
   | string
   | number
-  | boolean;
+  | boolean
+  | null
+  | undefined;
 
 type SupportedNativeValue = 
   | SupportedNativePrimitiveValue
@@ -61,10 +63,10 @@ async function moduleCommandRequest<T = Record<string, unknown>>(
   );
 };
 
-export function getModuleSharedValue(
+export function getModuleSharedValue<T = SupportedNativeValue>(
   moduleName: string,
   key: string,
-): SupportedNativeValue{
+): T {
   if(RNIUtilitiesModule == null){
     throw "RNIUtilitiesModule is null";
   };

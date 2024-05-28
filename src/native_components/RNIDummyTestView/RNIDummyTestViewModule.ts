@@ -33,15 +33,24 @@ async function somePromiseCommandThatWillAlwaysReject(){
   );
 };
 
-export function getSharedValueSomeNumber(){
+function getSharedValueSomeNumber(): number | undefined {
   return RNIUtilitiesModule.getModuleSharedValue(
     MODULE_NAME,  
     "someNumber"
   );
 };
 
+function setSharedValueSomeNumber(newValue: number | undefined){
+  RNIUtilitiesModule.setModuleSharedValue(
+    MODULE_NAME,  
+    "someNumber",
+    newValue
+  );
+};
+
 export default {
   somePromiseCommandThatWillAlwaysResolve,
   somePromiseCommandThatWillAlwaysReject,
-  getSharedValueSomeNumber
+  getSharedValueSomeNumber,
+  setSharedValueSomeNumber
 };

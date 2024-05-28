@@ -43,19 +43,18 @@ public extension RNIModuleCommandRequestHandling {
   };
   
   func getSharedValue(forKey key: String) -> Any? {
-    let sharedValues = RNIUtilitiesManager.shared.getModuleSharedValues(
-      forModuleName: Self.moduleName
+    return RNIUtilitiesManager.shared.getModuleSharedValue(
+      forModuleNamed: Self.moduleName,
+      forKey: key
     );
-    
-    return sharedValues[key];
-  };
+  }
   
   func setSharedValue(forKey key: String, withValue value: Any?){
-    let sharedValues = RNIUtilitiesManager.shared.getModuleSharedValues(
-      forModuleName: Self.moduleName
+    RNIUtilitiesManager.shared.setModuleSharedValue(
+      forModuleNamed: Self.moduleName,
+      forKey: key,
+      withValue: value as Any
     );
-    
-    sharedValues[key] = value;
   };
   
   func overwriteSharedValues(withDict dict: Dictionary<String, Any>){

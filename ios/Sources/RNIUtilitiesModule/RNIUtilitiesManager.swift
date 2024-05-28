@@ -153,9 +153,7 @@ public final class RNIUtilitiesManager: NSObject {
   };
   
   func setModuleSharedValues(forKey key: String, value: NSMutableDictionary){
-    self.serialQueue.sync {
-      self.moduleNameToSharedValuesMap[key] = value;
-    };
+    self.moduleNameToSharedValuesMap[key] = value;
   };
   
   public func getModuleSharedValues(
@@ -242,6 +240,28 @@ public final class RNIUtilitiesManager: NSObject {
   ) -> Any {
   
     let sharedValues = self.getModuleSharedValues(forModuleName: moduleName);
-    return sharedValues[key] as Any;
+    var match: Any?;
+    
+    self.serialQueue.sync {
+      match = sharedValues[key];
+    };
+    
+    return match as Any;
+  };
+  
+  @objc(setModuleSharedValueForModuleNamed:forKey:withValue:)
+  public func setModuleSharedValue(
+    forModuleNamed moduleName: String,
+    forKey key: String,
+    withValue value: Any
+  ) {
+    
+    let sharedValuesForModule =
+      self.getModuleSharedValues(forModuleName: moduleName);
+    
+    self.serialQueue.sync {
+      sharedValuesForModule;
+      sharedValuesForModule[key] = value;
+    };
   };
 };
