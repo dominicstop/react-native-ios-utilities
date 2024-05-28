@@ -1,7 +1,7 @@
 {
   "name": "react-native-ios-utilities",
-  "version": "0.1.0",
-  "description": "TBA",
+  "version": "4.4.6",
+  "description": "Utilities for react-native + iOS and wrappers for using swift together with fabric/paper + JSI",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
@@ -23,22 +23,32 @@
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__",
-    "!**/.*"
+    "!**/.*",
+    "ReactNativeIosUtilities.podspec"
+
   ],
   "scripts": {
     "example": "yarn workspace react-native-ios-utilities-example",
-    "test": "jest",
     "typecheck": "tsc --noEmit",
+    "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it",
-    "pod-install": "cd example/ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install"
+    "release": "release-it --only-version",
+    "pod-install": "cd example/ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install",
+    "nuke-node-modules": "rm -rfv ./node_modules ; cd example ; rm -rfv ./node_modules ; cd ../..",
+    "nuke-example-pods": "cd example/ios ; pod cache clean --all ; rm -rfv ./Pods ./build ; cd ../..",
+    "nuke-all": "yarn run nuke-node-modules ; yarn run nuke-example-pods",
+    "update-dep-pods": "cd example/ios ; pod update DGSwiftUtilities ComputableLayout AdaptiveModal ContextMenuAuxiliaryPreview ; pod install --repo-update ; yarn run pod-install ; cd ../.."
   },
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "utilities",
+    "utility",
+    "fabric",
+    "paper",
+    "JSI"
   ],
   "repository": {
     "type": "git",
@@ -65,9 +75,10 @@
     "react": "18.2.0",
     "react-native": "0.74.0",
     "react-native-builder-bob": "^0.20.0",
-    "release-it": "^15.0.0",
     "turbo": "^1.10.7",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "release-it": "^16.2.1"
+
   },
   "resolutions": {
     "@types/react": "^18.2.44"
@@ -82,7 +93,7 @@
   "packageManager": "yarn@3.6.1",
   "release-it": {
     "git": {
-      "commitMessage": "chore: release ${version}",
+      "commitMessage": "⚙️ Chore: Release ${version}",
       "tagName": "v${version}"
     },
     "npm": {
