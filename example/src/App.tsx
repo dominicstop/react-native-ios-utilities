@@ -110,6 +110,14 @@ export default function App() {
       RNIDummyTestViewModule.setSharedValueSomeNumber(newValue);
     }, 500);
 
+    setInterval(() => {
+      const result = RNIDummyTestViewModule.getAllModuleSharedValues();
+      console.log(
+        "JS - RNIDummyTestViewModule.getAllModuleSharedValues:",
+        "\n - result:", result
+      );
+    }, 1000);
+
     setTimeout(async () => {
       console.log(
         "Module.somePromiseCommandThatWillAlwaysResolve",

@@ -33,6 +33,13 @@ async function somePromiseCommandThatWillAlwaysReject(){
   );
 };
 
+function getAllModuleSharedValues(): {
+  someNumber: number | undefined
+} {
+  //@ts-ignore
+  return RNIUtilitiesModule.getAllModuleSharedValues(MODULE_NAME);
+}
+
 function getSharedValueSomeNumber(): number | undefined {
   return RNIUtilitiesModule.getModuleSharedValue(
     MODULE_NAME,  
@@ -51,6 +58,7 @@ function setSharedValueSomeNumber(newValue: number | undefined){
 export default {
   somePromiseCommandThatWillAlwaysResolve,
   somePromiseCommandThatWillAlwaysReject,
+  getAllModuleSharedValues,
   getSharedValueSomeNumber,
   setSharedValueSomeNumber
 };
