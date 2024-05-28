@@ -35,7 +35,7 @@ public extension RNIModuleCommandRequestHandling {
   
   var sharedValues: NSMutableDictionary {
     let shared =  RNIUtilitiesManager.shared;
-    let result = shared.getModuleSharedValues(
+    let result = shared.getAllModuleSharedValues(
       forModuleName: Self.moduleName
     );
     
@@ -58,7 +58,7 @@ public extension RNIModuleCommandRequestHandling {
   };
   
   func overwriteSharedValues(withDict dict: Dictionary<String, Any>){
-    let sharedValues = RNIUtilitiesManager.shared.getModuleSharedValues(
+    let sharedValues = RNIUtilitiesManager.shared.getAllModuleSharedValues(
       forModuleName: Self.moduleName
     );
     
@@ -67,7 +67,7 @@ public extension RNIModuleCommandRequestHandling {
   };
   
   func clearSharedValues(){
-    let sharedValues = RNIUtilitiesManager.shared.getModuleSharedValues(
+    let sharedValues = RNIUtilitiesManager.shared.getAllModuleSharedValues(
       forModuleName: Self.moduleName
     );
     

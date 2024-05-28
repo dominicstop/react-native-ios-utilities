@@ -22,9 +22,11 @@ namespace RNIUtilities {
 std::function<void(int)> RNIUtilitiesTurboModule::dummyFunction_;
 ViewCommandRequestFunction RNIUtilitiesTurboModule::viewCommandRequest_;
 ModuleCommandRequestFunction RNIUtilitiesTurboModule::moduleCommandRequest_;
+
 GetModuleSharedValueFunction RNIUtilitiesTurboModule::getModuleSharedValue_;
 SetModuleSharedValueFunction RNIUtilitiesTurboModule::setModuleSharedValue_;
-GetModuleSharedValuesFunction RNIUtilitiesTurboModule::getModuleSharedValues_;
+
+GetAllModuleSharedValuesFunction RNIUtilitiesTurboModule::getAllModuleSharedValues_;
 SetModuleSharedValuesFunction RNIUtilitiesTurboModule::setModuleSharedValues_;
 
 const char RNIUtilitiesTurboModule::MODULE_NAME[] = "RNIUtilitiesModule";
@@ -38,7 +40,7 @@ RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
   ModuleCommandRequestFunction moduleCommandRequest,
   GetModuleSharedValueFunction getModuleSharedValue,
   SetModuleSharedValueFunction setModuleSharedValue,
-  GetModuleSharedValuesFunction getModuleSharedValues,
+  GetAllModuleSharedValuesFunction getAllModuleSharedValues,
   SetModuleSharedValuesFunction setModuleSharedValues
 ) {
   dummyFunction_ = dummyFunction;
@@ -46,7 +48,7 @@ RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
   moduleCommandRequest_ = moduleCommandRequest;
   getModuleSharedValue_ = getModuleSharedValue;
   setModuleSharedValue_ = setModuleSharedValue;
-  getModuleSharedValues_ = getModuleSharedValues;
+  getAllModuleSharedValues_ = getAllModuleSharedValues;
   setModuleSharedValues_ = setModuleSharedValues;
 }
 
@@ -83,8 +85,8 @@ jsi::Value RNIUtilitiesTurboModule::get(
     return jsi::Function::createFromHostFunction(rt, name, 3, setModuleSharedValue);
   };
   
-  if(propName == "getModuleSharedValues"){
-    return jsi::Function::createFromHostFunction(rt, name, 2, getModuleSharedValues);
+  if(propName == "getAllModuleSharedValues"){
+    return jsi::Function::createFromHostFunction(rt, name, 1, getAllModuleSharedValues);
   };
   
   return jsi::Value::undefined();
@@ -107,7 +109,8 @@ std::vector<jsi::PropNameID> RNIUtilitiesTurboModule::getPropertyNames(
   properties.push_back(jsi::PropNameID::forUtf8(rt, "moduleCommandRequest"));
   properties.push_back(jsi::PropNameID::forUtf8(rt, "getModuleSharedValue"));
   properties.push_back(jsi::PropNameID::forUtf8(rt, "setModuleSharedValue"));
-  properties.push_back(jsi::PropNameID::forUtf8(rt, "getModuleSharedValues"));
+  properties.push_back(jsi::PropNameID::forUtf8(rt, "getAllModuleSharedValues"));
+  properties.push_back(jsi::PropNameID::forUtf8(rt, "setModuleSharedValues"));
 
   return properties;
 }
@@ -425,16 +428,16 @@ jsi::Value RNIUtilitiesTurboModule::setModuleSharedValue(
   return jsi::Value::undefined();
 };
 
-jsi::Value RNIUtilitiesTurboModule::getModuleSharedValues(
+jsi::Value RNIUtilitiesTurboModule::getAllModuleSharedValues(
   jsi::Runtime &rt,
   const jsi::Value &thisValue,
   const jsi::Value *arguments,
   size_t count
 ) {
 
-  if (count < 2 || count > 2) {
+  if (count < 1 || count > 1) {
     throw jsi::JSError(rt,
-      RNI_DEBUG_MESSAGE("Requires 2 arguments")
+      RNI_DEBUG_MESSAGE("Requires 1 arguments")
     );
   }
   
@@ -448,21 +451,9 @@ jsi::Value RNIUtilitiesTurboModule::getModuleSharedValues(
       RNI_DEBUG_MESSAGE("Argument passed to `moduleName` param must be a string literal")
     );
   }();
-  
-  std::string key = [&rt, &arguments]{
-    if (arguments[1].isString()){
-      auto jsString = arguments[1].asString(rt);
-      return jsString.utf8(rt);
-    };
-    
-    throw jsi::JSError(rt,
-      RNI_DEBUG_MESSAGE("Argument passed to `key` param must be a string literal")
-    );
-  }();
 
-  auto resultDyn = getModuleSharedValues_(
-    /* moduleName : */ moduleName,
-    /* key:       : */ key
+  auto resultDyn = getAllModuleSharedValues_(
+    /* moduleName: */ moduleName
   );
   
   if(resultDyn.type() != folly::dynamic::OBJECT){

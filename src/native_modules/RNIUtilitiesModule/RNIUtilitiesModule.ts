@@ -94,7 +94,7 @@ export function setModuleSharedValue(
   return RNIUtilitiesModule.setModuleSharedValue(moduleName, key, newValue);
 };
 
-export function getModuleSharedValues(
+export function getAllModuleSharedValues(
   moduleName: string,
   key: string,
 ): SharedNativeValueMap {
@@ -102,11 +102,11 @@ export function getModuleSharedValues(
     throw "RNIUtilitiesModule is null";
   };
 
-  if(RNIUtilitiesModule.getModuleSharedValues == null){
-    throw "RNIUtilitiesModule.getModuleSharedValues is null";
+  if(RNIUtilitiesModule.getAllModuleSharedValues == null){
+    throw "RNIUtilitiesModule.getAllModuleSharedValues is null";
   };
 
-  return RNIUtilitiesModule.getModuleSharedValues(moduleName, key);
+  return RNIUtilitiesModule.getAllModuleSharedValues(moduleName, key);
 };
 
 export function setModuleSharedValues(
@@ -118,7 +118,7 @@ export function setModuleSharedValues(
     throw "RNIUtilitiesModule is null";
   };
 
-  if(RNIUtilitiesModule.getModuleSharedValues == null){
+  if(RNIUtilitiesModule.getAllModuleSharedValues == null){
     throw "RNIUtilitiesModule.setModuleSharedValues is null";
   };
 
@@ -130,5 +130,5 @@ export default {
   moduleCommandRequest,
   getModuleSharedValue,
   setModuleSharedValue,
-  getModuleSharedValues,
+  getAllModuleSharedValues,
 };
