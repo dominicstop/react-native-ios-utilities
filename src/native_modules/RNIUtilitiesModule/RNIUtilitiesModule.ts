@@ -1,4 +1,5 @@
 import { default as NativeRNIUtilitiesModule } from './NativeRNIUtilitiesModule';
+import type { SharedNativeValueMap, SupportedNativeSharedValue } from './RNIUtilitiesModuleTypes';
 
 // modules are lazily loaded, so "reading" it's value triggers 
 // the module to load in the native side.
@@ -6,20 +7,6 @@ NativeRNIUtilitiesModule;
 
 const RNIUtilitiesModuleName = "RNIUtilitiesModule";
 const RNIUtilitiesModule = (global as any)[RNIUtilitiesModuleName];
-
-type SupportedNativePrimitiveValue = 
-  | string
-  | number
-  | boolean
-  | null
-  | undefined;
-
-type SupportedNativeValue = 
-  | SupportedNativePrimitiveValue
-  | Record<string, SupportedNativePrimitiveValue>
-  | Array<SupportedNativePrimitiveValue>;
-
-type SharedNativeValueMap = Record<string, SupportedNativeValue>;
 
 async function viewCommandRequest<T = Record<string, unknown>>(
   viewID: string,
@@ -63,7 +50,7 @@ async function moduleCommandRequest<T = Record<string, unknown>>(
   );
 };
 
-function getModuleSharedValue<T = SupportedNativeValue>(
+function getModuleSharedValue<T = SupportedNativeSharedValue>(
   moduleName: string,
   key: string,
 ): T {
@@ -81,7 +68,7 @@ function getModuleSharedValue<T = SupportedNativeValue>(
 function setModuleSharedValue(
   moduleName: string,
   key: string,
-  newValue: SupportedNativeValue
+  newValue: SupportedNativeSharedValue
 ){
   if(RNIUtilitiesModule == null){
     throw "RNIUtilitiesModule is null";
@@ -111,18 +98,17 @@ function getAllModuleSharedValues(
 
 function overwriteModuleSharedValues(
   moduleName: string,
-  key: string,
   newValues: SharedNativeValueMap
 ) {
   if(RNIUtilitiesModule == null){
     throw "RNIUtilitiesModule is null";
   };
 
-  if(RNIUtilitiesModule.getAllModuleSharedValues == null){
+  if(RNIUtilitiesModule.overwriteModuleSharedValues == null){
     throw "RNIUtilitiesModule.overwriteModuleSharedValues is null";
   };
 
-  return RNIUtilitiesModule.overwriteModuleSharedValues(moduleName, key, newValues);
+  return RNIUtilitiesModule.overwriteModuleSharedValues(moduleName, newValues);
 };
 
 export default {

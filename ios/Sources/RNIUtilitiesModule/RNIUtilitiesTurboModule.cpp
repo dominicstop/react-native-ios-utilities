@@ -89,6 +89,10 @@ jsi::Value RNIUtilitiesTurboModule::get(
     return jsi::Function::createFromHostFunction(rt, name, 1, getAllModuleSharedValues);
   };
   
+  if(propName == "overwriteModuleSharedValues"){
+    return jsi::Function::createFromHostFunction(rt, name, 2, overwriteModuleSharedValues);
+  };
+  
   return jsi::Value::undefined();
 }
 
@@ -472,9 +476,9 @@ jsi::Value RNIUtilitiesTurboModule::overwriteModuleSharedValues(
   size_t count
 ) {
 
-  if (count < 3 || count > 3) {
+  if (count < 2 || count > 2) {
     throw jsi::JSError(rt,
-      RNI_DEBUG_MESSAGE("Requires 3 arguments")
+      RNI_DEBUG_MESSAGE("Requires 2 arguments")
     );
   }
   
@@ -489,19 +493,8 @@ jsi::Value RNIUtilitiesTurboModule::overwriteModuleSharedValues(
     );
   }();
   
-  std::string key = [&rt, &arguments]{
-    if (arguments[1].isString()){
-      auto jsString = arguments[1].asString(rt);
-      return jsString.utf8(rt);
-    };
-    
-    throw jsi::JSError(rt,
-      RNI_DEBUG_MESSAGE("Argument passed to `key` param must be a string literal")
-    );
-  }();
-  
   folly::dynamic valueDyn = [&rt, &arguments]{
-    auto value = jsi::Value(rt, arguments[2]);
+    auto value = jsi::Value(rt, arguments[1]);
     auto valueDyn = jsi::dynamicFromValue(rt, value);
     
     if(valueDyn.type() != folly::dynamic::OBJECT){

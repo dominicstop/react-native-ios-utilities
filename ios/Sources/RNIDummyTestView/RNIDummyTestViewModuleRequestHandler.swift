@@ -48,6 +48,29 @@ final class RNIDummyTestViewModuleRequestHandler: RNIModuleCommandRequestHandlin
         withValue: someNumber.doubleValue + 1.0
       );
     }
+    
+    let _ = Timer.scheduledTimer(withTimeInterval: 0.75, repeats: true) { _ in
+      let sharedValues = NSMutableDictionary(dictionary: self.sharedValues);
+      let sharedValuesEntryCount = sharedValues.count;
+      
+      sharedValues.setValue(
+        sharedValuesEntryCount,
+        forKey: "newValueFromSwfit\(sharedValuesEntryCount)"
+      );
+      
+      RNIUtilitiesManager.shared.overwriteModuleSharedValues(
+        forKey: Self.moduleName,
+        value: sharedValues
+      );
+        
+      print(
+        "NATIVE - RNIDummyTestViewModuleRequestHandler.overwriteModuleSharedValues",
+        "\n - sharedValuesEntryCount old", sharedValuesEntryCount,
+        "\n - sharedValuesEntryCount new", sharedValues.count,
+        "\n - sharedValues:", sharedValues,
+        "\n"
+      );
+    }
   };
 
   func somePromiseCommandThatWillAlwaysResolve(

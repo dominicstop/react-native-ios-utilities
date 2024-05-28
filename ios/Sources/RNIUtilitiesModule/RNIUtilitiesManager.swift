@@ -152,10 +152,6 @@ public final class RNIUtilitiesManager: NSObject {
     return match;
   };
   
-  func overwriteModuleSharedValues(forKey key: String, value: NSMutableDictionary){
-    self.moduleNameToSharedValuesMap[key] = value;
-  };
-  
   // MARK: Visible in Obj-C
   // ----------------------
   
@@ -199,6 +195,14 @@ public final class RNIUtilitiesManager: NSObject {
     } catch {
       rejectBlock(error.localizedDescription);
     };
+  };
+  
+  @objc(overwriteModuleSharedValuesForModuleNamed:withValue:)
+  public func overwriteModuleSharedValues(
+    forKey key: String,
+    value: NSMutableDictionary
+  ){
+    self.moduleNameToSharedValuesMap[key] = value;
   };
   
   @objc(getAllModuleSharedValueForModuleName:)

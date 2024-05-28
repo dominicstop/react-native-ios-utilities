@@ -193,6 +193,12 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   const RNIUtilities::GetAllModuleSharedValuesFunction &getAllModuleSharedValues = [weakSelf](
     std::string moduleNameCxx
   ) {
+  
+    if(weakSelf == nil){
+      folly::dynamic resultDyn = nullptr;
+      return resultDyn;
+    };
+    
     NSString *moduleNameObjc =
       [NSString stringWithUTF8String:moduleNameCxx.c_str()];
       
@@ -201,10 +207,16 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   };
   
   const RNIUtilities::OverwriteModuleSharedValuesFunction &overwriteModuleSharedValues = [weakSelf](
-    std::string moduleName,
+    std::string moduleNameCxx,
     folly::dynamic valueDyn
   ) {
-    // TODO: WIP - Stub/Dummy Impl.
+  
+    NSString *moduleNameObjc =
+      [NSString stringWithUTF8String:moduleNameCxx.c_str()];
+    
+    id valueObjc = react::convertFollyDynamicToId(valueDyn);
+    [weakSelf overwriteModuleSharedValuesForModuleName:moduleNameObjc
+                                            withValues:valueObjc];
   };
 
   auto moduleHostObject = std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(
@@ -327,6 +339,14 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
 {
   RNIUtilitiesManager *manager = [RNIUtilitiesManager shared];
   return [manager getAllModuleSharedValueForModuleName:moduleName];
+}
+
+- (void)overwriteModuleSharedValuesForModuleName:(NSString *)moduleName
+                                      withValues:(NSDictionary *)values
+{
+  RNIUtilitiesManager *manager = [RNIUtilitiesManager shared];
+  [manager overwriteModuleSharedValuesForModuleNamed:moduleName
+                                           withValue:[values mutableCopy]];
 }
 
 // MARK: RCTBridgeModule
