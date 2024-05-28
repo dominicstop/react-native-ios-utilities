@@ -27,7 +27,7 @@ GetModuleSharedValueFunction RNIUtilitiesTurboModule::getModuleSharedValue_;
 SetModuleSharedValueFunction RNIUtilitiesTurboModule::setModuleSharedValue_;
 
 GetAllModuleSharedValuesFunction RNIUtilitiesTurboModule::getAllModuleSharedValues_;
-SetModuleSharedValuesFunction RNIUtilitiesTurboModule::setModuleSharedValues_;
+OverwriteModuleSharedValuesFunction RNIUtilitiesTurboModule::overwriteModuleSharedValues_;
 
 const char RNIUtilitiesTurboModule::MODULE_NAME[] = "RNIUtilitiesModule";
 
@@ -41,7 +41,7 @@ RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
   GetModuleSharedValueFunction getModuleSharedValue,
   SetModuleSharedValueFunction setModuleSharedValue,
   GetAllModuleSharedValuesFunction getAllModuleSharedValues,
-  SetModuleSharedValuesFunction setModuleSharedValues
+  OverwriteModuleSharedValuesFunction overwriteModuleSharedValues
 ) {
   dummyFunction_ = dummyFunction;
   viewCommandRequest_ = viewCommandRequest;
@@ -49,7 +49,7 @@ RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
   getModuleSharedValue_ = getModuleSharedValue;
   setModuleSharedValue_ = setModuleSharedValue;
   getAllModuleSharedValues_ = getAllModuleSharedValues;
-  setModuleSharedValues_ = setModuleSharedValues;
+  overwriteModuleSharedValues_ = overwriteModuleSharedValues;
 }
 
 RNIUtilitiesTurboModule::~RNIUtilitiesTurboModule(){
@@ -110,7 +110,7 @@ std::vector<jsi::PropNameID> RNIUtilitiesTurboModule::getPropertyNames(
   properties.push_back(jsi::PropNameID::forUtf8(rt, "getModuleSharedValue"));
   properties.push_back(jsi::PropNameID::forUtf8(rt, "setModuleSharedValue"));
   properties.push_back(jsi::PropNameID::forUtf8(rt, "getAllModuleSharedValues"));
-  properties.push_back(jsi::PropNameID::forUtf8(rt, "setModuleSharedValues"));
+  properties.push_back(jsi::PropNameID::forUtf8(rt, "overwriteModuleSharedValues"));
 
   return properties;
 }
@@ -465,7 +465,7 @@ jsi::Value RNIUtilitiesTurboModule::getAllModuleSharedValues(
   return jsi::valueFromDynamic(rt, resultDyn);
 };
 
-jsi::Value RNIUtilitiesTurboModule::setModuleSharedValues(
+jsi::Value RNIUtilitiesTurboModule::overwriteModuleSharedValues(
   jsi::Runtime &rt,
   const jsi::Value &thisValue,
   const jsi::Value *arguments,
@@ -513,10 +513,9 @@ jsi::Value RNIUtilitiesTurboModule::setModuleSharedValues(
     return valueDyn;
   }();
   
-  setModuleSharedValues_(
-    /* moduleName : */ moduleName,
-    /* key        : */ key,
-    /* values     : */ valueDyn
+  overwriteModuleSharedValues_(
+    /* moduleName: */ moduleName,
+    /* values    : */ valueDyn
   );
   
   return jsi::Value::undefined();

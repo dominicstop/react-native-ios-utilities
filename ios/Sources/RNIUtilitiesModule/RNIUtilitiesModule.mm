@@ -198,9 +198,8 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     return dyn;
   };
   
-  const RNIUtilities::SetModuleSharedValuesFunction &setModuleSharedValues = [weakSelf](
+  const RNIUtilities::OverwriteModuleSharedValuesFunction &overwriteModuleSharedValues = [weakSelf](
     std::string moduleName,
-    std::string key,
     folly::dynamic valueDyn
   ) {
     // TODO: WIP - Stub/Dummy Impl.
@@ -213,7 +212,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     getModuleSharedValue,
     setModuleSharedValue,
     getAllModuleSharedValues,
-    setModuleSharedValues
+    overwriteModuleSharedValues
   );
           
   auto moduleObject =

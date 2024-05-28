@@ -49,10 +49,9 @@ using GetAllModuleSharedValuesFunction = std::function<folly::dynamic(
   /* moduleName: */ std::string
 )>;
 
-using SetModuleSharedValuesFunction = std::function<void(
-  /* moduleName : */ std::string,
-  /* key        : */ std::string,
-  /* values     : */ folly::dynamic
+using OverwriteModuleSharedValuesFunction = std::function<void(
+  /* moduleName: */ std::string,
+  /* values    : */ folly::dynamic
 )>;
 
 
@@ -64,7 +63,7 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
   static GetModuleSharedValueFunction getModuleSharedValue_;
   static SetModuleSharedValueFunction setModuleSharedValue_;
   static GetAllModuleSharedValuesFunction getAllModuleSharedValues_;
-  static SetModuleSharedValuesFunction setModuleSharedValues_;
+  static OverwriteModuleSharedValuesFunction overwriteModuleSharedValues_;
 
   public:
   static const char MODULE_NAME[];
@@ -79,7 +78,7 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
     GetModuleSharedValueFunction getModuleSharedValue,
     SetModuleSharedValueFunction setModuleSharedValue,
     GetAllModuleSharedValuesFunction getAllModuleSharedValues,
-    SetModuleSharedValuesFunction setModuleSharedValues
+    OverwriteModuleSharedValuesFunction overwriteModuleSharedValues
   );
   
   ~RNIUtilitiesTurboModule() override;
@@ -147,7 +146,7 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
     size_t count
   );
   
-  static jsi::Value setModuleSharedValues(
+  static jsi::Value overwriteModuleSharedValues(
     jsi::Runtime &rt,
     const jsi::Value &thisValue,
     const jsi::Value *arguments,

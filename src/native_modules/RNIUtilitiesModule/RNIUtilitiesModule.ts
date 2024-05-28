@@ -63,7 +63,7 @@ async function moduleCommandRequest<T = Record<string, unknown>>(
   );
 };
 
-export function getModuleSharedValue<T = SupportedNativeValue>(
+function getModuleSharedValue<T = SupportedNativeValue>(
   moduleName: string,
   key: string,
 ): T {
@@ -78,7 +78,7 @@ export function getModuleSharedValue<T = SupportedNativeValue>(
   return RNIUtilitiesModule.getModuleSharedValue(moduleName, key);
 };
 
-export function setModuleSharedValue(
+function setModuleSharedValue(
   moduleName: string,
   key: string,
   newValue: SupportedNativeValue
@@ -94,7 +94,7 @@ export function setModuleSharedValue(
   return RNIUtilitiesModule.setModuleSharedValue(moduleName, key, newValue);
 };
 
-export function getAllModuleSharedValues(
+function getAllModuleSharedValues(
   moduleName: string,
   key: string,
 ): SharedNativeValueMap {
@@ -109,7 +109,7 @@ export function getAllModuleSharedValues(
   return RNIUtilitiesModule.getAllModuleSharedValues(moduleName, key);
 };
 
-export function setModuleSharedValues(
+function overwriteModuleSharedValues(
   moduleName: string,
   key: string,
   newValues: SharedNativeValueMap
@@ -119,10 +119,10 @@ export function setModuleSharedValues(
   };
 
   if(RNIUtilitiesModule.getAllModuleSharedValues == null){
-    throw "RNIUtilitiesModule.setModuleSharedValues is null";
+    throw "RNIUtilitiesModule.overwriteModuleSharedValues is null";
   };
 
-  return RNIUtilitiesModule.setModuleSharedValues(moduleName, key, newValues);
+  return RNIUtilitiesModule.overwriteModuleSharedValues(moduleName, key, newValues);
 };
 
 export default {
@@ -131,4 +131,5 @@ export default {
   getModuleSharedValue,
   setModuleSharedValue,
   getAllModuleSharedValues,
+  overwriteModuleSharedValues
 };
