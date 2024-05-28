@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
-import { RNIDummyTestNativeView, RNIUtilitiesModule, RNIDummyTestViewModule } from 'react-native-ios-utilities';
+import { RNIDummyTestNativeView, RNIUtilitiesModule, RNIDummyTestViewModule, type SharedNativeValueMap } from 'react-native-ios-utilities';
 
 const TEST_OBJECT = {
   someBool: true,
@@ -117,6 +117,28 @@ export default function App() {
         "\n - result:", result
       );
     }, 1000);
+
+    setInterval(() => {
+      const sharedValuesOld = RNIDummyTestViewModule.getAllModuleSharedValues();
+      const sharedValuesCount = Object.keys(sharedValuesOld).length;
+
+      const newSharedValues: SharedNativeValueMap = {
+        ...sharedValuesOld,
+      };
+
+      for (let index = 0; index < sharedValuesCount; index++) {
+        const newKey = "newValueFromJS" + index;
+        newSharedValues[newKey] = index;
+      };
+
+      RNIDummyTestViewModule.overwriteModuleSharedValues(newSharedValues);
+
+      console.log(
+        "JS - RNIDummyTestViewModule.overwrite:",
+        "\n - sharedValuesOldCount:", sharedValuesCount,
+        "\n - newSharedValues:", newSharedValues
+      );
+    }, 750);
 
     setTimeout(async () => {
       console.log(

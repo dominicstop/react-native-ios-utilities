@@ -1,4 +1,4 @@
-import { RNIUtilitiesModule } from '../../native_modules/RNIUtilitiesModule';
+import { RNIUtilitiesModule, type SharedNativeValueMap } from '../../native_modules/RNIUtilitiesModule';
 
 const MODULE_NAME = "RNIDummyTestViewModule";
 
@@ -33,6 +33,13 @@ async function somePromiseCommandThatWillAlwaysReject(){
   );
 };
 
+function overwriteModuleSharedValues(newValues: SharedNativeValueMap) {
+  RNIUtilitiesModule.overwriteModuleSharedValues(
+    MODULE_NAME,
+    newValues
+  );
+};
+
 function getAllModuleSharedValues(): {
   someNumber: number | undefined
 } {
@@ -59,6 +66,7 @@ export default {
   somePromiseCommandThatWillAlwaysResolve,
   somePromiseCommandThatWillAlwaysReject,
   getAllModuleSharedValues,
+  overwriteModuleSharedValues,
   getSharedValueSomeNumber,
   setSharedValueSomeNumber
 };
