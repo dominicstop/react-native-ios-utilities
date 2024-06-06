@@ -432,9 +432,9 @@ static BOOL SHOULD_LOG = NO;
       [super unmountChildComponentView:childComponentView index:index];
     };
     [self.contentDelegate notifyOnUnmountChildComponentViewWithSender:self
-                                                          childComponentView:childComponentView
-                                                                      index:index
-                                                                  superBlock:superBlock];
+                                                   childComponentView:childComponentView
+                                                                index:index
+                                                           superBlock:superBlock];
   } else {
     [super unmountChildComponentView:childComponentView index:index];
   };
