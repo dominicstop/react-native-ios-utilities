@@ -15,7 +15,7 @@ public typealias RNIContentViewParent = UIView
 public typealias RNIContentViewParent = RCTView;
 #endif
 
-@objc
+@objc(RNIContentViewParentDelegateSwift)
 public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
 
   var cachedLayoutMetrics: RNILayoutMetrics { get };

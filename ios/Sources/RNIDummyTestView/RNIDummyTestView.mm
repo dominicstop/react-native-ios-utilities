@@ -10,6 +10,7 @@
 
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
+#import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
 
 #import <react-native-ios-utilities/RNIObjcUtils.h>
 
