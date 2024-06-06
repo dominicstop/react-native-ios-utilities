@@ -6,20 +6,21 @@
 //
 
 #import "RNIBaseView.h"
+#import "react-native-ios-utilities/Swift.h"
 
 #import <objc/runtime.h>
 
-#import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
-#import "react-native-ios-utilities/UIView+RNIHelpers.h"
 #import "react-native-ios-utilities/RNIUtilitiesModule.h"
 #import "react-native-ios-utilities/RNIViewRegistry.h"
-#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 #import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 
 #import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
 #import "react-native-ios-utilities/RNIContentViewDelegate.h"
+#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
+
 #import "react-native-ios-utilities/RNIObjcUtils.h"
+#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
+#import "react-native-ios-utilities/UIView+RNIHelpers.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #include "RNIBaseViewState.h"

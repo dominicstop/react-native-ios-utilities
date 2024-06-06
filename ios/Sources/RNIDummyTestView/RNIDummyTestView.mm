@@ -9,10 +9,10 @@
 #import "RNIBaseView.h"
 
 #import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 #import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
 
-#import <react-native-ios-utilities/RNIObjcUtils.h>
+#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
+#import "react-native-ios-utilities/RNIObjcUtils.h"
 
 #if RCT_NEW_ARCH_ENABLED
 #include "RNIDummyTestViewComponentDescriptor.h"
