@@ -17,6 +17,7 @@
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 #import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 
+#import "react-native-ios-utilities/RNIContentViewDelegate.h"
 #import "react-native-ios-utilities/RNIObjcUtils.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED

@@ -8,7 +8,7 @@
 import UIKit
 import DGSwiftUtilities
 
-@objc
+@objc(RNIContentViewDelegateSwift)
 public protocol RNIContentViewDelegate where Self: UIView  {
   typealias KeyPathRoot = Self;
   
