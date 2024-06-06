@@ -135,7 +135,7 @@ static BOOL SHOULD_LOG = NO;
                                  userInfo:nil];
   }
   
-  if(![viewDelegateClass conformsToProtocol:@protocol(RNIContentViewDelegate)]) {
+  if(![viewDelegateClass conformsToProtocol:@protocol(RNIContentViewDelegateSwift)]) {
     NSString *errorMessage =
       @"[RNIBaseView %@] Error"
       @" - The class returned by getter `[%@ viewDelegateClass]` (i.e. '%@')"
@@ -144,7 +144,7 @@ static BOOL SHOULD_LOG = NO;
     NSString *currentSelector = NSStringFromSelector(_cmd);
     NSString *className = NSStringFromClass([self class]);
     NSString *delegateClassName = NSStringFromClass([[self class] viewDelegateClass]);
-    NSString *protocolName = NSStringFromProtocol(@protocol(RNIContentViewDelegate));
+    NSString *protocolName = NSStringFromProtocol(@protocol(RNIContentViewDelegateSwift));
     
     errorMessage =
       [NSString stringWithFormat: errorMessage, currentSelector, className, delegateClassName, protocolName];
