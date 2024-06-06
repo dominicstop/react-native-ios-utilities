@@ -57,10 +57,10 @@ static BOOL SHOULD_LOG = NO;
 @implementation RNIBaseView {
   BOOL _didNotifyForInit;
   BOOL _didDispatchEventOnDidSetViewID;
-  NSMutableArray<UIView *> *_reactSubviews;
 #ifdef RCT_NEW_ARCH_ENABLED
   UIView * _view;
   RNIBaseViewState::SharedConcreteState _state;
+  NSMutableArray<UIView *> *_reactSubviewsShim;
 #else
   CGRect _reactFrame;
 #endif
@@ -77,7 +77,7 @@ static BOOL SHOULD_LOG = NO;
   if (self = [super initWithFrame:frame]) {
     static const auto defaultProps = std::make_shared<const react::RNIBaseViewProps>();
     _props = defaultProps;
-    _reactSubviews = [NSMutableArray new];
+    _reactSubviewsShim = [NSMutableArray new];
     
     [self initCommon];
   };
@@ -211,8 +211,15 @@ static BOOL SHOULD_LOG = NO;
 #endif
 }
 
-// MARK: Methods
-// -------------
+// MARK: Methods - Paper + Fabric
+// ------------------------------
+
+#if RCT_NEW_ARCH_ENABLED
+- (NSArray<UIView *> *)reactSubviews
+{
+  return self->_reactSubviewsShim;
+}
+#endif
 
 - (void)_dispatchOnDidSetViewIDEventIfNeeded
 {
@@ -371,6 +378,8 @@ static BOOL SHOULD_LOG = NO;
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
                          index:(NSInteger)index
 {
+  [self->_reactSubviewsShim insertObject:childComponentView atIndex:index];
+  
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
     && [self.contentDelegate respondsToSelector:
@@ -415,6 +424,8 @@ static BOOL SHOULD_LOG = NO;
   } else {
     [super unmountChildComponentView:childComponentView index:index];
   };
+  
+  [self->_reactSubviewsShim removeObject:childComponentView];
 }
 
 - (void)updateEventEmitter:(const facebook::react::EventEmitter::Shared &)eventEmitter

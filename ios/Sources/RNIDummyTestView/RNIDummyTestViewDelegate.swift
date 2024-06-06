@@ -234,16 +234,18 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
       // );
     };
     
-    // print(
-    //   "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
-    //   "\n - childComponentView:", childComponentView.debugDescription,
-    //   "\n - childComponentView.reactNativeTag:", childComponentView.reactNativeTag?.stringValue ?? "N/A",
-    //   "\n - childComponentView.reactNativeID:", childComponentView.reactNativeID ?? "N/A",
-    //   "\n - index:", index,
-    //   "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
-    //   "\n - self.window:", self.window?.debugDescription ?? "N/A",
-    //   "\n"
-    // );
+    print(
+      "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
+      "\n - childComponentView:", childComponentView.debugDescription,
+      "\n - childComponentView.reactNativeTag:", childComponentView.reactNativeTag?.stringValue ?? "N/A",
+      "\n - childComponentView.reactNativeID:", childComponentView.reactNativeID ?? "N/A",
+      "\n - index:", index,
+      "\n - sender.window:", sender.window?.debugDescription ?? "N/A",
+      "\n - self.window:", self.window?.debugDescription ?? "N/A",
+      "\n - self.reactSubviews.count::", sender.reactSubviews.count,
+      "\n - sender.reactSubviews:", sender.reactSubviews,
+      "\n"
+    );
     
     // Note: Window might not be available yet
     self.addSubview(childComponentView);

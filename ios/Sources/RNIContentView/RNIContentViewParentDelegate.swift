@@ -20,6 +20,8 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
 
   var cachedLayoutMetrics: RNILayoutMetrics { get };
   
+  var reactSubviews: [UIView] { get }
+  
   func setSize(_ size: CGSize);
   
   func dispatchViewEvent(
