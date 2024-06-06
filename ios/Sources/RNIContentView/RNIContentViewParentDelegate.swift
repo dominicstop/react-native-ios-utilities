@@ -22,6 +22,8 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   
   var reactSubviews: [UIView] { get }
   
+  func requestToRemoveReactSubview(_ subview: UIView);
+  
   func setSize(_ size: CGSize);
   
   func dispatchViewEvent(

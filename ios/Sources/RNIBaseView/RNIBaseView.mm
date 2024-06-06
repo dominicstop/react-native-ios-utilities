@@ -221,6 +221,20 @@ static BOOL SHOULD_LOG = NO;
 }
 #endif
 
+- (void)requestToRemoveReactSubview:(UIView *)subview
+{
+  #if RCT_NEW_ARCH_ENABLED
+  [self->_reactSubviewsShim removeObject:subview];
+  
+  NSMutableArray<UIView *> *parentReactSubviews = [self valueForKey:@"_reactSubviews"];
+  if(parentReactSubviews != nil){
+    [parentReactSubviews removeObject:subview];
+  };
+  #else
+  [super removeReactSubview:subview];
+  #endif
+}
+
 - (void)_dispatchOnDidSetViewIDEventIfNeeded
 {
   BOOL shouldDispatchEvent =
