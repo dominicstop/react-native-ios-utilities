@@ -38,7 +38,7 @@ final class RNIDummyTestViewModuleRequestHandler: RNIModuleCommandRequestHandlin
       print(
         "NATIVE - RNIDummyTestViewModuleRequestHandler.getSharedValue",
         "\n - key: someNumber",
-        "\n - rawValue:", rawValue,
+        "\n - rawValue:", rawValue ?? "N/A",
         "\n - someNumber:", someNumber,
         "\n"
       );
@@ -55,7 +55,7 @@ final class RNIDummyTestViewModuleRequestHandler: RNIModuleCommandRequestHandlin
       
       sharedValues.setValue(
         sharedValuesEntryCount,
-        forKey: "newValueFromSwfit\(sharedValuesEntryCount)"
+        forKey: "newValueFromSwift-\(sharedValuesEntryCount)"
       );
       
       RNIUtilitiesManager.shared.overwriteModuleSharedValues(

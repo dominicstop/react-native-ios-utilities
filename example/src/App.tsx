@@ -88,9 +88,6 @@ export default function App() {
       console.log("viewCommandRequest:", result);
     }, 1000);
 
-    setTimeout(async () => {
-    }, 500);
-
     setInterval(() => {
       const result = RNIDummyTestViewModule.getSharedValueSomeNumber();
       console.log(
@@ -126,10 +123,8 @@ export default function App() {
         ...sharedValuesOld,
       };
 
-      for (let index = 0; index < sharedValuesCount; index++) {
-        const newKey = "newValueFromJS" + index;
-        newSharedValues[newKey] = index;
-      };
+      const newKey = `newValueFromJS-${sharedValuesCount}`;
+      newSharedValues[newKey] = sharedValuesCount;
 
       RNIDummyTestViewModule.overwriteModuleSharedValues(newSharedValues);
 
