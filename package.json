@@ -28,16 +28,26 @@
   ],
   "scripts": {
     "example": "yarn workspace react-native-ios-utilities-example",
-    "typecheck": "tsc --noEmit",
     "typescript": "tsc --noEmit",
+    "typescript:example": "cd example && tsc --noEmit --project tsconfig.json",
+    "typescript:all": "yarn run typescript ; yarn run typescript-example",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "release": "release-it --only-version",
-    "pod-install": "cd example/ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install",
-    "nuke-node-modules": "rm -rfv ./node_modules ; cd example ; rm -rfv ./node_modules ; cd ../..",
-    "nuke-example-pods": "cd example/ios ; pod cache clean --all ; rm -rfv ./Pods ./build ; cd ../..",
-    "nuke-all": "yarn run nuke-node-modules ; yarn run nuke-example-pods",
+    "open:ios": "open -a \"Xcode\" example/ios",
+    "open:android": "open -a \"Android Studio\" example/android",
+    "build:ios": "xcodebuild -workspace example/ios/IosUtilitiesExample.xcworkspace -scheme IosUtilitiesExample -destination 'generic/platform=iOS'",
+    "build:ios-info": "xcodebuild -project ./IosUtilitiesExample.xcodeproj -target IosUtilitiesExample -showBuildSettings",
+    "build": "yarn run lint ; yarn run typescript ; yarn run bob build ; yarn run pod-install ; yarn run build:ios",
+    "run:release": "cd example && npx react-native run-ios --configuration Release",
+    "run:debug": "cd example && npx react-native run-ios --configuration Debug",
+    "build-and-run": "yarn run build && yarn run run-debug && yarn run run-release",
+    "pod-install": "cd example/ios && bundle install ; RCT_NEW_ARCH_ENABLED=1 bundle exec pod install ; cd ../..",
+    "pod-install-old": "cd example/ios && pod install ; cd ../..",
+    "nuke:node-modules": "rm -rfv ./node_modules ; cd example ; rm -rfv ./node_modules ; cd ../..",
+    "nuke:example-pods": "cd example/ios ; pod cache clean --all ; rm -rfv ./Pods ./build ; cd ../..",
+    "nuke:all": "yarn run nuke-node-modules ; yarn run nuke-example-pods",
     "update-dep-pods": "cd example/ios ; pod update DGSwiftUtilities ComputableLayout AdaptiveModal ContextMenuAuxiliaryPreview ; pod install --repo-update ; yarn run pod-install ; cd ../.."
   },
   "keywords": [
@@ -74,9 +84,9 @@
     "react": "18.2.0",
     "react-native": "0.74.0",
     "react-native-builder-bob": "^0.20.0",
+    "release-it": "^16.2.1",
     "turbo": "^1.10.7",
-    "typescript": "^5.2.2",
-    "release-it": "^16.2.1"
+    "typescript": "^5.2.2"
   },
   "resolutions": {
     "@types/react": "^18.2.44"
