@@ -15,7 +15,6 @@
 #import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 
 #import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
-#import "react-native-ios-utilities/RNIContentViewDelegate.h"
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 
 #import "react-native-ios-utilities/RNIObjcUtils.h"
@@ -135,7 +134,7 @@ static BOOL SHOULD_LOG = NO;
                                  userInfo:nil];
   }
   
-  if(![viewDelegateClass conformsToProtocol:@protocol(RNIContentViewDelegateSwift)]) {
+  if(![viewDelegateClass conformsToProtocol:@protocol(RNIContentViewDelegate)]) {
     NSString *errorMessage =
       @"[RNIBaseView %@] Error"
       @" - The class returned by getter `[%@ viewDelegateClass]` (i.e. '%@')"
@@ -144,7 +143,7 @@ static BOOL SHOULD_LOG = NO;
     NSString *currentSelector = NSStringFromSelector(_cmd);
     NSString *className = NSStringFromClass([self class]);
     NSString *delegateClassName = NSStringFromClass([[self class] viewDelegateClass]);
-    NSString *protocolName = NSStringFromProtocol(@protocol(RNIContentViewDelegateSwift));
+    NSString *protocolName = NSStringFromProtocol(@protocol(RNIContentViewDelegate));
     
     errorMessage =
       [NSString stringWithFormat: errorMessage, currentSelector, className, delegateClassName, protocolName];
