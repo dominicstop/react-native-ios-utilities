@@ -56,3 +56,6 @@ android/keystores/debug.keystore
 # Expo
 .expo/*
 
+# Extra
+lib
+.yarn
