@@ -1,6 +1,6 @@
 {
   "name": "react-native-ios-utilities",
-  "version": "4.4.6-4",
+  "version": "4.5.0",
   "description": "Utilities for react-native + iOS",
   "main": "build/index.js",
   "types": "build/index.d.ts",
