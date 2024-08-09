@@ -47,6 +47,7 @@ namespace folly {
 
 
 @interface RNIObjcUtils : NSObject
+NS_ASSUME_NONNULL_BEGIN
 #if __cplusplus
 + (std::string)convertToCxxStringForObjcString:(NSString *)string;
 
@@ -68,9 +69,11 @@ namespace folly {
 + (RNILayoutMetrics *)convertToRNILayoutMetricsForPaperLayoutMetrics:(RCTLayoutMetrics)layoutMetrics
                                                     withShadowView:(RCTShadowView *)shadowView;
                                                     
-+ (NSString *)extractPropertyNameForSetterSelector:(SEL)selector;
++ (NSString *)extractPropertyNameForSetterSelector:(nonnull SEL)selector;
 
 + (NSString *)createSetterSelectorStringForPropertyName:(NSString *)propertyName;
 
-@end
++ (void)dispatchToJSThreadForBlock:(nonnull dispatch_block_t)block NS_SWIFT_NAME(dispatchToJSThread(forBlock:));
 
+NS_ASSUME_NONNULL_END
+@end

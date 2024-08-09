@@ -20,6 +20,9 @@
 #include <react/renderer/graphics/RectangleEdges.h>
 #endif
 
+#import <React/RCTBridge.h>
+#import <React/RCTBridge+Private.h>
+
 #import <React/RCTShadowView.h>
 #import <React/RCTShadowView+Layout.h>
 
@@ -249,6 +252,12 @@ static BOOL SHOULD_LOG = NO;
   [setterName appendString:@":"];
   
   return setterName;
+}
+
++ (void)dispatchToJSThreadForBlock:(dispatch_block_t)block
+{
+  RCTBridge *bridge = [RCTBridge currentBridge];
+  [bridge dispatchBlock:block queue:RCTJSThread];
 }
 
 + (id)alloc
