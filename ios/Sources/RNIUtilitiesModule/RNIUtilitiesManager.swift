@@ -292,7 +292,17 @@ public final class RNIUtilitiesManager: NSObject {
     resolve resolveBlock: Resolve,
     reject rejectBlock: Reject
   ) {
+  
     do {
+      // temp - fail early for now...
+      // TODO: Schedule deferred task - execute block on JS thread
+      guard self.state.isLoaded else {
+        throw RNIUtilitiesError(
+          errorCode: .guardCheckFailed,
+          description: "RNIUtilitiesManager not yet initialized"
+        );
+      };
+    
       guard let moduleDelegate = self.getModuleDelegate(forKey: moduleName) else {
         let commandRequestDelegates = self.commandRequestDelegateMap.allDelegates.map {
           "\($0.self)"
