@@ -12,9 +12,19 @@ import DGSwiftUtilities
 @objc
 public final class RNIUtilitiesManager: NSObject {
 
+  // MARK: - Embedded Types
+  // ----------------------
+
+  typealias DeferredActionBlock = (_ sender: RNIUtilitiesManager) -> Void;
+
   public typealias Resolve = RNIModuleCommandRequestHandling.Resolve;
   
   public typealias Reject = RNIModuleCommandRequestHandling.Reject;
+  
+  // MARK: - Class Properties
+  // ------------------------
+  
+  static var singletonClassesCached: [AnyClass] = [];
   
   public static let shared: RNIUtilitiesManager = .init();
   
@@ -22,6 +32,9 @@ public final class RNIUtilitiesManager: NSObject {
   
   // MARK: - Properties
   // ------------------
+  
+  private var state: LoadingState = .notLoaded;
+  private var deferredActions: [DeferredActionBlock] = [];
   
   public var sharedEnv: Dictionary<String, Any> = [:];
   
@@ -40,56 +53,130 @@ public final class RNIUtilitiesManager: NSObject {
   
   public override init(){
     super.init();
-    self._setupRegisterEventDelegates();
-    self._setupRegisterModuleRequestHandlers();
     
+    self.state = .loading;
+    ClassRegistry.shared.loadClasses { sender, classes in
+      self._setupRegisterEventDelegates(withClasses: classes);
+    };
+        
     #if DEBUG
     self._setupDebugObservers();
     #endif
   };
   
-  func _setupRegisterEventDelegates(){
-    let singletonClasses =
-      ClassRegistry.allClasses.getClasses(ofType: Singleton.Type.self);
+  // invoked on main thread, then runs in bg thread
+  func _setupRegisterEventDelegates(withClasses classes: [AnyClass]){
+    #if DEBUG
+    print(
+      "RNIUtilitiesManager._setupRegisterDelegates",
+      "\n - allClasses count:", classes.count,
+      "\n - Status: Load delegates begin",
+      "\n"
+    );
+    #endif
+  
+    DispatchQueue.global(qos: .userInitiated).async {
+      let singletonClasses = classes.getClasses(ofType: Singleton.Type.self);
       
-    let delegateSingletons: [RNIUtilitiesManagerEventsNotifiable] = singletonClasses.compactMap {
-      guard let delegateType = $0 as? RNIUtilitiesManagerEventsNotifiable.Type,
-            delegateType != RNIUtilitiesManager.self
-      else { return nil };
+      let delegateSingletons: [RNIUtilitiesManagerEventsNotifiable] = singletonClasses.compactMap {
+        guard let delegateType = $0 as? RNIUtilitiesManagerEventsNotifiable.Type,
+              delegateType != RNIUtilitiesManager.self
+        else { return nil };
+        
+        return delegateType.shared;
+      };
       
-      return delegateType.shared;
+      DispatchQueue.main.async {
+        #if DEBUG
+        print(
+          "RNIUtilitiesManager._setupRegisterDelegates",
+          "\n - Status: Load delegates complete",
+          "\n - singletonClasses count:", singletonClasses.count,
+          "\n - RNIUtilitiesManager delegates count:", delegateSingletons.count,
+          "\n"
+        );
+        #endif
+        
+        Self.singletonClassesCached = singletonClasses;
+        
+        self.eventDelegates.add(self);
+        delegateSingletons.forEach {
+          self.eventDelegates.add($0);
+        };
+        
+        self._setupRegisterModuleRequestHandlers(
+          withSingletonClasses: singletonClasses
+        );
+      };
     };
-    
-    delegateSingletons.forEach {
-      self.eventDelegates.add($0);
-    };
-    
-    self.eventDelegates.add(self);
   };
   
-  func _setupRegisterModuleRequestHandlers(){
-    let singletonClasses =
-      ClassRegistry.allClasses.getClasses(ofType: Singleton.Type.self);
+  // invoked on main thread, then runs in bg thread
+  func _setupRegisterModuleRequestHandlers(
+    withSingletonClasses singletonClasses: [AnyClass]
+  ){
+    #if DEBUG
+    print(
+      "RNIUtilitiesManager._setupRegisterModuleRequestHandlers",
+      "\n - Status: Load delegates begin",
+      "\n"
+    );
+    #endif
+  
+    DispatchQueue.global(qos: .userInitiated).async {
+      let conformingSingletons: [
+        any RNIModuleCommandRequestHandling
+      ] = singletonClasses.compactMap {
       
-    let conformingSingletons: [
-      any RNIModuleCommandRequestHandling
-    ] = singletonClasses.compactMap {
-    
-      guard let delegateType = $0 as? any RNIModuleCommandRequestHandling.Type,
-            delegateType != RNIUtilitiesManager.self
-      else { return nil };
+        guard let delegateType = $0 as? any RNIModuleCommandRequestHandling.Type,
+              delegateType != RNIUtilitiesManager.self
+        else { return nil };
+        
+        return delegateType.shared;
+      };
       
-      return delegateType.shared;
+      conformingSingletons.forEach {
+        self.commandRequestDelegateMap.add(
+          forKey: type(of: $0).moduleName,
+          withDelegate: $0
+        );
+      };
+      
+      self.eventDelegates.add(self);
+      
+      DispatchQueue.main.async {
+        #if DEBUG
+        print(
+          "RNIUtilitiesManager._setupRegisterModuleRequestHandlers",
+          "\n - Status: Load delegates complete",
+          "\n - singletonClasses count:", singletonClasses.count,
+          "\n - eventDelegates delegates count:", conformingSingletons.count,
+          "\n"
+        );
+        #endif
+        
+        self._notifyOnSetupComplete();
+      };
+    };
+  };
+  
+  // invoked in main thread, runs on main thread
+  func _notifyOnSetupComplete(){
+    self.deferredActions.forEach {
+      $0(self);
     };
     
-    conformingSingletons.forEach {
-      self.commandRequestDelegateMap.add(
-        forKey: type(of: $0).moduleName,
-        withDelegate: $0
-      );
-    };
+    #if DEBUG
+    print(
+      "RNIUtilitiesManager._notifyOnSetupComplete",
+      "\n - Status: Finalizing",
+      "\n - deferredActions count:", deferredActions.count,
+      "\n"
+    );
+    #endif
     
-    self.eventDelegates.add(self);
+    self.deferredActions = [];
+    self.state = .loaded;
   };
   
   #if DEBUG
@@ -109,7 +196,7 @@ public final class RNIUtilitiesManager: NSObject {
   };
   #endif
   
-  // MARK: - Public Functions
+  // MARK: - Functions
   // ------------------------
   
   func _createBridgeReloadDidChangeBlock() -> (() -> Bool) {
@@ -127,22 +214,58 @@ public final class RNIUtilitiesManager: NSObject {
     #endif
   };
   
-  func appendToSharedEnv(newEntries: Dictionary<String, Any>) {
+  public func notifyEventDelegates(
+    block: @escaping (RNIUtilitiesManagerEventsNotifiable) -> Void
+  ) {
+    if self.state.isLoaded {
+      block(self);
+      return;
+    };
+    
+    self.deferredActions.append { futureSelf in
+      futureSelf.eventDelegates.invoke(block);
+    };
+  };
+  
+  public func appendToSharedEnv(newEntries: Dictionary<String, Any>) {
     let oldSharedEnv = self.sharedEnv;
     let newSharedEnv = oldSharedEnv.merging(newEntries) { (_, new) in new };
     
     self.sharedEnv = newSharedEnv;
     
-    self.eventDelegates.invoke {
+    #if DEBUG
+    if !self.state.isLoaded {
+      print(
+        "RNIUtilitiesManager.appendToSharedEnv",
+        "\n - Status: Scheduling...",
+        "\n - newEntries:", newEntries,
+        "\n"
+      );
+    };
+    #endif
+    
+    self.notifyEventDelegates {
       $0.notifyOnSharedEnvDidUpdate(
         sharedEnv: newSharedEnv,
         newEntries: newEntries,
         oldEntries: oldSharedEnv
       );
+      
+      #if DEBUG
+      if !self.state.isLoaded {
+        print(
+          "RNIUtilitiesManager.appendToSharedEnv",
+          "\n - Status: Completed",
+          "\n - newEntries:", newEntries,
+          "\n - delegate:", $0,
+          "\n"
+        );
+      };
+      #endif
     };
   };
   
-  func getModuleDelegate(forKey key: String) -> (any RNIModuleCommandRequestHandling)? {
+  public func getModuleDelegate(forKey key: String) -> (any RNIModuleCommandRequestHandling)? {
     var match: (any RNIModuleCommandRequestHandling)?;
     
     self.serialQueue.sync {
@@ -160,6 +283,7 @@ public final class RNIUtilitiesManager: NSObject {
     return Self.shared;
   };
   
+  /// Note: Invoked in RN JS thread
   @objc(notifyForModuleCommandRequestForModuleName:commandName:withArguments:resolve:reject:)
   public func notifyForModuleCommandRequest(
     forModuleName moduleName: String,
@@ -269,3 +393,4 @@ public final class RNIUtilitiesManager: NSObject {
     };
   };
 };
+  
