@@ -145,6 +145,8 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
           let parentReactView = self.parentReactView
     else { return };
     
+    return;
+    
     DispatchQueue.main.asyncAfter(deadline: .now() + 10){
       parentReactView.setSize(.init(width: 300, height: 300));
     };

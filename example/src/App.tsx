@@ -69,7 +69,7 @@ export default function App() {
     const isUsingNewArch = nativeFabricUIManager != null;
 
     console.log(`isUsingNewArch: ${isUsingNewArch}`);
-    console.log('global: ', Object.keys(global));
+    false && console.log('global: ', Object.keys(global));
     // console.log('global.RNIUtilitiesModule', global.RNIUtilitiesModule);
     // console.log('global.RNIUtilitiesModule.dummyFunction', global.RNIUtilitiesModule?.dummyFunction);
     // console.log('global.RNIUtilitiesModule.dummyFunction()', global.RNIUtilitiesModule?.dummyFunction?.(0));
@@ -77,7 +77,7 @@ export default function App() {
     //console.log('global.NativeModules.RNIUtilitiesModule:', NativeModules.RNIUtilitiesModule);
     console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule ?? []));
     
-    setTimeout(async () => {
+    false && setTimeout(async () => {
       console.log("viewID.current:", viewID.current);
 
       const result = await RNIUtilitiesModule?.viewCommandRequest?.(
@@ -88,7 +88,7 @@ export default function App() {
       console.log("viewCommandRequest:", result);
     }, 1000);
 
-    setInterval(() => {
+    false && setInterval(() => {
       const result = RNIDummyTestViewModule.getSharedValueSomeNumber();
       console.log(
         "JS - RNIDummyTestViewModule.getSharedValueSomeNumber:",
@@ -107,7 +107,7 @@ export default function App() {
       RNIDummyTestViewModule.setSharedValueSomeNumber(newValue);
     }, 500);
 
-    setInterval(() => {
+    false && setInterval(() => {
       const result = RNIDummyTestViewModule.getAllModuleSharedValues();
       console.log(
         "JS - RNIDummyTestViewModule.getAllModuleSharedValues:",
@@ -115,7 +115,7 @@ export default function App() {
       );
     }, 1000);
 
-    setInterval(() => {
+    false && setInterval(() => {
       const sharedValuesOld = RNIDummyTestViewModule.getAllModuleSharedValues();
       const sharedValuesCount = Object.keys(sharedValuesOld).length;
 
@@ -149,11 +149,13 @@ export default function App() {
         /* someArray : */ TEST_ARRAY,
       );
 
+      alert("somePromiseCommandThatWillAlwaysResolve - resolve");
+
       console.log(
         "Module.somePromiseCommandThatWillAlwaysResolve",
         "\n - result:", result
       );
-    }, 500);
+    }, 2000);
   }, []);
 
   const [counter, setCounter] = React.useState(0);
@@ -162,6 +164,7 @@ export default function App() {
   const intervalRef = React.useRef<NodeJS.Timeout | undefined>();
 
   React.useEffect(() => {
+    return;
     if (!isIntervalActive) return;
 
     const intervalID = setInterval(() => {
