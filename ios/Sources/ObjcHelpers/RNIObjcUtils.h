@@ -76,5 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)dispatchToJSThreadViaBridgeForBlock:(void (^)(void))block
   NS_SWIFT_NAME(dispatchToJSThreadViaBridge(forBlock:));
 
++ (void)dispatchToJSThreadViaCallInvokerForBlock:(void (^)(void))block
+  NS_SWIFT_NAME(dispatchToJSThreadViaCallInvoker(forBlock:));
+
 NS_ASSUME_NONNULL_END
 @end

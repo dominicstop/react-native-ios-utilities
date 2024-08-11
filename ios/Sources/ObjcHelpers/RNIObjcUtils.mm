@@ -262,6 +262,20 @@ static BOOL SHOULD_LOG = NO;
   [bridge dispatchBlock:block queue:RCTJSThread];
 }
 
++ (void)dispatchToJSThreadViaCallInvokerForBlock:(void (^)(void))block
+{
+  RCTBridge *bridge = [RCTBridge currentBridge];
+  RCTBridgeProxy *bridgeProxy = (RCTBridgeProxy *)bridge;
+  std::shared_ptr<facebook::react::CallInvoker> jsCallInvoker = [bridgeProxy jsCallInvoker];
+  
+  jsCallInvoker->invokeAsync(
+    /* priority: */ facebook::react::SchedulerPriority::NormalPriority,
+    /* func    : */ [block] {
+      block();
+    }
+  );
+}
+
 + (id)alloc
 {
   [NSException raise:@"Cannot be instantiated!"
