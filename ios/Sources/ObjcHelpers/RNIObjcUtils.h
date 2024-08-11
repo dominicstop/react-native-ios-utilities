@@ -73,7 +73,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)createSetterSelectorStringForPropertyName:(NSString *)propertyName;
 
-+ (void)dispatchToJSThreadForBlock:(nonnull dispatch_block_t)block NS_SWIFT_NAME(dispatchToJSThread(forBlock:));
++ (void)dispatchToJSThreadViaBridgeForBlock:(void (^)(void))block
+  NS_SWIFT_NAME(dispatchToJSThreadViaBridge(forBlock:));
 
 NS_ASSUME_NONNULL_END
 @end

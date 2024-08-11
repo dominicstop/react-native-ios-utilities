@@ -22,6 +22,8 @@
 
 #import <React/RCTBridge.h>
 #import <React/RCTBridge+Private.h>
+#import <React/RCTBridgeProxy+Cxx.h>
+#import <React/RCTBridgeProxy.h>
 
 #import <React/RCTShadowView.h>
 #import <React/RCTShadowView+Layout.h>
@@ -254,7 +256,7 @@ static BOOL SHOULD_LOG = NO;
   return setterName;
 }
 
-+ (void)dispatchToJSThreadForBlock:(dispatch_block_t)block
++ (void)dispatchToJSThreadViaBridgeForBlock:(void (^)(void))block
 {
   RCTBridge *bridge = [RCTBridge currentBridge];
   [bridge dispatchBlock:block queue:RCTJSThread];
