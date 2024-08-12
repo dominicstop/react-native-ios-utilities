@@ -283,7 +283,7 @@ public final class RNIUtilitiesManager: NSObject {
     return Self.shared;
   };
   
-  /// Note: Invoked in RN JS thread
+  /// Note: Invoked + runs in RN JS thread
   @objc(notifyForModuleCommandRequestForModuleName:commandName:withArguments:resolve:reject:)
   public func notifyForModuleCommandRequest(
     forModuleName moduleName: String,

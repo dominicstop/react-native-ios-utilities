@@ -19,13 +19,12 @@ using Resolve = std::function<void(folly::dynamic)>;
 using Reject = std::function<void(const std::string&)>;
 
 
-
-
 class RNIUtilitiesTurboModule : public jsi::HostObject {
 
-  public:
-  static const char MODULE_NAME[];
+  // MARK: - Embedded Types
+  // ----------------------
   
+  public:
   using ViewCommandRequestFunction = std::function<void(
     /* viewID     : */ std::string,
     /* commandName: */ std::string,
@@ -61,6 +60,13 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
     /* moduleName: */ std::string,
     /* values    : */ folly::dynamic
   )>;
+  
+  
+  // MARK: - Static Properties
+  // -------------------------
+  
+  public:
+  static const char MODULE_NAME[];
   
   private:
   static std::function<void(int)> dummyFunction_;
@@ -159,5 +165,5 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
   );
 };
 
-};
+}; // namespace RNIUtilities
 #endif

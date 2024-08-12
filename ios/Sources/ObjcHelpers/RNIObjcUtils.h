@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 + (RNILayoutMetrics *)convertToRNILayoutMetricsForPaperLayoutMetrics:(RCTLayoutMetrics)layoutMetrics
-                                                    withShadowView:(RCTShadowView *)shadowView;
+                                                      withShadowView:(RCTShadowView *)shadowView;
                                                     
 + (NSString *)extractPropertyNameForSetterSelector:(nonnull SEL)selector;
 
