@@ -10,7 +10,7 @@ import React
 import UIKit
 
 
-
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public class RNIImageRemoteURLMaker {
   
   // MARK: - Embedded Types

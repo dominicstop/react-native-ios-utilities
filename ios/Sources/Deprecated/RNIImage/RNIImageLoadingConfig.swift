@@ -8,12 +8,14 @@
 import Foundation
 
 
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public protocol RNIImageLoadingConfigurable {
   var shouldCache: Bool? { get };
   var shouldLazyLoad: Bool? { get };
 };
 
 // TODO: Per file defaults via extension
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public struct RNIImageLoadingConfig: RNIImageLoadingConfigurable {
 
   public let shouldCache: Bool?;

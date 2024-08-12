@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import DGSwiftUtilities
 
-
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public struct RNIImageMaker {
 
   // MARK: - Properties

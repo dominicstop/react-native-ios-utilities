@@ -9,6 +9,7 @@ import UIKit
 import DGSwiftUtilities
 
 
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public struct RNIImageGradientMaker {
 
   // MARK: Embedded Types

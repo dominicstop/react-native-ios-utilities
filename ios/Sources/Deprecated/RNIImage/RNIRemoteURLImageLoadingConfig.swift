@@ -10,6 +10,7 @@ import Foundation
 
 
 /// Maps to: `ImageRemoteURLLoadingConfig`
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public struct RNIRemoteURLImageLoadingConfig: RNIImageLoadingConfigurable {
   
   // MARK: Embedded Types

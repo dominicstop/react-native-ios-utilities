@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public class RNIImageItem {
   
   // MARK: - Properties - Config

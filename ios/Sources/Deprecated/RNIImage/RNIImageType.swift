@@ -8,6 +8,7 @@
 import Foundation
 
 
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public enum RNIImageType: String {
   case IMAGE_ASSET;
   case IMAGE_SYSTEM;
@@ -18,6 +19,7 @@ public enum RNIImageType: String {
   case IMAGE_REMOTE_URL;
 };
 
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public enum RNIImageConfig {
   case IMAGE_ASSET(assetName: String);
   case IMAGE_SYSTEM(config: RNIImageSystemMaker);

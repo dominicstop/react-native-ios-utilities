@@ -8,6 +8,7 @@
 import React
 
 
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public class RNIImageRequireMaker {
   static private var imageCache: [String: UIImage] = [:];
   

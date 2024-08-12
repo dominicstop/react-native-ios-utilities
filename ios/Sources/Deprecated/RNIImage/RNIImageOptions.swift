@@ -9,6 +9,7 @@ import Foundation
 import DGSwiftUtilities
 
 
+@available(*, deprecated, message: "Use `ImageConfig` instead")
 public struct RNIImageOptions {
 
   // MARK: - Properties
