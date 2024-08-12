@@ -23,6 +23,8 @@ namespace RNIUtilities {
 // MARK: - Static Properties
 // -------------------------
 
+jsi::Runtime *RNIUtilitiesTurboModule::jsRuntime;
+
 std::function<void(int)> RNIUtilitiesTurboModule::dummyFunction_;
 
 RNIUtilitiesTurboModule::ViewCommandRequestFunction

@@ -90,6 +90,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   __weak auto weakSelf = self;
   
   auto moduleName = RNIUtilities::RNIUtilitiesTurboModule::MODULE_NAME;
+  RNIUtilitiesTurboModule::jsRuntime = jsiRuntime;
   
   const auto &dummyFunction = [weakSelf](int someInt) {
     #if DEBUG

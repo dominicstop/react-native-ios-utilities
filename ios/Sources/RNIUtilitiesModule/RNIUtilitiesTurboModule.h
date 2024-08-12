@@ -68,6 +68,8 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
   public:
   static const char MODULE_NAME[];
   
+  static jsi::Runtime *jsRuntime;
+  
   private:
   static std::function<void(int)> dummyFunction_;
   static ViewCommandRequestFunction viewCommandRequest_;
