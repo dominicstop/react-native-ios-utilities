@@ -5,9 +5,9 @@
 //  Created by Dominic Go on 9/27/22.
 //
 
-import Foundation
-import React
 import UIKit
+import React
+import DGSwiftUtilities
 
 
 @available(*, deprecated, message: "Use `ImageConfig` instead")
@@ -105,7 +105,7 @@ public class RNIImageRemoteURLMaker {
   // ------------------
   
   public lazy var imageLoader: RCTImageLoaderWithAttributionProtocol? = {
-    guard let bridge = RNIHelpers.bridge,
+    guard let bridge = RCTBridge.current(),
           let imageLoaderModuleRaw = bridge.module(forName: "ImageLoader")
     else {
       return nil
@@ -312,7 +312,7 @@ public class RNIImageRemoteURLMaker {
         
         let nextImage = strongSelf._image;
         
-        if !RNIHelpers.compareImages(prevImage, nextImage) {
+        if ViewHelpers.compareImage(prevImage, nextImage) {
           DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return };
             
