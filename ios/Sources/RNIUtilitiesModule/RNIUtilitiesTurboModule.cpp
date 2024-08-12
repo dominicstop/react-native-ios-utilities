@@ -17,18 +17,32 @@
 #endif
 
 using namespace facebook;
+
 namespace RNIUtilities {
 
+// MARK: - Static Properties
+// -------------------------
+
 std::function<void(int)> RNIUtilitiesTurboModule::dummyFunction_;
-ViewCommandRequestFunction RNIUtilitiesTurboModule::viewCommandRequest_;
-ModuleCommandRequestFunction RNIUtilitiesTurboModule::moduleCommandRequest_;
 
-GetModuleSharedValueFunction RNIUtilitiesTurboModule::getModuleSharedValue_;
-SetModuleSharedValueFunction RNIUtilitiesTurboModule::setModuleSharedValue_;
+RNIUtilitiesTurboModule::ViewCommandRequestFunction
+  RNIUtilitiesTurboModule::viewCommandRequest_;
+  
+RNIUtilitiesTurboModule::ModuleCommandRequestFunction
+  RNIUtilitiesTurboModule::moduleCommandRequest_;
+  
+RNIUtilitiesTurboModule::GetModuleSharedValueFunction
+  RNIUtilitiesTurboModule::getModuleSharedValue_;
+  
+RNIUtilitiesTurboModule::SetModuleSharedValueFunction
+  RNIUtilitiesTurboModule::setModuleSharedValue_;
 
-GetAllModuleSharedValuesFunction RNIUtilitiesTurboModule::getAllModuleSharedValues_;
-OverwriteModuleSharedValuesFunction RNIUtilitiesTurboModule::overwriteModuleSharedValues_;
-
+RNIUtilitiesTurboModule::GetAllModuleSharedValuesFunction
+  RNIUtilitiesTurboModule::getAllModuleSharedValues_;
+  
+RNIUtilitiesTurboModule::OverwriteModuleSharedValuesFunction
+  RNIUtilitiesTurboModule::overwriteModuleSharedValues_;
+  
 const char RNIUtilitiesTurboModule::MODULE_NAME[] = "RNIUtilitiesModule";
 
 // MARK: - Init + Deinit
@@ -141,7 +155,7 @@ jsi::Value RNIUtilitiesTurboModule::dummyFunction(
   #endif
   
   //int stackTag = arguments[0].asNumber();
-  dummyFunction_(-1);
+  RNIUtilitiesTurboModule::dummyFunction_(-1);
   return jsi::Value::undefined();
 }
 
@@ -216,7 +230,7 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
       return rejectValue->asObject(rt).asFunction(rt);
     }();
     
-    viewCommandRequest_(
+    RNIUtilitiesTurboModule::viewCommandRequest_(
       viewID,
       commandName,
       commandArgs,
@@ -313,7 +327,7 @@ jsi::Value RNIUtilitiesTurboModule::moduleCommandRequest(
       return rejectValue->asObject(rt).asFunction(rt);
     }();
     
-    moduleCommandRequest_(
+    RNIUtilitiesTurboModule::moduleCommandRequest_(
       moduleName,
       commandName,
       commandArgs,
@@ -375,7 +389,7 @@ jsi::Value RNIUtilitiesTurboModule::getModuleSharedValue(
     );
   }();
 
-  auto resultDyn = getModuleSharedValue_(
+  auto resultDyn = RNIUtilitiesTurboModule::getModuleSharedValue_(
     /* moduleName : */ moduleName,
     /* key:       : */ key
   );
@@ -423,7 +437,7 @@ jsi::Value RNIUtilitiesTurboModule::setModuleSharedValue(
     return jsi::dynamicFromValue(rt, value);
   }();
   
-  setModuleSharedValue_(
+  RNIUtilitiesTurboModule::setModuleSharedValue_(
     /* moduleName : */ moduleName,
     /* key        : */ key,
     /* value      : */ valueDyn
@@ -456,7 +470,7 @@ jsi::Value RNIUtilitiesTurboModule::getAllModuleSharedValues(
     );
   }();
 
-  auto resultDyn = getAllModuleSharedValues_(
+  auto resultDyn = RNIUtilitiesTurboModule::getAllModuleSharedValues_(
     /* moduleName: */ moduleName
   );
   
@@ -506,7 +520,7 @@ jsi::Value RNIUtilitiesTurboModule::overwriteModuleSharedValues(
     return valueDyn;
   }();
   
-  overwriteModuleSharedValues_(
+  RNIUtilitiesTurboModule::overwriteModuleSharedValues_(
     /* moduleName: */ moduleName,
     /* values    : */ valueDyn
   );

@@ -18,45 +18,51 @@ namespace RNIUtilities {
 using Resolve = std::function<void(folly::dynamic)>;
 using Reject = std::function<void(const std::string&)>;
 
-using ViewCommandRequestFunction = std::function<void(
-  /* viewID     : */ std::string,
-  /* commandName: */ std::string,
-  /* commandArgs: */ folly::dynamic,
-  /* resolve    : */ Resolve,
-  /* reject     : */ Reject
-)>;
 
-using ModuleCommandRequestFunction = std::function<void(
-  /* moduleName : */ std::string,
-  /* commandName: */ std::string,
-  /* commandArgs: */ folly::dynamic,
-  /* resolve    : */ Resolve,
-  /* reject     : */ Reject
-)>;
-
-using GetModuleSharedValueFunction = std::function<folly::dynamic(
-  /* moduleName : */ std::string,
-  /* key        : */ std::string
-)>;
-
-using SetModuleSharedValueFunction = std::function<void(
-  /* moduleName : */ std::string,
-  /* key        : */ std::string,
-  /* value      : */ folly::dynamic
-)>;
-
-using GetAllModuleSharedValuesFunction = std::function<folly::dynamic(
-  /* moduleName: */ std::string
-)>;
-
-using OverwriteModuleSharedValuesFunction = std::function<void(
-  /* moduleName: */ std::string,
-  /* values    : */ folly::dynamic
-)>;
 
 
 class RNIUtilitiesTurboModule : public jsi::HostObject {
 
+  public:
+  static const char MODULE_NAME[];
+  
+  using ViewCommandRequestFunction = std::function<void(
+    /* viewID     : */ std::string,
+    /* commandName: */ std::string,
+    /* commandArgs: */ folly::dynamic,
+    /* resolve    : */ Resolve,
+    /* reject     : */ Reject
+  )>;
+
+  using ModuleCommandRequestFunction = std::function<void(
+    /* moduleName : */ std::string,
+    /* commandName: */ std::string,
+    /* commandArgs: */ folly::dynamic,
+    /* resolve    : */ Resolve,
+    /* reject     : */ Reject
+  )>;
+
+  using GetModuleSharedValueFunction = std::function<folly::dynamic(
+    /* moduleName : */ std::string,
+    /* key        : */ std::string
+  )>;
+
+  using SetModuleSharedValueFunction = std::function<void(
+    /* moduleName : */ std::string,
+    /* key        : */ std::string,
+    /* value      : */ folly::dynamic
+  )>;
+
+  using GetAllModuleSharedValuesFunction = std::function<folly::dynamic(
+    /* moduleName: */ std::string
+  )>;
+
+  using OverwriteModuleSharedValuesFunction = std::function<void(
+    /* moduleName: */ std::string,
+    /* values    : */ folly::dynamic
+  )>;
+  
+  private:
   static std::function<void(int)> dummyFunction_;
   static ViewCommandRequestFunction viewCommandRequest_;
   static ModuleCommandRequestFunction moduleCommandRequest_;
@@ -65,10 +71,8 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
   static GetAllModuleSharedValuesFunction getAllModuleSharedValues_;
   static OverwriteModuleSharedValuesFunction overwriteModuleSharedValues_;
 
-  public:
-  static const char MODULE_NAME[];
-  
-// MARK: - Init + Deinit
+    
+// MARK: - Init + De-Init
 // ---------------------
   
   RNIUtilitiesTurboModule(
@@ -80,6 +84,7 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
     GetAllModuleSharedValuesFunction getAllModuleSharedValues,
     OverwriteModuleSharedValuesFunction overwriteModuleSharedValues
   );
+  public:
   
   ~RNIUtilitiesTurboModule() override;
   

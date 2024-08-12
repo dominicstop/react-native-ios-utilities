@@ -29,6 +29,7 @@
 
 using namespace facebook;
 using namespace react;
+using namespace RNIUtilities;
 #endif
 
 static BOOL SHOULD_LOG = NO;
@@ -98,7 +99,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     #endif
   };
   
-  const RNIUtilities::ViewCommandRequestFunction &viewCommandRequest = [weakSelf](
+  const RNIUtilitiesTurboModule::ViewCommandRequestFunction &viewCommandRequest = [weakSelf](
     std::string viewID,
     std::string commandName,
     folly::dynamic commandArgs,
@@ -128,7 +129,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                            reject:rejectBlock];
   };
   
-  const RNIUtilities::ModuleCommandRequestFunction &moduleCommandRequest = [weakSelf](
+  const RNIUtilitiesTurboModule::ModuleCommandRequestFunction &moduleCommandRequest = [weakSelf](
     std::string moduleName,
     std::string commandName,
     folly::dynamic commandArgs,
@@ -158,7 +159,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                           reject:rejectBlock];
   };
   
-  const RNIUtilities::GetModuleSharedValueFunction &getModuleSharedValue = [weakSelf](
+  const RNIUtilitiesTurboModule::GetModuleSharedValueFunction &getModuleSharedValue = [weakSelf](
     std::string moduleName,
     std::string key
   ) {
@@ -175,7 +176,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     return react::convertIdToFollyDynamic(result);
   };
   
-  const RNIUtilities::SetModuleSharedValueFunction &setModuleSharedValue = [weakSelf](
+  const RNIUtilitiesTurboModule::SetModuleSharedValueFunction &setModuleSharedValue = [weakSelf](
     std::string moduleName,
     std::string key,
     folly::dynamic valueDyn
@@ -190,7 +191,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
                                       withValue:value];
   };
   
-  const RNIUtilities::GetAllModuleSharedValuesFunction &getAllModuleSharedValues = [weakSelf](
+  const RNIUtilitiesTurboModule::GetAllModuleSharedValuesFunction &getAllModuleSharedValues = [weakSelf](
     std::string moduleNameCxx
   ) {
   
@@ -206,7 +207,7 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     return react::convertIdToFollyDynamic(values);
   };
   
-  const RNIUtilities::OverwriteModuleSharedValuesFunction &overwriteModuleSharedValues = [weakSelf](
+  const RNIUtilitiesTurboModule::OverwriteModuleSharedValuesFunction &overwriteModuleSharedValues = [weakSelf](
     std::string moduleNameCxx,
     folly::dynamic valueDyn
   ) {
