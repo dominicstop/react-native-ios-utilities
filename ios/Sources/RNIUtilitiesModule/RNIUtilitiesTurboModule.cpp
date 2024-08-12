@@ -175,12 +175,12 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
   size_t count
 ) {
 
-#if DEBUG
+  #if DEBUG
   std::cout
     << RNI_DEBUG_STRING
     << " - arg count: " << count
     << std::endl;
-#endif
+  #endif
 
 
   if (count < 3) {
@@ -189,7 +189,7 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
     );
   }
   
-  std::string viewID = [&rt, &arguments]{
+  std::string viewID = [&]{
     if (arguments[0].isString()){
       auto jsString = arguments[0].asString(rt);
       return jsString.utf8(rt);
@@ -200,7 +200,7 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
     );
   }();
   
-  std::string commandName = [&rt, &arguments]{
+  std::string commandName = [&]{
     if (arguments[1].isString()){
       auto jsString = arguments[1].asString(rt);
       return jsString.utf8(rt);
@@ -211,7 +211,7 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
     );
   }();
   
-  folly::dynamic commandArgs = [&rt, &arguments]{
+  folly::dynamic commandArgs = [&]{
     if (arguments[2].isObject()){
       return jsi::dynamicFromValue(rt, arguments[2]);
     };
@@ -222,34 +222,33 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
   }();
   
   auto promise = rt.global().getPropertyAsFunction(rt, "Promise");
-  auto promiseBody = [&viewID, &commandName, &commandArgs](
+  auto promiseBody = [=](
     jsi::Runtime &rt,
     const jsi::Value &thisValue,
     const jsi::Value *args,
     size_t count
   ) -> jsi::Value {
   
-    auto resolve = [&rt, &args]{
-      auto resolveValue = std::make_shared<jsi::Value>(rt, args[0]);
-      return resolveValue->asObject(rt).asFunction(rt);
-    }();
-    
-    auto reject = [&rt, &args]{
-      auto rejectValue = std::make_shared<jsi::Value>(rt, args[1]);
-      return rejectValue->asObject(rt).asFunction(rt);
-    }();
+    auto resolveValue = std::make_shared<jsi::Value>(rt, args[0]);
+    auto rejectValue  = std::make_shared<jsi::Value>(rt, args[1]);
     
     RNIUtilitiesTurboModule::viewCommandRequest_(
       viewID,
       commandName,
       commandArgs,
-      [&rt, &resolve](folly::dynamic resultDyn){
-        auto resultValue = jsi::valueFromDynamic(rt, resultDyn);
-        resolve.call(rt, std::move(resultValue));
+      [resolveValue = std::move(resolveValue)](folly::dynamic resultDyn){
+        jsi::Runtime *rt = RNIUtilitiesTurboModule::jsRuntime;
+        auto resultValue = jsi::valueFromDynamic(*rt, resultDyn);
+        
+        auto resolve = resolveValue->asObject(*rt).asFunction(*rt);
+        resolve.call(*rt, std::move(resultValue));
       },
-      [&rt, &reject](std::string errorMessage){
-        auto jsString = jsi::String::createFromUtf8(rt, errorMessage);
-        reject.call(rt, std::move(jsString));
+      [rejectValue = std::move(rejectValue)](std::string errorMessage){
+        jsi::Runtime *rt = RNIUtilitiesTurboModule::jsRuntime;
+        auto errorMessageValue = jsi::String::createFromUtf8(*rt, errorMessage);
+        
+        auto reject = rejectValue->asObject(*rt).asFunction(*rt);
+        reject.call(*rt, std::move(errorMessageValue));
       }
     );
     
