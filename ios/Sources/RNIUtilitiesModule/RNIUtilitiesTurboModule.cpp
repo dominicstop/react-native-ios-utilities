@@ -375,7 +375,7 @@ jsi::Value RNIUtilitiesTurboModule::getModuleSharedValue(
     );
   }
   
-  std::string moduleName = [&rt, &arguments]{
+  std::string moduleName = [&]{
     if (arguments[0].isString()){
       auto jsString = arguments[0].asString(rt);
       return jsString.utf8(rt);
@@ -386,7 +386,7 @@ jsi::Value RNIUtilitiesTurboModule::getModuleSharedValue(
     );
   }();
   
-  std::string key = [&rt, &arguments]{
+  std::string key = [&]{
     if (arguments[1].isString()){
       auto jsString = arguments[1].asString(rt);
       return jsString.utf8(rt);
@@ -418,7 +418,7 @@ jsi::Value RNIUtilitiesTurboModule::setModuleSharedValue(
     );
   }
   
-  std::string moduleName = [&rt, &arguments]{
+  std::string moduleName = [&]{
     if (arguments[0].isString()){
       auto jsString = arguments[0].asString(rt);
       return jsString.utf8(rt);
@@ -429,7 +429,7 @@ jsi::Value RNIUtilitiesTurboModule::setModuleSharedValue(
     );
   }();
   
-  std::string key = [&rt, &arguments]{
+  std::string key = [&]{
     if (arguments[1].isString()){
       auto jsString = arguments[1].asString(rt);
       return jsString.utf8(rt);
@@ -440,7 +440,7 @@ jsi::Value RNIUtilitiesTurboModule::setModuleSharedValue(
     );
   }();
   
-  folly::dynamic valueDyn = [&rt, &arguments]{
+  folly::dynamic valueDyn = [&]{
     auto value = jsi::Value(rt, arguments[2]);
     return jsi::dynamicFromValue(rt, value);
   }();
@@ -467,7 +467,7 @@ jsi::Value RNIUtilitiesTurboModule::getAllModuleSharedValues(
     );
   }
   
-  std::string moduleName = [&rt, &arguments]{
+  std::string moduleName = [&]{
     if (arguments[0].isString()){
       auto jsString = arguments[0].asString(rt);
       return jsString.utf8(rt);
@@ -504,7 +504,7 @@ jsi::Value RNIUtilitiesTurboModule::overwriteModuleSharedValues(
     );
   }
   
-  std::string moduleName = [&rt, &arguments]{
+  std::string moduleName = [&]{
     if (arguments[0].isString()){
       auto jsString = arguments[0].asString(rt);
       return jsString.utf8(rt);
@@ -515,7 +515,7 @@ jsi::Value RNIUtilitiesTurboModule::overwriteModuleSharedValues(
     );
   }();
   
-  folly::dynamic valueDyn = [&rt, &arguments]{
+  folly::dynamic valueDyn = [&]{
     auto value = jsi::Value(rt, arguments[1]);
     auto valueDyn = jsi::dynamicFromValue(rt, value);
     
