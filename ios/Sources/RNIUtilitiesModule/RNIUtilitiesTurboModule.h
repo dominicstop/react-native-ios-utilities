@@ -81,16 +81,8 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
 // MARK: - Init + De-Init
 // ---------------------
   
-  RNIUtilitiesTurboModule(
-    std::function<void(int)> dummyFunction,
-    ViewCommandRequestFunction viewCommandRequest,
-    ModuleCommandRequestFunction moduleCommandRequest,
-    GetModuleSharedValueFunction getModuleSharedValue,
-    SetModuleSharedValueFunction setModuleSharedValue,
-    GetAllModuleSharedValuesFunction getAllModuleSharedValues,
-    OverwriteModuleSharedValuesFunction overwriteModuleSharedValues
-  );
   public:
+  RNIUtilitiesTurboModule();
   
   ~RNIUtilitiesTurboModule() override;
   
@@ -111,6 +103,19 @@ class RNIUtilitiesTurboModule : public jsi::HostObject {
   std::vector<jsi::PropNameID> getPropertyNames(
     jsi::Runtime &rt
   ) override;
+  
+// MARK: - Static Functions
+// ------------------------
+  
+  static void registerCommands(
+    std::function<void(int)> dummyFunction,
+    ViewCommandRequestFunction viewCommandRequest,
+    ModuleCommandRequestFunction moduleCommandRequest,
+    GetModuleSharedValueFunction getModuleSharedValue,
+    SetModuleSharedValueFunction setModuleSharedValue,
+    GetAllModuleSharedValuesFunction getAllModuleSharedValues,
+    OverwriteModuleSharedValuesFunction overwriteModuleSharedValues
+  );
   
 // MARK: - Commands
 // ----------------

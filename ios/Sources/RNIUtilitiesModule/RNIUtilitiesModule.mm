@@ -219,8 +219,8 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     [weakSelf overwriteModuleSharedValuesForModuleName:moduleNameObjc
                                             withValues:valueObjc];
   };
-
-  auto moduleHostObject = std::make_shared<RNIUtilities::RNIUtilitiesTurboModule>(
+  
+  RNIUtilitiesTurboModule::registerCommands(
     dummyFunction,
     viewCommandRequest,
     moduleCommandRequest,
@@ -229,6 +229,8 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     getAllModuleSharedValues,
     overwriteModuleSharedValues
   );
+
+  auto moduleHostObject = std::make_shared<RNIUtilitiesTurboModule>();
           
   auto moduleObject =
     jsi::Object::createFromHostObject(runtime, moduleHostObject);

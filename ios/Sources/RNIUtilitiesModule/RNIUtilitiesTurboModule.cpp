@@ -45,25 +45,11 @@ RNIUtilitiesTurboModule::OverwriteModuleSharedValuesFunction
   
 const char RNIUtilitiesTurboModule::MODULE_NAME[] = "RNIUtilitiesModule";
 
-// MARK: - Init + Deinit
+// MARK: - Init + De-Init
 // ---------------------
 
-RNIUtilitiesTurboModule::RNIUtilitiesTurboModule(
-  std::function<void(int)> dummyFunction,
-  ViewCommandRequestFunction viewCommandRequest,
-  ModuleCommandRequestFunction moduleCommandRequest,
-  GetModuleSharedValueFunction getModuleSharedValue,
-  SetModuleSharedValueFunction setModuleSharedValue,
-  GetAllModuleSharedValuesFunction getAllModuleSharedValues,
-  OverwriteModuleSharedValuesFunction overwriteModuleSharedValues
-) {
-  dummyFunction_ = dummyFunction;
-  viewCommandRequest_ = viewCommandRequest;
-  moduleCommandRequest_ = moduleCommandRequest;
-  getModuleSharedValue_ = getModuleSharedValue;
-  setModuleSharedValue_ = setModuleSharedValue;
-  getAllModuleSharedValues_ = getAllModuleSharedValues;
-  overwriteModuleSharedValues_ = overwriteModuleSharedValues;
+RNIUtilitiesTurboModule::RNIUtilitiesTurboModule() {
+  // no-op
 }
 
 RNIUtilitiesTurboModule::~RNIUtilitiesTurboModule(){
@@ -133,8 +119,29 @@ std::vector<jsi::PropNameID> RNIUtilitiesTurboModule::getPropertyNames(
   return properties;
 }
 
-// MARK: - Commands
-// ----------------
+// MARK: - Static Functions
+// ------------------------
+
+void RNIUtilitiesTurboModule::registerCommands(
+  std::function<void(int)> dummyFunction,
+  ViewCommandRequestFunction viewCommandRequest,
+  ModuleCommandRequestFunction moduleCommandRequest,
+  GetModuleSharedValueFunction getModuleSharedValue,
+  SetModuleSharedValueFunction setModuleSharedValue,
+  GetAllModuleSharedValuesFunction getAllModuleSharedValues,
+  OverwriteModuleSharedValuesFunction overwriteModuleSharedValues
+) {
+  dummyFunction_ = dummyFunction;
+  viewCommandRequest_ = viewCommandRequest;
+  moduleCommandRequest_ = moduleCommandRequest;
+  getModuleSharedValue_ = getModuleSharedValue;
+  setModuleSharedValue_ = setModuleSharedValue;
+  getAllModuleSharedValues_ = getAllModuleSharedValues;
+  overwriteModuleSharedValues_ = overwriteModuleSharedValues;
+};
+
+// MARK: - JSI Commands
+// --------------------
 
 jsi::Value RNIUtilitiesTurboModule::dummyFunction(
   jsi::Runtime &rt,
@@ -250,7 +257,7 @@ jsi::Value RNIUtilitiesTurboModule::viewCommandRequest(
   auto promiseFunction = jsi::Function::createFromHostFunction(
     /* runtime    : */ rt,
     /* name       : */ jsi::PropNameID::forAscii(rt, "executor"),
-    /* param count: */  2,
+    /* param count: */ 2,
     /* function   : */ promiseBody
   );
   
@@ -309,9 +316,12 @@ jsi::Value RNIUtilitiesTurboModule::moduleCommandRequest(
     );
   }();
   
-  auto promise = rt.global().getPropertyAsFunction(rt, "Promise");
-  auto promiseBody = [&moduleName, &commandName, &commandArgs](
-    jsi::Runtime &rt,
+  jsi::Function promise = rt.global().getPropertyAsFunction(rt, "Promise");
+  
+  
+  
+  auto promiseBody = [moduleName, commandName, commandArgs, &promise, &rt](
+    jsi::Runtime &rt2,
     const jsi::Value &thisValue,
     const jsi::Value *args,
     size_t count
