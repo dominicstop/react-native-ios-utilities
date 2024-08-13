@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, ViewStyle, TextStyle, StyleProp } from 'react-native';
+import { StyleSheet, View, Text, type ViewStyle, type TextStyle, type StyleProp } from 'react-native';
 
-import * as Colors from '../constants/Colors';
+import * as Colors from '../misc/Colors';
 
 /**
  * ```

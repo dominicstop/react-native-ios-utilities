@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, View, type ViewStyle } from 'react-native';
 
 export function TriangleView(props: {
   style?: ViewStyle;
