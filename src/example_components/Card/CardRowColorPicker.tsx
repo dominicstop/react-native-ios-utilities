@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, ListRenderItem } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, type ListRenderItem } from 'react-native';
 
 import * as Colors from '../../misc/Colors';
 
@@ -32,11 +32,11 @@ const PALLETES = [
 ];
 
 const BASE_COLORS = PALLETES.reduce((acc: string[][], curr) => {
-  if('A700' in curr) acc[0].push(curr.A700);
+  if('A700' in curr) acc[0]!.push(curr.A700);
 
-  acc[1].push(curr['900']);
-  acc[2].push(curr['600']);
-  acc[3].push(curr['300']);
+  acc[1]!.push(curr['900']);
+  acc[2]!.push(curr['600']);
+  acc[3]!.push(curr['300']);
 
   return acc;
 }, [[], [], [], []]);
@@ -103,7 +103,7 @@ export class CardRowColorPicker extends React.Component<CardRowColorPickerProps,
           )}
         </View>
         <FlatList
-          style={styles.list}
+          style={[styles.list]}
           data={DEFAULT_COLORS}
           renderItem={this._listRenderItem}
           scrollIndicatorInsets={{left: 10, right: 10}}

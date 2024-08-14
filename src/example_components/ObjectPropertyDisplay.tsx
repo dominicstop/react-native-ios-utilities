@@ -13,7 +13,7 @@ import * as Colors from '../misc/Colors';
  * └─────────────────────────────┘
  * ```
  */                               
-export function ObjectPropertyDisplay<T extends object>(props: {
+export function ObjectPropertyDisplay<T extends {}>(props: {
   object?: T;
   style?: StyleProp<ViewStyle>;
   propertyLabelTextStyle?: TextStyle;
@@ -34,8 +34,9 @@ export function ObjectPropertyDisplay<T extends object>(props: {
       styles.rootContainerWhenHasObject,
       props.style,
     ]}>
-      {objectKeys.map((objKey, index) => {
-        const value = props.object![objKey];
+      {objectKeys.map((objKeyRaw, index) => {
+        const objKey = String(objKeyRaw);
+        const value = props.object![objKeyRaw];
         const isValueObj = (typeof value === 'object' && value !== null);
 
         return isValueObj?(
@@ -52,7 +53,7 @@ export function ObjectPropertyDisplay<T extends object>(props: {
             </Text>
             <ObjectPropertyDisplay
               key={`value-ObjectPropertyDisplay-${objKey}-${index}`}
-              object={value}
+              object={value!}
               style={[
                 styles.objectPropertyDisplay,
                 props.style
@@ -82,7 +83,7 @@ export function ObjectPropertyDisplay<T extends object>(props: {
                 props.propertyValueTextStyle
               ]}
             >
-              {isValueObj? `...`: `'${props.object[objKey]}'`}
+              {isValueObj? `...`: `'${props.object![objKeyRaw]}'`}
             </Text>
           </View>
         );
