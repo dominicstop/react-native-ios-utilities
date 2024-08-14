@@ -28,7 +28,7 @@ export const EXAMPLE_ITEMS: Array<ExampleItem> = (() => {
   const screenItems: Array<ExampleItemRoute> = [{
     component: RNIDummyTest01Screen,
     type: 'screen',
-    routeKey: 'home',
+    routeKey: 'dummyTest01',
   }];
 
   const cardItems: Array<ExampleItemCard> = []; 

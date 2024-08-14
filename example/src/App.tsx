@@ -9,6 +9,7 @@ import { HomeScreen } from "./examples/HomeScreen";
 
 import { SHARED_ENV } from "./constants/SharedEnv";
 import { ROUTE_ITEMS } from "./constants/Routes";
+import { ROUTE_KEYS } from "./constants/RouteKeys";
 
 const shouldEnableTabs =
   SHARED_ENV.enableReactNavigation && SHARED_ENV.enableTabNavigation;
@@ -17,8 +18,8 @@ function NavigationBarBanner(){
   return (
     <Image
       source={(SHARED_ENV.shouldSetAppBackground
-        ? require("./assets/tamagui-banner-rainbow-logo-black.png")
-        : require("./assets/tamagui-banner-rainbow-logo-white.png")
+        ? require("./assets/tamagui-banner-rainbow-logo-white.png")
+        : require("./assets/tamagui-banner-rainbow-logo-black.png")
       )}
       style={styles.navigationBarBannerImage}
     />
@@ -57,7 +58,7 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName='Home'
+          initialRouteName={ROUTE_KEYS.home}
           screenOptions={{
             contentStyle: {
               backgroundColor: (SHARED_ENV.shouldSetAppBackground

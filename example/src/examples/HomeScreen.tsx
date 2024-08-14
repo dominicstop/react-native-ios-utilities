@@ -18,10 +18,13 @@ const EXAMPLE_LIST_ITEMS = EXAMPLE_ITEMS.map(
   (item, index) => {
     switch(item.type) {
       case 'screen':
-        const navigation = SHARED_ENV.enableReactNavigation && useNavigation();
         return ({
           id: index + 1,
           component: (props: Record<string, unknown>) => {
+            // @ts-ignore
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const navigation = SHARED_ENV.enableReactNavigation && useNavigation();
+            
             return (
               <ExampleItemCard
                 {...{props}}
@@ -31,11 +34,11 @@ const EXAMPLE_LIST_ITEMS = EXAMPLE_ITEMS.map(
                 description={item.desc}
               >
                 <CardButton
-                  title="Navigate-"
+                  title="Navigate"
                   subtitle={`Push: ${item.routeKey}`}
                   onPress={() => {
                     // @ts-ignore
-                    navigation.push(item.routeKey);
+                    navigation?.push(item.routeKey);
                   }}
                 />
               </ExampleItemCard>
@@ -88,6 +91,7 @@ export function HomeScreen() {
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    backgroundColor: 'white',
   },
   scrollView: {
     flex: 1,
