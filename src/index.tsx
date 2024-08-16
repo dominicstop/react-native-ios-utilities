@@ -1,6 +1,8 @@
 export * from './native_components/RNIDummyTestView';
 export * from './native_modules/RNIUtilitiesModule';
 
+export * from './constants/UIBlurEffectStyles';
+
 export * from './types/SharedViewEvents';
 
 export * from './example_components/Card';
