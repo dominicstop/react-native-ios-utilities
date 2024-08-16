@@ -2,6 +2,7 @@ export * from './native_components/RNIDummyTestView';
 export * from './native_modules/RNIUtilitiesModule';
 
 export * from './constants/UIBlurEffectStyles';
+export * from './constants/UIVibrancyEffectStyles';
 
 export * from './types/SharedViewEvents';
 
