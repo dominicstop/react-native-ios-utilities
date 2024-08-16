@@ -1,5 +1,5 @@
-import { ComputableLayoutOffsetOperation } from "./ComputableLayoutOffsetOperation";
-import { ComputableLayoutValueMode } from "./ComputableLayoutValueMode";
+import type { ComputableLayoutOffsetOperation } from "./ComputableLayoutOffsetOperation";
+import type { ComputableLayoutValueMode } from "./ComputableLayoutValueMode";
 
 
 export type ComputableLayoutValue = {

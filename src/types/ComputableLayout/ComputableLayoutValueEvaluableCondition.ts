@@ -1,4 +1,4 @@
-import { ComputableLayoutValueMode } from "./ComputableLayoutValueMode";
+import type { ComputableLayoutValueMode } from "./ComputableLayoutValueMode";
 
 export type ComputableLayoutValueEvaluableCondition = {
   mode: 'isNilOrZero';

@@ -1,7 +1,7 @@
-import { CGRectNative, CGSize, UIEdgeInsets } from "../NativeTypes";
-import { ComputableLayoutValuePercentTarget } from "./ComputableLayoutValuePercentTarget";
-import { ComputableLayoutValueEvaluableCondition } from "./ComputableLayoutValueEvaluableCondition";
-import { EvaluableCondition } from "./EvaluableCondition";
+import type { CGRectNative, CGSize, UIEdgeInsets } from "../NativeTypes";
+import type { ComputableLayoutValuePercentTarget } from "./ComputableLayoutValuePercentTarget";
+import type { ComputableLayoutValueEvaluableCondition } from "./ComputableLayoutValueEvaluableCondition";
+import type { EvaluableCondition } from "./EvaluableCondition";
 
 
 export type ComputableLayoutValueMode = {

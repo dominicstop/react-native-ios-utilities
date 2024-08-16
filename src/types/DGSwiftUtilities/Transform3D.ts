@@ -1,4 +1,4 @@
-import { Angle } from "./Angle";
+import type { Angle } from "./Angle";
 
 export type Transform3D = {
   translateX?: number;

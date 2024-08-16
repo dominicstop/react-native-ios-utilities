@@ -1,8 +1,8 @@
-import { CGRectNative, CGSize, UIEdgeInsets, UIDevice, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle, CGRectInit } from "../NativeTypes";
-import { NumericLogicalExpression } from "./NumericLogicalExpression";
-import { EvaluableConditionContext } from "./EvaluableConditionContext";
-import { StringComparisonMode } from "./StringComparisonMode";
-import { KeysWithType } from "../UtilityTypes";
+import type { CGRectNative, CGSize, UIEdgeInsets, UIDevice, UIUserInterfaceIdiom, UIDeviceOrientation, UIInterfaceOrientation, UITraitEnvironmentLayoutDirection, UIUserInterfaceActiveAppearance, UIUserInterfaceLevel, UIUserInterfaceSizeClass, UIUserInterfaceStyle, CGRectInit } from "../NativeTypes";
+import type { NumericLogicalExpression } from "./NumericLogicalExpression";
+import type { EvaluableConditionContext } from "./EvaluableConditionContext";
+import type { StringComparisonMode } from "./StringComparisonMode";
+import type { KeysWithType } from "../UtilityTypes";
 
 export type EvaluableConditionFrameRectValue = {
  mode: 'window'; 

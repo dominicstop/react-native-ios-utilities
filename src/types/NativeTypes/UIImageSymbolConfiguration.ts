@@ -1,4 +1,4 @@
-import { UIFontTextStyle } from "./UIFont";
+import type { UIFontTextStyle } from "./UIFont";
 
 export type UIImageSymbolWeight = 
   | 'unspecified'

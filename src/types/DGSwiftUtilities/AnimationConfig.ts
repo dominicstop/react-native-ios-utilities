@@ -1,5 +1,5 @@
-import { CGPoint, CGVector } from "../NativeTypes/CoreGraphicsTypes";
-import { UIViewAnimationCurve } from "../NativeTypes/UIViewTypes";
+import type { CGPoint, CGVector } from "../NativeTypes/CoreGraphicsTypes";
+import type { UIViewAnimationCurve } from "../NativeTypes/UIViewTypes";
 
 
 // Unsupported: 

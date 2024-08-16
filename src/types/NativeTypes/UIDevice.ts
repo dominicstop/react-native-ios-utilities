@@ -1,6 +1,6 @@
 // UIKit - UIDevice
 
-import { UIDeviceOrientation } from "./UIOrientation";
+import type { UIDeviceOrientation } from "./UIOrientation";
 
 export type UIUserInterfaceIdiom =
   | 'unspecified'

@@ -1,6 +1,6 @@
-import { ComputableLayoutValue } from "./ComputableLayoutValue";
-import { HorizontalAlignment } from "./HorizontalAlignment";
-import { VerticalAlignment } from "./VerticalAlignment";
+import type { ComputableLayoutValue } from "./ComputableLayoutValue";
+import type { HorizontalAlignment } from "./HorizontalAlignment";
+import type { VerticalAlignment } from "./VerticalAlignment";
 
 export type ComputableLayout = {
   horizontalAlignment: HorizontalAlignment;
