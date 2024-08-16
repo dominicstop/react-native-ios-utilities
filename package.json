@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "example": "yarn workspace react-native-ios-utilities-example",
-    "typescript": "tsc --noEmit",
+    "typescript": "tsc --noEmit --project tsconfig.build.json",
     "typescript:example": "cd example && tsc --noEmit --project tsconfig.json",
     "typescript:all": "yarn run typescript ; yarn run typescript-example",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
