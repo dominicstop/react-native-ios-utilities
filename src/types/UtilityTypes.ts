@@ -9,5 +9,8 @@ export type KeysWithType<T, U> =
 
 export type UniformKeyAndValue<T extends string> = { [k in T]: k };
 
-
 export type UniformKeyAndValueFromObject<T extends Record<string, unknown>> = { [k in keyof T]: k };
+
+export type RemapObject<T, U extends {[key in keyof T]: unknown}> = {
+  [TKey in keyof T]: U[TKey];
+};
