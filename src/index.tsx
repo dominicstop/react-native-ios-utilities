@@ -13,6 +13,7 @@ export * from './types/SharedViewEvents';
 export * from './types/MiscTypes';
 export * from './types/NativeError';
 export * from './types/SharedPropTypes';
+export * from './types/SharedStateTypes';
 export * from './types/UtilityTypes';
 
 export * from './example_components/Card';
