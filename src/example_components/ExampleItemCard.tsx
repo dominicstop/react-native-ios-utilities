@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, type ViewStyle } from 'react-native';
+import { StyleSheet, View, Text, type ViewStyle, type TextStyle } from 'react-native';
 
 import * as Colors from '../misc/Colors';
 
 
 export type ExampleItemCardProps = {
+  colorPalette?: typeof Colors.BLUE;
   index?: number;
   title?: string;
   subtitle?: string;
@@ -21,9 +22,23 @@ export function ExampleItemCard(props: ExampleItemCardProps) {
   const descriptionMain = props.description?.[0];
   const descriptionSub  = props.description?.slice(1);
 
+  const colors = props.colorPalette ?? Colors.BLUE;
+
+  const bodyContainerStyle: ViewStyle = {
+    backgroundColor: colors[100],
+  };
+
+  const bodyDescriptionLabelTextStyle: TextStyle = {
+    color: colors[1100]
+  };
+
+  const headerContainerStyle: ViewStyle = {
+    backgroundColor: colors.A700,
+  };
+
   return (
     <View style={[styles.rootContainer, props.style]}>
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer, headerContainerStyle]}>
         <Text style={styles.headerTitleIndexText}>
             {`${props.index ?? 0}. `}
           </Text>
@@ -38,10 +53,10 @@ export function ExampleItemCard(props: ExampleItemCardProps) {
           )}
         </View>
       </View>
-      <View style={styles.bodyContainer}>
+      <View style={[styles.bodyContainer, bodyContainerStyle]}>
         {descriptionMain && (
           <Text style={styles.bodyDescriptionText}>
-            <Text style={styles.bodyDescriptionLabelText}>
+            <Text style={[styles.bodyDescriptionLabelText, bodyDescriptionLabelTextStyle]}>
               {'Description: '}
             </Text>
             {descriptionMain}
@@ -75,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
     paddingVertical: 8,
-    backgroundColor: Colors.BLUE.A700,
   },
   headerTitleContainer: {
     marginLeft: 5,
@@ -100,7 +114,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingTop: 7,
     paddingBottom: 10,
-    backgroundColor: Colors.BLUE[100],
   },
   bodyDescriptionText: {
     fontWeight: '300',
@@ -108,7 +121,6 @@ const styles = StyleSheet.create({
   },
   bodyDescriptionLabelText: {
     fontWeight: 'bold',
-    color: Colors.BLUE[1100],
   },
   bodyDescriptionSubText: {
     marginTop: 10,

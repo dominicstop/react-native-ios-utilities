@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: Colors.PURPLE[1100],
-    opacity: 0.4,
+    opacity: 0.5,
   },
   objectPropertyDisplay: {
     marginTop: 6,
