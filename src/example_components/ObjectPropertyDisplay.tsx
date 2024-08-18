@@ -15,7 +15,8 @@ import * as Colors from '../misc/Colors';
  */                               
 export function ObjectPropertyDisplay<T extends {}>(props: {
   object?: T;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>; 
+  recursiveStyle?: StyleProp<ViewStyle>;
   propertyLabelTextStyle?: TextStyle;
   propertyValueTextStyle?: TextStyle;
   emptyObjectText?: TextStyle;
@@ -32,6 +33,7 @@ export function ObjectPropertyDisplay<T extends {}>(props: {
     <View style={[
       styles.rootContainerBase, 
       styles.rootContainerWhenHasObject,
+      props.recursiveStyle,
       props.style,
     ]}>
       {objectKeys.map((objKeyRaw, index) => {
@@ -54,9 +56,9 @@ export function ObjectPropertyDisplay<T extends {}>(props: {
             <ObjectPropertyDisplay
               key={`value-ObjectPropertyDisplay-${objKey}-${index}`}
               object={value!}
-              style={[
+              recursiveStyle={[
                 styles.objectPropertyDisplay,
-                props.style
+                props.recursiveStyle
               ]}
               propertyLabelTextStyle={props.propertyLabelTextStyle}
               propertyValueTextStyle={props.propertyValueTextStyle}
@@ -93,7 +95,7 @@ export function ObjectPropertyDisplay<T extends {}>(props: {
     <View style={[
       styles.rootContainerBase, 
       styles.rootContainerWhenEmptyObject, 
-      props.style
+      props.recursiveStyle
     ]}>
       <Text style={[
         styles.emptyObjectText,

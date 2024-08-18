@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, TouchableOpacity, type GestureResponderEvent } from 'react-native';
+import { type StyleProp, StyleSheet, Text, TouchableOpacity, type ViewStyle, type GestureResponderEvent } from 'react-native';
 
 import * as Colors from '../../misc/Colors';
 
@@ -13,6 +13,7 @@ import * as Colors from '../../misc/Colors';
  * ```
  */ 
 export function CardButton(props: {
+  style?: StyleProp<ViewStyle>; 
   title: string;
   subtitle: string;
   onPress?: (event: GestureResponderEvent) => void;
@@ -23,9 +24,11 @@ export function CardButton(props: {
 
   return(
     <TouchableOpacity 
-      style={[styles.cardButtonContainer, {
-        backgroundColor: buttonColor,
-      }]}
+      style={[
+        props.style,
+        styles.cardButtonContainer, 
+        { backgroundColor: buttonColor },
+      ]}
       onPress={props.onPress}
     >
       <React.Fragment>
