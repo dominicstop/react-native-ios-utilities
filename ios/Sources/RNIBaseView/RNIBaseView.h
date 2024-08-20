@@ -60,6 +60,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 @property (nonatomic, strong, nullable) RNILayoutMetrics *cachedLayoutMetrics;
 
+@property (nonatomic, strong, nonnull) NSNumber *recycleCount;
+
 // MARK: - Properties - Paper Only
 // -------------------------------
 

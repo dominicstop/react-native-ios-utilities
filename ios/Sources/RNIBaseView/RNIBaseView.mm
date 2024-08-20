@@ -173,7 +173,7 @@ static BOOL SHOULD_LOG = NO;
 // NOTE: To be overridden + impl. by child class
 - (void)initCommon
 {
-
+  self.recycleCount = @0;
   [self initViewDelegate];
   
 #if !RCT_NEW_ARCH_ENABLED
@@ -592,6 +592,9 @@ static BOOL SHOULD_LOG = NO;
 
 -(void) prepareForRecycle
 {
+  self.recycleCount =
+    [NSNumber numberWithInt:[self.recycleCount intValue] + 1];
+  
   BOOL hasContentDelegate = self.contentDelegate != nil;
 
   BOOL shouldNotifyDelegate =
