@@ -264,6 +264,33 @@ static BOOL SHOULD_LOG = NO;
                           withPayload:dict];
 }
 
+-(void)remountChildComponentsToContentDelegate
+{
+  BOOL shouldNotifyDelegate =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnMountChildComponentViewWithSender:
+                                          childComponentView:
+                                                       index:
+                                                  superBlock:)];
+  if(!shouldNotifyDelegate) return;
+  
+  id superBlock = ^{
+    // no-op
+  };
+  
+  NSArray<UIView *> *reactSubviews = [self reactSubviews];
+  
+  for (int index = 0; index < reactSubviews.count; index++) {
+    UIView *currentView = [reactSubviews objectAtIndex:index];
+    
+    [self.contentDelegate notifyOnMountChildComponentViewWithSender:self
+                                                 childComponentView:currentView
+                                                              index:index
+                                                         superBlock:superBlock];
+  };
+}
+
 // MARK: Methods - Paper-Only
 // --------------------------
 
@@ -413,9 +440,9 @@ static BOOL SHOULD_LOG = NO;
     };
     
     [self.contentDelegate notifyOnMountChildComponentViewWithSender:self
-                                                        childComponentView:childComponentView
-                                                                     index:index
-                                                                superBlock:superBlock];
+                                                 childComponentView:childComponentView
+                                                              index:index
+                                                         superBlock:superBlock];
   } else {
     [super mountChildComponentView:childComponentView index:index];
   };
