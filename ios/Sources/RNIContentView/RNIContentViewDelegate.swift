@@ -66,6 +66,11 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   // MARK: Fabric Only
   // -----------------
   
+  @objc
+  optional func shouldRecycleContentDelegate(
+    sender: RNIContentViewParentDelegate
+  ) -> Bool;
+  
   #if RCT_NEW_ARCH_ENABLED
   @objc
   optional func notifyOnUpdateProps(

@@ -110,8 +110,7 @@ static BOOL SHOULD_LOG = NO;
 }
 #endif
 
-// NOTE: To be overridden + impl. by child class
-- (void)initCommon
+-(void)initViewDelegate
 {
   [[RNIViewRegistry shared] registerView:self];
   
@@ -169,6 +168,13 @@ static BOOL SHOULD_LOG = NO;
     self->_didNotifyForInit = YES;
     [viewDelegate notifyOnInitWithSender:self];
   };
+}
+
+// NOTE: To be overridden + impl. by child class
+- (void)initCommon
+{
+
+  [self initViewDelegate];
   
 #if !RCT_NEW_ARCH_ENABLED
   BOOL shouldNotifyDelegateToSetupConstraints =
@@ -222,16 +228,16 @@ static BOOL SHOULD_LOG = NO;
 
 - (void)requestToRemoveReactSubview:(UIView *)subview
 {
-  #if RCT_NEW_ARCH_ENABLED
+#if RCT_NEW_ARCH_ENABLED
   [self->_reactSubviewsShim removeObject:subview];
   
   NSMutableArray<UIView *> *parentReactSubviews = [self valueForKey:@"_reactSubviews"];
   if(parentReactSubviews != nil){
     [parentReactSubviews removeObject:subview];
   };
-  #else
+#else
   [super removeReactSubview:subview];
-  #endif
+#endif
 }
 
 - (void)_dispatchOnDidSetViewIDEventIfNeeded
@@ -586,14 +592,32 @@ static BOOL SHOULD_LOG = NO;
 
 -(void) prepareForRecycle
 {
+  BOOL hasContentDelegate = self.contentDelegate != nil;
+
   BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
+       hasContentDelegate
     && [self.contentDelegate respondsToSelector:
          @selector(notifyOnPrepareForReuseWithSender:)];
-  
+         
   if(shouldNotifyDelegate){
     [self.contentDelegate notifyOnPrepareForReuseWithSender:self];
-  }
+  };
+  
+  BOOL shouldAskDelegateIfShouldRecycle =
+       hasContentDelegate
+    && [self.contentDelegate respondsToSelector:
+         @selector(shouldRecycleContentDelegateWithSender:)];
+  
+  BOOL shouldRecycleContentDelegate = YES;
+  if(shouldRecycleContentDelegate){
+    shouldRecycleContentDelegate =
+      [self.contentDelegate shouldRecycleContentDelegateWithSender:self];
+  };
+  
+  if(!shouldRecycleContentDelegate){
+    self.contentView = nil;
+    [self initViewDelegate];
+  };
   
   [super prepareForRecycle];
 }

@@ -392,6 +392,10 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     //   "RNIDummyTestViewDelegate.notifyOnPrepareForReuse"
     // );
   };
+  
+  public func shouldRecycleContentDelegate(sender: RNIContentViewParentDelegate) -> Bool {
+    return false;
+  }
   #else
   
   // MARK: - Paper Only
