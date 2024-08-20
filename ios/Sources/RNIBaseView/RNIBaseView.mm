@@ -609,13 +609,15 @@ static BOOL SHOULD_LOG = NO;
          @selector(shouldRecycleContentDelegateWithSender:)];
   
   BOOL shouldRecycleContentDelegate = YES;
-  if(shouldRecycleContentDelegate){
+  if(shouldAskDelegateIfShouldRecycle){
     shouldRecycleContentDelegate =
       [self.contentDelegate shouldRecycleContentDelegateWithSender:self];
   };
   
   if(!shouldRecycleContentDelegate){
     self.contentView = nil;
+    self->_didNotifyForInit = NO;
+    
     [self initViewDelegate];
   };
   
