@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
     fontWeight: '700'
   },
   cardButtonSubtitleText: {
-    color: 'white',
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.8)',
     fontWeight: '400'
   },
 });

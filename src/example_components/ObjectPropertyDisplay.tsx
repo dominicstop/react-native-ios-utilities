@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   rootContainerBase: {
     marginTop: 12,
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingVertical: 12,
     backgroundColor: Colors.INDIGO[100],
     borderRadius: 10,
   },
@@ -126,18 +126,18 @@ const styles = StyleSheet.create({
   propertyLabelText: {
     flex: 1,
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '400',
     color: Colors.PURPLE[1100],
-    opacity: 0.75,
+    opacity: 0.8,
   },
   propertyLabelObjectText: {
     flex: 0,
   },
   propertyValueText: {
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '300',
     color: Colors.PURPLE[1100],
-    opacity: 0.5,
+    opacity: 0.6,
   },
   objectPropertyDisplay: {
     marginTop: 6,
