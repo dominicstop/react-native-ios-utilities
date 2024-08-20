@@ -126,10 +126,10 @@ const styles = StyleSheet.create({
     minHeight: 25,
   },
   selectedColorLabel: {
-    fontSize: 16,
+    fontSize: 12,
   },
   selectedColorValue: {
-    fontSize: 16,
+    fontSize: 12,
     color: 'rgba(0,0,0,0.3)'
   },
   list: {

@@ -61,13 +61,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardRowStepperLabelText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '500',
     color: Colors.PURPLE[1200],
   },
   cardRowStepperSubtitleText: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 12,
     opacity: 0.5,
     color: Colors.PURPLE[1100],
   },
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: 'white',
     opacity: 0.9,
-    fontSize: 18,
+    fontSize: 16,
   },
 });

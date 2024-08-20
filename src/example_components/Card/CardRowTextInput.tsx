@@ -37,7 +37,7 @@ export class CardRowTextInput extends React.PureComponent<{
 const styles = StyleSheet.create({
   cardRowTextInput: {
     backgroundColor: Colors.INDIGO[100],
-    fontSize: 16,
+    fontSize: 12,
     color: Colors.INDIGO[900],
     paddingHorizontal: 12,
     paddingVertical: 7,

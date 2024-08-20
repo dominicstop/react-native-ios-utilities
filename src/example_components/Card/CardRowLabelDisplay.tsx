@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   cardRowLabelDisplayLabelText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '500',
     color: Colors.PURPLE[1100],
     opacity: 0.75,
   },
   cardRowLabelDisplayValueText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '500',
     color: Colors.PURPLE[1100],
     opacity: 0.4,

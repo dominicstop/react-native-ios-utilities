@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   propertyLabelText: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '500',
     color: Colors.PURPLE[1100],
     opacity: 0.75,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     flex: 0,
   },
   propertyValueText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '500',
     color: Colors.PURPLE[1100],
     opacity: 0.5,

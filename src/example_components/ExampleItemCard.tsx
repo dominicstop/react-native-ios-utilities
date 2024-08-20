@@ -96,17 +96,17 @@ const styles = StyleSheet.create({
   },
   headerTitleText: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '700',
     color: 'white',
   },
   headerTitleIndexText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '800',
     color: 'rgba(255,255,255,0.75)',
   },
   headerSubtitleText: {
-    fontSize: 14,
+    fontSize: 12,
     color: 'rgba(255,255,255,0.75)',
     fontWeight: '600',
   },

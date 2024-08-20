@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   cardRowSwitchLabelText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '500',
     color: Colors.PURPLE[1200],
   },
   cardRowSwitchSubtitleText: {
-    fontSize: 16,
+    fontSize: 12,
     opacity: 0.5,
     color: Colors.PURPLE[1100],
   },

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   cardButtonTitleText: {
     color: 'white',
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '700'
   },
   cardButtonSubtitleText: {

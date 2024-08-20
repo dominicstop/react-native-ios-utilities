@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
   },
   cardPillWrapper: {
@@ -77,12 +77,12 @@ const styles = StyleSheet.create({
   cardPillTitleText: {
     color: 'white',
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: 14,
   },
   cardSubtitleText: {
     marginTop: 7,
     fontWeight: '300',
-    fontSize: 14,
+    fontSize: 12,
     color: 'rgba(0,0,0,0.5)'
   },
 });
