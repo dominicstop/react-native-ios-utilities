@@ -270,7 +270,7 @@ static BOOL SHOULD_LOG = NO;
   
   jsCallInvoker->invokeAsync(
     /* priority: */ facebook::react::SchedulerPriority::NormalPriority,
-    /* func    : */ [block] {
+    /* func    : */ [block](facebook::jsi::Runtime &rt) {
       block();
     }
   );

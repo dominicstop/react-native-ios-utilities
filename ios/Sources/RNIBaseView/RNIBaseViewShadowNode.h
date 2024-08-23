@@ -39,7 +39,7 @@ public:
     RNIBaseViewState
   >::ConcreteViewShadowNode;
   
-  virtual Point getContentOriginOffset() const override {
+  virtual Point getContentOriginOffset() const {
     auto stateData = this->getStateData();
     return stateData.contentOffset;
   }
