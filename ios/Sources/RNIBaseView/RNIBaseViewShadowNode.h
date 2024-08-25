@@ -39,7 +39,11 @@ public:
     RNIBaseViewState
   >::ConcreteViewShadowNode;
   
+#if REACT_NATIVE_TARGET_VERSION <= 74
+  virtual Point getContentOriginOffset() const override {
+#else
   virtual Point getContentOriginOffset() const {
+#endif
     auto stateData = this->getStateData();
     return stateData.contentOffset;
   }
