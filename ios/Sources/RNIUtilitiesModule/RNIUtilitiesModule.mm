@@ -113,11 +113,15 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     
     RNIPromiseResolveBlock resolveBlock = ^(NSDictionary *result) {
       folly::dynamic resultDyn = react::convertIdToFollyDynamic(result);
-      resolve(resultDyn);
+      [RNIObjcUtils dispatchToJSThreadViaCallInvokerForBlock: ^{
+        resolve(resultDyn);
+      }];
     };
     
     RNIPromiseRejectBlock rejectBlock = ^(NSString *errorMessage) {
-      reject([errorMessage UTF8String]);
+      [RNIObjcUtils dispatchToJSThreadViaCallInvokerForBlock: ^{
+        reject([errorMessage UTF8String]);
+      }];
     };
     
     NSDictionary *commandArgsDict = react::convertFollyDynamicToId(commandArgs);
@@ -290,11 +294,15 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     rejectBlock(message);
   };
   
-  UIView<RNIViewCommandRequestHandling> *view = (UIView<RNIViewCommandRequestHandling> *)match;
-  [view handleViewRequestForCommandName:commandName
-                          withArguments:commandArgs
-                                resolve:resolveBlock
-                                 reject:rejectBlock];
+  UIView<RNIViewCommandRequestHandling> *view =
+    (UIView<RNIViewCommandRequestHandling> *)match;
+    
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [view handleViewRequestForCommandName:commandName
+                            withArguments:commandArgs
+                                  resolve:resolveBlock
+                                   reject:rejectBlock];
+  });
 }
 
 - (void)moduleCommandForModuleName:(NSString *)moduleName
