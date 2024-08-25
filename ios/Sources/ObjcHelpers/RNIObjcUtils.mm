@@ -268,11 +268,17 @@ static BOOL SHOULD_LOG = NO;
   RCTBridgeProxy *bridgeProxy = (RCTBridgeProxy *)bridge;
   std::shared_ptr<facebook::react::CallInvoker> jsCallInvoker = [bridgeProxy jsCallInvoker];
   
+  #if REACT_NATIVE_TARGET_VERSION <= 74
+  facebook::react::CallFunc dispatchBlock = [block]() {
+  #else
+  facebook::react::CallFunc dispatchBlock = [block](facebook::jsi::Runtime &rt)
+  #endif
+    block();
+  };
+  
   jsCallInvoker->invokeAsync(
     /* priority: */ facebook::react::SchedulerPriority::NormalPriority,
-    /* func    : */ [block](facebook::jsi::Runtime &rt) {
-      block();
-    }
+    /* func    : */ std::move(dispatchBlock)
   );
 }
 
