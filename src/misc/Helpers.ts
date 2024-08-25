@@ -1,4 +1,7 @@
 /** wrapper func for setState that returns a promise */
+
+import type { RNIUtilitiesModule } from "../native_modules/RNIUtilitiesModule";
+
 // eslint-disable-next-line consistent-this
 export function setStateAsync<T extends {}>(
   that: React.Component,
@@ -37,4 +40,9 @@ export function promiseWithTimeout<T>(ms: number, promise: Promise<T>){
 
 export function pad(num: number | string, places = 2){
   return String(num).padStart(places, '0');
+};
+
+export function getRNIUtilitiesModule(): typeof RNIUtilitiesModule{
+  // @ts-ignore
+  return global.RNIUtilitiesModule;
 };
