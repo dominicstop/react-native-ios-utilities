@@ -271,7 +271,7 @@ static BOOL SHOULD_LOG = NO;
   #if REACT_NATIVE_TARGET_VERSION <= 74
   facebook::react::CallFunc dispatchBlock = [block]() {
   #else
-  facebook::react::CallFunc dispatchBlock = [block](facebook::jsi::Runtime &rt)
+  facebook::react::CallFunc dispatchBlock = [block](facebook::jsi::Runtime &rt) {
   #endif
     block();
   };
