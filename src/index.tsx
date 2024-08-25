@@ -25,4 +25,5 @@ export * from './example_components/ViewShapes';
 import * as Colors from './misc/Colors';
 export { Colors };
 
-export * from './misc/Helpers';
+import * as Helpers from './misc/Helpers';
+export { Helpers };

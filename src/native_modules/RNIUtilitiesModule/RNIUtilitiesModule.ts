@@ -6,110 +6,116 @@ import type { SharedNativeValueMap, SupportedNativeSharedValue } from './RNIUtil
 NativeRNIUtilitiesModule;
 
 const RNIUtilitiesModuleName = "RNIUtilitiesModule";
-const RNIUtilitiesModuleNative = (global as any)[RNIUtilitiesModuleName];
+const RNIUtilitiesModule = (global as any)[RNIUtilitiesModuleName];
 
-export class RNIUtilitiesModule {
+async function viewCommandRequest<T = Record<string, unknown>>(
+  viewID: string,
+  commandName: string,
+  commandArgs: Record<string, any>
+): Promise<T> {
 
-  static async viewCommandRequest<T = Record<string, unknown>>(
-    viewID: string,
-    commandName: string,
-    commandArgs: Record<string, any>
-  ): Promise<T> {
-
-    if(RNIUtilitiesModuleNative == null){
-      throw "RNIUtilitiesModule is null";
-    };
-
-    if(RNIUtilitiesModuleNative.viewCommandRequest == null){
-      throw "RNIUtilitiesModule.viewCommandRequest is null";
-    };
-
-    return await RNIUtilitiesModuleNative.viewCommandRequest(
-      viewID,
-      commandName,
-      commandArgs
-    );
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
   };
 
-  static async moduleCommandRequest<T = Record<string, unknown>>(
-    moduleName: string,
-    commandName: string,
-    commandArgs: Record<string, any>
-  ): Promise<T> {
-
-    if(RNIUtilitiesModuleNative == null){
-      throw "RNIUtilitiesModule is null";
-    };
-
-    if(RNIUtilitiesModuleNative.moduleCommandRequest == null){
-      throw "RNIUtilitiesModule.moduleCommandRequest is null";
-    };
-
-    return await RNIUtilitiesModuleNative.moduleCommandRequest(
-      moduleName,
-      commandName,
-      commandArgs
-    );
+  if(RNIUtilitiesModule.viewCommandRequest == null){
+    throw "RNIUtilitiesModule.viewCommandRequest is null";
   };
 
-  static getModuleSharedValue<T = SupportedNativeSharedValue>(
-    moduleName: string,
-    key: string,
-  ): T {
-    if(RNIUtilitiesModuleNative == null){
-      throw "RNIUtilitiesModule is null";
-    };
+  return await RNIUtilitiesModule.viewCommandRequest(
+    viewID,
+    commandName,
+    commandArgs
+  );
+};
 
-    if(RNIUtilitiesModuleNative.getModuleSharedValue == null){
-      throw "RNIUtilitiesModule.getModuleSharedValue is null";
-    };
+async function moduleCommandRequest<T = Record<string, unknown>>(
+  moduleName: string,
+  commandName: string,
+  commandArgs: Record<string, any>
+): Promise<T> {
 
-    return RNIUtilitiesModuleNative.getModuleSharedValue(moduleName, key);
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
   };
 
-  static setModuleSharedValue(
-    moduleName: string,
-    key: string,
-    newValue: SupportedNativeSharedValue
-  ){
-    if(RNIUtilitiesModuleNative == null){
-      throw "RNIUtilitiesModule is null";
-    };
-
-    if(RNIUtilitiesModuleNative.getModuleSharedValue == null){
-      throw "RNIUtilitiesModule.setModuleSharedValue is null";
-    };
-
-    return RNIUtilitiesModuleNative.setModuleSharedValue(moduleName, key, newValue);
+  if(RNIUtilitiesModule.moduleCommandRequest == null){
+    throw "RNIUtilitiesModule.moduleCommandRequest is null";
   };
 
-  static getAllModuleSharedValues(
-    moduleName: string
-  ): SharedNativeValueMap {
+  return await RNIUtilitiesModule.moduleCommandRequest(
+    moduleName,
+    commandName,
+    commandArgs
+  );
+};
 
-    if(RNIUtilitiesModuleNative == null){
-      throw "RNIUtilitiesModule is null";
-    };
-
-    if(RNIUtilitiesModuleNative.getAllModuleSharedValues == null){
-      throw "RNIUtilitiesModule.getAllModuleSharedValues is null";
-    };
-
-    return RNIUtilitiesModuleNative.getAllModuleSharedValues(moduleName);
+function getModuleSharedValue<T = SupportedNativeSharedValue>(
+  moduleName: string,
+  key: string,
+): T {
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
   };
 
-  static overwriteModuleSharedValues(
-    moduleName: string,
-    newValues: SharedNativeValueMap
-  ) {
-    if(RNIUtilitiesModuleNative == null){
-      throw "RNIUtilitiesModule is null";
-    };
-
-    if(RNIUtilitiesModuleNative.overwriteModuleSharedValues == null){
-      throw "RNIUtilitiesModule.overwriteModuleSharedValues is null";
-    };
-
-    return RNIUtilitiesModuleNative.overwriteModuleSharedValues(moduleName, newValues);
+  if(RNIUtilitiesModule.getModuleSharedValue == null){
+    throw "RNIUtilitiesModule.getModuleSharedValue is null";
   };
+
+  return RNIUtilitiesModule.getModuleSharedValue(moduleName, key);
+};
+
+function setModuleSharedValue(
+  moduleName: string,
+  key: string,
+  newValue: SupportedNativeSharedValue
+){
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.getModuleSharedValue == null){
+    throw "RNIUtilitiesModule.setModuleSharedValue is null";
+  };
+
+  return RNIUtilitiesModule.setModuleSharedValue(moduleName, key, newValue);
+};
+
+function getAllModuleSharedValues(
+  moduleName: string
+): SharedNativeValueMap {
+
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.getAllModuleSharedValues == null){
+    throw "RNIUtilitiesModule.getAllModuleSharedValues is null";
+  };
+
+  return RNIUtilitiesModule.getAllModuleSharedValues(moduleName);
+};
+
+function overwriteModuleSharedValues(
+  moduleName: string,
+  newValues: SharedNativeValueMap
+) {
+  if(RNIUtilitiesModule == null){
+    throw "RNIUtilitiesModule is null";
+  };
+
+  if(RNIUtilitiesModule.overwriteModuleSharedValues == null){
+    throw "RNIUtilitiesModule.overwriteModuleSharedValues is null";
+  };
+
+  return RNIUtilitiesModule.overwriteModuleSharedValues(moduleName, newValues);
+};
+
+export default {
+  viewCommandRequest,
+  moduleCommandRequest,
+  getModuleSharedValue,
+  setModuleSharedValue,
+  getAllModuleSharedValues,
+  overwriteModuleSharedValues
 };
