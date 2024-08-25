@@ -152,9 +152,24 @@ static BOOL SHOULD_LOG = NO;
                                  userInfo:nil];
   }
   
-  UIView<RNIContentViewDelegate> *viewDelegate =
-    [[viewDelegateClass new] initWithFrame:self.frame];
+  UIView<RNIContentViewDelegate> *viewDelegate = ^id{
+    BOOL shouldInitDelegateUsingInstanceMaker =
+      [viewDelegateClass respondsToSelector:@selector(instanceMakerWithSender:frame:)];
+      
+    if(shouldInitDelegateUsingInstanceMaker){
+      return [viewDelegateClass instanceMakerWithSender:self frame:self.frame];
+    };
     
+    BOOL isDelegateSubclassOfUIButton =
+      [viewDelegateClass isSubclassOfClass:[UIButton class]];
+      
+    if(isDelegateSubclassOfUIButton) {
+      return [viewDelegateClass new];
+    };
+    
+    return [[viewDelegateClass new] initWithFrame:self.frame];
+  }();
+  
   viewDelegate.parentReactView = self;
   
   self.contentDelegate = viewDelegate;

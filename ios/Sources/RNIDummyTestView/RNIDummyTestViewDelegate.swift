@@ -129,6 +129,14 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
   // MARK: Init
   // ----------
   
+  public static func instanceMaker(
+    sender: RNIContentViewParentDelegate,
+    frame: CGRect
+  ) -> RNIContentViewDelegate {
+  
+    return Self.init(frame: frame);
+  };
+  
   public override init(frame: CGRect) {
     super.init(frame: frame);
   };

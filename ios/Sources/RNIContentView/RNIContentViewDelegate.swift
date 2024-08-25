@@ -16,6 +16,12 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   // --------------------
   
   @objc
+  optional static func instanceMaker(
+    sender: RNIContentViewParentDelegate,
+    frame: CGRect
+  ) -> RNIContentViewDelegate;
+  
+  @objc
   var reactProps: NSDictionary { set get }
   
   @objc
