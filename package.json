@@ -37,7 +37,7 @@
     "release": "release-it --only-version",
     "open:ios": "open -a \"Xcode\" example/ios",
     "open:android": "open -a \"Android Studio\" example/android",
-    "build:update-version": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g') ; cd example/ios ; agvtool new-marketing-version $PACKAGE_VERSION ; xcrun agvtool next-version -all ; cd ../..",
+    "build:update-version": "PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | sed 's/-.*//') ; cd example/ios ; agvtool new-marketing-version $PACKAGE_VERSION ; xcrun agvtool next-version -all ; cd ../..",
     "build": "yarn run build:js ; yarn run build:ios",
     "build:js": "yarn run lint ; yarn run typescript ; yarn run bob build",
     "build:ios": "cd ./example/ios ; BUILD_INFO=$(xcodebuild -project ./*.xcodeproj -showBuildSettings -list -json | tr -d ' ' | tr -d '\n') ; SCHEME_NAME=$(node -pe 'JSON.parse(process.argv[1]).project.schemes[0]' $BUILD_INFO) ; xcodebuild -workspace *.xcworkspace -scheme $SCHEME_NAME -destination 'generic/platform=iOS'",
@@ -53,7 +53,8 @@
     "update-dep": "yarn add react-native-ios-utilities --dev ; cd example ; yarn add react-native-ios-utilities ; cd ..",
     "update-dep:next": "yarn add react-native-ios-utilities@next --dev ; cd example ; yarn add react-native-ios-utilities@next ; cd .. ; yarn run build:update-version",
     "update-dep:pods": "cd example/ios ; pod install --repo-update ; pod update DGSwiftUtilities ComputableLayout VisualEffectBlurView ; cd ../.. ; yarn run build:update-version",
-    "initialize": "yarn install ; cd example ; yarn install ; cd .. ; yarn run pod-install",
+    "initialize": "yarn initialize:js ; yarn run pod-install",
+    "initialize:js": "yarn install ; cd example ; yarn install ; cd ..",
     "initialize:reset": "yarn run nuke:all && yarn run initialize"
   },
   "keywords": [
