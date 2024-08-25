@@ -223,14 +223,14 @@ static BOOL SHOULD_LOG = NO;
     [NSMutableString stringWithString: NSStringFromSelector(selector)];
   
   [string replaceOccurrencesOfString:@"set"
-                             withString:@""
-                                options:NSLiteralSearch
-                                  range:NSMakeRange(0, 3)];
+                          withString:@""
+                             options:NSLiteralSearch
+                               range:NSMakeRange(0, 3)];
   
   [string replaceOccurrencesOfString:@":"
-                             withString:@""
-                                options:NSLiteralSearch
-                                  range:NSMakeRange(0, string.length)];
+                          withString:@""
+                            options:NSLiteralSearch
+                              range:NSMakeRange(0, string.length)];
   
   NSString *firstLetterLowercased =
     [[string substringToIndex:1] lowercaseString];
