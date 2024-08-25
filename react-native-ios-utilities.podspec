@@ -11,6 +11,8 @@ end
 
 reactNativeTargetVersion = reactNativeVersion.split('.')[1].to_i
 
+puts "reactNativeTargetVersion: #{reactNativeVersion}"
+
 fabric_enabled = ENV['RCT_NEW_ARCH_ENABLED'] == '1'
 fabric_compiler_flags = '-DRN_FABRIC_ENABLED -DRCT_NEW_ARCH_ENABLED'
 folly_version = '2022.05.16.00'
