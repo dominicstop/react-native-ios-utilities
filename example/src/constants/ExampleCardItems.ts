@@ -1,4 +1,6 @@
 import { RNIDummyTest01Screen } from "../examples/RNIDummyTest01Screen";
+import { RNIWrapperViewTest01 } from "../examples/RNIWrapperViewTest01";
+
 import type { ExampleItemProps } from "../examples/SharedExampleTypes";
 import type { RouteEntry } from "./Routes";
 
@@ -25,13 +27,21 @@ export type ExampleListItem = {
 };
 
 export const EXAMPLE_ITEMS: Array<ExampleItem> = (() => {
-  const screenItems: Array<ExampleItemRoute> = [{
-    component: RNIDummyTest01Screen,
-    type: 'screen',
-    routeKey: 'dummyTest01',
-  }];
+  const screenItems: Array<ExampleItemRoute> = [
+    {
+      component: RNIDummyTest01Screen,
+      type: 'screen',
+      routeKey: 'dummyTest01',
+    },
+  ];
 
-  const cardItems: Array<ExampleItemCard> = []; 
+  const cardItems: Array<ExampleItemCard> = [
+    {
+      type: 'card',
+      component: RNIWrapperViewTest01,
+    },
+
+  ]; 
 
   // if (SHARED_ENV.enableReactNavigation) {
   //   items.splice(0, 0, ...[DebugControls]);
