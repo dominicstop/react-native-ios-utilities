@@ -7,12 +7,10 @@
 
 import UIKit
 import DGSwiftUtilities
-import ContextMenuAuxiliaryPreview
-import react_native_ios_utilities
 
 
 @objc(RNIWrapperViewContent)
-public final class RNIWrapperViewContent: RNIContentView {
+public final class RNIWrapperViewContent: UIView, RNIContentView {
 
   // MARK: - Embedded Types
   // ----------------------
@@ -36,6 +34,9 @@ public final class RNIWrapperViewContent: RNIContentView {
   // MARK: Public Properties
   // -----------------------
   
+  public var didAttachToParentVC = false;
+  public var navEventsVC: RNINavigationEventsReportingViewController?;
+  
   // MARK: - Properties - RNIContentViewDelegate
   // -------------------------------------------
   
@@ -55,12 +56,12 @@ public final class RNIWrapperViewContent: RNIContentView {
   // MARK: Init
   // ----------
   
-  public static func instanceMaker(
-    sender: RNIContentViewParentDelegate,
-    frame: CGRect
-  ) -> RNIWrapperViewContent {
-    
-    return .init();
+  public override init(frame: CGRect) {
+    super.init(frame: frame);
+  };
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented");
   };
   
   // MARK: View Lifecycle
@@ -89,8 +90,6 @@ public final class RNIWrapperViewContent: RNIContentView {
   func _setupIfNeeded(){
     guard !self._didSetup else { return };
     self._didSetup = true;
-    
-    self.isEnabled = true;
   };
     
   // MARK: Functions

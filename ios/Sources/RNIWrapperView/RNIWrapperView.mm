@@ -7,9 +7,7 @@
 
 #import "RNIWrapperView.h"
 
-#import "react-native-ios-context-menu/Swift.h"
-#import "react-native-ios-utilities/RNIBaseView.h"
-
+#import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
 
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
