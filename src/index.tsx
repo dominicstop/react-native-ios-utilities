@@ -27,3 +27,9 @@ export { Colors };
 
 import * as Helpers from './misc/Helpers';
 export { Helpers };
+
+export { 
+  RNIWrapperView as WrapperView,
+  type RNIWrapperViewProps as WrapperViewProps,
+  type RNIWrapperViewRef as WrapperViewRef,
+} from './native_components/RNIWrapperView';
