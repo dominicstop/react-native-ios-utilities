@@ -9,8 +9,7 @@ import UIKit
 import DGSwiftUtilities
 
 @objc
-public protocol RNIContentViewDelegate where Self: UIView  {
-  typealias KeyPathRoot = Self;
+public protocol RNIContentViewDelegate where Self: UIView & RNIViewPropDelegate {
   
   // MARK: Fabric + Paper
   // --------------------
@@ -20,10 +19,7 @@ public protocol RNIContentViewDelegate where Self: UIView  {
     sender: RNIContentViewParentDelegate,
     frame: CGRect
   ) -> RNIContentViewDelegate;
-  
-  @objc
-  var reactProps: NSDictionary { set get }
-  
+
   @objc
   weak var parentReactView: RNIContentViewParentDelegate? { set get }
   
@@ -49,11 +45,6 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   );
   
   @objc
-  optional func notifyDidSetProps(
-    sender: RNIContentViewParentDelegate
-  );
-  
-  @objc
   optional func notifyOnUpdateLayoutMetrics(
     sender: RNIContentViewParentDelegate,
     oldLayoutMetrics: RNILayoutMetrics,
@@ -72,19 +63,7 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   // MARK: Fabric Only
   // -----------------
   
-  @objc
-  optional func shouldRecycleContentDelegate(
-    sender: RNIContentViewParentDelegate
-  ) -> Bool;
-  
   #if RCT_NEW_ARCH_ENABLED
-  @objc
-  optional func notifyOnUpdateProps(
-    sender: RNIContentViewParentDelegate,
-    oldProps: NSDictionary,
-    newProps: NSDictionary
-  );
-  
   @objc
   optional func notifyOnUpdateState(
     sender: RNIContentViewParentDelegate,
@@ -103,47 +82,20 @@ public protocol RNIContentViewDelegate where Self: UIView  {
   optional func notifyOnPrepareForReuse(
     sender: RNIContentViewParentDelegate
   );
-  #else
-  
-  // MARK: - Paper-Only
-  // ------------------
   
   @objc
-  optional func notifyDidSetProps(
-    sender: RNIContentViewParentDelegate,
-    changedProps: Array<String>
-  );
+  optional func shouldRecycleContentDelegate(
+    sender: RNIContentViewParentDelegate
+  ) -> Bool;
   #endif
   
   // MARK: Internal-Only
   // -------------------
   
-  #if RCT_NEW_ARCH_ENABLED
-  @objc
-  optional func _notifyOnRequestToSetProps(
-    sender: RNIContentViewParentDelegate,
-    props: NSDictionary
-  );
-  #else
+  #if !RCT_NEW_ARCH_ENABLED
   @objc
   optional func _notifyOnRequestToSetupConstraints(
     sender: RNIContentViewParentDelegate
-  );
-  
-  @objc
-  optional func _getSupportedReactEvents() -> [String];
-  
-  @objc
-  optional func _getSupportedReactProps() -> [String];
-  
-  @objc
-  optional func _getSupportedReactPropsTypeMap() -> [String: String];
-  
-  @objc
-  optional func _notifyOnRequestToSetProp(
-    sender: RNIContentViewParentDelegate,
-    propName: String,
-    propValue: Any
   );
   #endif
 };

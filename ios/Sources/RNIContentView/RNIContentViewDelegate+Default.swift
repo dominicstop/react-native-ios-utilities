@@ -12,16 +12,7 @@ import DGSwiftUtilities
 @objc
 fileprivate extension UIView {
   
-  #if RCT_NEW_ARCH_ENABLED
-  // @objc(_RNIContentViewDelegate_notifyOnRequestToSetPropsWithSender:props:)
-  func _notifyOnRequestToSetProps(
-    sender: RNIContentViewParentDelegate,
-    props: NSDictionary
-  ) {
-    guard let _self = self as? (any RNIContentView) else { return };
-    _self.setValues(withDict: props);
-  };
-  #else
+  #if !RCT_NEW_ARCH_ENABLED
   func _notifyOnRequestToSetupConstraints(
     sender: RNIContentViewParentDelegate
   ) {

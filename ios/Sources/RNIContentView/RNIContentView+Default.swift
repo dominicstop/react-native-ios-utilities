@@ -11,13 +11,6 @@ import DGSwiftUtilities
 
 public extension RNIContentViewDelegate where Self: RNIContentView  {
 
-  // MARK: StringKeyPathMapping
-  // --------------------------
-
-  static var partialKeyPathMap: Dictionary<String, PartialKeyPath<Self>> {
-    return Self.propKeyPathMap;
-  };
-
   // MARK: - Paper Only
   // ------------------
 

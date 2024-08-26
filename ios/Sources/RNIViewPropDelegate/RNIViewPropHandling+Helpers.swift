@@ -1,15 +1,14 @@
 //
-//  RNIContentView+Helpers.swift
+//  RNIViewPropHandling+Helpers.swift
 //  react-native-ios-utilities
 //
-//  Created by Dominic Go on 5/23/24.
+//  Created by Dominic Go on 8/26/24.
 //
 
 import Foundation
-import DGSwiftUtilities
 
 
-public extension RNIContentViewDelegate where Self: RNIContentView  {
+public extension RNIViewPropHandling where Self: RNIViewPropDelegate  {
   
   var allSupportedEventsAsStrings: [String] {
     Events.allCases.map {

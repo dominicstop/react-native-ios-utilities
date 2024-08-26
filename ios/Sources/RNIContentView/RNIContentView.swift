@@ -10,11 +10,7 @@ import DGSwiftUtilities
 
 
 public protocol RNIContentView where Self:
-  RNIContentViewDelegate & StringKeyPathMapping {
-  
-  associatedtype Events: RawRepresentable<String> & CaseIterable;
-  
-  static var propKeyPathMap: Dictionary<String, PartialKeyPath<KeyPathRoot>> { get };
+  RNIContentViewDelegate & StringKeyPathMapping & RNIViewPropHandling {
   
   // MARK: - Paper Only
   // ------------------

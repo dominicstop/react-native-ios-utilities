@@ -1,14 +1,15 @@
 //
-//  RNIContentViewDelegate+StringKeyPathMapping.swift
+//  RNIViewPropDelegate+StringKeyPathMapping.swift
 //  react-native-ios-utilities
 //
-//  Created by Dominic Go on 5/13/24.
+//  Created by Dominic Go on 8/26/24.
 //
 
 import Foundation
 import DGSwiftUtilities
 
-public extension RNIContentViewDelegate where Self: StringKeyPathMapping {
+
+public extension RNIViewPropDelegate where Self: StringKeyPathMapping {
 
   func setValue(forKey key: String, value: Any){
     guard let keyPath = try? Self.getPartialKeyPath(forKey: key)

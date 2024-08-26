@@ -1,14 +1,15 @@
 //
-//  RNIContentViewDelegate+AnyObject.swift
+//  RNIViewPropDelegate+AnyObject.swift
 //  react-native-ios-utilities
 //
-//  Created by Dominic Go on 5/13/24.
+//  Created by Dominic Go on 8/26/24.
 //
 
 import Foundation
 
 
-public extension RNIContentViewDelegate where Self: AnyObject {
+
+public extension RNIViewPropDelegate where Self: AnyObject {
 
   func setValue(
     withKeyPath keyPath: AnyKeyPath,
