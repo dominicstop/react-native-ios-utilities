@@ -1,4 +1,4 @@
-import { HomeScreen } from "../examples/HomeScreen";
+import { HomeScreen } from "../components/HomeScreen";
 import { RNIDummyTest01Screen } from "../examples/RNIDummyTest01Screen";
 import type { RouteKey } from "./RouteKeys";
 
