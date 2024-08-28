@@ -54,7 +54,7 @@ Pod::Spec.new do |s|
     'OTHER_SWIFT_FLAGS' => "$(inherited) #{fabric_enabled ? fabric_compiler_flags : ''}"
   }
   user_header_search_paths = [
-    '"${PODS_CONFIGURATION_BUILD_DIR}/react-native-ios-utilities/Swift Compatibility Header"',
+    '"${PODS_CONFIGURATION_BUILD_DIR}/react-native-ios-utilities/Swift\ Compatibility\ Header"',
     '"$(PODS_ROOT)/Headers/Private/React-bridging/react/bridging"',
     '"$(PODS_CONFIGURATION_BUILD_DIR)/React-bridging/react_bridging.framework/Headers"',
     '"$(PODS_ROOT)/Headers/Private/Yoga"',
