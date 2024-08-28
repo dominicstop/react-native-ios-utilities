@@ -12,6 +12,7 @@ export type RNIWrapperViewRef = {
 
 export type RNIWrapperViewInheritedOptionalProps = Partial<Pick<RNIWrapperNativeViewProps,
   | 'onDidSetViewID'
+  | 'onViewWillRecycle'
 >>;
 
 // export type RNIWrapperViewInheritedRequiredProps = Required<Pick<RNIWrapperNativeViewProps,

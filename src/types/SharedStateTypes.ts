@@ -1,4 +1,4 @@
-import type { OnDidSetViewIDEventPayload } from "./SharedViewEvents";
+import type { OnDidSetViewIDEventPayload, OnViewWillRecycleEventPayload } from "./SharedViewEvents";
 
 
 export type StateViewID = 
@@ -7,4 +7,8 @@ export type StateViewID =
 
 export type StateReactTag = 
     OnDidSetViewIDEventPayload['reactTag'] 
+  | undefined;
+
+export type StateViewRecycleCount =
+    OnViewWillRecycleEventPayload['recycleCount']
   | undefined;

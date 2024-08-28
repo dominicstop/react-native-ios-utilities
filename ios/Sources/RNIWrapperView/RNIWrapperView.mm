@@ -71,6 +71,11 @@ using namespace facebook::react;
   return [RNIWrapperViewContent class];
 }
 
++ (BOOL)doesSupportBaseEventOnViewWillRecycle
+{
+  return YES;
+}
+
 // MARK: - Fabric
 // --------------
 
