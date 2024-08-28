@@ -638,6 +638,11 @@ static BOOL SHOULD_LOG = NO;
 
 -(void) prepareForRecycle
 {
+  // reset flags
+  self->_didNotifyForInit = NO;
+  self->_didDispatchEventOnDidSetViewID = NO;
+
+  // increment `recycleCount`
   self.recycleCount =
     [NSNumber numberWithInt:[self.recycleCount intValue] + 1];
   
@@ -798,7 +803,6 @@ static BOOL SHOULD_LOG = NO;
 
 // MARK: RNIViewCommandRequestHandling
 // -----------------------------------
-
 
 - (void)handleViewRequestForCommandName:(NSString *)commandName
                           withArguments:(NSDictionary *)commandArguments
