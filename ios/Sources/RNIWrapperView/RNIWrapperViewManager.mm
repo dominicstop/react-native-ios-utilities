@@ -1,5 +1,5 @@
 //
-//  RNIWrapperViewViewManager.m
+//  RNIWrapperViewManager.m
 //  react-native-ios-context-menu
 //
 //  Created by Dominic Go on 8/24/24.
@@ -16,10 +16,10 @@
 #import <React/RCTUIManager.h>
 
 
-@interface RNIWrapperViewViewManager : RNIBaseViewManager
+@interface RNIWrapperViewManager : RNIBaseViewManager
 @end
 
-@implementation RNIWrapperViewViewManager
+@implementation RNIWrapperViewManager
 
 RCT_EXPORT_MODULE(RNIWrapperView)
 
