@@ -6,16 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RNIDummyTestView.h"
-
-#import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/RNIBaseViewUtils.h"
-
-#import <objc/runtime.h>
-
 #import <React/RCTViewManager.h>
-#import <React/RCTUIManager.h>
-#import "RCTBridge.h"
 
 
 @interface RNIBaseViewManager : RCTViewManager
