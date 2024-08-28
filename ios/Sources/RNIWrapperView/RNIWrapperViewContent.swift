@@ -16,7 +16,7 @@ public final class RNIWrapperViewContent: UIView, RNIContentView {
   // ----------------------
   
   public enum Events: String, CaseIterable {
-    case placeholder;
+    case onViewWillRecycle;
   };
   
   // MARK: - Static Properties

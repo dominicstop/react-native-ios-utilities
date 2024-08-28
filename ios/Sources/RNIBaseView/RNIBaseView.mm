@@ -12,7 +12,6 @@
 
 #import "react-native-ios-utilities/RNIUtilitiesModule.h"
 #import "react-native-ios-utilities/RNIViewRegistry.h"
-#import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 
 #import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
@@ -35,6 +34,8 @@
 #else
 #import "RNIBaseViewPaperEventHandler.h"
 #import "RNIBaseViewPaperPropHandler.h"
+
+#import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 #import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
 
 #import <React/UIView+React.h>
@@ -241,11 +242,11 @@ static BOOL SHOULD_LOG = NO;
 - (void)_dispatchOnDidSetViewIDEventIfNeeded
 {
   BOOL shouldDispatchEvent =
-       !self->_didDispatchEventOnDidSetViewID
 #if RCT_NEW_ARCH_ENABLED
+       !self->_didDispatchEventOnDidSetViewID
     && self->_eventEmitter != nil;
 #else
-    && self.window != nil;
+    !self->_didDispatchEventOnDidSetViewID;
 #endif
 
   if(!shouldDispatchEvent){
@@ -709,7 +710,6 @@ static BOOL SHOULD_LOG = NO;
 
 - (void)didMoveToWindow
 {
-  [self _dispatchOnDidSetViewIDEventIfNeeded];
   [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
     self.cachedShadowView = shadowView;
     if(shadowView == nil){
@@ -810,6 +810,8 @@ static BOOL SHOULD_LOG = NO;
     [self.contentDelegate notifyDidSetPropsWithSender:self
                            changedProps:changedProps];
   };
+  
+  [self _dispatchOnDidSetViewIDEventIfNeeded];
 }
 #endif
 
