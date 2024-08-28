@@ -9,13 +9,14 @@
 #import <objc/runtime.h>
 
 #import "react-native-ios-utilities/RNIBaseViewUtils.h"
+#import "react-native-ios-utilities/RNIBaseViewManager.h"
 
 #import "RCTBridge.h"
 #import <React/RCTViewManager.h>
 #import <React/RCTUIManager.h>
 
 
-@interface RNIWrapperViewViewManager : RCTViewManager
+@interface RNIWrapperViewViewManager : RNIBaseViewManager
 @end
 
 @implementation RNIWrapperViewViewManager
@@ -28,8 +29,5 @@ RCT_EXPORT_MODULE(RNIWrapperView)
   return [[RNIWrapperView new] initWithBridge:self.bridge];
 }
 #endif
-
-RNI_EXPORT_VIEW_PROPERTY(placeholder, BOOL)
-RNI_EXPORT_VIEW_EVENT(onDidSetViewID, RCTBubblingEventBlock)
 
 @end

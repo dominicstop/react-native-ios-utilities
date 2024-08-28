@@ -8,6 +8,7 @@
 
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/RNIBaseViewUtils.h"
+#import "react-native-ios-utilities/RNIBaseViewManager.h"
 
 #import <objc/runtime.h>
 
@@ -16,7 +17,7 @@
 #import "RCTBridge.h"
 
 
-@interface RNIDummyTestViewManager : RCTViewManager
+@interface RNIDummyTestViewManager : RNIBaseViewManager
 @end
 
 @implementation RNIDummyTestViewManager
@@ -44,7 +45,7 @@ RNI_EXPORT_VIEW_EVENT(onSomeDirectEventWithEmptyPayload, RCTDirectEventBlock);
 RNI_EXPORT_VIEW_EVENT(onSomeDirectEventWithObjectPayload, RCTDirectEventBlock);
 RNI_EXPORT_VIEW_EVENT(onSomeBubblingEventWithEmptyPayload, RCTBubblingEventBlock);
 RNI_EXPORT_VIEW_EVENT(onSomeBubblingEventWithObjectPayload, RCTBubblingEventBlock);
-RNI_EXPORT_VIEW_EVENT(onDidSetViewID, RCTBubblingEventBlock);
+
 
 @end
 
