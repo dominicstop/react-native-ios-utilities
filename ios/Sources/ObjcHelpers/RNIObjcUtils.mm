@@ -10,6 +10,12 @@
 #import "RNIObjcUtils.h"
 #import "react-native-ios-utilities/Swift.h"
 
+#import <React/RCTBridge.h>
+#import <React/RCTBridge+Private.h>
+
+#import <React/RCTShadowView.h>
+#import <React/RCTShadowView+Layout.h>
+
 #if __cplusplus
 #import <folly/dynamic.h>
 #import <React/RCTConversions.h>
@@ -18,15 +24,10 @@
 #include <react/renderer/core/LayoutMetrics.h>
 #include <react/renderer/graphics/Rect.h>
 #include <react/renderer/graphics/RectangleEdges.h>
-#endif
 
-#import <React/RCTBridge.h>
-#import <React/RCTBridge+Private.h>
-#import <React/RCTBridgeProxy+Cxx.h>
 #import <React/RCTBridgeProxy.h>
-
-#import <React/RCTShadowView.h>
-#import <React/RCTShadowView+Layout.h>
+#import <React/RCTBridgeProxy+Cxx.h>
+#endif
 
 
 static BOOL SHOULD_LOG = NO;
@@ -264,8 +265,10 @@ static BOOL SHOULD_LOG = NO;
 
 + (void)dispatchToJSThreadViaCallInvokerForBlock:(void (^)(void))block
 {
+#if __cplusplus
   RCTBridge *bridge = [RCTBridge currentBridge];
   RCTBridgeProxy *bridgeProxy = (RCTBridgeProxy *)bridge;
+  
   std::shared_ptr<facebook::react::CallInvoker> jsCallInvoker = [bridgeProxy jsCallInvoker];
   
   #if REACT_NATIVE_TARGET_VERSION <= 74
@@ -280,6 +283,7 @@ static BOOL SHOULD_LOG = NO;
     /* priority: */ facebook::react::SchedulerPriority::NormalPriority,
     /* func    : */ std::move(dispatchBlock)
   );
+#endif
 }
 
 + (id)alloc
