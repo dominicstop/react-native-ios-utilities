@@ -7,6 +7,13 @@ export type OnDidSetViewIDEventPayload = Readonly<{
 
 export type OnDidSetViewIDEvent = BubblingEventHandler<OnDidSetViewIDEventPayload>;
 
+export type OnViewWillRecycleEventPayload = Readonly<{
+  recycleCount: number;
+}>;
+
+export type OnViewWillRecycleEvent = BubblingEventHandler<OnViewWillRecycleEventPayload>;
+
 export type SharedViewEvents = {
-  onDidSetViewID: OnDidSetViewIDEvent;
+  onDidSetViewID?: OnDidSetViewIDEvent;
+  onViewWillRecycle?: OnViewWillRecycleEvent;
 };

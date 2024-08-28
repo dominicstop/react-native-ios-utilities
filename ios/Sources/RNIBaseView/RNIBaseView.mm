@@ -283,6 +283,27 @@ static BOOL SHOULD_LOG = NO;
                           withPayload:dict];
 }
 
+- (void)_dispatchEventOnViewWillRecycle
+{
+  BOOL shouldDispatchEvent =
+#if RCT_NEW_ARCH_ENABLED
+    self->_eventEmitter != nil;
+#else
+    self.window != nil;
+#endif
+
+  if(!shouldDispatchEvent){
+    return;
+  };
+  
+  NSDictionary *dict = @{
+    @"recycleCount": self->_recycleCount,
+  };
+  
+  [self dispatchViewEventForEventName:@"onViewWillRecycle"
+                          withPayload:dict];
+}
+
 -(void)remountChildComponentsToContentDelegate
 {
   BOOL shouldNotifyDelegate =
@@ -645,6 +666,8 @@ static BOOL SHOULD_LOG = NO;
   // increment `recycleCount`
   self.recycleCount =
     [NSNumber numberWithInt:[self.recycleCount intValue] + 1];
+    
+  [self _dispatchEventOnViewWillRecycle];
   
   BOOL hasContentDelegate = self.contentDelegate != nil;
 
