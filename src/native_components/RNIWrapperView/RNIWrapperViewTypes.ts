@@ -11,17 +11,16 @@ export type RNIWrapperViewRef = {
 };
 
 export type RNIWrapperViewInheritedOptionalProps = Partial<Pick<RNIWrapperNativeViewProps,
-  | 'placeholder'
   | 'onDidSetViewID'
 >>;
 
-export type RNIWrapperViewInheritedRequiredProps = Required<Pick<RNIWrapperNativeViewProps,
-  | 'placeholder'
->>;
+// export type RNIWrapperViewInheritedRequiredProps = Required<Pick<RNIWrapperNativeViewProps,
+//   | 'placeholder'
+// >>;
 
 export type RNIWrapperViewInheritedProps =
-    RNIWrapperViewInheritedOptionalProps
-  & RNIWrapperViewInheritedRequiredProps;
+    RNIWrapperViewInheritedOptionalProps;
+//  & RNIWrapperViewInheritedRequiredProps;
 
 export type RNIWrapperViewBaseProps = {
   // TBA

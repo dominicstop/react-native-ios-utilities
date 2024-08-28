@@ -10,7 +10,7 @@ type RNIWrapperViewNativeComponentBaseProps =
   Omit<RNIWrapperViewNativeComponentProps, keyof (ViewProps & SharedViewEvents)>
 
 export type RNIWrapperNativeViewBaseProps = RemapObject<RNIWrapperViewNativeComponentBaseProps, {
-  placeholder: boolean;
+  // TBA
 }>;
 
 export type RNIWrapperNativeViewProps = 
