@@ -107,4 +107,10 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 - (void)setPositionType:(RNIPositionType)positionType;
 #endif
+
+// MARK: - Base Event Support
+// --------------------------
+
++ (BOOL)doesSupportBaseEventOnViewWillRecycle;
+
 @end

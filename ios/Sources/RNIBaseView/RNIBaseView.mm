@@ -286,10 +286,11 @@ static BOOL SHOULD_LOG = NO;
 - (void)_dispatchEventOnViewWillRecycle
 {
   BOOL shouldDispatchEvent =
+       [[self class] doesSupportBaseEventOnViewWillRecycle]
 #if RCT_NEW_ARCH_ENABLED
-    self->_eventEmitter != nil;
+    && self->_eventEmitter != nil;
 #else
-    self.window != nil;
+    && self.window != nil;
 #endif
 
   if(!shouldDispatchEvent){
@@ -810,6 +811,14 @@ static BOOL SHOULD_LOG = NO;
   };
 }
 #endif
+
+// MARK: - Base Event Support
+// --------------------------
+
++ (BOOL)doesSupportBaseEventOnViewWillRecycle
+{
+  return NO;
+}
 
 // MARK: - Dummy Impl.
 // -------------------
