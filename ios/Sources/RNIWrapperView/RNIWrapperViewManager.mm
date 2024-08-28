@@ -9,14 +9,13 @@
 #import <objc/runtime.h>
 
 #import "react-native-ios-utilities/RNIBaseViewUtils.h"
-#import "react-native-ios-utilities/RNIBaseViewManager.h"
 
 #import "RCTBridge.h"
 #import <React/RCTViewManager.h>
 #import <React/RCTUIManager.h>
 
 
-@interface RNIWrapperViewManager : RNIBaseViewManager
+@interface RNIWrapperViewManager : RCTViewManager
 @end
 
 @implementation RNIWrapperViewManager

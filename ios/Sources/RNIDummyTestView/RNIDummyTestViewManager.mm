@@ -8,7 +8,6 @@
 
 #import "react-native-ios-utilities/Swift.h"
 #import "react-native-ios-utilities/RNIBaseViewUtils.h"
-#import "react-native-ios-utilities/RNIBaseViewManager.h"
 
 #import <objc/runtime.h>
 
@@ -17,7 +16,7 @@
 #import "RCTBridge.h"
 
 
-@interface RNIDummyTestViewManager : RNIBaseViewManager
+@interface RNIDummyTestViewManager : RCTViewManager
 @end
 
 @implementation RNIDummyTestViewManager
