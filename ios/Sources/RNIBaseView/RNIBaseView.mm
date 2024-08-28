@@ -277,6 +277,7 @@ static BOOL SHOULD_LOG = NO;
   NSDictionary *dict = @{
     @"viewID": self.viewID,
     @"reactTag": [self reactNativeTag],
+    @"recycleCount": self->_recycleCount,
   };
   
   [self dispatchViewEventForEventName:@"onDidSetViewID"
