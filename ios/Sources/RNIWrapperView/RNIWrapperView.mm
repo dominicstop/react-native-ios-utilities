@@ -29,8 +29,8 @@
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
 
-#import <react/renderer/components/RNIContextMenuViewSpec/EventEmitters.h>
-#import <react/renderer/components/RNIContextMenuViewSpec/RCTComponentViewHelpers.h>
+#import <react/renderer/components/RNIUtilitiesSpec/EventEmitters.h>
+#import <react/renderer/components/RNIUtilitiesSpec/RCTComponentViewHelpers.h>
 #else
 #import <React/RCTTouchHandler.h>
 #import <React/RCTInvalidating.h>
@@ -44,7 +44,7 @@ using namespace facebook::react;
 @interface RNIWrapperView () <
   RNIContentViewParentDelegate,
 #ifdef RCT_NEW_ARCH_ENABLED
-  RCTIosContextMenuViewViewProtocol
+  RCTRNIWrapperViewViewProtocol
 #else
   RCTInvalidating
 #endif
