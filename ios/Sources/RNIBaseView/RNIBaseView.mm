@@ -192,11 +192,15 @@ static BOOL SHOULD_LOG = NO;
   [self initViewDelegate];
   
 #if !RCT_NEW_ARCH_ENABLED
+  if(self.contentDelegate == nil){
+    return;
+  };
+
   BOOL shouldNotifyDelegateToSetupConstraints =
-    [viewDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
+    [self.contentDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
     
   if(shouldNotifyDelegateToSetupConstraints){
-     [viewDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
+     [self.contentDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
   };
   
   [self.reactEventHandler createSettersForEvents:^(){
