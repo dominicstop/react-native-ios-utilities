@@ -178,6 +178,39 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
       ),
     ]);
   };
+  
+  func _dispatchEvents(){
+    let eventPayload: [String: Any] = [
+      "someBool": true,
+      "someString": "abc",
+      "someNumber": 123,
+      "someObject": [
+        "someBool": true,
+        "someString": "abc",
+      ],
+      "someArray": [],
+    ];
+    
+    self.dispatchEvent(
+      for: .onSomeDirectEventWithEmptyPayload,
+      withPayload: [:]
+    );
+    
+    self.dispatchEvent(
+      for: .onSomeDirectEventWithObjectPayload,
+      withPayload: eventPayload
+    );
+    
+    self.dispatchEvent(
+      for: .onSomeBubblingEventWithEmptyPayload,
+      withPayload: [:]
+    );
+    
+    self.dispatchEvent(
+      for: .onSomeBubblingEventWithObjectPayload,
+      withPayload: eventPayload
+    );
+  };
 };
 
 extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
@@ -201,41 +234,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
     superBlock();
     #endif
     
-    if(!self._didSendEvents){
-      self._didSendEvents = true;
-      
-      let eventPayload: [String: Any] = [
-        "someBool": true,
-        "someString": "abc",
-        "someNumber": 123,
-        "someObject": [
-          "someBool": true,
-          "someString": "abc",
-        ],
-        "someArray": [],
-      ];
-      
-      self.dispatchEvent(
-        for: .onSomeDirectEventWithEmptyPayload,
-        withPayload: [:]
-      );
-      
-      self.dispatchEvent(
-        for: .onSomeDirectEventWithObjectPayload,
-        withPayload: eventPayload
-      );
-      
-      self.dispatchEvent(
-        for: .onSomeBubblingEventWithEmptyPayload,
-        withPayload: [:]
-      );
-      
-      self.dispatchEvent(
-        for: .onSomeBubblingEventWithObjectPayload,
-        withPayload: eventPayload
-      );
-    };
-    
+    self._dispatchEvents();
     self.reactGetLayoutMetrics {
       print(
         "RNIDummyTestViewDelegate.notifyOnMountChildComponentView",
@@ -408,6 +407,10 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   
   // MARK: - Paper Only
   // ------------------
+  
+  public override func didSetProps(_ changedProps: [String]!) {
+    self._dispatchEvents();
+  };
   
   #endif
 };
