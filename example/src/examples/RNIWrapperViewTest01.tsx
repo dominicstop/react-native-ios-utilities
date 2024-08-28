@@ -1,27 +1,42 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
-import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { CardButton, ExampleItemCard } from 'react-native-ios-utilities';
+import { ExampleItemCard, WrapperView, type OnDidSetViewIDEventPayload, ObjectPropertyDisplay, Colors } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
 
 
-export function RNIWrapperViewTest01(props: ExampleItemProps) { 
+export function RNIWrapperViewTest01(props: ExampleItemProps) {
+  const [reactTag, setReactTag] = 
+    React.useState<OnDidSetViewIDEventPayload['reactTag'] | undefined>();
+
+  const [viewID, setViewID] = 
+    React.useState<OnDidSetViewIDEventPayload['viewID'] | undefined>();
+  
   return (
-    <ExampleItemCard
-      index={props.index}
-      title={'RNIWrapperView Test 01'}
-      description={[
-        `TBA`
-      ]}
+    <WrapperView
+      onDidSetViewID={({nativeEvent}) => {
+        setReactTag(nativeEvent.reactTag);
+        setViewID(nativeEvent.viewID);
+      }}
     >
-      <CardButton
-        title={'placeholder'}
-        subtitle={'TBA'}
-        onPress={() => {
-          // TBA
-        }}
-      />
-    </ExampleItemCard>
+      <ExampleItemCard
+        index={props.index}
+        title={'RNIWrapperViewTest01'}
+        description={[
+          "Get the `reactTag` + `viewID` for the current view",
+        ]}
+      >
+        <ObjectPropertyDisplay
+          recursiveStyle={styles.debugDisplayInner}
+          object={{reactTag, viewID}}
+        />
+      </ExampleItemCard>
+    </WrapperView>
   );
 };
+
+const styles = StyleSheet.create({
+  debugDisplayInner: {
+    backgroundColor: `${Colors.PURPLE[200]}99`,
+  },
+});
