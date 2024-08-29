@@ -56,8 +56,7 @@ static BOOL SHOULD_LOG = NO;
 
 - (UIView *)getViewForViewID:(NSString *)viewID
 {
-  NSDictionary *viewRegistryDict = [self->_viewRegistry dictionaryRepresentation];
-  return [viewRegistryDict valueForKey:viewID];
+  return [self->_viewRegistry objectForKey:viewID];
 }
 
 - (UIView *)getViewForReactTag:(NSNumber *)reactTag
