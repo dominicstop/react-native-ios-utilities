@@ -9,8 +9,8 @@ import Foundation
 import DGSwiftUtilities
 
 
-public protocol RNIContentView where Self:
-  RNIContentViewDelegate & StringKeyPathMapping & RNIViewPropHandling {
+public protocol RNIContentView: RNIViewPropHandling
+  where Self: RNIContentViewDelegate & StringKeyPathMapping {
   
   // MARK: - Paper Only
   // ------------------

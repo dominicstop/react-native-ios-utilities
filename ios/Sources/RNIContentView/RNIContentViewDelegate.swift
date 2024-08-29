@@ -9,7 +9,7 @@ import UIKit
 import DGSwiftUtilities
 
 @objc
-public protocol RNIContentViewDelegate where Self: UIView & RNIViewPropDelegate {
+public protocol RNIContentViewDelegate: RNIViewPropDelegate where Self: UIView  {
   
   // MARK: Fabric + Paper
   // --------------------
@@ -19,9 +19,6 @@ public protocol RNIContentViewDelegate where Self: UIView & RNIViewPropDelegate 
     sender: RNIContentViewParentDelegate,
     frame: CGRect
   ) -> RNIContentViewDelegate;
-
-  @objc
-  weak var parentReactView: RNIContentViewParentDelegate? { set get }
   
   @objc
   optional func notifyOnInit(

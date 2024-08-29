@@ -32,7 +32,11 @@ public extension RNIViewPropHandling where Self: RNIViewPropDelegate  {
     for event: Events,
     withPayload payload: Dictionary<String, Any>
   ){
-    self.parentReactView?.dispatchViewEvent(
+    guard let parentReactView = self.parentReactView else {
+      return;
+    };
+    
+    parentReactView.dispatchViewEvent(
       forEventName: event.rawValue,
       withPayload: payload
     );
