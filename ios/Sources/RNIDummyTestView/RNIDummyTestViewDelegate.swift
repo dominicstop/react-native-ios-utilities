@@ -153,6 +153,7 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
           let parentReactView = self.parentReactView
     else { return };
     
+    self._dispatchEvents();
     return;
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 10){
@@ -282,6 +283,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   }
   
   public func notifyDidSetProps(sender: RNIContentViewParentDelegate) {
+    self._dispatchEvents();
     print(
       "RNIDummyTestViewDelegate.notifyDidSetProps",
       "\n - someBool:", self.someBool,
