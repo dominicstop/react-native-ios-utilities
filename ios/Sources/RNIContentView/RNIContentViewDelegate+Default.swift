@@ -12,7 +12,6 @@ import DGSwiftUtilities
 @objc
 fileprivate extension UIView {
   
-  #if !RCT_NEW_ARCH_ENABLED
   func _notifyOnRequestToSetupConstraints(
     sender: RNIContentViewParentDelegate
   ) {
@@ -40,6 +39,7 @@ fileprivate extension UIView {
     NSLayoutConstraint.activate(constraints);
   };
   
+  #if !RCT_NEW_ARCH_ENABLED
   func _getSupportedReactEvents() -> [String] {
     guard let _self = self as? (any RNIContentView) else {
       return [];

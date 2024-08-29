@@ -179,6 +179,13 @@ static BOOL SHOULD_LOG = NO;
   self.contentDelegate = viewDelegate;
   self.contentView = viewDelegate;
   
+  BOOL shouldNotifyDelegateToSetupConstraints =
+    [self.contentDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
+    
+  if(shouldNotifyDelegateToSetupConstraints){
+     [self.contentDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
+  };
+  
   BOOL shouldNotifyDelegateForInit =
        !self->_didNotifyForInit
     && [viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:)];
@@ -198,13 +205,6 @@ static BOOL SHOULD_LOG = NO;
 #if !RCT_NEW_ARCH_ENABLED
   if(self.contentDelegate == nil){
     return;
-  };
-
-  BOOL shouldNotifyDelegateToSetupConstraints =
-    [self.contentDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
-    
-  if(shouldNotifyDelegateToSetupConstraints){
-     [self.contentDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
   };
   
   [self.reactEventHandler createSettersForEvents:^(){

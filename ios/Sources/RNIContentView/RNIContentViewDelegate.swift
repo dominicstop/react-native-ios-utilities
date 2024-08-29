@@ -90,11 +90,9 @@ public protocol RNIContentViewDelegate: RNIViewPropDelegate where Self: UIView  
   // MARK: Internal-Only
   // -------------------
   
-  #if !RCT_NEW_ARCH_ENABLED
   @objc
   optional func _notifyOnRequestToSetupConstraints(
     sender: RNIContentViewParentDelegate
   );
-  #endif
 };
 

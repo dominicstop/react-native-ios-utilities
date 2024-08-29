@@ -11,10 +11,6 @@ import DGSwiftUtilities
 
 public extension RNIContentViewDelegate where Self: RNIContentView  {
 
-  // MARK: - Paper Only
-  // ------------------
-
-  #if !RCT_NEW_ARCH_ENABLED
   var horizontalAlignment: HorizontalAlignmentPosition {
     .stretchTarget
   };
@@ -22,6 +18,5 @@ public extension RNIContentViewDelegate where Self: RNIContentView  {
   var verticalAlignment: VerticalAlignmentPosition {
     .stretchTarget
   };
-  #endif
 };
 
