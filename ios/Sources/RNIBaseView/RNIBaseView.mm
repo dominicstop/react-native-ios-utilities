@@ -494,6 +494,18 @@ static BOOL SHOULD_LOG = NO;
 }
 #endif
 
+// MARK: - View/React Lifecycle - Fabric + Paper
+// ---------------------------------------------
+
+- (void)willMoveToWindow:(UIWindow *)newWindow
+{
+  if(newWindow == nil){
+    return;
+  };
+  
+  [[RNIViewRegistry shared] registerViewUsingReactTagForView:self];
+}
+
 // MARK: - View/React Lifecycle - Fabric Only
 // ------------------------------------------
 

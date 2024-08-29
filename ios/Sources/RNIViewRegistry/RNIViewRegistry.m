@@ -54,6 +54,44 @@ static BOOL SHOULD_LOG = NO;
   );
 }
 
+
+- (void)registerViewUsingReactTagForView:(UIView<RNIRegistrableView> *)view
+{
+  NSNumber *reactTag;
+  if ([view respondsToSelector:NSSelectorFromString(@"reactNativeTag")]) {
+    reactTag = [view valueForKey:@"reactNativeTag"];
+  };
+  
+  if(reactTag == nil || reactTag <= 0){
+    return;
+  };
+  
+  __block NSString *viewID;
+  
+  BOOL isRegistered = ^{
+    if(view.viewID == nil){
+      return NO;
+    };
+    
+    id match = [self getViewForViewID:view.viewID];
+    if(match != nil){
+      viewID = view.viewID;
+      return YES;
+    };
+    
+    viewID = [@(self->_counterViewID++) stringValue];
+    return NO;
+  }();
+  
+  if(!isRegistered){
+    [self registerView:view];
+  };
+  
+  if(reactTag != nil){
+    [self->_reactTagToViewIdMap setObject:viewID forKey:reactTag];
+  };
+};
+
 - (UIView *)getViewForViewID:(NSString *)viewID
 {
   return [self->_viewRegistry objectForKey:viewID];

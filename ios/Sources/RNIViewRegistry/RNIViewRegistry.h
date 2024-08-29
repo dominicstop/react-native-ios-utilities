@@ -15,6 +15,8 @@
 
 - (void)registerView:(UIView<RNIRegistrableView> * _Nonnull)view;
 
+- (void)registerViewUsingReactTagForView:(UIView<RNIRegistrableView> * _Nonnull)view;
+
 - (nullable UIView *)getViewForViewID:(NSString * _Nonnull)viewID;
 
 - (nullable UIView *)getViewForReactTag:(NSNumber * _Nonnull)reactTag;
