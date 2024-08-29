@@ -77,8 +77,10 @@ static BOOL SHOULD_LOG = NO;
 {
   if (self = [super initWithFrame:frame]) {
     static const auto defaultProps = std::make_shared<const react::RNIBaseViewProps>();
-    _props = defaultProps;
-    _reactSubviewsShim = [NSMutableArray new];
+    self->_props = defaultProps;
+    
+    self->_reactSubviewsShim = [NSMutableArray new];
+    self->_queuedEvents = [NSMutableArray new];
     
     [self initCommon];
   };
@@ -191,8 +193,6 @@ static BOOL SHOULD_LOG = NO;
 - (void)initCommon
 {
   self.recycleCount = @0;
-  self->_queuedEvents = [NSMutableArray new];
-  
   [self initViewDelegate];
   
 #if !RCT_NEW_ARCH_ENABLED
@@ -340,6 +340,7 @@ static BOOL SHOULD_LOG = NO;
 // MARK: Methods - Fabric-Only
 // ---------------------------
 
+#if RCT_NEW_ARCH_ENABLED
 - (void)dispatchQueuedViewEventsIfNeeded
 {
   BOOL shouldDispatchEvent =
@@ -359,6 +360,7 @@ static BOOL SHOULD_LOG = NO;
   
   [self->_queuedEvents removeAllObjects];
 }
+#endif
 
 // MARK: Methods - Paper-Only
 // --------------------------
