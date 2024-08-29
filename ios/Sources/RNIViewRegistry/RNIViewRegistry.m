@@ -14,6 +14,7 @@ static BOOL SHOULD_LOG = NO;
 
 @implementation RNIViewRegistry {
   NSMapTable *_viewRegistry;
+  NSMutableDictionary *_reactTagToViewIdMap;
   NSInteger _counterViewID;
 }
 
@@ -31,6 +32,7 @@ static BOOL SHOULD_LOG = NO;
 - (instancetype)init {
   if (self = [super init]) {
     self->_viewRegistry = [NSMapTable strongToWeakObjectsMapTable];
+    self->_reactTagToViewIdMap = [NSMutableDictionary new];
     self->_counterViewID = 0;
   }
   return self;
@@ -40,6 +42,7 @@ static BOOL SHOULD_LOG = NO;
 {
   NSString *viewID = [@(self->_counterViewID++) stringValue];
   view.viewID = viewID;
+  
   [self->_viewRegistry setObject:view forKey:viewID];
   
   RNILog(
@@ -55,6 +58,22 @@ static BOOL SHOULD_LOG = NO;
 {
   NSDictionary *viewRegistryDict = [self->_viewRegistry dictionaryRepresentation];
   return [viewRegistryDict valueForKey:viewID];
+}
+
+- (UIView *)getViewForReactTag:(NSNumber *)reactTag
+{
+  NSString *viewID = [self->_reactTagToViewIdMap objectForKey:reactTag];
+  if(viewID == nil){
+    return nil;
+  };
+  
+  UIView *match = [self getViewForViewID:viewID];
+  if(match == nil){
+    [self->_reactTagToViewIdMap removeObjectForKey:reactTag];
+    return nil;
+  };
+  
+  return match;
 }
 
 @end

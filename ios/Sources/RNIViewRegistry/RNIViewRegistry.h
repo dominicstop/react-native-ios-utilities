@@ -17,4 +17,6 @@
 
 - (nullable UIView *)getViewForViewID:(NSString * _Nonnull)viewID;
 
+- (nullable UIView *)getViewForReactTag:(NSNumber * _Nonnull)reactTag;
+
 @end
