@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 @property (nonatomic, strong, nullable) UIView *contentView;
 #endif
 
-@property (nonatomic, strong, nullable) NSObject<RNIContentViewDelegate> *contentDelegate;
+@property (nonatomic, strong, nullable) UIView<RNIContentViewDelegate> *contentDelegate;
 
 @property (nonatomic, strong, nullable) RNILayoutMetrics *cachedLayoutMetrics;
 

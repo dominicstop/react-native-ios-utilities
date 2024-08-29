@@ -36,6 +36,8 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   // -----------------
   
   #if RCT_NEW_ARCH_ENABLED
+  var contentDelegate: RNIContentViewDelegate { get };
+  
   func setPadding(_ insets: UIEdgeInsets);
   
   func setPositionType(_ positionType: RNILayoutMetrics.RNIPositionType);

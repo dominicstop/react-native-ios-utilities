@@ -160,6 +160,8 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
       "\n - reactProps:", self.reactProps.description,
       "\n - reactNativeTag:", self.parentReactView?.reactNativeTag ?? -1,
       "\n - parentReactView.viewID:", self.parentReactView?.viewID ?? "N/A",
+      "\n - parentReactView.contentDelegate:", self.parentReactView?.contentDelegate.description ?? "N/A",
+      "\n - parentReactView.cachedLayoutMetrics", self.parentReactView?.cachedLayoutMetrics.description ?? "N/A",
       "\n"
     );
     
