@@ -1,3 +1,4 @@
+import type { OnDidSetViewIDEventPayload } from "./SharedViewEvents";
 
 export type PointPreset = 
   | 'top' 
@@ -20,4 +21,11 @@ export type DynamicColor = {
     dark: string;
     light: string;
   };
+};
+
+// Native Type: `RNINativeViewIdentifier`
+export type NativeViewIdentifier = {
+  reactTag: OnDidSetViewIDEventPayload['reactTag'];
+} | {
+  viewID: OnDidSetViewIDEventPayload['viewID'];
 };
