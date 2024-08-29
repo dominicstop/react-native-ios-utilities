@@ -19,6 +19,9 @@ public typealias RNIContentViewParent = RCTView;
 public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
 
   var cachedLayoutMetrics: RNILayoutMetrics { get };
+  
+  var contentDelegate: RNIContentViewDelegate { get };
+  
   var viewID: String? { get };
   
   var reactSubviews: [UIView] { get }
@@ -36,8 +39,6 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   // -----------------
   
   #if RCT_NEW_ARCH_ENABLED
-  var contentDelegate: RNIContentViewDelegate { get };
-  
   func setPadding(_ insets: UIEdgeInsets);
   
   func setPositionType(_ positionType: RNILayoutMetrics.RNIPositionType);
