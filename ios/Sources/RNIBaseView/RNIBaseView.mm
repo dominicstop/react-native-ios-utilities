@@ -242,7 +242,7 @@ static BOOL SHOULD_LOG = NO;
 // MARK: Methods - Paper + Fabric
 // ------------------------------
 
-- (void)_dispatchOnDidSetViewIDEventIfNeeded
+- (void)_dispatchViewEventOnDidSetViewIDIfNeeded
 {
   BOOL shouldDispatchEvent =
 #if RCT_NEW_ARCH_ENABLED
@@ -552,7 +552,7 @@ static BOOL SHOULD_LOG = NO;
 - (void)updateEventEmitter:(const facebook::react::EventEmitter::Shared &)eventEmitter
 {
   [super updateEventEmitter:eventEmitter];
-  [self _dispatchOnDidSetViewIDEventIfNeeded];
+  [self _dispatchViewEventOnDidSetViewIDIfNeeded];
   [self dispatchQueuedViewEventsIfNeeded];
 }
 
@@ -844,7 +844,7 @@ static BOOL SHOULD_LOG = NO;
                            changedProps:changedProps];
   };
   
-  [self _dispatchOnDidSetViewIDEventIfNeeded];
+  [self _dispatchViewEventOnDidSetViewIDIfNeeded];
 }
 #endif
 
