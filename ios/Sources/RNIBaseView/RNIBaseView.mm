@@ -61,6 +61,7 @@ static BOOL SHOULD_LOG = NO;
   UIView * _view;
   RNIBaseViewState::SharedConcreteState _state;
   NSMutableArray<UIView *> *_reactSubviewsShim;
+  NSMutableArray<NSDictionary *> *_queuedEvents;
 #else
   CGRect _reactFrame;
 #endif
@@ -190,6 +191,8 @@ static BOOL SHOULD_LOG = NO;
 - (void)initCommon
 {
   self.recycleCount = @0;
+  self->_queuedEvents = [NSMutableArray new];
+  
   [self initViewDelegate];
   
 #if !RCT_NEW_ARCH_ENABLED
@@ -334,6 +337,29 @@ static BOOL SHOULD_LOG = NO;
   };
 }
 
+// MARK: Methods - Fabric-Only
+// ---------------------------
+
+- (void)dispatchQueuedViewEventsIfNeeded
+{
+  BOOL shouldDispatchEvent =
+       [self->_queuedEvents count] > 0
+    && self->_eventEmitter != nil;
+    
+  if(!shouldDispatchEvent){
+    return;
+  };
+
+  for (NSDictionary *_queuedEvent in self->_queuedEvents) {
+    NSString *eventName = [_queuedEvent valueForKey:@"eventName"];
+    NSDictionary *eventPayload = [_queuedEvent valueForKey:@"eventPayload"];
+    
+    [self dispatchViewEventForEventName:eventName withPayload:eventPayload];
+  };
+  
+  [self->_queuedEvents removeAllObjects];
+}
+
 // MARK: Methods - Paper-Only
 // --------------------------
 
@@ -415,9 +441,15 @@ static BOOL SHOULD_LOG = NO;
 {
 #if RCT_NEW_ARCH_ENABLED
   if (self->_eventEmitter == nullptr){
+    NSDictionary *_queuedEvent = @{
+      @"eventName": eventName,
+      @"eventPayload": eventPayload,
+    };
+    
+    [self->_queuedEvents addObject:_queuedEvent];
     return;
   };
-  
+ 
   auto eventEmitter =
     std::dynamic_pointer_cast<const react::RNIBaseViewEventEmitter>(_eventEmitter);
   
@@ -521,6 +553,7 @@ static BOOL SHOULD_LOG = NO;
 {
   [super updateEventEmitter:eventEmitter];
   [self _dispatchOnDidSetViewIDEventIfNeeded];
+  [self dispatchQueuedViewEventsIfNeeded];
 }
 
 - (void)updateLayoutMetrics:(const LayoutMetrics &)layoutMetrics
