@@ -157,9 +157,18 @@ static BOOL SHOULD_LOG = NO;
   }
   
   UIView<RNIContentViewDelegate> *viewDelegate = ^id{
+    BOOL shouldUseDelegateForInit =
+      [viewDelegateClass respondsToSelector:@selector(createInstanceWithSender:frame:)];
+      
+    if(shouldUseDelegateForInit){
+      return [viewDelegateClass createInstanceWithSender:self frame:self.frame];
+    };
+    
+    // deprecated
     BOOL shouldInitDelegateUsingInstanceMaker =
       [viewDelegateClass respondsToSelector:@selector(instanceMakerWithSender:frame:)];
-      
+    
+    // deprecated
     if(shouldInitDelegateUsingInstanceMaker){
       return [viewDelegateClass instanceMakerWithSender:self frame:self.frame];
     };
