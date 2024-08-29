@@ -154,6 +154,43 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
     else { return };
     
     self._dispatchEvents();
+    
+    print(
+      "RNIDummyTestViewDelegate.didMoveToWindow",
+      "\n - reactProps:", self.reactProps.description,
+      "\n - reactNativeTag:", self.parentReactView?.reactNativeTag ?? -1,
+      "\n - parentReactView.viewID:", self.parentReactView?.viewID ?? "N/A",
+      "\n"
+    );
+    
+    let viewID: RNINativeViewIdentifier = {
+      let dict: Dictionary<String, Any> = [
+        "viewID": self.parentReactView!.viewID!,
+      ];
+      
+      return try! .init(fromDict: dict);
+    }();
+    
+    let matchingViewForViewID = viewID.getAssociatedView();
+    
+    let reactTag: RNINativeViewIdentifier = {
+      let dict: Dictionary<String, Any> = [
+        "reactTag": self.parentReactView?.reactNativeTag?.intValue ?? -1,
+      ];
+      
+      return try! .init(fromDict: dict);
+    }();
+    
+    let matchingViewForReactTag = reactTag.getAssociatedView();
+    
+    print(
+      "RNIDummyTestViewDelegate.didMoveToWindow",
+      "\n - RNINativeViewIdentifier.viewID:", viewID,
+      "\n - matchingViewForViewID:", matchingViewForViewID,
+      "\n - RNINativeViewIdentifier.reactTag:", reactTag,
+      "\n - matchingViewForReactTag:", matchingViewForReactTag,
+      "\n"
+    );
     return;
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 10){
