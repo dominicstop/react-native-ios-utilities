@@ -27,6 +27,11 @@ public protocol RNIContentViewDelegate: RNIViewPropDelegate where Self: UIView  
   );
   
   @objc
+  optional func notifyOnRequestToSetupLayout(
+    sender: RNIContentViewParentDelegate
+  );
+  
+  @objc
   optional func notifyOnMountChildComponentView(
     sender: RNIContentViewParentDelegate,
     childComponentView: UIView,

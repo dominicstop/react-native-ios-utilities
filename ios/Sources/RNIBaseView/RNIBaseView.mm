@@ -179,12 +179,19 @@ static BOOL SHOULD_LOG = NO;
   self.contentDelegate = viewDelegate;
   self.contentView = viewDelegate;
   
+  BOOL hasCustomLayoutSetup =
+    [self.contentDelegate respondsToSelector:@selector(notifyOnRequestToSetupLayoutWithSender:)];
+  
   BOOL shouldNotifyDelegateToSetupConstraints =
-    [self.contentDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
+      !hasCustomLayoutSetup
+    & [self.contentDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
     
   if(shouldNotifyDelegateToSetupConstraints){
      [self.contentDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
-  };
+     
+  } else if(hasCustomLayoutSetup){
+    [self.contentDelegate notifyOnRequestToSetupLayoutWithSender:self];
+  };;
   
   BOOL shouldNotifyDelegateForInit =
        !self->_didNotifyForInit
