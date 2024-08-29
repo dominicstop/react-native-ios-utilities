@@ -18,7 +18,7 @@ public enum RNINativeViewIdentifier {
   // MARK: - Functions
   // -----------------
   
-  func getAssociatedView() -> UIView? {
+  public func getAssociatedView() -> UIView? {
     switch self {
       case let .reactTag(reactTag):
         var match: UIView?;
