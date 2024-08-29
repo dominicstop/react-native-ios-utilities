@@ -9,6 +9,6 @@
 
 @protocol RNIRegistrableView <NSObject>
 
-@property (nullable, nonatomic) NSString *viewID;
+@property (nullable, nonatomic, copy) NSString *viewID;
 
 @end
