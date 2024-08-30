@@ -5,6 +5,7 @@ import type { HostComponent, ViewProps } from 'react-native';
 // stubs
 export interface NativeProps extends ViewProps {
   onDidSetViewID: BubblingEventHandler<{}>;
+  onContentViewDidDetach?: BubblingEventHandler<{}>;
 };
 
 // stubs

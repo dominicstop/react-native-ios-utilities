@@ -16,7 +16,7 @@ public final class RNIDetachedViewContent: UIView, RNIContentView {
   // ----------------------
   
   public enum Events: String, CaseIterable {
-    case onViewWillRecycle;
+    case onContentViewDidDetach;
   };
   
   // MARK: - Static Properties
