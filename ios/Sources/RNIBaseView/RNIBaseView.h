@@ -9,11 +9,11 @@
 #import "react-native-ios-utilities/RNIRegistrableView.h"
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 
-
 #if RCT_NEW_ARCH_ENABLED
 #import <React/RCTViewComponentView.h>
 #else
 #import <React/RCTView.h>
+#import <React/RCTInvalidating.h>
 #endif
 
 // MARK: - Forward Declarations
@@ -112,5 +112,12 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 // --------------------------
 
 + (BOOL)doesSupportBaseEventOnViewWillRecycle;
+
+// MARK: -  RCTInvalidating (Paper Only)
+// -------------------------------------
+
+#if !RCT_NEW_ARCH_ENABLED
+- (void)invalidate NS_REQUIRES_SUPER;
+#endif
 
 @end

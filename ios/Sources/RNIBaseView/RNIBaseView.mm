@@ -876,6 +876,17 @@ static BOOL SHOULD_LOG = NO;
   
   [self _dispatchViewEventOnDidSetViewIDIfNeeded];
 }
+
+- (void)invalidate
+{
+  BOOL shouldNotifyDelegate =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:@selector(notifyOnViewWillInvalidateWithSender:)];
+    
+  if(shouldNotifyDelegate) {
+    [self.contentDelegate notifyOnViewWillInvalidateWithSender:self];
+  };
+}
 #endif
 
 // MARK: - Base Event Support

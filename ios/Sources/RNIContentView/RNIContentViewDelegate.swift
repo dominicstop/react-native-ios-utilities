@@ -11,8 +11,8 @@ import DGSwiftUtilities
 @objc
 public protocol RNIContentViewDelegate: RNIViewPropDelegate where Self: UIView  {
   
-  // MARK: Fabric + Paper
-  // --------------------
+  // MARK: - Fabric + Paper
+  // ----------------------
   
   @available(*, deprecated, renamed: "createInstance")
   @objc
@@ -69,8 +69,8 @@ public protocol RNIContentViewDelegate: RNIViewPropDelegate where Self: UIView  
     reject rejectBlock: (String) -> Void
   );
   
-  // MARK: Fabric Only
-  // -----------------
+  // MARK: - Fabric Only
+  // -------------------
   
   #if RCT_NEW_ARCH_ENABLED
   @objc
@@ -96,6 +96,15 @@ public protocol RNIContentViewDelegate: RNIViewPropDelegate where Self: UIView  
   optional func shouldRecycleContentDelegate(
     sender: RNIContentViewParentDelegate
   ) -> Bool;
+  #else
+  
+  // MARK: - Paper Only
+  // ------------------
+  
+  @objc
+  optional func notifyOnViewWillInvalidate(
+    sender: RNIContentViewParentDelegate
+  );
   #endif
   
   // MARK: Internal-Only
