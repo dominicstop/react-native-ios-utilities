@@ -89,16 +89,6 @@ Class<RCTComponentViewProtocol> RNIDetachedViewCls(void)
 {
   return RNIDetachedView.class;
 }
-#else
-
-// MARK: - Paper
-// -------------
-
-- (void)invalidate
-{
-  // to be impl.
-}
-
 #endif
 @end
 

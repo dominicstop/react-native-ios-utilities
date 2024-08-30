@@ -89,16 +89,6 @@ Class<RCTComponentViewProtocol> RNIWrapperViewCls(void)
 {
   return RNIWrapperView.class;
 }
-#else
-
-// MARK: - Paper
-// -------------
-
-- (void)invalidate
-{
-  // to be impl.
-}
-
 #endif
 @end
 

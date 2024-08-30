@@ -30,8 +30,13 @@ public final class RNIDetachedViewContent: UIView, RNIContentView {
   
   public weak var parentReactView: RNIContentViewParentDelegate?;
   
-  // MARK: Properties - Props
-  // ------------------------
+  // MARK: - Properties
+  // ------------------
+  
+  public var didDetach = false;
+  
+  // MARK: - Properties - Props
+  // --------------------------
   
   public var reactProps: NSDictionary = [:];
 
@@ -44,6 +49,15 @@ public final class RNIDetachedViewContent: UIView, RNIContentView {
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented");
+  };
+  
+  // MARK: - Methods
+  // ---------------
+  
+  func detach(){
+    self.removeFromSuperview();
+    self.didDetach = true;
+    self.dispatchEvent(for: .onContentViewDidDetach, withPayload: [:]);
   };
 };
 
@@ -63,9 +77,6 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
     index: NSInteger,
     superBlock: () -> Void
   ) {
-    #if !RCT_NEW_ARCH_ENABLED
-    superBlock();
-    #endif
     
     // Note: Window might not be available yet
     self.addSubview(childComponentView);
@@ -79,9 +90,9 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
   ) {
     #if !RCT_NEW_ARCH_ENABLED
     superBlock();
-    #endif
-    
+    #else
     childComponentView.removeFromSuperview();
+    #endif
   };
   
   public func notifyOnViewCommandRequest(
@@ -102,6 +113,8 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
           guard let window = UIApplication.shared.activeWindow else {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
+          
+          self.detach();
           
           self.translatesAutoresizingMaskIntoConstraints = false;
           window.addSubview(self);
@@ -132,4 +145,16 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
       rejectBlock(error.localizedDescription);
     };
   };
+  
+  // MARK: Paper Only
+  // ----------------
+  
+  #if !RCT_NEW_ARCH_ENABLED
+  public func notifyOnViewWillInvalidate(sender: RNIContentViewParentDelegate) {
+    sender.reactSubviews.forEach {
+      $0.removeFromSuperview();
+    };
+  };
+  #endif
+  
 };
