@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { type StateViewID, type StateReactTag } from "react-native-ios-utilities";
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
 
 import type { 
@@ -8,6 +7,8 @@ import type {
   RNIDetachedViewRef, 
 } from './RNIDetachedViewTypes';
 
+import { type StateViewID, type StateReactTag } from '../../types/SharedStateTypes';
+import * as Helpers from '../../misc/Helpers';
 
 export const RNIDetachedView = React.forwardRef<
   RNIDetachedViewRef, 
@@ -23,6 +24,17 @@ export const RNIDetachedView = React.forwardRef<
     },
     getViewID: () => {
       return viewID;
+    },
+    attachToWindow: async () => {
+      if(viewID == null) return;
+      const module = Helpers.getRNIUtilitiesModule();
+
+      setIsDetached(true);
+      await module.viewCommandRequest(
+        /* viewID     : */ viewID,
+        /* commandName: */ 'attachToWindow',
+        /* commandArgs: */ {}
+      );
     },
   }));
 

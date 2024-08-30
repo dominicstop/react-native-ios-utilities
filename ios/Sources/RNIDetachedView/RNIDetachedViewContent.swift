@@ -92,6 +92,44 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
     reject rejectBlock: (String) -> Void
   ) {
     
-    rejectBlock("not implemented");
+    do {
+      guard let parentReactView = self.parentReactView else {
+        throw RNIUtilitiesError(errorCode: .guardCheckFailed);
+      };
+      
+      switch commandName {
+        case "attachToWindow":
+          guard let window = UIApplication.shared.activeWindow else {
+            throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
+          };
+          
+          self.translatesAutoresizingMaskIntoConstraints = false;
+          window.addSubview(self);
+          
+          NSLayoutConstraint.activate([
+            self.centerXAnchor.constraint(
+              equalTo: window.centerXAnchor
+            ),
+            self.centerYAnchor.constraint(
+              equalTo: window.centerYAnchor
+            ),
+            self.widthAnchor.constraint(
+              equalToConstant: 200
+            ),
+            self.heightAnchor.constraint(
+              equalToConstant: 200
+            ),
+          ]);
+          
+          parentReactView.setSize(.init(width: 200, height: 200));
+          resolveBlock([:]);
+        
+        default:
+          throw RNIUtilitiesError(errorCode: .invalidValue);
+      };
+    
+    } catch {
+      rejectBlock(error.localizedDescription);
+    };
   };
 };

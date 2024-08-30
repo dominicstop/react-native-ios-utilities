@@ -8,6 +8,7 @@ import type { StateReactTag, StateViewID } from "react-native-ios-utilities";
 export type RNIDetachedViewRef = {
   getViewID: () => StateViewID;
   getReactTag: () => StateReactTag;
+  attachToWindow: () => Promise<void>;
 };
 
 export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNativeViewProps,
@@ -26,7 +27,6 @@ export type RNIDetachedViewInheritedProps =
 
 export type RNIDetachedViewBaseProps = {
   // TBA
-  debugShouldEnableLogging?: boolean;
 };
 
 export type RNIDetachedViewProps = PropsWithChildren<
