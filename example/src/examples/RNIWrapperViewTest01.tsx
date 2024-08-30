@@ -17,6 +17,7 @@ export function RNIWrapperViewTest01(props: ExampleItemProps) {
   
   return (
     <WrapperView
+      style={props.style}
       onDidSetViewID={({nativeEvent}) => {
         setReactTag(nativeEvent.reactTag);
         setViewID(nativeEvent.viewID);

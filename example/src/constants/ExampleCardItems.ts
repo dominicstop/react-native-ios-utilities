@@ -1,4 +1,5 @@
 import { HomeScreen } from "../components/HomeScreen";
+import { RNIDetachedViewTest01 } from "../examples/RNIDetachedViewTest01";
 import { RNIDummyTest01Screen } from "../examples/RNIDummyTest01Screen";
 import { RNIWrapperViewTest01 } from "../examples/RNIWrapperViewTest01";
 
@@ -52,7 +53,10 @@ export const EXAMPLE_ITEMS: Array<ExampleItem> = (() => {
       type: 'card',
       component: RNIWrapperViewTest01,
     },
-
+    {
+      type: 'card',
+      component: RNIDetachedViewTest01,
+    },
   ]; 
 
   // if (SHARED_ENV.enableReactNavigation) {
