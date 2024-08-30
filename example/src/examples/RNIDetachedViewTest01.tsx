@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, CardButton } from 'react-native-ios-utilities';
+import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, CardButton, type RNIDetachedViewRef } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
 
 
 export function RNIDetachedViewTest01(props: ExampleItemProps) {
+  const detachedViewRef = React.useRef<RNIDetachedViewRef | null>(null);
+  
   const [isIntervalRunning, setIsIntervalRunning] = React.useState(false);
   const [counter, setCounter] = React.useState(0);
   
@@ -62,26 +64,30 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         "TBA",
       ]}
     >
-      <RNIDetachedView style={styles.detachedView}>
-        {(isCounterOdd && shouldDisplaySubtitle) && (
-          <Text style={[
-            styles.counterSubtitleLabel,
-            !useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
-          ]}>
-            {'Odd'}
+      <RNIDetachedView 
+        ref={detachedViewRef}
+      >
+        <View style={styles.detachedView}>
+          {(isCounterOdd && shouldDisplaySubtitle) && (
+            <Text style={[
+              styles.counterSubtitleLabel,
+              !useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
+            ]}>
+              {'Odd'}
+            </Text>
+          )}
+          <Text style={styles.counterLabel}>
+            {counter}
           </Text>
-        )}
-        <Text style={styles.counterLabel}>
-          {counter}
-        </Text>
-        {(!isCounterOdd && shouldDisplaySubtitle) && (
-          <Text style={[
-            styles.counterSubtitleLabel,
-            useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
-          ]}>
-            {'Even'}
-          </Text>
-        )}
+          {(!isCounterOdd && shouldDisplaySubtitle) && (
+            <Text style={[
+              styles.counterSubtitleLabel,
+              useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
+            ]}>
+              {'Even'}
+            </Text>
+          )}
+        </View>
       </RNIDetachedView>
       <ObjectPropertyDisplay
         recursiveStyle={styles.debugDisplayInner}
@@ -107,6 +113,7 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         title={'Attach To Window'}
         subtitle={'Detach and attach to window'}
         onPress={() => {
+          detachedViewRef.current?.attachToWindow();
         }}
       />
     </ExampleItemCard>
