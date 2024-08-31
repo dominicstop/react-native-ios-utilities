@@ -42,5 +42,8 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   func setPadding(_ insets: UIEdgeInsets);
   
   func setPositionType(_ positionType: RNILayoutMetrics.RNIPositionType);
+  
+  @objc
+  func requestToUpdateState(_ nextState: RNIBaseViewState);
   #endif
 };

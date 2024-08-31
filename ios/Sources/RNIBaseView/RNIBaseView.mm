@@ -533,6 +533,67 @@ static BOOL SHOULD_LOG = NO;
   self->_state->updateState(stateCallback);
   [self->_view setNeedsLayout];
 };
+
+- (void)requestToUpdateState:(RNIBaseViewStateSwift *)stateFromSwift
+{
+  RNIBaseViewState prevState = self->_state->getData();
+  RNIBaseViewState newState = RNIBaseViewState(prevState);
+  
+  BOOL doesNeedLayout = false;
+  
+  if(stateFromSwift.shouldSetSize != nil) {
+    newState.shouldSetSize = stateFromSwift.shouldSetSize.boolValue;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.frameSize != nil){
+    CGSize frameSizeObjc = stateFromSwift.frameSize.CGSizeValue;
+    
+    auto frameSizeReact =
+      [RNIObjcUtils convertToReactSizeForSize:frameSizeObjc];
+      
+    newState.frameSize = frameSizeReact;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.shouldSetPadding != nil) {
+    newState.shouldSetPadding = stateFromSwift.shouldSetPadding.boolValue;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.padding != nil){
+    UIEdgeInsets paddingObjc = stateFromSwift.frameSize.UIEdgeInsetsValue;
+    
+    auto paddingReact =
+      [RNIObjcUtils convertToReactRectangleEdgesForEdgeInsets:paddingObjc];
+      
+    newState.padding = paddingReact;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.shouldSetPositionType != nil) {
+    newState.shouldSetPositionType =
+      stateFromSwift.shouldSetPositionType.boolValue;
+      
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.positionType != nil){
+    RNIPositionType positionTypeObjc =
+      (RNIPositionType)stateFromSwift.positionType.intValue;
+      
+    auto positionTypeReact =
+      [RNIObjcUtils convertToYGPostionTypeForRNIPostionType:positionTypeObjc];
+      
+    newState.positionType = positionTypeReact;
+  };
+  
+  self->_state->updateState(std::move(newState));
+  
+  if(doesNeedLayout){
+    [self->_view setNeedsLayout];
+  };
+};
 #endif
 
 // MARK: - View/React Lifecycle - Fabric + Paper
