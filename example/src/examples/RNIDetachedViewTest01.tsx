@@ -14,6 +14,8 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
   
   const counterIntervalID = React.useRef<NodeJS.Timeout | undefined>();
 
+  
+
   const stopTimer = () => {
     setIsIntervalRunning(false);
 
@@ -66,8 +68,9 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
     >
       <RNIDetachedView 
         ref={detachedViewRef}
+        style={styles.detachedView}
       >
-        <View style={styles.detachedView}>
+        <View style={styles.detachedContent}>
           {(isCounterOdd && shouldDisplaySubtitle) && (
             <Text style={[
               styles.counterSubtitleLabel,
@@ -116,12 +119,22 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
           detachedViewRef.current?.attachToWindow();
         }}
       />
+      <CardButton
+        title={'Present In View Controller'}
+        subtitle={'Detach and present'}
+        onPress={() => {
+          detachedViewRef.current?.presentInModal();
+        }}
+      />
     </ExampleItemCard>
   );
 };
 
 const styles = StyleSheet.create({
   detachedView: {
+  },
+  detachedContent: {
+    flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(255,255,255,0.3)',
