@@ -746,7 +746,9 @@ static BOOL SHOULD_LOG = NO;
   auto newState =
     std::static_pointer_cast<const RNIBaseViewState::ConcreteState>(state);
     
-  self->_state = newState;
+  if (self->_state == nil){
+    self->_state = newState;
+  };
   
   auto newStateData = newState->getData();
   auto newStateDynamic = newStateData.getDynamic();

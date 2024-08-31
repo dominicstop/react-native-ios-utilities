@@ -11,6 +11,7 @@ import type {
 import { type StateViewID, type StateReactTag } from '../../types/SharedStateTypes';
 import * as Helpers from '../../misc/Helpers';
 import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
+import { RNIWrapperView } from '../RNIWrapperView';
 
 
 export const RNIDetachedView = React.forwardRef<
@@ -41,6 +42,17 @@ export const RNIDetachedView = React.forwardRef<
         /* commandArgs: */ {}
       );
     },
+    presentInModal: async () => {
+      if(viewID == null) return;
+      const module = Helpers.getRNIUtilitiesModule();
+
+      setIsDetached(true);
+      await module.viewCommandRequest(
+        /* viewID     : */ viewID,
+        /* commandName: */ 'presentInModal',
+        /* commandArgs: */ {}
+      );
+    },
   }));
 
   return (
@@ -49,6 +61,7 @@ export const RNIDetachedView = React.forwardRef<
       style={[
         isDetached && styles.detachedView,
         props.style,
+        // {backgroundColor: 'blue'}
       ]}
       onDidSetViewID={(event) => {
         setViewID(event.nativeEvent.viewID);
@@ -56,13 +69,27 @@ export const RNIDetachedView = React.forwardRef<
         props.onDidSetViewID?.(event);
       }}
     >
-      {IS_USING_NEW_ARCH ? (
-        <View>
+      <RNIWrapperView
+        style={[
+          {
+          // backgroundColor: 'rgba(255,0,0,0.3)',
+          },
+          isDetached && {
+            position: 'absolute',
+            opacity: 0,
+          },
+        ]}
+      >
+        <View style={isDetached && {
+          flex: 1,
+          margin: 10,
+          backgroundColor: 'rgba(0,255,0,0.3)',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
           {props.children}
         </View>
-      ):(
-        props.children
-      )}
+      </RNIWrapperView>
     </RNIDetachedNativeView>
   );
 });

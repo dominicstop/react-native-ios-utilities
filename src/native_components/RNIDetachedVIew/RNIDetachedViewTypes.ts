@@ -9,6 +9,7 @@ export type RNIDetachedViewRef = {
   getViewID: () => StateViewID;
   getReactTag: () => StateReactTag;
   attachToWindow: () => Promise<void>;
+  presentInModal: () => Promise<void>;
 };
 
 export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNativeViewProps,
