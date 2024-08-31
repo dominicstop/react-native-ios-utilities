@@ -492,14 +492,25 @@ static BOOL SHOULD_LOG = NO;
 #if RCT_NEW_ARCH_ENABLED
 - (void)setPadding:(UIEdgeInsets)padding
 {
-  RNIBaseViewState prevState = self->_state->getData();
-  RNIBaseViewState newState = RNIBaseViewState(prevState);
+  if(self->_state == nullptr) {
+    return;
+  };
+    
+  auto newPadding =
+    [RNIObjcUtils convertToReactRectangleEdgesForEdgeInsets:padding];
+        
+  auto stateCallback = [=](
+    const RNIBaseViewState::ConcreteState::Data& oldData
+  ) -> StateData::Shared {
+    
+    RNIBaseViewState newData = RNIBaseViewState(oldData);
+    newData.padding = newPadding;
+    newData.shouldSetPadding = true;
+    
+    return std::make_shared<RNIBaseViewState>(newData);
+  };
   
-  auto newPadding = [RNIObjcUtils convertToReactRectangleEdgesForEdgeInsets:padding];
-  newState.padding = newPadding;
-  newState.shouldSetPadding = true;
-  
-  self->_state->updateState(std::move(newState));
+  self->_state->updateState(stateCallback);
   [self->_view setNeedsLayout];
 }
 
