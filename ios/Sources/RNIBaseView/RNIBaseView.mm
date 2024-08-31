@@ -429,17 +429,25 @@ static BOOL SHOULD_LOG = NO;
 - (void)setSize:(CGSize)size
 {
 #if RCT_NEW_ARCH_ENABLED
-  if(self->_state != nullptr){
-    RNIBaseViewState prevState = self->_state->getData();
-    RNIBaseViewState newState = RNIBaseViewState(prevState);
+  if(self->_state == nullptr) {
+    return;
+  };
     
-    auto newSize = [RNIObjcUtils convertToReactSizeForSize:size];
-    newState.frameSize = newSize;
-    newState.shouldSetSize = true;
+  auto newSize = [RNIObjcUtils convertToReactSizeForSize:size];
+        
+  auto stateCallback = [=](
+    const RNIBaseViewState::ConcreteState::Data& oldData
+  ) -> StateData::Shared {
+  
+    RNIBaseViewState newData = RNIBaseViewState(oldData);
+    newData.frameSize = newSize;
+    newData.shouldSetSize = true;
     
-    self->_state->updateState(std::move(newState));
-    [self->_view setNeedsLayout];
-  }
+    return std::make_shared<RNIBaseViewState>(newData);
+  };
+  
+  self->_state->updateState(stateCallback);
+  [self->_view setNeedsLayout];
 #else
   if(self.bridge == nil){
     return;
