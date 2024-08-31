@@ -516,17 +516,23 @@ static BOOL SHOULD_LOG = NO;
 
 - (void)setPositionType:(RNIPositionType)positionType
 {
-  RNIBaseViewState prevState = self->_state->getData();
-  RNIBaseViewState newState = RNIBaseViewState(prevState);
-  
-  newState.positionType =
+  auto newPositionType =
     [RNIObjcUtils convertToYGPostionTypeForRNIPostionType:positionType];
-     
-  newState.shouldSetPositionType = true;
+        
+  auto stateCallback = [=](
+    const RNIBaseViewState::ConcreteState::Data& oldData
+  ) -> StateData::Shared {
   
-  self->_state->updateState(std::move(newState));
+    RNIBaseViewState newData = RNIBaseViewState(oldData);
+    newData.positionType = newPositionType;
+    newData.shouldSetPositionType = true;
+    
+    return std::make_shared<RNIBaseViewState>(newData);
+  };
+  
+  self->_state->updateState(stateCallback);
   [self->_view setNeedsLayout];
-}
+};
 #endif
 
 // MARK: - View/React Lifecycle - Fabric + Paper
