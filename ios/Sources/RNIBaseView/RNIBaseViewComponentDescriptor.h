@@ -76,6 +76,22 @@ public:
       << "\n - getComponentHandle: " << layoutableShadowNode.getComponentHandle()
       << "\n - getTag: " << layoutableShadowNode.getTag()
       << "\n - getSurfaceId: " << layoutableShadowNode.getSurfaceId()
+      << "\n - oldSize: " << oldSize.width << ", " << oldSize.height
+      << "\n - newSize: " << newSize.width << ", " << newSize.height
+      << "\n - didChangeSize: " << didChangeSize
+      << "\n - state, shouldSetSize: " << stateData.shouldSetSize
+      << "\n - state, frameSize.height: " << stateData.frameSize.height
+      << "\n - state, frameSize.width: " << stateData.frameSize.width
+      << "\n - state, contentOffset.x: " << stateData.contentOffset.x
+      << "\n - state, contentOffset.y: " << stateData.contentOffset.y
+      << "\n - state, shouldSetPadding: " << stateData.shouldSetPadding
+      << "\n - state, padding.top: " << stateData.padding.top
+      << "\n - state, padding.bottom: " << stateData.padding.bottom
+      << "\n - state, padding.left: " << stateData.padding.left
+      << "\n - state, padding.right: " << stateData.padding.right
+      << "\n - state, shouldSetPositionType: " << stateData.shouldSetPositionType
+      << "\n - state, positionType: " << stateData.positionType
+      << "\n"
       << std::endl;
 #endif
     
