@@ -42,6 +42,10 @@
 #import <React/RCTShadowView.h>
 #import <React/RCTBridge.h>
 #import <React/RCTUIManager.h>
+
+#if DEBUG
+#import <React/RCTBridgeConstants.h>
+#endif
 #endif
 
 #if __cplusplus
@@ -219,6 +223,14 @@ static BOOL SHOULD_LOG = NO;
   [self initViewDelegate];
   
 #if !RCT_NEW_ARCH_ENABLED
+#if DEBUG
+  [[NSNotificationCenter defaultCenter]
+    addObserver:self
+       selector:@selector(handleOnBridgeWillReloadNotification:)
+           name:RCTBridgeWillReloadNotification
+         object:nil];
+#endif
+
   if(self.contentDelegate == nil){
     return;
   };
@@ -750,6 +762,8 @@ static BOOL SHOULD_LOG = NO;
     self->_state = newState;
   };
   
+  RNIBaseViewState nextState = self->_state->getData();
+  
   auto newStateData = newState->getData();
   auto newStateDynamic = newStateData.getDynamic();
   
@@ -975,6 +989,25 @@ static BOOL SHOULD_LOG = NO;
     [self.contentDelegate notifyOnViewWillInvalidateWithSender:self];
   };
 }
+
+#if DEBUG
+// Note: Only gets called on paper?
+- (void)handleOnBridgeWillReloadNotification:(NSNotification *)notification
+{
+  BOOL shouldNotifyDelegate =
+       self.contentDelegate != nil
+    && [self.contentDelegate respondsToSelector:
+         @selector(notifyOnBridgeWillReloadWithSender:notification:)];
+         
+  if(shouldNotifyDelegate){
+    [self.contentDelegate
+      notifyOnBridgeWillReloadWithSender:self
+                            notification:notification];
+  };
+  
+  // TODO: Impl. view cleanup
+}
+#endif
 #endif
 
 // MARK: - Base Event Support
@@ -998,8 +1031,8 @@ static BOOL SHOULD_LOG = NO;
                               userInfo:nil];
 }
 
-// MARK: RNIViewCommandRequestHandling
-// -----------------------------------
+// MARK: - RNIViewCommandRequestHandling
+// -------------------------------------
 
 - (void)handleViewRequestForCommandName:(NSString *)commandName
                           withArguments:(NSDictionary *)commandArguments
@@ -1051,4 +1084,3 @@ static BOOL SHOULD_LOG = NO;
 };
 
 @end
-

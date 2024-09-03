@@ -105,6 +105,16 @@ public protocol RNIContentViewDelegate: RNIViewPropDelegate where Self: UIView  
   optional func notifyOnViewWillInvalidate(
     sender: RNIContentViewParentDelegate
   );
+  
+  // MARK: - Paper Only (Debug)
+  // --------------------------
+  
+  /// Note: Only gets invoked in paper for some reason
+  @objc
+  optional func notifyOnBridgeWillReload(
+    sender: RNIContentViewParentDelegate,
+    notification: Notification
+  );
   #endif
   
   // MARK: Internal-Only
