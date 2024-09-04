@@ -471,6 +471,7 @@ static BOOL SHOULD_LOG = NO;
   };
   
   [uiManager setSize:size forView:self];
+  [self setNeedsLayout];
 #endif
 };
 
