@@ -24,7 +24,9 @@
 
 @class RNILayoutMetrics;
 
-#if !RCT_NEW_ARCH_ENABLED
+#if RCT_NEW_ARCH_ENABLED
+@class RNIBaseViewStateSwift;
+#else
 @class RCTBridge;
 @class RCTShadowView;
 
@@ -106,6 +108,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (void)setPadding:(UIEdgeInsets)padding;
 
 - (void)setPositionType:(RNIPositionType)positionType;
+
+- (void)requestToUpdateState:(RNIBaseViewStateSwift *)stateFromSwift;
 #endif
 
 // MARK: - Base Event Support
