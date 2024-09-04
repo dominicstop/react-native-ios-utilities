@@ -1335,7 +1335,7 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
           /// * same as `test06`
           ///
           /// results - fabric: ok
-          /// * same as `test06`
+          /// * same as `test06`, `test22` -> `test23`
           /// * refresh causes crash
           ///
           ///
@@ -1387,19 +1387,27 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
           ///
           /// wrap wrapperView parent in VC
           /// detach detachedview
+          /// add touch hadnler
           /// update size in `viewDidLayoutSubviews`
           ///
-          /// results - paper:
-          /// * not tested, but should be ok
-          /// * same as `test06`
+          /// results - paper: ok
+          /// * same as `test06`, `test22` -> `test24`
+          /// * touches work
           ///
-          /// results - fabric: ok
-          /// * same as `test06`
+          /// results - fabric: no
+          /// * same as `test06`, `test22` -> `test24`
+          /// * touches dont work
           ///
           ///
           func test26(){
             let viewToDetach =
               self.subviews.first! as! RNIContentViewParentDelegate;
+              
+            let bridge = RCTBridge.current();
+            let touchHandler: RCTTouchHandler = .init(bridge: bridge);
+            
+            touchHandler.attach(to: viewToDetach);
+            
             
             #if RCT_NEW_ARCH_ENABLED
             sender.setPositionType(.absolute);
@@ -1446,7 +1454,83 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             childVC.didMove(toParent: rootVC);
           };
           
-          test26();
+          /// Paper + Fabric
+          /// Base: test06 (fabric), test24
+          ///
+          /// wrap wrapperView parent in VC
+          /// detach detachedview
+          /// add touch hadnler
+          /// update size in `viewDidLayoutSubviews`
+          ///
+          /// results - paper: ok
+          /// * same as `test06`, `test22` -> `test25`
+          /// * touches work
+          ///
+          /// results - fabric: ok
+          /// * same as `test06`, `test22` -> `test25`
+          /// * touches work
+          ///
+          ///
+          func test27(){
+            let viewToDetach =
+              self.subviews.first! as! RNIContentViewParentDelegate;
+              
+            
+            #if RCT_NEW_ARCH_ENABLED
+            sender.setPositionType(.absolute);
+            sender.backgroundColor = .clear;
+            sender.alpha = 0.01;
+            
+            viewToDetach.attachReactTouchHandler();
+            #else
+            sender.removeFromSuperview();
+            
+            let bridge = RCTBridge.current();
+            let touchHandler: RCTTouchHandler = .init(bridge: bridge);
+            
+            touchHandler.attach(to: viewToDetach);
+            #endif
+            
+            class WrapperViewController: UIViewController {
+              weak var content: RNIContentViewParentDelegate!;
+            
+              override func viewDidLoad() {
+                self.content.translatesAutoresizingMaskIntoConstraints = false;
+                self.view.addSubview(content);
+                
+                NSLayoutConstraint.activate([
+                  self.content.leadingAnchor.constraint(
+                    equalTo: self.view.leadingAnchor
+                  ),
+                  self.content.trailingAnchor.constraint(
+                    equalTo: self.view.trailingAnchor
+                  ),
+                  self.content.topAnchor.constraint(
+                    equalTo: self.view.topAnchor
+                  ),
+                  self.content.bottomAnchor.constraint(
+                    equalTo: self.view.bottomAnchor
+                  ),
+                ]);
+              };
+              
+              override func viewDidLayoutSubviews() {
+                self.content.setSize(self.view.bounds.size);
+              };
+            };
+            
+            let childVC = WrapperViewController();
+            childVC.content = viewToDetach;
+            
+            let rootVC = window.rootViewController!;
+            rootVC.view.addSubview(childVC.view);
+            rootVC.addChild(childVC);
+            childVC.didMove(toParent: rootVC);
+          };
+          
+          
+          
+          test27();
           
           // self.detach();
           
