@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, CardButton, type RNIDetachedViewRef } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
@@ -54,6 +55,10 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
   const shouldDisplaySubtitle = (counter % 3 !== 0);
   const useAltCounterSubtitle = (counter % 4 !== 0);
 
+  const shouldFillParent = 
+       (counter % 5 === 0)
+    || (counter % 6 === 0);
+
   const shouldShowClearTimerButton = 
     (isIntervalRunning || counter > 0);
 
@@ -70,7 +75,19 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         ref={detachedViewRef}
         style={styles.detachedView}
       >
-        <View style={styles.detachedContent}>
+        <TouchableOpacity 
+          style={[
+            styles.detachedContent,
+            shouldFillParent && {
+              flex: 1,
+            },
+          ]}
+          onPress={() => {
+            // @ts-ignore
+            // eslint-disable-next-line no-alert
+            alert('onPress Event Triggered');
+          }}
+        >
           {(isCounterOdd && shouldDisplaySubtitle) && (
             <Text style={[
               styles.counterSubtitleLabel,
@@ -90,7 +107,7 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
               {'Even'}
             </Text>
           )}
-        </View>
+        </TouchableOpacity>
       </RNIDetachedView>
       <ObjectPropertyDisplay
         recursiveStyle={styles.debugDisplayInner}
