@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, CardButton, type RNIDetachedViewRef } from 'react-native-ios-utilities';
+import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, CardButton, type RNIDetachedViewRef, type AlignmentPositionConfig } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
 
 
@@ -62,6 +62,11 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
   const shouldShowClearTimerButton = 
     (isIntervalRunning || counter > 0);
 
+  const contentPositionConfig: AlignmentPositionConfig = {
+    horizontalAlignment: 'stretchTarget',
+    verticalAlignment: 'stretchTarget',
+  };
+
   return (
     <ExampleItemCard
       style={props.style}
@@ -111,7 +116,7 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
       </RNIDetachedView>
       <ObjectPropertyDisplay
         recursiveStyle={styles.debugDisplayInner}
-        object={{isIntervalRunning}}
+        object={{isIntervalRunning, ...contentPositionConfig}}
       />
       <CardButton
         title={`${isIntervalRunning ? 'Pause' : 'Resume'} Timer`}
@@ -133,7 +138,9 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         title={'Attach To Window'}
         subtitle={'Detach and attach to window'}
         onPress={() => {
-          detachedViewRef.current?.attachToWindow();
+          detachedViewRef.current?.attachToWindow({
+            contentPositionConfig,
+          });
         }}
       />
       <CardButton
