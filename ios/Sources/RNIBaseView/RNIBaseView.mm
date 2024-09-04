@@ -26,7 +26,9 @@
 #include "RNIBaseViewEventEmitter.h"
 
 #import "RCTFabricComponentsPlugins.h"
+
 #import <React/RCTFollyConvert.h>
+#import <React/RCTSurfaceTouchHandler.h>
 
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 #include <react/renderer/graphics/Float.h>
@@ -41,7 +43,9 @@
 #import <React/UIView+React.h>
 #import <React/RCTShadowView.h>
 #import <React/RCTBridge.h>
+#import <React/RCTBridge+Private.h>
 #import <React/RCTUIManager.h>
+#import <React/RCTTouchHandler.h>
 
 #if DEBUG
 #import <React/RCTBridgeConstants.h>
@@ -66,8 +70,10 @@ static BOOL SHOULD_LOG = NO;
   RNIBaseViewState::SharedConcreteState _state;
   NSMutableArray<UIView *> *_reactSubviewsShim;
   NSMutableArray<NSDictionary *> *_queuedEvents;
+  RCTSurfaceTouchHandler *_touchHandlerFabric;
 #else
   CGRect _reactFrame;
+  RCTTouchHandler *_touchHandlerPaper;
 #endif
 }
 
@@ -501,6 +507,45 @@ static BOOL SHOULD_LOG = NO;
                                            withPayload:eventPayload];
 #endif
 }
+
+- (void)attachReactTouchHandler
+{
+  UIGestureRecognizer *reactGestureRecognizer;
+#if RCT_NEW_ARCH_ENABLED
+  RCTSurfaceTouchHandler *touchHandlerFabric = [RCTSurfaceTouchHandler new];
+  self->_touchHandlerFabric = touchHandlerFabric;
+  reactGestureRecognizer = reactGestureRecognizer;
+  
+  [touchHandlerFabric attachToView:self];
+#else
+  RCTBridge *bridge = [RCTBridge currentBridge];
+  RCTTouchHandler * touchHandlerPaper = [[RCTTouchHandler new] initWithBridge:bridge];
+  self->_touchHandlerPaper = touchHandlerPaper;
+  reactGestureRecognizer = touchHandlerPaper;
+  
+  [touchHandlerPaper attachToView:self];
+#endif
+}
+
+- (void)detachReactTouchHandler
+{
+#if RCT_NEW_ARCH_ENABLED
+  if(self->_touchHandlerFabric == nil){
+    return;
+  };
+  
+  [self->_touchHandlerFabric detachFromView:self];
+#else
+  if(self->_touchHandlerPaper == nil){
+    return;
+  };
+  
+  [self->_touchHandlerPaper detachFromView:self];
+#endif
+}
+
+// MARK: - RNIContentViewParentDelegate Commands (Fabric Only)
+// -----------------------------------------------------------
 
 #if RCT_NEW_ARCH_ENABLED
 - (void)setPadding:(UIEdgeInsets)padding

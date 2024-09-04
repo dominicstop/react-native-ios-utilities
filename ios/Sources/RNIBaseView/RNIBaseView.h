@@ -110,6 +110,10 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (void)setPositionType:(RNIPositionType)positionType;
 
 - (void)requestToUpdateState:(RNIBaseViewStateSwift *)stateFromSwift;
+
+- (void)requestToAttachTouchHandler;
+
+- (void)detachReactTouchHandler;
 #endif
 
 // MARK: - Base Event Support

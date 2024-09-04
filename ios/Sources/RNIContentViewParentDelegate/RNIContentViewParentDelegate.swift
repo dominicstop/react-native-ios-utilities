@@ -35,6 +35,10 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
     withPayload payload: Dictionary<String, Any>
   );
   
+  func attachReactTouchHandler();
+  
+  func detachReactTouchHandler();
+  
   // MARK: Fabric Only
   // -----------------
   
