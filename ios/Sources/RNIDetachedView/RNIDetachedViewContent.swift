@@ -105,7 +105,9 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
   ) {
     
     do {
-      guard let parentReactView = self.parentReactView else {
+      guard let parentReactView = self.parentReactView,
+            let commandArguments = commandArguments as? Dictionary<String, Any>
+      else {
         throw RNIUtilitiesError(errorCode: .guardCheckFailed);
       };
       
@@ -115,6 +117,14 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
           
+          let contentPositionConfig: AlignmentPositionConfig = try {
+            let dictConfig = try commandArguments.getValueFromDictionary(
+              forKey: "contentPositionConfig",
+              type: Dictionary<String, Any>.self
+            );
+            
+            return try .init(fromDict: dictConfig);
+          }();
           
           let newSize: CGSize = .init(width: 200, height: 200);
           
@@ -1528,9 +1538,65 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             childVC.didMove(toParent: rootVC);
           };
           
+          func test28(){
+            let viewToDetach =
+              self.subviews.first! as! RNIContentViewParentDelegate;
+              
+            
+            #if RCT_NEW_ARCH_ENABLED
+            sender.setPositionType(.absolute);
+            sender.backgroundColor = .clear;
+            sender.alpha = 0.01;
+            
+            viewToDetach.attachReactTouchHandler();
+            #else
+            sender.removeFromSuperview();
+            
+            let bridge = RCTBridge.current();
+            let touchHandler: RCTTouchHandler = .init(bridge: bridge);
+            
+            touchHandler.attach(to: viewToDetach);
+            #endif
+            
+            class WrapperViewController: UIViewController {
+              weak var content: RNIContentViewParentDelegate!;
+              var contentPositionConfig: AlignmentPositionConfig = .default;
+            
+              override func viewDidLoad() {
+                self.content.translatesAutoresizingMaskIntoConstraints = false;
+                self.view.addSubview(content);
+                
+                let window = UIApplication.shared.activeWindow!;
+                
+                let constraints = self.contentPositionConfig.createConstraints(
+                  forView: self.content,
+                  attachingTo: self.view,
+                  enclosingView: self.view
+                );
+                
+                NSLayoutConstraint.activate(constraints);
+              };
+              
+              override func viewDidLayoutSubviews() {
+                self.content.setSize(self.view.bounds.size);
+              };
+            };
+            
+            let childVC = WrapperViewController();
+            childVC.content = viewToDetach;
+            childVC.contentPositionConfig = contentPositionConfig;
+            
+            let rootVC = window.rootViewController!;
+            rootVC.view.addSubview(childVC.view);
+            rootVC.addChild(childVC);
+            childVC.didMove(toParent: rootVC);
+          };
           
           
-          test27();
+          
+          
+          
+          test28();
           
           // self.detach();
           

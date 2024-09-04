@@ -31,7 +31,7 @@ export const RNIDetachedView = React.forwardRef<
     getViewID: () => {
       return viewID;
     },
-    attachToWindow: async () => {
+    attachToWindow: async (commandArgs) => {
       if(viewID == null) return;
       const module = Helpers.getRNIUtilitiesModule();
 
@@ -39,7 +39,7 @@ export const RNIDetachedView = React.forwardRef<
       await module.viewCommandRequest(
         /* viewID     : */ viewID,
         /* commandName: */ 'attachToWindow',
-        /* commandArgs: */ {}
+        /* commandArgs: */ commandArgs,
       );
     },
     presentInModal: async () => {

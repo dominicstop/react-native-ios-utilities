@@ -2,13 +2,18 @@ import type { PropsWithChildren } from "react";
 import type { ViewProps } from "react-native";
 
 import type { RNIDetachedNativeViewProps } from "./RNIDetachedNativeView";
-import type { StateReactTag, StateViewID } from "react-native-ios-utilities";
+import type { StateReactTag, StateViewID } from "../../types/SharedStateTypes";
+import type { AlignmentPositionConfig } from "../../types/DGSwiftUtilities";
 
 
 export type RNIDetachedViewRef = {
   getViewID: () => StateViewID;
   getReactTag: () => StateReactTag;
-  attachToWindow: () => Promise<void>;
+  
+  attachToWindow: (commandParams: {
+    contentPositionConfig: AlignmentPositionConfig;
+  }) => Promise<void>;
+
   presentInModal: () => Promise<void>;
 };
 
