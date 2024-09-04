@@ -66,7 +66,7 @@ static BOOL SHOULD_LOG = NO;
   BOOL _didNotifyForInit;
   BOOL _didDispatchEventOnDidSetViewID;
 #ifdef RCT_NEW_ARCH_ENABLED
-  UIView * _view;
+  UIView *_view;
   RNIBaseViewState::SharedConcreteState _state;
   NSMutableArray<UIView *> *_reactSubviewsShim;
   NSMutableArray<NSDictionary *> *_queuedEvents;
@@ -273,7 +273,7 @@ static BOOL SHOULD_LOG = NO;
 #endif
 }
 
-// MARK: Methods - Paper + Fabric
+// MARK: Methods (Paper + Fabric)
 // ------------------------------
 
 - (void)_dispatchViewEventOnDidSetViewIDIfNeeded
@@ -441,8 +441,8 @@ static BOOL SHOULD_LOG = NO;
 }
 #endif
 
-// MARK: - RNIContentViewParentDelegate Commands
-// ---------------------------------------------
+// MARK: - RNIContentViewParentDelegate Commands (Fabric + Paper)
+// --------------------------------------------------------------
 
 - (void)setSize:(CGSize)size
 {
@@ -654,7 +654,7 @@ static BOOL SHOULD_LOG = NO;
 };
 #endif
 
-// MARK: - View/React Lifecycle - Fabric + Paper
+// MARK: - View/React Lifecycle (Fabric + Paper)
 // ---------------------------------------------
 
 - (void)willMoveToWindow:(UIWindow *)newWindow
@@ -666,8 +666,8 @@ static BOOL SHOULD_LOG = NO;
   [[RNIViewRegistry shared] registerViewUsingReactTagForView:self];
 }
 
-// MARK: - View/React Lifecycle - Fabric Only
-// ------------------------------------------
+// MARK: - View/React Lifecycle (Fabric + Paper)
+// ---------------------------------------------
 
 #ifdef RCT_NEW_ARCH_ENABLED
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
@@ -916,7 +916,7 @@ static BOOL SHOULD_LOG = NO;
 }
 #else
 
-// MARK: - View/React Lifecycle - Paper Only
+// MARK: - View/React Lifecycle (Paper Only)
 // -----------------------------------------
 
 - (void)didMoveToWindow
