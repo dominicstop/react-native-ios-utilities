@@ -1618,11 +1618,25 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             childVC.didMove(toParent: rootVC);
           };
           
+          func test29() throws {
+            guard let viewToDetach = self.viewToDetach else {
+              throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
+            };
+            
+            try self.detach();
+            
+            let childVC = RNIBaseViewController();
+            childVC.rootReactView = viewToDetach;
+            childVC.positionConfig = contentPositionConfig;
+            
+            let rootVC = window.rootViewController!;
+            rootVC.view.addSubview(childVC.view);
+            rootVC.addChild(childVC);
+            childVC.didMove(toParent: rootVC);
+          };
           
           
-          
-          
-          test28();
+          try test29();
           
           // self.detach();
           
