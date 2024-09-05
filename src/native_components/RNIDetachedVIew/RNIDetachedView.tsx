@@ -74,18 +74,12 @@ export const RNIDetachedView = React.forwardRef<
     >
       <RNIWrapperView
         style={[
+          styles.wrapperView,
           shouldEnableDebugBackgroundColors && styles.wrapperViewDebug,
+          props.contentContainerStyle,
         ]}
       >
-        <View style={isDetached && {
-          flex: 1,
-          margin: 10,
-          backgroundColor: 'rgba(0,255,0,0.3)',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
           {props.children}
-        </View>
       </RNIWrapperView>
     </RNIDetachedNativeView>
   );
@@ -94,9 +88,13 @@ export const RNIDetachedView = React.forwardRef<
 const styles = StyleSheet.create({
   detachedView: {
     position: 'absolute',
+    pointerEvents: 'none',
   },
   detachedViewDebug: {
     backgroundColor: 'rgba(255,0,0,0.3)',
+  },
+  wrapperView: {
+    flex: 1,
   },
   wrapperViewDebug: {
     backgroundColor: 'rgba(0,0,255,0.3)',

@@ -33,6 +33,7 @@ export type RNIDetachedViewInheritedProps =
 
 export type RNIDetachedViewBaseProps = {
   shouldEnableDebugBackgroundColors?: boolean;
+  contentContainerStyle?: ViewProps['style'];
 };
 
 export type RNIDetachedViewProps = PropsWithChildren<
