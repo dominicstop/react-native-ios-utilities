@@ -14,13 +14,13 @@ import { type StateViewID, type StateReactTag } from '../../types/SharedStateTyp
 
 import * as Helpers from '../../misc/Helpers';
 import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
+import type { OnContentViewDidDetachEvent } from './RNIDetachedViewEvents';
 
 
 export const RNIDetachedView = React.forwardRef<
   RNIDetachedViewRef, 
   RNIDetachedViewProps
 >((props, ref) => {
-
   const [viewID, setViewID] = React.useState<StateViewID>();
   const [reactTag, setReactTag] = React.useState<StateReactTag>();
 
@@ -57,6 +57,17 @@ export const RNIDetachedView = React.forwardRef<
     },
   }));
 
+  const onContentViewDidDetachHandler = 
+    React.useRef<OnContentViewDidDetachEvent | undefined>();
+  
+  React.useEffect(() => {
+    onContentViewDidDetachHandler.current = (event) => {
+      props.onContentViewDidDetach?.(event);
+      event.stopPropagation();
+      setIsDetached(true);
+    };
+  });
+
   const shouldEnableDebugBackgroundColors = 
     props.shouldEnableDebugBackgroundColors ?? false;
 
@@ -79,6 +90,7 @@ export const RNIDetachedView = React.forwardRef<
         setReactTag(event.nativeEvent.reactTag);
         props.onDidSetViewID?.(event);
       }}
+      onContentViewDidDetach={onContentViewDidDetachHandler.current}
     >
       <RNIWrapperView
         style={IS_USING_NEW_ARCH && wrapperStyle}
