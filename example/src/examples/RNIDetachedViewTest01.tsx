@@ -9,11 +9,12 @@ import type { ExampleItemProps } from './SharedExampleTypes';
 
 export function RNIDetachedViewTest01(props: ExampleItemProps) {
   const detachedViewRef = React.useRef<RNIDetachedViewRef | null>(null);
-  
+
   const [didDetach, setDidDetach] = React.useState(false);
   const [isIntervalRunning, setIsIntervalRunning] = React.useState(false);
   const [counter, setCounter] = React.useState(0);
-  
+  const [mountDetachedView, setMountDetachedView] = React.useState(true);
+
   const counterIntervalID = React.useRef<NodeJS.Timeout | undefined>();
 
   const stopTimer = () => {
@@ -76,58 +77,66 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         "TBA",
       ]}
     >
-      <RNIDetachedView 
-        ref={detachedViewRef}
-        style={styles.detachedView}
-        contentContainerStyle={[
-          styles.detachedContentContainer,
-          styles.detachedContentContainerDetached,
-        ]}
-        shouldEnableDebugBackgroundColors={false}
-        onContentViewDidDetach={() => {
-          setDidDetach(true);
-        }}
-      >
-        <TouchableOpacity 
-          style={[
-            styles.counterContainer,
-            shouldFillParent && styles.counterContainerLarge,
+      {mountDetachedView && (
+        <RNIDetachedView 
+          ref={detachedViewRef}
+          style={styles.detachedView}
+          contentContainerStyle={[
+            styles.detachedContentContainer,
+            styles.detachedContentContainerDetached,
           ]}
-          onPress={() => {
-            // @ts-ignore
-            // eslint-disable-next-line no-alert
-            alert('onPress Event Triggered');
+          shouldEnableDebugBackgroundColors={true}
+          onContentViewDidDetach={() => {
+            setDidDetach(true);
           }}
         >
-          {(isCounterOdd && shouldDisplaySubtitle) && (
+          <TouchableOpacity 
+            style={[
+              styles.counterContainer,
+              shouldFillParent && styles.counterContainerLarge,
+            ]}
+            onPress={() => {
+              // @ts-ignore
+              // eslint-disable-next-line no-alert
+              alert('onPress Event Triggered');
+            }}
+          >
+            {(isCounterOdd && shouldDisplaySubtitle) && (
+              <Text style={[
+                styles.counterSubtitleLabel,
+                !useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
+                shouldFillParent && styles.counterSubtitleLabelLarge,
+              ]}>
+                {'Odd'}
+              </Text>
+            )}
             <Text style={[
-              styles.counterSubtitleLabel,
-              !useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
-              shouldFillParent && styles.counterSubtitleLabelLarge,
+              styles.counterLabel,
+              shouldFillParent && styles.counterLabelLarge,
             ]}>
-              {'Odd'}
+              {counter}
             </Text>
-          )}
-          <Text style={[
-            styles.counterLabel,
-            shouldFillParent && styles.counterLabelLarge,
-          ]}>
-            {counter}
-          </Text>
-          {(!isCounterOdd && shouldDisplaySubtitle) && (
-            <Text style={[
-              styles.counterSubtitleLabel,
-              useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
-              shouldFillParent && styles.counterSubtitleLabelLarge,
-            ]}>
-              {'Even'}
-            </Text>
-          )}
-        </TouchableOpacity>
-      </RNIDetachedView>
+            {(!isCounterOdd && shouldDisplaySubtitle) && (
+              <Text style={[
+                styles.counterSubtitleLabel,
+                useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
+                shouldFillParent && styles.counterSubtitleLabelLarge,
+              ]}>
+                {'Even'}
+              </Text>
+            )}
+          </TouchableOpacity>
+        </RNIDetachedView>
+      )}
       <ObjectPropertyDisplay
         recursiveStyle={styles.debugDisplayInner}
-        object={{isIntervalRunning, ...contentPositionConfig}}
+        object={{
+          isIntervalRunning,
+          didDetach, 
+          mountDetachedView,
+          shouldFillParent,
+          ...contentPositionConfig
+        }}
       />
       <CardButton
         title={`${isIntervalRunning ? 'Pause' : 'Resume'} Timer`}
@@ -159,6 +168,14 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         subtitle={'Detach and present'}
         onPress={() => {
           detachedViewRef.current?.presentInModal();
+        }}
+      />
+      <CardButton
+        title={`${mountDetachedView ? 'Unmount' : 'Mount'} WrapperView`}
+        subtitle={'Toggle mounting for `RNIDetachedView` component'}
+        onPress={() => {
+          setMountDetachedView(prevValue => !prevValue);
+          setDidDetach(false);
         }}
       />
     </ExampleItemCard>
