@@ -35,6 +35,7 @@ public final class RNIDetachedViewContent: UIView, RNIContentView {
   // ------------------
   
   public var didDetach = false;
+  public var viewToDetach: RNIContentViewParentDelegate?;
   
   // MARK: - Properties - Props
   // --------------------------
@@ -55,8 +56,30 @@ public final class RNIDetachedViewContent: UIView, RNIContentView {
   // MARK: - Methods
   // ---------------
   
-  func detach(){
-    self.removeFromSuperview();
+  func detach() throws {
+    guard !self.didDetach else {
+      throw RNIUtilitiesError(errorCode: .illegalState);
+    };
+    
+    guard let parentReactView = self.parentReactView else {
+      throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
+    };
+    
+    guard let viewToDetach = self.viewToDetach else {
+      throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
+    };
+    
+    #if RCT_NEW_ARCH_ENABLED
+    parentReactView.setPositionType(.absolute);
+    parentReactView.backgroundColor = .clear;
+    parentReactView.alpha = 0.01;
+    #else
+    
+    parentReactView.removeFromSuperview();
+    #endif
+    
+    viewToDetach.attachReactTouchHandler();
+    
     self.didDetach = true;
     self.dispatchEvent(for: .onContentViewDidDetach, withPayload: [:]);
   };
@@ -78,9 +101,12 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
     index: NSInteger,
     superBlock: () -> Void
   ) {
-    
-    // Note: Window might not be available yet
+  
     self.addSubview(childComponentView);
+    
+    if let viewToDetach = childComponentView as? RNIContentViewParentDelegate {
+      self.viewToDetach = viewToDetach;
+    };
   };
   
   public func notifyOnUnmountChildComponentView(
