@@ -10,12 +10,11 @@ import type { ExampleItemProps } from './SharedExampleTypes';
 export function RNIDetachedViewTest01(props: ExampleItemProps) {
   const detachedViewRef = React.useRef<RNIDetachedViewRef | null>(null);
   
+  const [didDetach, setDidDetach] = React.useState(false);
   const [isIntervalRunning, setIsIntervalRunning] = React.useState(false);
   const [counter, setCounter] = React.useState(0);
   
   const counterIntervalID = React.useRef<NodeJS.Timeout | undefined>();
-
-  
 
   const stopTimer = () => {
     setIsIntervalRunning(false);
@@ -55,9 +54,11 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
   const shouldDisplaySubtitle = (counter % 3 !== 0);
   const useAltCounterSubtitle = (counter % 4 !== 0);
 
-  const shouldFillParent = 
+  const shouldFillParent = didDetach && (
        (counter % 5 === 0)
-    || (counter % 6 === 0);
+    || (counter % 6 === 0)
+  );
+       
 
   const shouldShowClearTimerButton = 
     (isIntervalRunning || counter > 0);
@@ -79,13 +80,13 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
       <RNIDetachedView 
         ref={detachedViewRef}
         style={styles.detachedView}
+        contentContainerStyle={styles.detachedContentContainer}
+        shouldEnableDebugBackgroundColors={false}
       >
         <TouchableOpacity 
           style={[
-            styles.detachedContent,
-            shouldFillParent && {
-              flex: 1,
-            },
+            styles.counterContainer,
+            shouldFillParent && styles.counterContainerLarge,
           ]}
           onPress={() => {
             // @ts-ignore
@@ -97,17 +98,22 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
             <Text style={[
               styles.counterSubtitleLabel,
               !useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
+              shouldFillParent && styles.counterSubtitleLabelLarge,
             ]}>
               {'Odd'}
             </Text>
           )}
-          <Text style={styles.counterLabel}>
+          <Text style={[
+            styles.counterLabel,
+            shouldFillParent && styles.counterLabelLarge,
+          ]}>
             {counter}
           </Text>
           {(!isCounterOdd && shouldDisplaySubtitle) && (
             <Text style={[
               styles.counterSubtitleLabel,
               useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
+              shouldFillParent && styles.counterSubtitleLabelLarge,
             ]}>
               {'Even'}
             </Text>
@@ -138,6 +144,7 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         title={'Attach To Window'}
         subtitle={'Detach and attach to window'}
         onPress={() => {
+          setDidDetach(true);
           detachedViewRef.current?.attachToWindow({
             contentPositionConfig,
           });
@@ -157,8 +164,11 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
 const styles = StyleSheet.create({
   detachedView: {
   },
-  detachedContent: {
-    flex: 0,
+  detachedContentContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  counterContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(255,255,255,0.3)',
@@ -167,10 +177,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 15
   },
+  counterContainerLarge: {
+    flex: 1,
+    alignSelf: 'stretch',
+    marginHorizontal: 24,
+    marginBottom: 32,
+    marginTop: 52,
+    borderRadius: 40,
+  },
   counterLabel: {
     fontSize: 24,
     fontWeight: '900',
     color: 'rgba(0,0,0,0.5)',
+  },
+  counterLabelLarge: {
+    fontSize: 64,
   },
   counterSubtitleLabel: {
     fontSize: 16,
@@ -182,6 +203,9 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     fontWeight: '600',
     color: 'rgba(0,0,0,0.5)',
+  },
+  counterSubtitleLabelLarge: {
+    fontSize: 32,
   },
   debugDisplayInner: {
     backgroundColor: `${Colors.PURPLE[200]}99`,
