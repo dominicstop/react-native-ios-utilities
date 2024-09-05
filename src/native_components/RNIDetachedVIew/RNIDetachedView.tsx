@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
 
@@ -10,7 +10,7 @@ import type {
 
 import { type StateViewID, type StateReactTag } from '../../types/SharedStateTypes';
 import * as Helpers from '../../misc/Helpers';
-import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
+
 import { RNIWrapperView } from '../RNIWrapperView';
 
 
@@ -55,13 +55,16 @@ export const RNIDetachedView = React.forwardRef<
     },
   }));
 
+  const shouldEnableDebugBackgroundColors = 
+    props.shouldEnableDebugBackgroundColors ?? false;
+
   return (
     <RNIDetachedNativeView
       {...props}
       style={[
         isDetached && styles.detachedView,
+        shouldEnableDebugBackgroundColors && styles.detachedViewDebug,
         props.style,
-        // {backgroundColor: 'blue'}
       ]}
       onDidSetViewID={(event) => {
         setViewID(event.nativeEvent.viewID);
@@ -71,13 +74,7 @@ export const RNIDetachedView = React.forwardRef<
     >
       <RNIWrapperView
         style={[
-          {
-          // backgroundColor: 'rgba(255,0,0,0.3)',
-          },
-          isDetached && {
-            position: 'absolute',
-            opacity: 0,
-          },
+          shouldEnableDebugBackgroundColors && styles.wrapperViewDebug,
         ]}
       >
         <View style={isDetached && {
@@ -97,5 +94,11 @@ export const RNIDetachedView = React.forwardRef<
 const styles = StyleSheet.create({
   detachedView: {
     position: 'absolute',
+  },
+  detachedViewDebug: {
+    backgroundColor: 'rgba(255,0,0,0.3)',
+  },
+  wrapperViewDebug: {
+    backgroundColor: 'rgba(0,0,255,0.3)',
   },
 });

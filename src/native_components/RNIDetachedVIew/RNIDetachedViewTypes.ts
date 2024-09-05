@@ -32,7 +32,7 @@ export type RNIDetachedViewInheritedProps =
 //  & RNIDetachedViewInheritedRequiredProps;
 
 export type RNIDetachedViewBaseProps = {
-  // TBA
+  shouldEnableDebugBackgroundColors?: boolean;
 };
 
 export type RNIDetachedViewProps = PropsWithChildren<
