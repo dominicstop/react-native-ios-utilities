@@ -94,4 +94,15 @@ extension RNIWrapperViewContent: RNIContentViewDelegate {
     
     rejectBlock("not implemented");
   };
+  
+  // MARK: - Fabric Only
+  // -------------------
+  
+  #if RCT_NEW_ARCH_ENABLED
+  public func shouldRecycleContentDelegate(
+    sender: RNIContentViewParentDelegate
+  ) -> Bool {
+    return false;
+  };
+  #endif
 };
