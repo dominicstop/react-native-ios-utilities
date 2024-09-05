@@ -58,7 +58,6 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
        (counter % 5 === 0)
     || (counter % 6 === 0)
   );
-       
 
   const shouldShowClearTimerButton = 
     (isIntervalRunning || counter > 0);
@@ -80,8 +79,14 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
       <RNIDetachedView 
         ref={detachedViewRef}
         style={styles.detachedView}
-        contentContainerStyle={styles.detachedContentContainer}
+        contentContainerStyle={[
+          styles.detachedContentContainer,
+          styles.detachedContentContainerDetached,
+        ]}
         shouldEnableDebugBackgroundColors={false}
+        onContentViewDidDetach={() => {
+          setDidDetach(true);
+        }}
       >
         <TouchableOpacity 
           style={[
@@ -144,7 +149,6 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         title={'Attach To Window'}
         subtitle={'Detach and attach to window'}
         onPress={() => {
-          setDidDetach(true);
           detachedViewRef.current?.attachToWindow({
             contentPositionConfig,
           });
@@ -167,6 +171,8 @@ const styles = StyleSheet.create({
   detachedContentContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  detachedContentContainerDetached: {
   },
   counterContainer: {
     alignItems: 'center',
