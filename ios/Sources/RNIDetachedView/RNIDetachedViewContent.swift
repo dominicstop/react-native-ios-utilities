@@ -1744,9 +1744,16 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
     };
   };
   
-  public func notifyOnPrepareForReuse(sender: RNIContentViewParentDelegate) {
-    
+  // MARK: Fabric Only
+  // -----------------
+  
+  #if RCT_NEW_ARCH_ENABLED
+  public func shouldRecycleContentDelegate(
+    sender: RNIContentViewParentDelegate
+  ) -> Bool {
+    return false;
   };
+  #endif
   
   // MARK: Paper Only
   // ----------------
