@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
 
@@ -8,10 +8,12 @@ import type {
   RNIDetachedViewRef, 
 } from './RNIDetachedViewTypes';
 
-import { type StateViewID, type StateReactTag } from '../../types/SharedStateTypes';
-import * as Helpers from '../../misc/Helpers';
-
 import { RNIWrapperView } from '../RNIWrapperView';
+
+import { type StateViewID, type StateReactTag } from '../../types/SharedStateTypes';
+
+import * as Helpers from '../../misc/Helpers';
+import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
 
 
 export const RNIDetachedView = React.forwardRef<
@@ -58,6 +60,12 @@ export const RNIDetachedView = React.forwardRef<
   const shouldEnableDebugBackgroundColors = 
     props.shouldEnableDebugBackgroundColors ?? false;
 
+  const wrapperStyle: StyleProp<ViewStyle> = [
+    styles.wrapperView,
+    shouldEnableDebugBackgroundColors && styles.wrapperViewDebug,
+    props.contentContainerStyle,
+  ];
+
   return (
     <RNIDetachedNativeView
       {...props}
@@ -73,13 +81,15 @@ export const RNIDetachedView = React.forwardRef<
       }}
     >
       <RNIWrapperView
-        style={[
-          styles.wrapperView,
-          shouldEnableDebugBackgroundColors && styles.wrapperViewDebug,
-          props.contentContainerStyle,
-        ]}
+        style={IS_USING_NEW_ARCH && wrapperStyle}
       >
-          {props.children}
+        {IS_USING_NEW_ARCH ? (
+          props.children
+        ) : (
+          <View style={wrapperStyle}>
+            {props.children}
+          </View>
+        )}
       </RNIWrapperView>
     </RNIDetachedNativeView>
   );
@@ -98,5 +108,9 @@ const styles = StyleSheet.create({
   },
   wrapperViewDebug: {
     backgroundColor: 'rgba(0,0,255,0.3)',
+  },
+  wrapperContentContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
   },
 });
