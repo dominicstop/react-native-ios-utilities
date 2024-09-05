@@ -1659,57 +1659,80 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
           resolveBlock([:]);
           
         case "presentInModal":
-          let viewToDetachParent = self.subviews.first! as! RNIContentViewParentDelegate;
-          let viewToDetach = viewToDetachParent.contentDelegate;
-          
-          class WrapperViewController: UIViewController {
+        
+          func test01(){
+            let viewToDetachParent = self.subviews.first! as! RNIContentViewParentDelegate;
+            let viewToDetach = viewToDetachParent.contentDelegate;
             
-            weak var contentParent: RNIContentViewParentDelegate!;
-            weak var content: UIView!;
-          
-            override func viewDidLoad() {
-              self.content.translatesAutoresizingMaskIntoConstraints = false;
-              self.view.addSubview(content);
+            class WrapperViewController: UIViewController {
               
-              NSLayoutConstraint.activate([
-                self.content.leadingAnchor.constraint(
-                  equalTo: self.view.leadingAnchor
-                ),
-                self.content.trailingAnchor.constraint(
-                  equalTo: self.view.trailingAnchor
-                ),
-                self.content.topAnchor.constraint(
-                  equalTo: self.view.topAnchor
-                ),
-                self.content.bottomAnchor.constraint(
-                  equalTo: self.view.bottomAnchor
-                ),
-              ]);
+              weak var contentParent: RNIContentViewParentDelegate!;
+              weak var content: UIView!;
+            
+              override func viewDidLoad() {
+                self.content.translatesAutoresizingMaskIntoConstraints = false;
+                self.view.addSubview(content);
+                
+                NSLayoutConstraint.activate([
+                  self.content.leadingAnchor.constraint(
+                    equalTo: self.view.leadingAnchor
+                  ),
+                  self.content.trailingAnchor.constraint(
+                    equalTo: self.view.trailingAnchor
+                  ),
+                  self.content.topAnchor.constraint(
+                    equalTo: self.view.topAnchor
+                  ),
+                  self.content.bottomAnchor.constraint(
+                    equalTo: self.view.bottomAnchor
+                  ),
+                ]);
+              };
+              
+              override func viewDidLayoutSubviews() {
+                #if RCT_NEW_ARCH_ENABLED
+                self.contentParent.requestToUpdateState(
+                  .init(
+                    shouldSetSize: true,
+                    frameSize: self.view.bounds.size
+                  )
+                );
+                #else
+                self.contentParent.setSize(self.view.bounds.size);
+                #endif
+              };
             };
             
-            override func viewDidLayoutSubviews() {
-              #if RCT_NEW_ARCH_ENABLED
-              self.contentParent.requestToUpdateState(
-                .init(
-                  shouldSetSize: true,
-                  frameSize: self.view.bounds.size
-                )
-              );
-              #else
-              self.contentParent.setSize(self.view.bounds.size);
-              #endif
-            };
+            let modalVC = WrapperViewController();
+            modalVC.content = viewToDetach;
+            modalVC.contentParent = viewToDetachParent;
+            
+            
+            let window = UIApplication.shared.activeWindow!;
+            let rootVC = window.rootViewController!;
+            rootVC.present(modalVC, animated: true);
           };
           
-          let modalVC = WrapperViewController();
-          modalVC.content = viewToDetach;
-          modalVC.contentParent = viewToDetachParent;
+          func test02() throws {
+            guard let window = UIApplication.shared.activeWindow else {
+              throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
+            };
           
+            guard let viewToDetach = self.viewToDetach else {
+              throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
+            };
+            
+            try self.detach();
+            
+            let modalVC = RNIBaseViewController();
+            modalVC.rootReactView = viewToDetach;
+            modalVC.view.backgroundColor = .systemGray;
+            
+            let rootVC = window.rootViewController!;
+            rootVC.present(modalVC, animated: true);
+          };
           
-          let window = UIApplication.shared.activeWindow!;
-          let rootVC = window.rootViewController!;
-          rootVC.present(modalVC, animated: true);
-          
+          try test02();
           resolveBlock([:]);
         
         default:
