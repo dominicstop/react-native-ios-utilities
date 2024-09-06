@@ -874,7 +874,6 @@ static BOOL SHOULD_LOG = NO;
 -(void) prepareForRecycle
 {
   // reset flags
-  self->_didNotifyForInit = NO;
   self->_didDispatchEventOnDidSetViewID = NO;
 
   // increment `recycleCount`
@@ -912,6 +911,7 @@ static BOOL SHOULD_LOG = NO;
     [self initViewDelegate];
   };
   
+  self->_state.reset();
   [super prepareForRecycle];
 }
 #else
