@@ -104,16 +104,16 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (void)dispatchViewEventForEventName:(nonnull NSString *)eventName
                           withPayload:(nonnull NSDictionary *)eventPayload NS_SWIFT_NAME(dispatchViewEvent(forEventName:withPayload:));
 
+- (void)requestToAttachTouchHandler;
+
+- (void)detachReactTouchHandler;
+
 #if RCT_NEW_ARCH_ENABLED
 - (void)setPadding:(UIEdgeInsets)padding;
 
 - (void)setPositionType:(RNIPositionType)positionType;
 
-- (void)requestToUpdateState:(RNIBaseViewStateSwift *)stateFromSwift;
-
-- (void)requestToAttachTouchHandler;
-
-- (void)detachReactTouchHandler;
+- (void)requestToUpdateState:(nonnull RNIBaseViewStateSwift *)stateFromSwift;
 #endif
 
 // MARK: - Base Event Support
