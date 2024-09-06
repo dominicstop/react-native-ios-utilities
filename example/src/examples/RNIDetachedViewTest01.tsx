@@ -74,7 +74,8 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
       index={props.index}
       title={'RNIDetachedViewTest01'}
       description={[
-        "TBA",
+        "Simple test for detaching a react view from it's parent (for use in other native views)",
+        "View should be centered and resize (grow/shrink)",
       ]}
     >
       {mountDetachedView && (
@@ -85,7 +86,7 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
             styles.detachedContentContainer,
             styles.detachedContentContainerDetached,
           ]}
-          shouldEnableDebugBackgroundColors={true}
+          shouldEnableDebugBackgroundColors={false}
           onContentViewDidDetach={() => {
             setDidDetach(true);
           }}
@@ -186,6 +187,7 @@ const styles = StyleSheet.create({
   detachedView: {
   },
   detachedContentContainer: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
