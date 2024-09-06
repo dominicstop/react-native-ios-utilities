@@ -64,6 +64,7 @@ static BOOL SHOULD_LOG = NO;
 
 @implementation RNIBaseView {
   BOOL _didNotifyForInit;
+  BOOL _didAttachContentDelegate;
   BOOL _didDispatchEventOnDidSetViewID;
 #ifdef RCT_NEW_ARCH_ENABLED
   UIView *_view;
@@ -79,8 +80,8 @@ static BOOL SHOULD_LOG = NO;
 
 @synthesize viewID;
 
-// MARK: - Init
-// ------------
+// MARK: - Init + Setup
+// --------------------
 
 #ifdef RCT_NEW_ARCH_ENABLED
 - (instancetype)initWithFrame:(CGRect)frame
@@ -197,21 +198,7 @@ static BOOL SHOULD_LOG = NO;
   
   self.contentDelegate = viewDelegate;
   self.contentView = viewDelegate;
-  
-  BOOL hasCustomLayoutSetup =
-    [self.contentDelegate respondsToSelector:@selector(notifyOnRequestToSetupLayoutWithSender:)];
-  
-  BOOL shouldNotifyDelegateToSetupConstraints =
-      !hasCustomLayoutSetup
-    & [self.contentDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
     
-  if(shouldNotifyDelegateToSetupConstraints){
-     [self.contentDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
-     
-  } else if(hasCustomLayoutSetup){
-    [self.contentDelegate notifyOnRequestToSetupLayoutWithSender:self];
-  };;
-  
   BOOL shouldNotifyDelegateForInit =
        !self->_didNotifyForInit
     && [viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:)];
@@ -220,13 +207,14 @@ static BOOL SHOULD_LOG = NO;
     self->_didNotifyForInit = YES;
     [viewDelegate notifyOnInitWithSender:self];
   };
-}
+};
 
 // NOTE: To be overridden + impl. by child class
 - (void)initCommon
 {
   self.recycleCount = @0;
   [self initViewDelegate];
+  [self setupAttachContentDelegate];
   
 #if !RCT_NEW_ARCH_ENABLED
 #if DEBUG
@@ -271,6 +259,25 @@ static BOOL SHOULD_LOG = NO;
     @" - Supported Props:", propList
   );
 #endif
+}
+
+- (void)setupAttachContentDelegate
+{
+  BOOL hasCustomLayoutSetup =
+    [self.contentDelegate respondsToSelector:@selector(notifyOnRequestToSetupLayoutWithSender:)];
+  
+  BOOL shouldNotifyDelegateToSetupConstraints =
+       !hasCustomLayoutSetup
+    && [self.contentDelegate respondsToSelector:@selector(_notifyOnRequestToSetupConstraintsWithSender:)];
+    
+  if(shouldNotifyDelegateToSetupConstraints){
+     [self.contentDelegate _notifyOnRequestToSetupConstraintsWithSender:self];
+     self->_didAttachContentDelegate = YES;
+     
+  } else if(hasCustomLayoutSetup){
+    [self.contentDelegate notifyOnRequestToSetupLayoutWithSender:self];
+    self->_didAttachContentDelegate = YES;
+  };
 }
 
 // MARK: Methods (Paper + Fabric)
@@ -663,6 +670,14 @@ static BOOL SHOULD_LOG = NO;
     return;
   };
   
+  BOOL shouldAttachContentDelegate =
+       self->_contentDelegate != nil
+    && !self->_didAttachContentDelegate;
+    
+  if(shouldAttachContentDelegate){
+    [self setupAttachContentDelegate];
+  };
+  
   [[RNIViewRegistry shared] registerViewUsingReactTagForView:self];
 }
 
@@ -906,8 +921,12 @@ static BOOL SHOULD_LOG = NO;
   
   if(!shouldRecycleContentDelegate){
     self.contentView = nil;
-    self->_didNotifyForInit = NO;
+    self.contentDelegate = nil;
     
+    self->_didNotifyForInit = NO;
+    self->_didAttachContentDelegate = NO;
+
+    [self.contentView removeFromSuperview];
     [self initViewDelegate];
   };
   
