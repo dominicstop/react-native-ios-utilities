@@ -3,7 +3,8 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import * as PackageConfig from '../../package.json';
+import * as LibraryPackageConfig from '../../../package.json';
+import * as ExamplePackageConfig from '../../package.json';
 import { IS_USING_NEW_ARCH } from '../constants/SharedEnv';
 
 import { ExampleItemCard, ObjectPropertyDisplay, Colors } from 'react-native-ios-utilities';
@@ -21,8 +22,10 @@ export function AppMetadataCard(props: ExampleItemProps) {
       <ObjectPropertyDisplay
         recursiveStyle={styles.debugDisplayInner}
         object={{
+          libraryName: LibraryPackageConfig.name,
+          libraryVersion: LibraryPackageConfig.version,
           IS_USING_NEW_ARCH,
-          dependencies: PackageConfig.dependencies,
+          exampleDependencies: ExamplePackageConfig.dependencies,
         }}
       />
     </ExampleItemCard>
