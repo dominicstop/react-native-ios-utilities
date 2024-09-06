@@ -32,7 +32,9 @@ export const RNIWrapperView = React.forwardRef<
       onDidSetViewID={(event) => {
         setViewID(event.nativeEvent.viewID);
         setReactTag(event.nativeEvent.reactTag);
+
         props.onDidSetViewID?.(event);
+        event.stopPropagation();
       }}
     >
       {props.children}

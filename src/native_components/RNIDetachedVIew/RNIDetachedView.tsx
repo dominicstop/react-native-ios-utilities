@@ -88,7 +88,9 @@ export const RNIDetachedView = React.forwardRef<
       onDidSetViewID={(event) => {
         setViewID(event.nativeEvent.viewID);
         setReactTag(event.nativeEvent.reactTag);
+
         props.onDidSetViewID?.(event);
+        event.stopPropagation();
       }}
       onContentViewDidDetach={onContentViewDidDetachHandler.current}
     >
