@@ -104,7 +104,7 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (void)dispatchViewEventForEventName:(nonnull NSString *)eventName
                           withPayload:(nonnull NSDictionary *)eventPayload NS_SWIFT_NAME(dispatchViewEvent(forEventName:withPayload:));
 
-- (void)requestToAttachTouchHandler;
+- (void)attachReactTouchHandler;
 
 - (void)detachReactTouchHandler;
 
