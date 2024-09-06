@@ -1,4 +1,5 @@
 import { HomeScreen } from "../components/HomeScreen";
+import { AppMetadataCard } from "../examples/AppMetadataCard";
 import { RNIDetachedViewTest01 } from "../examples/RNIDetachedViewTest01";
 import { RNIDummyTest01Screen } from "../examples/RNIDummyTest01Screen";
 import { RNIWrapperViewTest01 } from "../examples/RNIWrapperViewTest01";
@@ -63,5 +64,12 @@ export const EXAMPLE_ITEMS: Array<ExampleItem> = (() => {
   //   items.splice(0, 0, ...[DebugControls]);
   // }
 
-  return [...screenItems, ...cardItems];
+  return [
+    {
+      type: 'card',
+      component: AppMetadataCard,
+    },
+    ...screenItems, 
+    ...cardItems
+  ];
 })();
