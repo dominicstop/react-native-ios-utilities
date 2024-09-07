@@ -29,7 +29,9 @@ RCT_EXPORT_MODULE(RNIDetachedView)
 }
 #endif
 
-RNI_EXPORT_VIEW_EVENT(onDidSetViewID, RCTBubblingEventBlock)
 RNI_EXPORT_VIEW_EVENT(onViewWillRecycle, RCTBubblingEventBlock)
+
+RNI_EXPORT_VIEW_EVENT(onDidSetViewID, RCTBubblingEventBlock)
+RNI_EXPORT_VIEW_EVENT(onContentViewDidDetach, RCTBubblingEventBlock)
 
 @end

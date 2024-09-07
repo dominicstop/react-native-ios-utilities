@@ -57,17 +57,6 @@ export const RNIDetachedView = React.forwardRef<
     },
   }));
 
-  const onContentViewDidDetachHandler = 
-    React.useRef<OnContentViewDidDetachEvent | undefined>();
-  
-  React.useEffect(() => {
-    onContentViewDidDetachHandler.current = (event) => {
-      props.onContentViewDidDetach?.(event);
-      event.stopPropagation();
-      setIsDetached(true);
-    };
-  });
-
   const shouldEnableDebugBackgroundColors = 
     props.shouldEnableDebugBackgroundColors ?? false;
 
@@ -92,7 +81,11 @@ export const RNIDetachedView = React.forwardRef<
         props.onDidSetViewID?.(event);
         event.stopPropagation();
       }}
-      onContentViewDidDetach={onContentViewDidDetachHandler.current}
+      onContentViewDidDetach={(event) => {
+        props.onContentViewDidDetach?.(event);
+        event.stopPropagation();
+        setIsDetached(true);
+      }}
     >
       <RNIWrapperView
         style={IS_USING_NEW_ARCH && wrapperStyle}
