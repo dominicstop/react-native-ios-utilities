@@ -526,7 +526,7 @@ static BOOL SHOULD_LOG = NO;
   [touchHandlerFabric attachToView:self];
 #else
   RCTBridge *bridge = [RCTBridge currentBridge];
-  RCTTouchHandler * touchHandlerPaper = [[RCTTouchHandler new] initWithBridge:bridge];
+  RCTTouchHandler *touchHandlerPaper = [[RCTTouchHandler alloc] initWithBridge:bridge];
   self->_touchHandlerPaper = touchHandlerPaper;
   reactGestureRecognizer = touchHandlerPaper;
   
