@@ -10,7 +10,7 @@ import DGSwiftUtilities
 
 
 @objc
-public protocol RNIViewPropDelegate {
+public protocol RNIViewPropDelegate: RNIViewPropUpdatesNotifiable {
   
   typealias KeyPathRoot = Self;
   
@@ -22,33 +22,6 @@ public protocol RNIViewPropDelegate {
   
   @objc
   weak var parentReactView: RNIContentViewParentDelegate? { set get };
-  
-  @objc
-  optional func notifyDidSetProps(
-    sender: RNIContentViewParentDelegate
-  );
-  
-  // MARK: Fabric Only
-  // -----------------
-  
-  #if RCT_NEW_ARCH_ENABLED
-  @objc
-  optional func notifyOnUpdateProps(
-    sender: RNIContentViewParentDelegate,
-    oldProps: NSDictionary,
-    newProps: NSDictionary
-  );
-  #else
-  
-  // MARK: - Paper-Only
-  // ------------------
-  
-  @objc
-  optional func notifyDidSetProps(
-    sender: RNIContentViewParentDelegate,
-    changedProps: Array<String>
-  );
-  #endif
   
   // MARK: - Internal Only
   // ---------------------
