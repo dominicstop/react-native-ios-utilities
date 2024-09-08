@@ -56,13 +56,6 @@ using namespace facebook::react;
 @implementation RNIWrapperView {
 }
 
-// MARK: - Init
-// ------------
-
-- (void)initCommon {
-  [super initCommon];
-}
-
 // MARK: - RNIBaseView
 // -------------------
 
