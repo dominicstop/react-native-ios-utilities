@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
 
@@ -8,13 +8,10 @@ import type {
   RNIDetachedViewRef, 
 } from './RNIDetachedViewTypes';
 
-import { RNIWrapperView } from '../RNIWrapperView';
-
-import { type StateViewID, type StateReactTag } from '../../types/SharedStateTypes';
+import type { RNIDetachedViewContentProps } from './RNIDetachedViewContentTypes';
+import type { StateViewID, StateReactTag } from '../../types/SharedStateTypes';
 
 import * as Helpers from '../../misc/Helpers';
-import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
-import type { OnContentViewDidDetachEvent } from './RNIDetachedViewEvents';
 
 
 export const RNIDetachedView = React.forwardRef<
@@ -60,11 +57,15 @@ export const RNIDetachedView = React.forwardRef<
   const shouldEnableDebugBackgroundColors = 
     props.shouldEnableDebugBackgroundColors ?? false;
 
-  const wrapperStyle: StyleProp<ViewStyle> = [
-    styles.wrapperView,
-    shouldEnableDebugBackgroundColors && styles.wrapperViewDebug,
-    props.contentContainerStyle,
-  ];
+  const children = React.Children.map(props.children, (child) => {
+    return React.cloneElement(
+      child as React.ReactElement<RNIDetachedViewContentProps>, 
+      {
+        isDetached,
+        shouldEnableDebugBackgroundColors,
+      }
+    );
+  });
 
   return (
     <RNIDetachedNativeView
@@ -87,17 +88,7 @@ export const RNIDetachedView = React.forwardRef<
         setIsDetached(true);
       }}
     >
-      <RNIWrapperView
-        style={IS_USING_NEW_ARCH && wrapperStyle}
-      >
-        {IS_USING_NEW_ARCH ? (
-          props.children
-        ) : (
-          <View style={wrapperStyle}>
-            {props.children}
-          </View>
-        )}
-      </RNIWrapperView>
+      {children}
     </RNIDetachedNativeView>
   );
 });
@@ -109,15 +100,5 @@ const styles = StyleSheet.create({
   },
   detachedViewDebug: {
     backgroundColor: 'rgba(255,0,0,0.3)',
-  },
-  wrapperView: {
-    flex: 1,
-  },
-  wrapperViewDebug: {
-    backgroundColor: 'rgba(0,0,255,0.3)',
-  },
-  wrapperContentContainer: {
-    flex: 1,
-    alignSelf: 'stretch',
   },
 });
