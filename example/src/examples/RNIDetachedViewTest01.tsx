@@ -1,9 +1,8 @@
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, CardButton, type RNIDetachedViewRef, type AlignmentPositionConfig } from 'react-native-ios-utilities';
+import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, RNIDetachedViewContent, CardButton, type RNIDetachedViewRef, type AlignmentPositionConfig } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
 
 
@@ -82,51 +81,54 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         <RNIDetachedView 
           ref={detachedViewRef}
           style={styles.detachedView}
-          contentContainerStyle={[
-            styles.detachedContentContainer,
-            styles.detachedContentContainerDetached,
-          ]}
           shouldEnableDebugBackgroundColors={false}
           onContentViewDidDetach={() => {
             setDidDetach(true);
           }}
         >
-          <TouchableOpacity 
-            style={[
-              styles.counterContainer,
-              shouldFillParent && styles.counterContainerLarge,
+          <RNIDetachedViewContent
+            contentContainerStyle={[
+              styles.detachedContentContainer,
+              styles.detachedContentContainerDetached,
             ]}
-            onPress={() => {
-              // @ts-ignore
-              // eslint-disable-next-line no-alert
-              alert('onPress Event Triggered');
-            }}
           >
-            {(isCounterOdd && shouldDisplaySubtitle) && (
+            <TouchableOpacity 
+              style={[
+                styles.counterContainer,
+                shouldFillParent && styles.counterContainerLarge,
+              ]}
+              onPress={() => {
+                // @ts-ignore
+                // eslint-disable-next-line no-alert
+                alert('onPress Event Triggered');
+              }}
+            >
+              {(isCounterOdd && shouldDisplaySubtitle) && (
+                <Text style={[
+                  styles.counterSubtitleLabel,
+                  !useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
+                  shouldFillParent && styles.counterSubtitleLabelLarge,
+                ]}>
+                  {'Odd'}
+                </Text>
+              )}
               <Text style={[
-                styles.counterSubtitleLabel,
-                !useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
-                shouldFillParent && styles.counterSubtitleLabelLarge,
+                styles.counterLabel,
+                shouldFillParent && styles.counterLabelLarge,
               ]}>
-                {'Odd'}
+                {counter}
               </Text>
-            )}
-            <Text style={[
-              styles.counterLabel,
-              shouldFillParent && styles.counterLabelLarge,
-            ]}>
-              {counter}
-            </Text>
-            {(!isCounterOdd && shouldDisplaySubtitle) && (
-              <Text style={[
-                styles.counterSubtitleLabel,
-                useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
-                shouldFillParent && styles.counterSubtitleLabelLarge,
-              ]}>
-                {'Even'}
-              </Text>
-            )}
-          </TouchableOpacity>
+              {(!isCounterOdd && shouldDisplaySubtitle) && (
+                <Text style={[
+                  styles.counterSubtitleLabel,
+                  useAltCounterSubtitle && styles.counterSubtitleLabelAlt,
+                  shouldFillParent && styles.counterSubtitleLabelLarge,
+                ]}>
+                  {'Even'}
+                </Text>
+              )}
+            </TouchableOpacity>
+          </RNIDetachedViewContent>
         </RNIDetachedView>
       )}
       <ObjectPropertyDisplay
