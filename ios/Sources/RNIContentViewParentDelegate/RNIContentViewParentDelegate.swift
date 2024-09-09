@@ -7,6 +7,7 @@
 
 import UIKit
 import React
+import DGSwiftUtilities
 
 
 #if RCT_NEW_ARCH_ENABLED
@@ -21,6 +22,8 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   var cachedLayoutMetrics: RNILayoutMetrics { get };
   
   var contentDelegate: RNIContentViewDelegate { get };
+  
+  var eventBroadcaster: RNIBaseViewEventBroadcaster! { get };
   
   var viewID: String? { get };
   
@@ -50,4 +53,18 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   @objc
   func requestToUpdateState(_ nextState: RNIBaseViewState);
   #endif
+};
+
+// MARK: - RNIContentViewParentDelegate+Helpers
+// --------------------------------------------
+
+public extension RNIContentViewParentDelegate {
+  
+  var viewLifecycleDelegates: MulticastDelegate<RNIViewLifecycle>! {
+    self.eventBroadcaster.viewLifecycleDelegates;
+  };
+  
+  var viewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> {
+    self.eventBroadcaster.viewPropUpdatesDelegates;
+  };
 };

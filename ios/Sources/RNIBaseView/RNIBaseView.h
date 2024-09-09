@@ -23,6 +23,7 @@
 @protocol RNIContentViewDelegate;
 
 @class RNILayoutMetrics;
+@class RNIBaseViewEventBroadcaster;
 
 #if RCT_NEW_ARCH_ENABLED
 @class RNIBaseViewStateSwift;
@@ -63,6 +64,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 @property (nonatomic, strong, nullable) RNILayoutMetrics *cachedLayoutMetrics;
 
 @property (nonatomic, strong, nonnull) NSNumber *recycleCount;
+
+@property (nonatomic, strong, nonnull) RNIBaseViewEventBroadcaster *eventBroadcaster;
 
 // MARK: - Properties - Paper Only
 // -------------------------------

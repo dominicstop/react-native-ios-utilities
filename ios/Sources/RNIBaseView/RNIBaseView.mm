@@ -198,23 +198,25 @@ static BOOL SHOULD_LOG = NO;
   
   self.contentDelegate = viewDelegate;
   self.contentView = viewDelegate;
-    
-  BOOL shouldNotifyDelegateForInit =
-       !self->_didNotifyForInit
-    && [viewDelegate respondsToSelector:@selector(notifyOnInitWithSender:)];
-  
-  if(shouldNotifyDelegateForInit) {
-    self->_didNotifyForInit = YES;
-    [viewDelegate notifyOnInitWithSender:self];
-  };
 };
 
 // NOTE: To be overridden + impl. by child class
 - (void)initCommon
 {
   self.recycleCount = @0;
+  
+  self.eventBroadcaster =
+    [[RNIBaseViewEventBroadcaster alloc] initWithParentReactView:self];
+  
   [self initViewDelegate];
   [self setupAttachContentDelegate];
+  
+  [self.eventBroadcaster registerDelegatesFromParentReactView];
+  
+  if(!self->_didNotifyForInit) {
+    self->_didNotifyForInit = YES;
+    [self.eventBroadcaster notifyOnInitWithSender:self];
+  };
   
 #if !RCT_NEW_ARCH_ENABLED
 #if DEBUG
@@ -401,12 +403,11 @@ static BOOL SHOULD_LOG = NO;
   
   [self->_queuedEvents removeAllObjects];
 }
-#endif
+#else
 
 // MARK: Methods - Paper-Only
 // --------------------------
 
-#if !RCT_NEW_ARCH_ENABLED
 - (void)notifyOnPaperSetProp:(NSString *)propName
                    withValue:(id)propValue;
 {
@@ -435,16 +436,9 @@ static BOOL SHOULD_LOG = NO;
                                       withShadowView:self.cachedShadowView];
   
   self.cachedLayoutMetrics = newLayoutMetrics;
-
-  BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
-  
-  if (shouldNotifyDelegate) {
-    [self.contentDelegate notifyOnUpdateLayoutMetricsWithSender:self
-                                                      oldLayoutMetrics:oldLayoutMetrics
-                                                      newLayoutMetrics:newLayoutMetrics];
-  };
+  [self.eventBroadcaster notifyOnUpdateLayoutMetricsWithSender:self
+                                              oldLayoutMetrics:oldLayoutMetrics
+                                              newLayoutMetrics:newLayoutMetrics];
 }
 #endif
 
@@ -670,6 +664,7 @@ static BOOL SHOULD_LOG = NO;
     return;
   };
   
+#if RCT_NEW_ARCH_ENABLED
   BOOL shouldAttachContentDelegate =
        self->_contentDelegate != nil
     && !self->_didAttachContentDelegate;
@@ -677,12 +672,13 @@ static BOOL SHOULD_LOG = NO;
   if(shouldAttachContentDelegate){
     [self setupAttachContentDelegate];
   };
+#endif
   
   [[RNIViewRegistry shared] registerViewUsingReactTagForView:self];
 }
 
-// MARK: - View/React Lifecycle (Fabric + Paper)
-// ---------------------------------------------
+// MARK: - View/React Lifecycle (Fabric Only)
+// ------------------------------------------
 
 #ifdef RCT_NEW_ARCH_ENABLED
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
@@ -751,17 +747,12 @@ static BOOL SHOULD_LOG = NO;
   RNILayoutMetrics *layoutMetricsNew = [RNIObjcUtils convertToRNILayoutMetricsForFabricLayoutMetrics:layoutMetrics];
   self.cachedLayoutMetrics = layoutMetricsNew;
 
-  BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnUpdateLayoutMetricsWithSender:oldLayoutMetrics:newLayoutMetrics:)];
-  
-  if (shouldNotifyDelegate) {
-    RNILayoutMetrics *layoutMetricsOld = [RNIObjcUtils convertToRNILayoutMetricsForFabricLayoutMetrics:oldLayoutMetrics];
+  RNILayoutMetrics *layoutMetricsOld = [RNIObjcUtils convertToRNILayoutMetricsForFabricLayoutMetrics:oldLayoutMetrics];
     
-    [self.contentDelegate notifyOnUpdateLayoutMetricsWithSender:self
-                                                      oldLayoutMetrics:layoutMetricsOld
-                                                      newLayoutMetrics:layoutMetricsNew];
-  }
+  [self.eventBroadcaster notifyOnUpdateLayoutMetricsWithSender:self
+                                              oldLayoutMetrics:layoutMetricsOld
+                                              newLayoutMetrics:layoutMetricsNew];
+  
   
   [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
 }
@@ -788,28 +779,11 @@ static BOOL SHOULD_LOG = NO;
   [self.contentDelegate _notifyOnRequestToSetPropsWithSender:self
                                                       props:dictPropsNew];
   
-  BOOL shouldNotifyDelegateForOnUpdateProps =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:
-         @selector(notifyOnUpdatePropsWithSender:
-                                        oldProps:
-                                        newProps:)];
-    
-  if(shouldNotifyDelegateForOnUpdateProps){
-    [self.contentDelegate notifyOnUpdatePropsWithSender:self
-                                               oldProps:dictPropsOld
-                                               newProps:dictPropsNew];
-  };
+  [self.eventBroadcaster notifyOnUpdatePropsWithSender:self
+                                              oldProps:dictPropsOld
+                                              newProps:dictPropsNew];
   
-  BOOL shouldNotifyDelegateForDidSetProps =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:
-         @selector(notifyDidSetPropsWithSender:)];
-         
-  if(shouldNotifyDelegateForDidSetProps){
-    [self.contentDelegate notifyDidSetPropsWithSender:self];
-  };
-
+  [self.eventBroadcaster notifyDidSetPropsWithSender:self];
   [super updateProps:props oldProps:oldProps];
 }
 
@@ -849,40 +823,23 @@ static BOOL SHOULD_LOG = NO;
     ? [RNIObjcUtils convertFollyDynamicToId:&newStateDynamic]
     : nil;
     
-  BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:
-         @selector(notifyOnUpdateStateWithSender:
-                                        oldState:
-                                        newState:)];
-    
-  if(shouldNotifyDelegate){
-    [self.contentDelegate notifyOnUpdateStateWithSender:self
-                                               oldState:oldStateDict
-                                               newState:newStateDict];
-  };
+
+  [self.eventBroadcaster notifyOnUpdateStateWithSender:self
+                                              oldState:oldStateDict
+                                              newState:newStateDict];
     
   [super updateState:state oldState:oldState];
 }
 
 - (void)finalizeUpdates:(RNComponentViewUpdateMask)updateMask
 {
-  BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:
-         @selector(notifyOnFinalizeUpdatesWithSender:
-                                       updateMaskRaw:
-                                          updateMask:)];
-    
-  if(shouldNotifyDelegate){
-    RNIComponentViewUpdateMask *swiftMask =
+  RNIComponentViewUpdateMask *swiftMask =
       [[RNIComponentViewUpdateMask new] initWithRawValue:updateMask];
   
-    [self.contentDelegate notifyOnFinalizeUpdatesWithSender:self
-                                              updateMaskRaw:updateMask
-                                                 updateMask:swiftMask];
-  }
-  
+  [self.eventBroadcaster notifyOnFinalizeUpdatesWithSender:self
+                                             updateMaskRaw:updateMask
+                                                updateMask:swiftMask];
+                                                  
   [super finalizeUpdates:updateMask];
 }
 
@@ -1030,29 +987,16 @@ static BOOL SHOULD_LOG = NO;
 {
   self.contentDelegate.reactProps =
     [self.reactPropHandler.propHolder.propsMap copy];
-    
-  BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:
-         @selector(notifyDidSetPropsWithSender:changedProps:)];
          
-  if(shouldNotifyDelegate){
-    [self.contentDelegate notifyDidSetPropsWithSender:self
-                           changedProps:changedProps];
-  };
+  [self.eventBroadcaster notifyDidSetPropsWithSender:self
+                                        changedProps:changedProps];
   
   [self _dispatchViewEventOnDidSetViewIDIfNeeded];
 }
 
 - (void)invalidate
 {
-  BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:@selector(notifyOnViewWillInvalidateWithSender:)];
-    
-  if(shouldNotifyDelegate) {
-    [self.contentDelegate notifyOnViewWillInvalidateWithSender:self];
-  };
+  [self.eventBroadcaster notifyOnViewWillInvalidateWithSender:self];
 }
 
 #if DEBUG
