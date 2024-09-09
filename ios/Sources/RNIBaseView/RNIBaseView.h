@@ -50,8 +50,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
     RNIRegistrableView,
     RNIViewCommandRequestHandling>
     
-// MARK: - Properties - Fabric + Paper
-// -----------------------------------
+// MARK: - Properties - RNIContentViewParentDelegate
+// -------------------------------------------------
 
 + (nonnull Class<RNIContentViewDelegate>) viewDelegateClass;
 
@@ -66,6 +66,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 @property (nonatomic, strong, nonnull) NSNumber *recycleCount;
 
 @property (nonatomic, strong, nonnull) RNIBaseViewEventBroadcaster *eventBroadcaster;
+
+- (nonnull NSDictionary *)rawProps;
 
 // MARK: - Properties - Paper Only
 // -------------------------------

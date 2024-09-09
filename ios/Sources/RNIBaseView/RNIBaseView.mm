@@ -459,6 +459,24 @@ static BOOL SHOULD_LOG = NO;
 }
 #endif
 
+// MARK: - RNIContentViewParentDelegate Getters
+// --------------------------------------------
+
+- (NSDictionary *)rawProps
+{
+#if RCT_NEW_ARCH_ENABLED
+  const auto &propsRaw =
+    *std::static_pointer_cast<RNIBaseViewProps const>(self->_props);
+  
+  NSDictionary *propsDict =
+    [RNIObjcUtils convertToDictForFollyDynamicMap:propsRaw.propsMap];
+    
+  return propsDict;
+#else
+  return [self.reactPropHandler.propHolder.propsMap copy];
+#endif
+}
+
 // MARK: - RNIContentViewParentDelegate Commands (Fabric + Paper)
 // --------------------------------------------------------------
 

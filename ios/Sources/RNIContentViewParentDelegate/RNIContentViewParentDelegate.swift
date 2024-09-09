@@ -19,15 +19,23 @@ public typealias RNIContentViewParent = RCTView;
 @objc(RNIContentViewParentDelegateSwift)
 public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
 
+  // MARK: Properties
+  // ----------------
+
   var cachedLayoutMetrics: RNILayoutMetrics { get };
   
   var contentDelegate: RNIContentViewDelegate { get };
   
   var eventBroadcaster: RNIBaseViewEventBroadcaster! { get };
   
+  var rawProps: NSDictionary { get };
+  
   var viewID: String? { get };
   
-  var reactSubviews: [UIView] { get }
+  var reactSubviews: [UIView] { get };
+  
+  // MARK: Methods
+  // -------------
   
   func requestToRemoveReactSubview(_ subview: UIView);
   
@@ -42,8 +50,8 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   
   func detachReactTouchHandler();
   
-  // MARK: Fabric Only
-  // -----------------
+  // MARK: Methods (Fabric Only)
+  // --------------------------
   
   #if RCT_NEW_ARCH_ENABLED
   func setPadding(_ insets: UIEdgeInsets);
