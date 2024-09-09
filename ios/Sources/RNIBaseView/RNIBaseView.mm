@@ -1021,16 +1021,8 @@ static BOOL SHOULD_LOG = NO;
 // Note: Only gets called on paper?
 - (void)handleOnBridgeWillReloadNotification:(NSNotification *)notification
 {
-  BOOL shouldNotifyDelegate =
-       self.contentDelegate != nil
-    && [self.contentDelegate respondsToSelector:
-         @selector(notifyOnBridgeWillReloadWithSender:notification:)];
-         
-  if(shouldNotifyDelegate){
-    [self.contentDelegate
-      notifyOnBridgeWillReloadWithSender:self
-                            notification:notification];
-  };
+  [self.eventBroadcaster notifyOnBridgeWillReloadWithSender:self
+                                               notification:notification];
   
   // TODO: Impl. view cleanup
 }
