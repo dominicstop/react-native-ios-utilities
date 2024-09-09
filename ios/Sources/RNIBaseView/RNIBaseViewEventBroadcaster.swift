@@ -111,6 +111,15 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
       $0.notifyOnPrepareForReuse?(sender: sender);
     };
   };
+  
+  @objc
+  public func notifyOnRequestForCleanup(
+    sender: RNIContentViewParentDelegate
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnRequestForCleanup?(sender: sender);
+    };
+  };
 };
 #else
 

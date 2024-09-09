@@ -22,4 +22,9 @@ public protocol RNIViewLifecycleCommon {
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   );
+  
+  @objc
+  optional func notifyOnRequestForCleanup(
+    sender: RNIContentViewParentDelegate
+  );
 };

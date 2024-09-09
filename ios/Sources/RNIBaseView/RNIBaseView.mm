@@ -889,6 +889,7 @@ static BOOL SHOULD_LOG = NO;
     
   [self _dispatchEventOnViewWillRecycle];
   [self.eventBroadcaster notifyOnPrepareForReuseWithSender:self];
+  [self.eventBroadcaster notifyOnRequestForCleanupWithSender:self];
   
   BOOL shouldAskDelegateIfShouldRecycle =
        self.contentDelegate != nil
@@ -1015,6 +1016,7 @@ static BOOL SHOULD_LOG = NO;
 - (void)invalidate
 {
   [self.eventBroadcaster notifyOnViewWillInvalidateWithSender:self];
+  [self.eventBroadcaster notifyOnRequestForCleanupWithSender:self];
 }
 
 #if DEBUG
@@ -1024,7 +1026,7 @@ static BOOL SHOULD_LOG = NO;
   [self.eventBroadcaster notifyOnBridgeWillReloadWithSender:self
                                                notification:notification];
   
-  // TODO: Impl. view cleanup
+  [self.eventBroadcaster notifyOnRequestForCleanupWithSender:self];
 }
 #endif
 #endif
