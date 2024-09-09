@@ -10,7 +10,7 @@ import Foundation
 
 /// Holds/wraps a `RNIBaseView` instance (i.e. `RNIContentViewParentDelegate`)
 ///
-public class RNIBaseViewController: UIViewController {
+open class RNIBaseViewController: UIViewController {
 
   public var shouldTriggerDefaultCleanup = true;
   
