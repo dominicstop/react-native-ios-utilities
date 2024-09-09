@@ -403,6 +403,23 @@ static BOOL SHOULD_LOG = NO;
   
   [self->_queuedEvents removeAllObjects];
 }
+
+- (void)_resetContentDelegate
+{
+  self.contentView = nil;
+  self.contentDelegate = nil;
+  
+  self->_didNotifyForInit = NO;
+  self->_didAttachContentDelegate = NO;
+
+  [self.contentView removeFromSuperview];
+  [self initViewDelegate];
+  
+  [self.eventBroadcaster registerDelegatesFromParentReactView];
+  [self.eventBroadcaster notifyOnInitWithSender:self];
+  
+  self->_didNotifyForInit = YES;
+}
 #else
 
 // MARK: Methods - Paper-Only
@@ -877,14 +894,7 @@ static BOOL SHOULD_LOG = NO;
   };
   
   if(!shouldRecycleContentDelegate){
-    self.contentView = nil;
-    self.contentDelegate = nil;
-    
-    self->_didNotifyForInit = NO;
-    self->_didAttachContentDelegate = NO;
-
-    [self.contentView removeFromSuperview];
-    [self initViewDelegate];
+    [self _resetContentDelegate];
   };
   
   self->_state.reset();
