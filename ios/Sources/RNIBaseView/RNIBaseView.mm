@@ -888,20 +888,10 @@ static BOOL SHOULD_LOG = NO;
     [NSNumber numberWithInt:[self.recycleCount intValue] + 1];
     
   [self _dispatchEventOnViewWillRecycle];
-  
-  BOOL hasContentDelegate = self.contentDelegate != nil;
-
-  BOOL shouldNotifyDelegate =
-       hasContentDelegate
-    && [self.contentDelegate respondsToSelector:
-         @selector(notifyOnPrepareForReuseWithSender:)];
-         
-  if(shouldNotifyDelegate){
-    [self.contentDelegate notifyOnPrepareForReuseWithSender:self];
-  };
+  [self.eventBroadcaster notifyOnPrepareForReuseWithSender:self];
   
   BOOL shouldAskDelegateIfShouldRecycle =
-       hasContentDelegate
+       self.contentDelegate != nil
     && [self.contentDelegate respondsToSelector:
          @selector(shouldRecycleContentDelegateWithSender:)];
   
