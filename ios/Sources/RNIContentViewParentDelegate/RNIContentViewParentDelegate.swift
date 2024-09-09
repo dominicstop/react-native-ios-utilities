@@ -22,7 +22,7 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
   // MARK: Properties
   // ----------------
 
-  var cachedLayoutMetrics: RNILayoutMetrics { get };
+  var cachedLayoutMetrics: RNILayoutMetrics? { get };
   
   var contentDelegate: RNIContentViewDelegate { get };
   
