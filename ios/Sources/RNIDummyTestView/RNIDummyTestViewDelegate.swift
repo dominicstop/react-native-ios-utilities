@@ -161,7 +161,7 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
       "\n - reactNativeTag:", self.parentReactView?.reactNativeTag ?? -1,
       "\n - parentReactView.viewID:", self.parentReactView?.viewID ?? "N/A",
       "\n - parentReactView.contentDelegate:", self.parentReactView?.contentDelegate.description ?? "N/A",
-      "\n - parentReactView.cachedLayoutMetrics", self.parentReactView?.cachedLayoutMetrics.description ?? "N/A",
+      "\n - parentReactView.cachedLayoutMetrics", self.parentReactView?.cachedLayoutMetrics?.description ?? "N/A",
       "\n"
     );
     
@@ -188,12 +188,11 @@ public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
     print(
       "RNIDummyTestViewDelegate.didMoveToWindow",
       "\n - RNINativeViewIdentifier.viewID:", viewID,
-      "\n - matchingViewForViewID:", matchingViewForViewID,
+      "\n - matchingViewForViewID:", matchingViewForViewID.debugDescription,
       "\n - RNINativeViewIdentifier.reactTag:", reactTag,
-      "\n - matchingViewForReactTag:", matchingViewForReactTag,
+      "\n - matchingViewForReactTag:", matchingViewForReactTag.debugDescription,
       "\n"
     );
-    return;
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 10){
       parentReactView.setSize(.init(width: 300, height: 300));
@@ -323,6 +322,7 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   
   public func notifyDidSetProps(sender: RNIContentViewParentDelegate) {
     self._dispatchEvents();
+    
     print(
       "RNIDummyTestViewDelegate.notifyDidSetProps",
       "\n - someBool:", self.someBool,
@@ -334,6 +334,12 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
       "\n - someObjectOptional:", self.someObjectOptional.debugDescription,
       "\n - someArray:", self.someArray,
       "\n - someArrayOptional:", self.someArrayOptional.debugDescription,
+      "\n"
+    );
+    
+    print(
+      "RNIDummyTestViewDelegate.notifyDidSetProps",
+      "\n - sender.rawProps:", sender.rawProps,
       "\n"
     );
   };
@@ -452,6 +458,5 @@ extension RNIDummyTestViewDelegate: RNIContentViewDelegate {
   public override func didSetProps(_ changedProps: [String]!) {
     self._dispatchEvents();
   };
-  
   #endif
 };
