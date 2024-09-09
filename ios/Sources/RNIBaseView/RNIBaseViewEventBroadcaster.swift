@@ -65,6 +65,15 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleCommon {
       );
     };
   };
+  
+  @objc
+  public func notifyOnRequestForCleanup(
+    sender: RNIContentViewParentDelegate
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnRequestForCleanup?(sender: sender);
+    };
+  };
 };
 
 // MARK: - RNIViewLifecycleFabric
@@ -109,15 +118,6 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
   ) {
     self.viewLifecycleDelegates.invoke {
       $0.notifyOnPrepareForReuse?(sender: sender);
-    };
-  };
-  
-  @objc
-  public func notifyOnRequestForCleanup(
-    sender: RNIContentViewParentDelegate
-  ) {
-    self.viewLifecycleDelegates.invoke {
-      $0.notifyOnRequestForCleanup?(sender: sender);
     };
   };
 };
