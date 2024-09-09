@@ -1009,7 +1009,8 @@ static BOOL SHOULD_LOG = NO;
          
   [self.eventBroadcaster notifyDidSetPropsWithSender:self
                                         changedProps:changedProps];
-  
+                                        
+  [self.eventBroadcaster notifyDidSetPropsWithSender:self];
   [self _dispatchViewEventOnDidSetViewIDIfNeeded];
 }
 
