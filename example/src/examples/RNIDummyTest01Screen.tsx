@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
-import { RNIDummyTestNativeView, RNIUtilitiesModule, RNIDummyTestViewModule, type SharedNativeValueMap } from 'react-native-ios-utilities';
+import { RNIDummyTestNativeView, type RNIUtilitiesModule as RNIUtilitiesModuleType, RNIDummyTestViewModule, type SharedNativeValueMap } from 'react-native-ios-utilities';
 
 const TEST_OBJECT = {
   someBool: true,
@@ -62,21 +62,40 @@ const TEST_ARRAY = [
 export function RNIDummyTest01Screen() {
   const viewID = React.useRef<string | undefined>();
 
+  const RNIUtilitiesModule: typeof RNIUtilitiesModuleType = 
+    (global as any).RNIUtilitiesModule;
+
   React.useEffect(() => {
     // @ts-ignore
     const nativeFabricUIManager = global?.nativeFabricUIManager;
     const isUsingNewArch = nativeFabricUIManager != null;
 
     console.log(`isUsingNewArch: ${isUsingNewArch}`);
-    false && console.log('global: ', Object.keys(global));
-    // console.log('global.RNIUtilitiesModule', global.RNIUtilitiesModule);
-    // console.log('global.RNIUtilitiesModule.dummyFunction', global.RNIUtilitiesModule?.dummyFunction);
-    // console.log('global.RNIUtilitiesModule.dummyFunction()', global.RNIUtilitiesModule?.dummyFunction?.(0));
-    // console.log('global.RNIUtilitiesModule.viewCommandRequest', global.RNIUtilitiesModule?.viewCommandRequest);
-    //console.log('global.NativeModules.RNIUtilitiesModule:', NativeModules.RNIUtilitiesModule);
+    console.log('global: ', Object.keys(global));
+
+    console.log(
+      'global.RNIUtilitiesModule', 
+      (global as any).RNIUtilitiesModule
+    );
+
+    console.log(
+      'global.RNIUtilitiesModule.dummyFunction', 
+      (global as any).RNIUtilitiesModule?.dummyFunction
+    );
+
+    console.log(
+      'global.RNIUtilitiesModule.dummyFunction()', 
+      (global as any).RNIUtilitiesModule?.dummyFunction?.(0)
+    )
+    ;
+    console.log(
+      'global.RNIUtilitiesModule.viewCommandRequest', 
+      (global as any).RNIUtilitiesModule?.viewCommandRequest
+    );
+
     console.log('RNIUtilitiesModule:', Object.keys(RNIUtilitiesModule ?? []));
     
-    false && setTimeout(async () => {
+    setTimeout(async () => {
       console.log("viewID.current:", viewID.current);
 
       const result = await RNIUtilitiesModule?.viewCommandRequest?.(
@@ -87,7 +106,7 @@ export function RNIDummyTest01Screen() {
       console.log("viewCommandRequest:", result);
     }, 1000);
 
-    false && setInterval(() => {
+    setInterval(() => {
       const result = RNIDummyTestViewModule.getSharedValueSomeNumber();
       console.log(
         "JS - RNIDummyTestViewModule.getSharedValueSomeNumber:",
@@ -106,7 +125,7 @@ export function RNIDummyTest01Screen() {
       RNIDummyTestViewModule.setSharedValueSomeNumber(newValue);
     }, 500);
 
-    false && setInterval(() => {
+    setInterval(() => {
       const result = RNIDummyTestViewModule.getAllModuleSharedValues();
       console.log(
         "JS - RNIDummyTestViewModule.getAllModuleSharedValues:",
@@ -114,7 +133,7 @@ export function RNIDummyTest01Screen() {
       );
     }, 1000);
 
-    false && setInterval(() => {
+    setInterval(() => {
       const sharedValuesOld = RNIDummyTestViewModule.getAllModuleSharedValues();
       const sharedValuesCount = Object.keys(sharedValuesOld).length;
 
@@ -148,7 +167,7 @@ export function RNIDummyTest01Screen() {
         /* someArray : */ TEST_ARRAY,
       );
 
-      //alert("somePromiseCommandThatWillAlwaysResolve - resolve");
+      // alert("somePromiseCommandThatWillAlwaysResolve - resolve");
 
       console.log(
         "Module.somePromiseCommandThatWillAlwaysResolve",
@@ -163,7 +182,6 @@ export function RNIDummyTest01Screen() {
   const intervalRef = React.useRef<NodeJS.Timeout | undefined>();
 
   React.useEffect(() => {
-    return;
     if (!isIntervalActive) return;
 
     const intervalID = setInterval(() => {
@@ -247,6 +265,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'white',
   },
   box: {
     width: 60,
