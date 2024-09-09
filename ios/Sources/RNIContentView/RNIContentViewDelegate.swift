@@ -30,6 +30,27 @@ public protocol RNIContentViewDelegate:
   ) -> RNIContentViewDelegate;
   
   @objc
+  optional func notifyOnRequestToSetupLayout(
+    sender: RNIContentViewParentDelegate
+  );
+  
+  @objc
+  optional func notifyOnMountChildComponentView(
+    sender: RNIContentViewParentDelegate,
+    childComponentView: UIView,
+    index: NSInteger,
+    superBlock: () -> Void
+  );
+  
+  @objc
+  optional func notifyOnUnmountChildComponentView(
+    sender: RNIContentViewParentDelegate,
+    childComponentView: UIView,
+    index: NSInteger,
+    superBlock: () -> Void
+  );
+  
+  @objc
   optional func notifyOnViewCommandRequest(
     sender: RNIContentViewParentDelegate,
     forCommandName commandName: String,
