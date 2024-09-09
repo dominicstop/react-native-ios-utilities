@@ -11,6 +11,8 @@ import Foundation
 /// Holds/wraps a `RNIBaseView` instance (i.e. `RNIContentViewParentDelegate`)
 ///
 public class RNIBaseViewController: UIViewController {
+
+  public var shouldTriggerDefaultCleanup = true;
   
   public weak var rootReactView: RNIContentViewParentDelegate?;
   
@@ -36,6 +38,8 @@ public class RNIBaseViewController: UIViewController {
     );
     
     NSLayoutConstraint.activate(constraints);
+    
+    rootReactView.viewLifecycleDelegates.add(self);
   };
 
   public override func viewDidLayoutSubviews() {
@@ -44,5 +48,28 @@ public class RNIBaseViewController: UIViewController {
     };
     
     rootReactView.setSize(self.view.bounds.size);
+  };
+};
+
+extension RNIBaseViewController: RNIViewLifecycle {
+  
+  public func notifyOnRequestForCleanup(sender: RNIContentViewParentDelegate) {
+    guard self.shouldTriggerDefaultCleanup,
+          self.view.window != nil
+    else {
+      return;
+    };
+    
+    if self.presentingViewController != nil {
+      self.dismiss(animated: true);
+      
+    } else if self.parent != nil {
+      self.willMove(toParent: nil);
+      self.view.removeFromSuperview();
+      
+      self.removeFromParent()
+    } else {
+      self.view.removeFromSuperview();
+    };
   };
 };
