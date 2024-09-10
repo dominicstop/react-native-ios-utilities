@@ -66,8 +66,8 @@ extension RNIBaseViewController: RNIViewLifecycle {
     } else if self.parent != nil {
       self.willMove(toParent: nil);
       self.view.removeFromSuperview();
+      self.removeFromParent();
       
-      self.removeFromParent()
     } else {
       self.view.removeFromSuperview();
     };
