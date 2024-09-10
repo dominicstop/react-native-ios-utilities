@@ -4,7 +4,11 @@ import type { HostComponent, ViewProps } from 'react-native';
 
 // stubs
 export interface NativeProps extends ViewProps {
+  // common/shared events
   onDidSetViewID: BubblingEventHandler<{}>;
+  onViewWillRecycle: BubblingEventHandler<{}>;
+
+  // event stubs
   onContentViewDidDetach?: BubblingEventHandler<{}>;
 };
 
