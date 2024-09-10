@@ -16,6 +16,7 @@ public final class RNIDetachedViewContent: UIView, RNIContentView {
   // ----------------------
   
   public enum Events: String, CaseIterable {
+    case onRawNativeEvent;
     case onContentViewDidDetach;
   };
   

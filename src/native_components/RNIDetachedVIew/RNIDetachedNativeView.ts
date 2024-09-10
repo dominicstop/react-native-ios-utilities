@@ -9,11 +9,11 @@ import type { OnContentViewDidDetachEvent } from './RNIDetachedViewEvents';
 
 import type { SharedViewEvents } from '../../types/SharedViewEvents';
 import type { RemapObject } from '../../types/UtilityTypes';
-import type { NativeComponentBaseProps } from '../../types/ReactNativeUtilityTypes';
+import type { NativeComponentBasePropsInternal } from '../../types/ReactNativeUtilityTypes';
 
 
 type RNIDetachedViewNativeComponentBaseProps = 
-  NativeComponentBaseProps<RNIDetachedViewNativeComponentProps>;
+  NativeComponentBasePropsInternal<RNIDetachedViewNativeComponentProps>;
 
 export type RNIDetachedNativeViewBaseProps = RemapObject<RNIDetachedViewNativeComponentBaseProps, {
   // events

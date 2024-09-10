@@ -7,6 +7,7 @@ export interface NativeProps extends ViewProps {
   // common/shared events
   onDidSetViewID: BubblingEventHandler<{}>;
   onViewWillRecycle: BubblingEventHandler<{}>;
+  onRawNativeEvent: BubblingEventHandler<{}>;
 
   // event stubs
   onContentViewDidDetach?: BubblingEventHandler<{}>;
