@@ -11,9 +11,13 @@ export type RNIWrapperViewRef = {
 };
 
 export type RNIWrapperViewInheritedOptionalProps = Partial<Pick<RNIWrapperNativeViewProps,
+  // shared/internal events
   | 'onDidSetViewID'
   | 'onViewWillRecycle'
   | 'onRawNativeEvent'
+
+  // shared/internal props
+  | 'rawDataForNative'
 >>;
 
 export type RNIWrapperViewBaseProps = {

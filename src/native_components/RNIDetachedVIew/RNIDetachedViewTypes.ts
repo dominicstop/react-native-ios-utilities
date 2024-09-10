@@ -18,9 +18,15 @@ export type RNIDetachedViewRef = {
 };
 
 export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNativeViewProps,
+  // shared/internal events
   | 'onDidSetViewID'
   | 'onViewWillRecycle'
   | 'onRawNativeEvent'
+
+  // shared/internal props
+  | 'rawDataForNative'
+
+  // events
   | 'onContentViewDidDetach'
 >>;
 
