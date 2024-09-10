@@ -19,6 +19,7 @@ static BOOL SHOULD_LOG = NO;
 @implementation RNIBaseViewPaperEventHandler {
   __weak RNIBaseView *_parentView;
   Class  _eventHolderClass;
+  NSString *_eventHolderClassName;
   RNIBaseViewPaperEventHolder *_eventHolderInstance;
 };
 
@@ -34,8 +35,20 @@ static BOOL SHOULD_LOG = NO;
   };
     
   return _sharedClassRegistry;
+}
+
+/// Key: `NSString`, class name
+/// Value: `NSArray<NSString>`, list of event names
+///
++ (NSMutableDictionary *)sharedSupportedEventRegistry
+{
+  static NSMutableDictionary * _sharedSupportedEventRegistry = nil;
+  
+  if (_sharedSupportedEventRegistry == nil) {
+    _sharedSupportedEventRegistry = [NSMutableDictionary new];
   };
     
+  return _sharedSupportedEventRegistry;
 }
 
 - (instancetype)initWithParentRef:(RNIBaseView *)parentView
@@ -48,6 +61,8 @@ static BOOL SHOULD_LOG = NO;
       NSString *refClassName = NSStringFromClass([parentView class]);
       return [refClassName stringByAppendingString:@"EventHolder"];
     }();
+    
+    self->_eventHolderClassName = className;
     
     Class associatedClass = ^{
       Class matchingClass =
@@ -81,6 +96,20 @@ static BOOL SHOULD_LOG = NO;
 
 - (void)createSettersForEvents:(NSArray *)events
 {
+  NSArray *associatedEvents =
+    [[[self class] sharedSupportedEventRegistry] objectForKey:self->_eventHolderClassName];
+  
+  BOOL shouldCreateSettersForEvents =
+       associatedEvents == nil
+    && [associatedEvents count] != [events count];
+    
+  if(!shouldCreateSettersForEvents){
+    return;
+  };
+  
+  [[[self class] sharedSupportedEventRegistry] setObject:events
+                                                  forKey:self->_eventHolderClassName];
+  
   for (NSString *eventName in events) {
     NSString *setterName =
       [RNIObjcUtils createSetterSelectorStringForPropertyName:eventName];

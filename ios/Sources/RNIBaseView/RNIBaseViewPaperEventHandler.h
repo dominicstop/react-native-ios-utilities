@@ -12,9 +12,19 @@
 
 @interface RNIBaseViewPaperEventHandler : NSObject
 
-@property (nonatomic, weak, nullable) RNIBaseView *parentView;
+// MARK: - Static/Class Members
+// ----------------------------
 
 + (nonnull NSMutableDictionary *)sharedClassRegistry;
++ (nonnull NSMutableDictionary *)sharedSupportedEventRegistry;
+
+// MARK: - Properties
+// ------------------
+
+@property (nonatomic, weak, nullable) RNIBaseView *parentView;
+
+// MARK: - Methods
+// ---------------
 
 - (nonnull instancetype)initWithParentRef:(nonnull id)ref;
 
