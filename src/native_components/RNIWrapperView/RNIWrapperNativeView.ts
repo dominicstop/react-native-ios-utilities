@@ -2,6 +2,7 @@ import type { HostComponent, ViewProps } from 'react-native';
 
 import type { SharedViewEvents } from '../../types/SharedViewEvents';
 import type { RemapObject } from '../../types/UtilityTypes';
+import type { NativeComponentBaseProps } from '../../types/ReactNativeUtilityTypes';
 
 
 import { 
@@ -10,7 +11,7 @@ import {
 } from './RNIWrapperViewNativeComponent';
 
 type RNIWrapperViewNativeComponentBaseProps = 
-  Omit<RNIWrapperViewNativeComponentProps, keyof (ViewProps & SharedViewEvents)>
+  NativeComponentBaseProps<RNIWrapperViewNativeComponentProps>;
 
 export type RNIWrapperNativeViewBaseProps = RemapObject<RNIWrapperViewNativeComponentBaseProps, {
   // TBA
