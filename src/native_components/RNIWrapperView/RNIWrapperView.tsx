@@ -1,12 +1,9 @@
 import * as React from 'react';
 
-import { type StateViewID, type StateReactTag } from "react-native-ios-utilities";
 import { RNIWrapperNativeView } from './RNIWrapperNativeView';
 
-import type { 
-  RNIWrapperViewProps, 
-  RNIWrapperViewRef, 
-} from './RNIWrapperViewTypes';
+import type { RNIWrapperViewProps, RNIWrapperViewRef } from './RNIWrapperViewTypes';
+import type { StateReactTag, StateViewID } from '../../types/SharedStateTypes';
 
 
 export const RNIWrapperView = React.forwardRef<

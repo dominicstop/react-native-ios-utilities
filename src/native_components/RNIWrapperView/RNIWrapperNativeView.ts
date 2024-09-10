@@ -1,5 +1,8 @@
 import type { HostComponent, ViewProps } from 'react-native';
-import type { SharedViewEvents, RemapObject } from 'react-native-ios-utilities';
+
+import type { SharedViewEvents } from '../../types/SharedViewEvents';
+import type { RemapObject } from '../../types/UtilityTypes';
+
 
 import { 
   default as RNIWrapperViewNativeComponent,

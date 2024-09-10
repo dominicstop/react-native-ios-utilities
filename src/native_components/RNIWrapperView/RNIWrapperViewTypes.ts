@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import type { ViewProps } from "react-native";
 
 import type { RNIWrapperNativeViewProps } from "./RNIWrapperNativeView";
-import type { StateReactTag, StateViewID } from "react-native-ios-utilities";
+import type { StateReactTag, StateViewID } from '../../types/SharedStateTypes';
 
 
 export type RNIWrapperViewRef = {

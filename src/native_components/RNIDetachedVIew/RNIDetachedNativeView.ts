@@ -1,5 +1,9 @@
 import type { HostComponent, ViewProps } from 'react-native';
-import type { SharedViewEvents, RemapObject, OnContentViewDidDetachEvent } from 'react-native-ios-utilities';
+
+import type { OnContentViewDidDetachEvent } from './RNIDetachedViewEvents';
+import type { SharedViewEvents } from '../../types/SharedViewEvents';
+import type { RemapObject } from '../../types/UtilityTypes';
+
 
 import { 
   default as RNIDetachedViewNativeComponent,
