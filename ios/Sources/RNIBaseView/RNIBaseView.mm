@@ -253,7 +253,7 @@ static BOOL SHOULD_LOG = NO;
   NSDictionary *propTypeMap =
     [self.contentDelegate _getSupportedReactPropsTypeMap];
     
-  [self.reactPropHandler setPropTypeMap:propTypeMap];
+  [self.reactPropHandler setPropTypeMapIfNeeded:propTypeMap];
   
   NSArray *propList = [self.contentDelegate _getSupportedReactProps];
   [self.reactPropHandler createSettersIfNeededForProps:propList];

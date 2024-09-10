@@ -32,6 +32,6 @@
 
 - (void)createSettersIfNeededForProps:(nonnull NSArray *)props;
 
-- (void)setPropTypeMap:(nonnull NSDictionary *)propTypeMap;
+- (void)setPropTypeMapIfNeeded:(nonnull NSDictionary *)propTypeMap;
 
 @end

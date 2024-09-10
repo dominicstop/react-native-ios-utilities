@@ -170,7 +170,7 @@ static BOOL SHOULD_LOG = NO;
   };
 };
 
-- (void)setPropTypeMap:(NSDictionary *)propTypeMap
+- (void)setPropTypeMapIfNeeded:(NSDictionary *)propTypeMap
 {
   BOOL shouldCreateBoolPropMap = self.boolSettersToPropNameMap == nil;
   if(!shouldCreateBoolPropMap){
