@@ -10,12 +10,12 @@ import DGSwiftUtilities
 
 
 @objc(RNIWrapperViewContent)
-public final class RNIWrapperViewContent: UIView, RNIContentView {
+public final class RNIWrapperViewContent: UIView, RNIContentViewInternal {
 
   // MARK: - Embedded Types
   // ----------------------
   
-  public enum Events: String, CaseIterable {
+  public enum Events: String, CaseIterable, RNIViewInternalEvents {
     case onRawNativeEvent;
   };
   

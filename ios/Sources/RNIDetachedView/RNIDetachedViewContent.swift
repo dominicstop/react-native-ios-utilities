@@ -10,12 +10,13 @@ import DGSwiftUtilities
 
 
 @objc(RNIDetachedViewContent)
-public final class RNIDetachedViewContent: UIView, RNIContentView {
+public final class RNIDetachedViewContent:
+  UIView, RNIContentView, RNIContentViewInternal {
 
   // MARK: - Embedded Types
   // ----------------------
   
-  public enum Events: String, CaseIterable {
+  public enum Events: String, CaseIterable, RNIViewInternalEvents {
     case onRawNativeEvent;
     case onContentViewDidDetach;
   };
