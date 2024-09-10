@@ -14,8 +14,8 @@ public class RNIBaseViewEventBroadcaster: NSObject {
 
   public weak var parentReactView: RNIContentViewParentDelegate?;
   
-  public var viewLifecycleDelegates: MulticastDelegate<RNIViewLifecycle> = .init();
   
+  public var reactViewLifecycleDelegates: MulticastDelegate<RNIViewLifecycle> = .init();
   public var reactViewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> = .init();
   
   // MARK: Visible to Obj-C
@@ -32,7 +32,7 @@ public class RNIBaseViewEventBroadcaster: NSObject {
       return;
     };
     
-    self.viewLifecycleDelegates.add(contentDelegate);
+    self.reactViewLifecycleDelegates.add(contentDelegate);
     self.reactViewPropUpdatesDelegates.add(contentDelegate);
   };
 };
@@ -46,7 +46,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleCommon {
   public func notifyOnInit(
     sender: RNIContentViewParentDelegate
   ) {
-    self.viewLifecycleDelegates.invoke {
+    self.reactViewLifecycleDelegates.invoke {
       $0.notifyOnInit?(sender: sender);
     };
   };
@@ -57,7 +57,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleCommon {
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   ) {
-    self.viewLifecycleDelegates.invoke {
+    self.reactViewLifecycleDelegates.invoke {
       $0.notifyOnUpdateLayoutMetrics?(
         sender: sender,
         oldLayoutMetrics: oldLayoutMetrics,
@@ -70,7 +70,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleCommon {
   public func notifyOnRequestForCleanup(
     sender: RNIContentViewParentDelegate
   ) {
-    self.viewLifecycleDelegates.invoke {
+    self.reactViewLifecycleDelegates.invoke {
       $0.notifyOnRequestForCleanup?(sender: sender);
     };
   };
@@ -88,7 +88,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
     oldState: NSDictionary?,
     newState: NSDictionary
   ) {
-    self.viewLifecycleDelegates.invoke {
+    self.reactViewLifecycleDelegates.invoke {
       $0.notifyOnUpdateState?(
         sender: sender,
         oldState: oldState,
@@ -103,7 +103,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
     updateMaskRaw: Int,
     updateMask: RNIComponentViewUpdateMask
   ) {
-    self.viewLifecycleDelegates.invoke {
+    self.reactViewLifecycleDelegates.invoke {
       $0.notifyOnFinalizeUpdates?(
         sender: sender,
         updateMaskRaw: updateMaskRaw,
@@ -116,7 +116,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
   public func notifyOnPrepareForReuse(
     sender: RNIContentViewParentDelegate
   ) {
-    self.viewLifecycleDelegates.invoke {
+    self.reactViewLifecycleDelegates.invoke {
       $0.notifyOnPrepareForReuse?(sender: sender);
     };
   };
@@ -132,7 +132,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecyclePaper {
   public func notifyOnViewWillInvalidate(
     sender: RNIContentViewParentDelegate
   ) {
-    self.viewLifecycleDelegates.invoke {
+    self.reactViewLifecycleDelegates.invoke {
       $0.notifyOnViewWillInvalidate?(sender: sender);
     };
   };
@@ -146,7 +146,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecyclePaper {
     sender: RNIContentViewParentDelegate,
     notification: Notification
   ) {
-    self.viewLifecycleDelegates.invoke {
+    self.reactViewLifecycleDelegates.invoke {
       $0.notifyOnBridgeWillReload?(
         sender: sender,
         notification: notification

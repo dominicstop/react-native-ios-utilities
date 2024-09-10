@@ -39,7 +39,7 @@ open class RNIBaseViewController: UIViewController {
     
     NSLayoutConstraint.activate(constraints);
     
-    rootReactView.viewLifecycleDelegates.add(self);
+    rootReactView.reactViewLifecycleDelegates.add(self);
   };
 
   public override func viewDidLayoutSubviews() {
