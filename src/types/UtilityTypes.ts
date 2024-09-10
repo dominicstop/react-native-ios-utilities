@@ -25,3 +25,7 @@ export type Merge<A, B> = {
     ? A[K]
     : never;
 };
+
+export type Merge3<A, B, C> = Merge<Merge<A, B>, C>;
+
+export type ConvertPropertiesToAny<T> = { [K in keyof T]: any };
