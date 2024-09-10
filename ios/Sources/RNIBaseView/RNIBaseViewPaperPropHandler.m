@@ -20,7 +20,6 @@ static BOOL SHOULD_LOG = NO;
   __weak RNIBaseView *_parentView;
   Class  _propHolderClass;
   NSString *_propHolderClassName;
-  NSMutableDictionary *_boolSettersToPropNameMap;
 };
 
 // MARK: - Class Members
@@ -54,6 +53,36 @@ static BOOL SHOULD_LOG = NO;
   return _sharedSupportedPropsRegistry;
 }
 
+/// Key: `NSString`, class name
+/// Value: `NSDictionary`, boolSettersToPropNameMap
+/// * Key: `NSString`, selector string, i.e. prop setter name
+/// * Value: `NSString`, prop name
+///
++ (NSMutableDictionary *)sharedBoolPropsMap
+{
+  static NSMutableDictionary * _sharedBoolPropsMap = nil;
+  
+  if (_sharedBoolPropsMap == nil) {
+    _sharedBoolPropsMap = [NSMutableDictionary new];
+  };
+    
+  return _sharedBoolPropsMap;
+}
+
+// MARK: - Setter/Getters
+// ----------------------
+
+- (NSMutableDictionary *)boolSettersToPropNameMap
+{
+  return [[[self class] sharedBoolPropsMap] objectForKey:self->_propHolderClassName];
+};
+
+- (void)setBoolSettersToPropNameMap:(NSMutableDictionary *)newValue
+{
+  [[[self class] sharedBoolPropsMap] setObject:newValue
+                                        forKey:self->_propHolderClassName];
+}
+
 // MARK: - Init
 // ------------
 
@@ -62,7 +91,6 @@ static BOOL SHOULD_LOG = NO;
   self = [[self class] new];
   if(self){
     self->_parentView = parentView;
-    self->_boolSettersToPropNameMap = [NSMutableDictionary new];
     
     NSString *className = ^{
       NSString *refClassName = NSStringFromClass([parentView class]);
@@ -144,7 +172,18 @@ static BOOL SHOULD_LOG = NO;
 
 - (void)setPropTypeMap:(NSDictionary *)propTypeMap
 {
-  [propTypeMap enumerateKeysAndObjectsUsingBlock:^(NSString *propName, NSString *propType, BOOL *stop) {
+  BOOL shouldCreateBoolPropMap = self.boolSettersToPropNameMap == nil;
+  if(!shouldCreateBoolPropMap){
+    return;
+  };
+  
+  self.boolSettersToPropNameMap = [NSMutableDictionary new];
+
+  [propTypeMap enumerateKeysAndObjectsUsingBlock:^(
+    NSString *propName,
+    NSString *propType,
+    BOOL *stop
+  ) {
     BOOL isTypeBool =
       [propType localizedCaseInsensitiveContainsString:@"bool"];
       
@@ -152,8 +191,8 @@ static BOOL SHOULD_LOG = NO;
       NSString *setterName =
         [RNIObjcUtils createSetterSelectorStringForPropertyName:propName];
         
-      [self->_boolSettersToPropNameMap setObject:propName
-                                          forKey:setterName];
+      [self.boolSettersToPropNameMap setObject:propName
+                                        forKey:setterName];
     };
   }];
 }
@@ -161,9 +200,10 @@ static BOOL SHOULD_LOG = NO;
 - (BOOL)isBoolSetterForSelector:(SEL)selector
 {
   NSString *selectorString = NSStringFromSelector(selector);
-  id match = [self->_boolSettersToPropNameMap valueForKey:selectorString];
+  id match = [self.boolSettersToPropNameMap valueForKey:selectorString];
+  BOOL hasMatch = match != nil;
   
-  return match != nil;
+  return hasMatch;
 }
 
 // MARK: - Methods (Internal)
