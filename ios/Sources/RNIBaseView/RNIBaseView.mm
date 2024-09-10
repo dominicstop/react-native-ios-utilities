@@ -123,6 +123,55 @@ static BOOL SHOULD_LOG = NO;
   
   return self;
 }
+
+- (void)initPaper
+{
+#if DEBUG
+  [[NSNotificationCenter defaultCenter]
+    addObserver:self
+       selector:@selector(handleOnBridgeWillReloadNotification:)
+           name:RCTBridgeWillReloadNotification
+         object:nil];
+#endif
+
+  if(self.contentDelegate == nil){
+    return;
+  };
+  
+  [self.reactEventHandler createSettersIfNeededForEvents:^(){
+    NSMutableArray *events =
+      [NSMutableArray arrayWithArray:[self.contentDelegate _getSupportedReactEvents]];
+      
+    RNILog(
+      @"%@\n%@ %@\n%@ %@",
+      @"[RNIBaseView initCommon]",
+      @" - Class Name:", NSStringFromClass([self class]),
+      @" - Supported Events:", events
+    );
+    
+    if([[self class] doesSupportBaseEventOnViewWillRecycle]){
+      [events addObject:@"onViewWillRecycle"];
+    };
+
+    [events addObject:@"onDidSetViewID"];
+    return events;
+  }()];
+  
+  NSDictionary *propTypeMap =
+    [self.contentDelegate _getSupportedReactPropsTypeMap];
+    
+  [self.reactPropHandler setPropTypeMapIfNeeded:propTypeMap];
+  
+  NSArray *propList = [self.contentDelegate _getSupportedReactProps];
+  [self.reactPropHandler createSettersIfNeededForProps:propList];
+  
+  RNILog(
+    @"%@\n%@ %@\n%@ %@",
+    @"RNIBaseView.initCommon",
+    @" - Class Name:", NSStringFromClass([self class]),
+    @" - Supported Props:", propList
+  );
+}
 #endif
 
 -(void)initViewDelegate
@@ -213,58 +262,14 @@ static BOOL SHOULD_LOG = NO;
   
   [self.eventBroadcaster registerDelegatesFromParentReactView];
   
+  #if !RCT_NEW_ARCH_ENABLED
+  [self initPaper];
+  #endif
+  
   if(!self->_didNotifyForInit) {
     self->_didNotifyForInit = YES;
     [self.eventBroadcaster notifyOnInitWithSender:self];
   };
-  
-#if !RCT_NEW_ARCH_ENABLED
-#if DEBUG
-  [[NSNotificationCenter defaultCenter]
-    addObserver:self
-       selector:@selector(handleOnBridgeWillReloadNotification:)
-           name:RCTBridgeWillReloadNotification
-         object:nil];
-#endif
-
-  if(self.contentDelegate == nil){
-    return;
-  };
-  
-  [self.reactEventHandler createSettersIfNeededForEvents:^(){
-    NSMutableArray *events =
-      [NSMutableArray arrayWithArray:[self.contentDelegate _getSupportedReactEvents]];
-      
-    RNILog(
-      @"%@\n%@ %@\n%@ %@",
-      @"[RNIBaseView initCommon]",
-      @" - Class Name:", NSStringFromClass([self class]),
-      @" - Supported Events:", events
-    );
-    
-    if([[self class] doesSupportBaseEventOnViewWillRecycle]){
-      [events addObject:@"onViewWillRecycle"];
-    };
-
-    [events addObject:@"onDidSetViewID"];
-    return events;
-  }()];
-  
-  NSDictionary *propTypeMap =
-    [self.contentDelegate _getSupportedReactPropsTypeMap];
-    
-  [self.reactPropHandler setPropTypeMapIfNeeded:propTypeMap];
-  
-  NSArray *propList = [self.contentDelegate _getSupportedReactProps];
-  [self.reactPropHandler createSettersIfNeededForProps:propList];
-  
-  RNILog(
-    @"%@\n%@ %@\n%@ %@",
-    @"RNIBaseView.initCommon",
-    @" - Class Name:", NSStringFromClass([self class]),
-    @" - Supported Props:", propList
-  );
-#endif
 }
 
 - (void)setupAttachContentDelegate
