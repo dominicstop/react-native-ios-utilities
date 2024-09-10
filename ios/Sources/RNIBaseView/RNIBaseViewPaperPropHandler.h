@@ -16,6 +16,7 @@
 // ----------------------------
 
 + (nonnull NSMutableDictionary *)sharedClassRegistry;
++ (nonnull NSMutableDictionary *)sharedSupportedPropsRegistry;
 
 // MARK: - Properties
 // ------------------

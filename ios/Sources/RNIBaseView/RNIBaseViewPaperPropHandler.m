@@ -19,6 +19,7 @@ static BOOL SHOULD_LOG = NO;
 @implementation RNIBaseViewPaperPropHandler {
   __weak RNIBaseView *_parentView;
   Class  _propHolderClass;
+  NSString *_propHolderClassName;
   NSMutableDictionary *_boolSettersToPropNameMap;
 };
 
@@ -39,6 +40,20 @@ static BOOL SHOULD_LOG = NO;
   return _sharedClassRegistry;
 }
 
+/// Key: `NSString`, class name
+/// Value: `NSArray<NSString>`, list of prop names
+///
++ (NSMutableDictionary *)sharedSupportedPropsRegistry
+{
+  static NSMutableDictionary * _sharedSupportedPropsRegistry = nil;
+  
+  if (_sharedSupportedPropsRegistry == nil) {
+    _sharedSupportedPropsRegistry = [NSMutableDictionary new];
+  };
+    
+  return _sharedSupportedPropsRegistry;
+}
+
 // MARK: - Init
 // ------------
 
@@ -53,6 +68,8 @@ static BOOL SHOULD_LOG = NO;
       NSString *refClassName = NSStringFromClass([parentView class]);
       return [refClassName stringByAppendingString:@"PropHolder"];
     }();
+    
+    self->_propHolderClassName = className;
     
     Class associatedClass = ^{
       Class matchingClass =
@@ -86,6 +103,27 @@ static BOOL SHOULD_LOG = NO;
 
 - (void)createSettersForProps:(NSArray *)props
 {
+  NSArray *associatedProps =
+    [[[self class] sharedSupportedPropsRegistry] objectForKey:self->_propHolderClassName];
+  
+  BOOL shouldCreateSettersForProps = ^{
+    if(associatedProps == nil){
+      return YES;
+    };
+    
+    if([associatedProps count] != [props count]) {
+      return YES;
+    };
+    
+    return NO;
+  }();
+  
+  if(!shouldCreateSettersForProps){
+    return;
+  };
+  
+  [[[self class] sharedSupportedPropsRegistry] setObject:props
+                                                  forKey:self->_propHolderClassName];
   for (NSString *propName in props) {
     NSString *setterName =
       [RNIObjcUtils createSetterSelectorStringForPropertyName:propName];
