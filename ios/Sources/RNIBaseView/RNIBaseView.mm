@@ -256,7 +256,7 @@ static BOOL SHOULD_LOG = NO;
   [self.reactPropHandler setPropTypeMap:propTypeMap];
   
   NSArray *propList = [self.contentDelegate _getSupportedReactProps];
-  [self.reactPropHandler createSettersForProps:propList];
+  [self.reactPropHandler createSettersIfNeededForProps:propList];
   
   RNILog(
     @"%@\n%@ %@\n%@ %@",

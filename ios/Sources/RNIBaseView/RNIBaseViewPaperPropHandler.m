@@ -129,7 +129,7 @@ static BOOL SHOULD_LOG = NO;
 // MARK: Methods (Public)
 // ----------------------
 
-- (void)createSettersForProps:(NSArray *)props
+- (void)createSettersIfNeededForProps:(NSArray *)props
 {
   NSArray *associatedProps =
     [[[self class] sharedSupportedPropsRegistry] objectForKey:self->_propHolderClassName];
