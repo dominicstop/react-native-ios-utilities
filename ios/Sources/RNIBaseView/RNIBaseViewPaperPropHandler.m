@@ -22,14 +22,16 @@ static BOOL SHOULD_LOG = NO;
   NSMutableDictionary *_boolSettersToPropNameMap;
 };
 
-static NSMutableDictionary * _sharedPropHolderClassRegistry = nil;
+
 + (NSMutableDictionary *)sharedClassRegistry
 {
-  if ( _sharedPropHolderClassRegistry == nil) {
-    _sharedPropHolderClassRegistry = [NSMutableDictionary new];
+  static NSMutableDictionary * _sharedClassRegistry = nil;
+  
+  if (_sharedClassRegistry == nil) {
+    _sharedClassRegistry = [NSMutableDictionary new];
   };
     
-  return _sharedPropHolderClassRegistry;
+  return _sharedClassRegistry;
 }
 
 - (instancetype)initWithParentRef:(RNIBaseView *)parentView
