@@ -18,11 +18,13 @@ export * from './types/NativeTypes';
 export * from './types/ImageItemConfig';
 
 export * from './types/SharedViewEvents';
+export * from './types/SharedViewEventsInternal';
 export * from './types/MiscTypes';
 export * from './types/NativeError';
 export * from './types/SharedPropTypes';
 export * from './types/SharedStateTypes';
 export * from './types/UtilityTypes';
+export * from './types/ReactNativeUtilityTypes';
 
 export * from './example_components/Card';
 export * from './example_components/ExampleItemCard';
