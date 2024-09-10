@@ -67,6 +67,10 @@ public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
 // --------------------------------------------
 
 public extension RNIContentViewParentDelegate {
+
+  var viewLifecycleDelegates: MulticastDelegate<ViewLifecycleEventsNotifiable>! {
+    self.eventBroadcaster.viewLifecycleDelegates;
+  };
   
   var reactViewLifecycleDelegates: MulticastDelegate<RNIViewLifecycle>! {
     self.eventBroadcaster.reactViewLifecycleDelegates;

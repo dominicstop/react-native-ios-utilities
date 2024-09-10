@@ -694,18 +694,15 @@ static BOOL SHOULD_LOG = NO;
 };
 #endif
 
-// MARK: - View/React Lifecycle (Fabric + Paper)
-// ---------------------------------------------
+// MARK: - View Lifecycle (Fabric + Paper)
+// ---------------------------------------
 
 - (void)willMoveToWindow:(UIWindow *)newWindow
 {
-  if(newWindow == nil){
-    return;
-  };
-  
 #if RCT_NEW_ARCH_ENABLED
   BOOL shouldAttachContentDelegate =
-       self->_contentDelegate != nil
+       newWindow != nil
+    && self->_contentDelegate != nil
     && !self->_didAttachContentDelegate;
     
   if(shouldAttachContentDelegate){
@@ -714,10 +711,76 @@ static BOOL SHOULD_LOG = NO;
 #endif
   
   [[RNIViewRegistry shared] registerViewUsingReactTagForView:self];
+  
+  [self.eventBroadcaster notifyOnViewWillMoveToWindowWithSender:self
+                                                      newWindow:newWindow];
 }
 
-// MARK: - View/React Lifecycle (Fabric Only)
-// ------------------------------------------
+- (void)didMoveToWindow
+{
+  #if !RCT_NEW_ARCH_ENABLED
+  [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
+    self.cachedShadowView = shadowView;
+    if(shadowView == nil){
+      return;
+    };
+  }];
+  #endif
+  
+  [self.eventBroadcaster notifyOnViewDidMoveToWindowWithSender:self];
+}
+
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+  [self.eventBroadcaster notifyOnViewWillMoveToSuperviewWithSender:self
+                                                      newSuperview:newSuperview];
+}
+
+- (void)didMoveToSuperview
+{
+  [self.eventBroadcaster notifyOnViewDidMoveToSuperviewWithSender:self];
+}
+
+- (void)layoutSubviews
+{
+  [super layoutSubviews];
+  
+  #if !RCT_NEW_ARCH_ENABLED
+  if(self.cachedShadowView == nil){
+    [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
+      self.cachedShadowView = shadowView;
+      if(shadowView == nil){
+        return;
+      };
+      
+      [self _notifyDelegateForLayoutMetricsUpdate];
+    }];
+    
+  } else {
+    [self _notifyDelegateForLayoutMetricsUpdate];
+  };
+  
+  RNILog(
+    @"%@\n%@ %d\n%@ %@\n%@ %@\n%@ %@",
+    @"RNIBaseView.layoutSubviews",
+    @" - self.reactSubviews count:", (int)[self.reactSubviews count],
+    @" - self.cachedShadowView:", self.cachedShadowView,
+    @" - self.frame:", NSStringFromCGRect(self.frame),
+    @" - self.cachedLayoutMetrics:", self.cachedLayoutMetrics
+  );
+  #endif
+  
+  [self.eventBroadcaster notifyOnViewLayoutSubviewsWithSender:self];
+}
+
+- (void)removeFromSuperview
+{
+  [super removeFromSuperview];
+  [self.eventBroadcaster notifyOnViewRemovedFromSuperviewWithSender:self];
+}
+
+// MARK: - React Lifecycle (Fabric Only)
+// -------------------------------------
 
 #ifdef RCT_NEW_ARCH_ENABLED
 -(void)mountChildComponentView:(UIView<RCTComponentViewProtocol> *)childComponentView
@@ -915,46 +978,8 @@ static BOOL SHOULD_LOG = NO;
 }
 #else
 
-// MARK: - View/React Lifecycle (Paper Only)
-// -----------------------------------------
-
-- (void)didMoveToWindow
-{
-  [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
-    self.cachedShadowView = shadowView;
-    if(shadowView == nil){
-      return;
-    };
-  }];
-}
-
-- (void)layoutSubviews
-{
-  [super layoutSubviews];
-  
-  if(self.cachedShadowView == nil){
-    [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
-      self.cachedShadowView = shadowView;
-      if(shadowView == nil){
-        return;
-      };
-      
-      [self _notifyDelegateForLayoutMetricsUpdate];
-    }];
-    
-  } else {
-    [self _notifyDelegateForLayoutMetricsUpdate];
-  };
-  
-  RNILog(
-    @"%@\n%@ %d\n%@ %@\n%@ %@\n%@ %@",
-    @"RNIBaseView.layoutSubviews",
-    @" - self.reactSubviews count:", (int)[self.reactSubviews count],
-    @" - self.cachedShadowView:", self.cachedShadowView,
-    @" - self.frame:", NSStringFromCGRect(self.frame),
-    @" - self.cachedLayoutMetrics:", self.cachedLayoutMetrics
-  );
-}
+// MARK: - React Lifecycle (Paper Only)
+// ------------------------------------
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
 {

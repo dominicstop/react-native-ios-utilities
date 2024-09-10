@@ -14,8 +14,10 @@ public class RNIBaseViewEventBroadcaster: NSObject {
 
   public weak var parentReactView: RNIContentViewParentDelegate?;
   
+  public var viewLifecycleDelegates: MulticastDelegate<ViewLifecycleEventsNotifiable> = .init();
   
   public var reactViewLifecycleDelegates: MulticastDelegate<RNIViewLifecycle> = .init();
+
   public var reactViewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> = .init();
   
   // MARK: Visible to Obj-C
@@ -206,4 +208,69 @@ extension RNIBaseViewEventBroadcaster: RNIViewPropUpdatesNotifiable {
     };
   };
   #endif
+};
+
+extension RNIBaseViewEventBroadcaster: ViewLifecycleEventsNotifiable {
+  
+  @objc
+  public func notifyOnViewWillMoveToWindow(
+    sender: UIView,
+    newWindow: UIWindow?
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnViewWillMoveToWindow(
+        sender: sender,
+        newWindow: newWindow
+      );
+    };
+  };
+  
+  @objc
+  public func notifyOnViewDidMoveToWindow(
+    sender: UIView
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnViewDidMoveToWindow(sender: sender);
+    };
+  };
+  
+  @objc
+  public func notifyOnViewWillMoveToSuperview(
+    sender: UIView,
+    newSuperview: UIView?
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnViewWillMoveToSuperview(
+        sender: sender,
+        newSuperview: newSuperview
+      );
+    };
+  };
+  
+  @objc
+  public func notifyOnViewDidMoveToSuperview(
+    sender: UIView
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnViewDidMoveToSuperview(sender: sender);
+    };
+  };
+  
+  @objc
+  public func notifyOnViewLayoutSubviews(
+    sender: UIView
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnViewLayoutSubviews(sender: sender);
+    };
+  };
+  
+  @objc
+  public func notifyOnViewRemovedFromSuperview(
+    sender: UIView
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnViewRemovedFromSuperview(sender: sender);
+    };
+  };
 };

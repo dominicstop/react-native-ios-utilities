@@ -93,6 +93,21 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 - (void) initCommon NS_REQUIRES_SUPER;
 
+// MARK: - View Lifecycle (Fabric + Paper)
+// ---------------------------------------
+
+- (void)willMoveToWindow:(nullable UIWindow *)newWindow NS_REQUIRES_SUPER;
+
+- (void)didMoveToWindow NS_REQUIRES_SUPER;
+
+- (void)willMoveToSuperview:(nullable UIView *)newSuperview NS_REQUIRES_SUPER;
+
+- (void)didMoveToSuperview NS_REQUIRES_SUPER;
+
+- (void)layoutSubviews NS_REQUIRES_SUPER;
+
+- (void)removeFromSuperview NS_REQUIRES_SUPER;
+
 // MARK: - Methods (Paper-Only)
 // ----------------------------
 
