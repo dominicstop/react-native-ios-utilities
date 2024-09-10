@@ -1048,7 +1048,8 @@ static BOOL SHOULD_LOG = NO;
 // -------------------
 
 // This is meant to be overridden by the subclass
-+ (Class _Nonnull)viewDelegateClass {
++ (Class _Nonnull)viewDelegateClass
+{
   NSString *errorMessage = [NSString stringWithFormat:
     @"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
   

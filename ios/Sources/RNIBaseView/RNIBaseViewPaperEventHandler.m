@@ -119,9 +119,10 @@ static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
   Method method = class_getInstanceMethod(self->_eventHolderClass, selector);
     
   class_addMethod(
-    self->_eventHolderClass, selector,
-    (IMP)_handleReactEventSetterInvocation,
-    method_getTypeEncoding(method)
+    /* cls  : */ self->_eventHolderClass,
+    /* name : */ selector,
+    /* imp  : */ (IMP)_handleReactEventSetterInvocation,
+    /* types: */ method_getTypeEncoding(method)
   );
 }
 
