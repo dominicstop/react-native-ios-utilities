@@ -28,7 +28,7 @@
 
 - (nonnull instancetype)initWithParentRef:(nonnull id)ref;
 
-- (void)createSettersForEvents:(nonnull NSArray *)events;
+- (void)createSettersIfNeededForEvents:(nonnull NSArray *)events;
 
 - (void)invokeEventBlockForEventName:(nonnull NSString *)eventName
                          withPayload:(nonnull NSDictionary *)eventPayload;

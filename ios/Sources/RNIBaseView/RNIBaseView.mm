@@ -231,7 +231,7 @@ static BOOL SHOULD_LOG = NO;
     return;
   };
   
-  [self.reactEventHandler createSettersForEvents:^(){
+  [self.reactEventHandler createSettersIfNeededForEvents:^(){
     NSMutableArray *events =
       [NSMutableArray arrayWithArray:[self.contentDelegate _getSupportedReactEvents]];
       

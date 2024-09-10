@@ -94,7 +94,7 @@ static BOOL SHOULD_LOG = NO;
 // MARK: Functions - Public
 // ------------------------
 
-- (void)createSettersForEvents:(NSArray *)events
+- (void)createSettersIfNeededForEvents:(NSArray *)events
 {
   NSArray *associatedEvents =
     [[[self class] sharedSupportedEventRegistry] objectForKey:self->_eventHolderClassName];
