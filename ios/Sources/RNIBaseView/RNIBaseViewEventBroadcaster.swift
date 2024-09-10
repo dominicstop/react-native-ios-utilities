@@ -16,7 +16,7 @@ public class RNIBaseViewEventBroadcaster: NSObject {
   
   public var viewLifecycleDelegates: MulticastDelegate<RNIViewLifecycle> = .init();
   
-  public var viewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> = .init();
+  public var reactViewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> = .init();
   
   // MARK: Visible to Obj-C
   // ----------------------
@@ -33,7 +33,7 @@ public class RNIBaseViewEventBroadcaster: NSObject {
     };
     
     self.viewLifecycleDelegates.add(contentDelegate);
-    self.viewPropUpdatesDelegates.add(contentDelegate);
+    self.reactViewPropUpdatesDelegates.add(contentDelegate);
   };
 };
 
@@ -165,7 +165,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewPropUpdatesNotifiable {
   public func notifyDidSetProps(
     sender: RNIContentViewParentDelegate
   ) {
-    self.viewPropUpdatesDelegates.invoke {
+    self.reactViewPropUpdatesDelegates.invoke {
       $0.notifyDidSetProps?(sender: sender);
     };
   };
@@ -180,7 +180,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewPropUpdatesNotifiable {
     oldProps: NSDictionary,
     newProps: NSDictionary
   ) {
-    self.viewPropUpdatesDelegates.invoke {
+    self.reactViewPropUpdatesDelegates.invoke {
       $0.notifyOnUpdateProps?(
         sender: sender,
         oldProps: oldProps,
@@ -198,7 +198,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewPropUpdatesNotifiable {
     sender: RNIContentViewParentDelegate,
     changedProps: Array<String>
   ) {
-    self.viewPropUpdatesDelegates.invoke {
+    self.reactViewPropUpdatesDelegates.invoke {
       $0.notifyDidSetProps?(
         sender: sender,
         changedProps: changedProps

@@ -72,7 +72,7 @@ public extension RNIContentViewParentDelegate {
     self.eventBroadcaster.viewLifecycleDelegates;
   };
   
-  var viewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> {
-    self.eventBroadcaster.viewPropUpdatesDelegates;
+  var reactViewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> {
+    self.eventBroadcaster.reactViewPropUpdatesDelegates;
   };
 };
