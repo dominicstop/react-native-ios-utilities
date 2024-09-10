@@ -12,6 +12,11 @@
 
 @interface RNIBaseViewPaperPropHandler : NSObject
 
+// MARK: - Static/Class Members
+// ----------------------------
+
++ (nonnull NSMutableDictionary *)sharedClassRegistry;
+
 // MARK: - Properties
 // ------------------
 
