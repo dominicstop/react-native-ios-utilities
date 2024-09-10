@@ -8,6 +8,7 @@ import {
 import type { OnContentViewDidDetachEvent } from './RNIDetachedViewEvents';
 
 import type { SharedViewEvents } from '../../types/SharedViewEvents';
+import type { SharedViewEventsInternal } from '../../types/SharedViewEventsInternal';
 import type { RemapObject } from '../../types/UtilityTypes';
 import type { NativeComponentBasePropsInternal } from '../../types/ReactNativeUtilityTypes';
 
@@ -21,8 +22,9 @@ export type RNIDetachedNativeViewBaseProps = RemapObject<RNIDetachedViewNativeCo
 }>;
 
 export type RNIDetachedNativeViewProps = 
-    SharedViewEvents
-  & ViewProps
+    ViewProps
+  & SharedViewEvents
+  & SharedViewEventsInternal
   & RNIDetachedNativeViewBaseProps;
 
 export const RNIDetachedNativeView = 

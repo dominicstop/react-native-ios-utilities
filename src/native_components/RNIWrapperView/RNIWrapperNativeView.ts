@@ -10,6 +10,7 @@ import {
   type NativeProps as RNIWrapperViewNativeComponentProps
 } from './RNIWrapperViewNativeComponent';
 
+import type { SharedViewEventsInternal } from '../../types/SharedViewEventsInternal';
 type RNIWrapperViewNativeComponentBaseProps = 
   NativeComponentBasePropsInternal<RNIWrapperViewNativeComponentProps>;
 
@@ -18,8 +19,9 @@ export type RNIWrapperNativeViewBaseProps = RemapObject<RNIWrapperViewNativeComp
 }>;
 
 export type RNIWrapperNativeViewProps = 
-    SharedViewEvents
-  & ViewProps
+    ViewProps
+  & SharedViewEvents
+  & SharedViewEventsInternal
   & RNIWrapperNativeViewBaseProps;
 
 export const RNIWrapperNativeView = 

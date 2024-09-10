@@ -20,6 +20,7 @@ export type RNIDetachedViewRef = {
 export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNativeViewProps,
   | 'onDidSetViewID'
   | 'onViewWillRecycle'
+  | 'onRawNativeEvent'
   | 'onContentViewDidDetach'
 >>;
 
