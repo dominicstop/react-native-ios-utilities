@@ -22,15 +22,20 @@ static BOOL SHOULD_LOG = NO;
   RNIBaseViewPaperEventHolder *_eventHolderInstance;
 };
 
-static NSMutableDictionary * _sharedEventHolderClassRegistry = nil;
-
+/// Key: `NSString`, class name
+/// Value: `Class`
+///
 + (NSMutableDictionary *)sharedClassRegistry
 {
-  if ( _sharedEventHolderClassRegistry == nil) {
-    _sharedEventHolderClassRegistry = [NSMutableDictionary new];
+  static NSMutableDictionary * _sharedClassRegistry = nil;
+  
+  if (_sharedClassRegistry == nil) {
+    _sharedClassRegistry = [NSMutableDictionary new];
   };
     
-  return _sharedEventHolderClassRegistry;
+  return _sharedClassRegistry;
+  };
+    
 }
 
 - (instancetype)initWithParentRef:(RNIBaseView *)parentView
