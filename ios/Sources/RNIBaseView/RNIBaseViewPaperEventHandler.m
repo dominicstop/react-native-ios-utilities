@@ -104,10 +104,18 @@ static BOOL SHOULD_LOG = NO;
 {
   NSArray *associatedEvents =
     [[[self class] sharedSupportedEventRegistry] objectForKey:self->_eventHolderClassName];
-  
-  BOOL shouldCreateSettersForEvents =
-       associatedEvents == nil
-    && [associatedEvents count] != [events count];
+    
+  BOOL shouldCreateSettersForEvents = ^{
+    if(associatedEvents == nil){
+      return YES;
+    };
+    
+    if([associatedEvents count] != [events count]) {
+      return YES;
+    };
+    
+    return NO;
+  }();
     
   if(!shouldCreateSettersForEvents){
     return;
