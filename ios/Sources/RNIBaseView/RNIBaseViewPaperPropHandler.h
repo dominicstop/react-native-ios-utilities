@@ -12,9 +12,15 @@
 
 @interface RNIBaseViewPaperPropHandler : NSObject
 
+// MARK: - Properties
+// ------------------
+
 @property (nonatomic, weak, nullable) RNIBaseView *parentView;
 
 @property (nonatomic, strong, nonnull) RNIBaseViewPaperPropHolder *propHolder;
+
+// MARK: - Methods
+// ---------------
 
 - (nonnull instancetype)initWithParentRef:(nonnull RNIBaseView *)parentView;
 

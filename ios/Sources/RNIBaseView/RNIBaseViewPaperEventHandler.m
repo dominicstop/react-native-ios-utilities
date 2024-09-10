@@ -23,6 +23,9 @@ static BOOL SHOULD_LOG = NO;
   RNIBaseViewPaperEventHolder *_eventHolderInstance;
 };
 
+// MARK: - Class Members
+// ---------------------
+
 /// Key: `NSString`, class name
 /// Value: `Class`
 ///
@@ -50,6 +53,9 @@ static BOOL SHOULD_LOG = NO;
     
   return _sharedSupportedEventRegistry;
 }
+
+// MARK: - Init
+// ------------
 
 - (instancetype)initWithParentRef:(RNIBaseView *)parentView
 {
@@ -91,8 +97,8 @@ static BOOL SHOULD_LOG = NO;
   return self;
 }
 
-// MARK: Functions - Public
-// ------------------------
+// MARK: Methods (Public)
+// ----------------------
 
 - (void)createSettersIfNeededForEvents:(NSArray *)events
 {
@@ -145,7 +151,7 @@ static BOOL SHOULD_LOG = NO;
   eventBlock(eventPayload);
 }
 
-// MARK: Functions - Internal
+// MARK: - Methods (Internal)
 // --------------------------
 
 - (void)createSetterForSelector:(SEL)selector
@@ -195,6 +201,9 @@ static BOOL SHOULD_LOG = NO;
   
   return self->_eventHolderInstance;
 }
+
+// MARK: - Static Functions
+// ------------------------
 
 void _handleReactEventSetterInvocation(RNIBaseViewPaperEventHolder *_self, SEL _cmd, id _arg) {
   RNILog(

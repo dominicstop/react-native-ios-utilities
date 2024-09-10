@@ -22,7 +22,12 @@ static BOOL SHOULD_LOG = NO;
   NSMutableDictionary *_boolSettersToPropNameMap;
 };
 
+// MARK: - Class Members
+// ---------------------
 
+/// Key: `NSString`, class name
+/// Value: `Class`
+///
 + (NSMutableDictionary *)sharedClassRegistry
 {
   static NSMutableDictionary * _sharedClassRegistry = nil;
@@ -33,6 +38,9 @@ static BOOL SHOULD_LOG = NO;
     
   return _sharedClassRegistry;
 }
+
+// MARK: - Init
+// ------------
 
 - (instancetype)initWithParentRef:(RNIBaseView *)parentView
 {
@@ -73,8 +81,8 @@ static BOOL SHOULD_LOG = NO;
   return self;
 }
 
-// MARK: Functions - Public
-// ------------------------
+// MARK: Methods (Public)
+// ----------------------
 
 - (void)createSettersForProps:(NSArray *)props
 {
@@ -120,7 +128,7 @@ static BOOL SHOULD_LOG = NO;
   return match != nil;
 }
 
-// MARK: Functions - Internal
+// MARK: - Methods (Internal)
 // --------------------------
 
 - (void)createSetterForSelector:(SEL)selector
@@ -169,6 +177,9 @@ static BOOL SHOULD_LOG = NO;
   
   return self.propHolder;
 }
+
+// MARK: - Static Functions
+// ------------------------
 
 void _handleReactPropSetterInvocation(
   RNIBaseViewPaperPropHolder *_self,
