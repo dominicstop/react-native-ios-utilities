@@ -50,10 +50,11 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
     RNIRegistrableView,
     RNIViewCommandRequestHandling>
     
+// MARK: - Properties
+// ------------------
+
 // MARK: - Properties - RNIContentViewParentDelegate
 // -------------------------------------------------
-
-+ (nonnull Class<RNIContentViewDelegate>) viewDelegateClass;
 
 #if !RCT_NEW_ARCH_ENABLED
 @property (nonatomic, strong, nullable) UIView *contentView;
@@ -140,16 +141,18 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (void)requestToUpdateState:(nonnull RNIBaseViewStateSwift *)stateFromSwift;
 #endif
 
-// MARK: - Base Event Support
-// --------------------------
-
-+ (BOOL)doesSupportBaseEventOnViewWillRecycle;
-
-// MARK: -  RCTInvalidating (Paper Only)
-// -------------------------------------
+// MARK: - RCTInvalidating (Paper Only)
+// ------------------------------------
 
 #if !RCT_NEW_ARCH_ENABLED
 - (void)invalidate NS_REQUIRES_SUPER;
 #endif
+
+// MARK: - Class Members
+// ---------------------
+
++ (nonnull Class<RNIContentViewDelegate>)viewDelegateClass;
+
++ (BOOL)doesSupportBaseEventOnViewWillRecycle;
 
 @end

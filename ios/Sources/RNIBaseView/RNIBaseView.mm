@@ -66,6 +66,7 @@ static BOOL SHOULD_LOG = NO;
   BOOL _didNotifyForInit;
   BOOL _didAttachContentDelegate;
   BOOL _didDispatchEventOnDidSetViewID;
+  
 #ifdef RCT_NEW_ARCH_ENABLED
   UIView *_view;
   RNIBaseViewState::SharedConcreteState _state;
