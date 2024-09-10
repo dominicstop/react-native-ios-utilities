@@ -581,12 +581,14 @@ static BOOL SHOULD_LOG = NO;
   };
   
   [self->_touchHandlerFabric detachFromView:self];
+  self->_touchHandlerFabric = nil;
 #else
   if(self->_touchHandlerPaper == nil){
     return;
   };
   
   [self->_touchHandlerPaper detachFromView:self];
+  self->_touchHandlerPaper = nil;
 #endif
 }
 
@@ -992,6 +994,12 @@ static BOOL SHOULD_LOG = NO;
   };
   
   self->_state.reset();
+
+  [self->_reactSubviewsShim removeAllObjects];
+  [self->_queuedEvents removeAllObjects];
+  
+  [self detachReactTouchHandler];
+  
   [super prepareForRecycle];
 }
 #else
