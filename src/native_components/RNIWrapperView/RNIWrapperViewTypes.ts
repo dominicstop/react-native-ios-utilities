@@ -15,21 +15,12 @@ export type RNIWrapperViewInheritedOptionalProps = Partial<Pick<RNIWrapperNative
   | 'onViewWillRecycle'
 >>;
 
-// export type RNIWrapperViewInheritedRequiredProps = Required<Pick<RNIWrapperNativeViewProps,
-//   | 'placeholder'
-// >>;
-
-export type RNIWrapperViewInheritedProps =
-    RNIWrapperViewInheritedOptionalProps;
-//  & RNIWrapperViewInheritedRequiredProps;
-
 export type RNIWrapperViewBaseProps = {
-  // TBA
   debugShouldEnableLogging?: boolean;
 };
 
 export type RNIWrapperViewProps = PropsWithChildren<
-    RNIWrapperViewInheritedProps 
+    RNIWrapperViewInheritedOptionalProps 
   & RNIWrapperViewBaseProps
   & ViewProps
 >;

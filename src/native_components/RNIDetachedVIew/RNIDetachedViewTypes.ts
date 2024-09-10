@@ -23,21 +23,13 @@ export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNati
   | 'onContentViewDidDetach'
 >>;
 
-// export type RNIDetachedViewInheritedRequiredProps = Required<Pick<RNIDetachedNativeViewProps,
-//   | 'placeholder'
-// >>;
-
-export type RNIDetachedViewInheritedProps =
-    RNIDetachedViewInheritedOptionalProps;
-//  & RNIDetachedViewInheritedRequiredProps;
-
 export type RNIDetachedViewBaseProps = {
   shouldEnableDebugBackgroundColors?: boolean;
   contentContainerStyle?: ViewProps['style'];
 };
 
 export type RNIDetachedViewProps = PropsWithChildren<
-    RNIDetachedViewInheritedProps 
+    RNIDetachedViewInheritedOptionalProps 
   & RNIDetachedViewBaseProps
   & ViewProps
 >;
