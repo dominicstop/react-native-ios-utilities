@@ -784,6 +784,18 @@ static BOOL SHOULD_LOG = NO;
   [self.eventBroadcaster notifyOnViewRemovedFromSuperviewWithSender:self];
 }
 
+- (void)didAddSubview:(UIView *)subview
+{
+  [self.eventBroadcaster notifyOnViewDidAddSubviewWithSender:self
+                                                     subview:subview];
+};
+
+- (void)willRemoveSubview:(UIView *)subview
+{
+  [self.eventBroadcaster notifyOnViewWillRemoveSubviewWithSender:self
+                                                         subview:subview];
+};
+
 // MARK: - React Lifecycle (Fabric Only)
 // -------------------------------------
 

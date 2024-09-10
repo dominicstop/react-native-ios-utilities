@@ -91,7 +91,7 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (nonnull instancetype)initWithBridge:(nonnull RCTBridge *)bridge;
 #endif
 
-- (void) initCommon NS_REQUIRES_SUPER;
+- (void)initCommon NS_REQUIRES_SUPER;
 
 // MARK: - View Lifecycle (Fabric + Paper)
 // ---------------------------------------
@@ -107,6 +107,10 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 - (void)layoutSubviews NS_REQUIRES_SUPER;
 
 - (void)removeFromSuperview NS_REQUIRES_SUPER;
+
+- (void)didAddSubview:(nonnull UIView *)subview NS_REQUIRES_SUPER;
+
+- (void)willRemoveSubview:(nonnull UIView *)subview NS_REQUIRES_SUPER;
 
 // MARK: - Methods (Paper-Only)
 // ----------------------------

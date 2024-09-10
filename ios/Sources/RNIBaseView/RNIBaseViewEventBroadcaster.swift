@@ -273,4 +273,24 @@ extension RNIBaseViewEventBroadcaster: ViewLifecycleEventsNotifiable {
       $0.notifyOnViewRemovedFromSuperview(sender: sender);
     };
   };
+  
+  @objc
+  public func notifyOnViewDidAddSubview(
+    sender: UIView,
+    subview: UIView
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnViewDidAddSubview(sender: sender, subview: subview);
+    };
+  };
+  
+  @objc
+  public func notifyOnViewWillRemoveSubview(
+    sender: UIView,
+    subview: UIView
+  ) {
+    self.viewLifecycleDelegates.invoke {
+      $0.notifyOnViewWillRemoveSubview(sender: sender, subview: subview);
+    };
+  };
 };

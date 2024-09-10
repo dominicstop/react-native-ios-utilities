@@ -34,6 +34,16 @@ public protocol ViewLifecycleEventsNotifiable: AnyObject {
   func notifyOnViewRemovedFromSuperview(
     sender: UIView
   );
+  
+  func notifyOnViewDidAddSubview(
+    sender: UIView,
+    subview: UIView
+  );
+  
+  func notifyOnViewWillRemoveSubview(
+    sender: UIView,
+    subview: UIView
+  );
 };
 
 // MARK: - ViewLifecycleEventsNotifiable+Default
@@ -75,6 +85,20 @@ public extension ViewLifecycleEventsNotifiable {
   
   func notifyOnViewRemovedFromSuperview(
     sender: UIView
+  ) {
+    // no-op
+  };
+  
+  func notifyOnViewDidAddSubview(
+    sender: UIView,
+    subview: UIView
+  ) {
+    // no-op
+  };
+  
+  func notifyOnViewWillRemoveSubview(
+    sender: UIView,
+    subview: UIView
   ) {
     // no-op
   };
