@@ -235,12 +235,16 @@ static BOOL SHOULD_LOG = NO;
     NSMutableArray *events =
       [NSMutableArray arrayWithArray:[self.contentDelegate _getSupportedReactEvents]];
       
-  RNILog(
-    @"%@\n%@ %@\n%@ %@",
-    @"[RNIBaseView initCommon]",
-    @" - Class Name:", NSStringFromClass([self class]),
-    @" - Supported Events:", events
-  );
+    RNILog(
+      @"%@\n%@ %@\n%@ %@",
+      @"[RNIBaseView initCommon]",
+      @" - Class Name:", NSStringFromClass([self class]),
+      @" - Supported Events:", events
+    );
+    
+    if([[self class] doesSupportBaseEventOnViewWillRecycle]){
+      [events addObject:@"onViewWillRecycle"];
+    };
 
     [events addObject:@"onDidSetViewID"];
     return events;
