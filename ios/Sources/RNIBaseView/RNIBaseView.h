@@ -49,12 +49,11 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
     RNIContentViewParentDelegate,
     RNIRegistrableView,
     RNIViewCommandRequestHandling>
-    
-// MARK: - Properties
-// ------------------
 
 // MARK: - Properties - RNIContentViewParentDelegate
 // -------------------------------------------------
+
+@property (nonatomic, strong, nonnull) NSMapTable *reactSubviewRegistry;
 
 #if !RCT_NEW_ARCH_ENABLED
 @property (nonatomic, strong, nullable) UIView *contentView;

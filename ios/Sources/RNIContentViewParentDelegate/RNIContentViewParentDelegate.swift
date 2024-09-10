@@ -11,16 +11,18 @@ import DGSwiftUtilities
 
 
 #if RCT_NEW_ARCH_ENABLED
-public typealias RNIContentViewParent = UIView;
+public typealias ReactView = UIView;
 #else
-public typealias RNIContentViewParent = RCTView;
+public typealias ReactView = RCTView;
 #endif
 
 @objc(RNIContentViewParentDelegateSwift)
-public protocol RNIContentViewParentDelegate where Self: RNIContentViewParent {
+public protocol RNIContentViewParentDelegate where Self: ReactView {
 
   // MARK: Properties
   // ----------------
+  
+  var reactSubviewRegistry: NSMapTable<NSString, ReactView> { get };
 
   var cachedLayoutMetrics: RNILayoutMetrics? { get };
   
@@ -78,5 +80,10 @@ public extension RNIContentViewParentDelegate {
   
   var reactViewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> {
     self.eventBroadcaster.reactViewPropUpdatesDelegates;
+  };
+  
+  var allReactSubviews: Array<ReactView> {
+    let dict = self.reactSubviewRegistry.dictionaryRepresentation();
+    return .init(dict.values);
   };
 };

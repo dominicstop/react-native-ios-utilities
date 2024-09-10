@@ -80,6 +80,7 @@ static BOOL SHOULD_LOG = NO;
 }
 
 @synthesize viewID;
+@synthesize reactSubviewRegistry;
 
 // MARK: - Init + Setup
 // --------------------
@@ -257,6 +258,10 @@ static BOOL SHOULD_LOG = NO;
   
   self.eventBroadcaster =
     [[RNIBaseViewEventBroadcaster alloc] initWithParentReactView:self];
+    
+  self.reactSubviewRegistry =
+    [NSMapTable mapTableWithKeyOptions:NSMapTableCopyIn
+                          valueOptions:NSMapTableWeakMemory];
   
   [self initViewDelegate];
   [self setupAttachContentDelegate];
@@ -808,6 +813,9 @@ static BOOL SHOULD_LOG = NO;
 {
   [self->_reactSubviewsShim insertObject:childComponentView atIndex:index];
   
+  [self.reactSubviewRegistry setObject:childComponentView
+                                forKey:childComponentView.reactNativeTag];
+  
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
     && [self.contentDelegate respondsToSelector:
@@ -999,6 +1007,7 @@ static BOOL SHOULD_LOG = NO;
   [self->_queuedEvents removeAllObjects];
   
   [self detachReactTouchHandler];
+  [self.reactSubviewRegistry removeAllObjects];
   
   [super prepareForRecycle];
 }
@@ -1009,6 +1018,9 @@ static BOOL SHOULD_LOG = NO;
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
 {
+  [self.reactSubviewRegistry setObject:subview
+                                forKey:subview.reactNativeTag];
+
   BOOL shouldNotifyDelegate =
        self.contentDelegate != nil
     && [self.contentDelegate respondsToSelector:
