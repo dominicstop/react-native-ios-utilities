@@ -12,8 +12,9 @@ import DGSwiftUtilities
 public protocol RNIViewPropHandling where Self:
   RNIViewPropDelegate & StringKeyPathMapping {
   
-  static var propKeyPathMap:
-    Dictionary<String, PartialKeyPath<KeyPathRoot>> { get };
-    
+  typealias PropKeyPathMap = Dictionary<String, PartialKeyPath<KeyPathRoot>>;
+  
   associatedtype Events: RawRepresentable<String> & CaseIterable;
+  
+  static var propKeyPathMap: PropKeyPathMap { get };
 };

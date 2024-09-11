@@ -24,8 +24,7 @@ public final class RNIDetachedViewContent:
   // MARK: - Static Properties
   // -------------------------
   
-  public static var propKeyPathMap:
-    Dictionary<String, PartialKeyPath<RNIDetachedViewContent>> = [:];
+  public static var propKeyPathMap: PropKeyPathMap = [:];
   
   // MARK: - Properties - RNIContentViewDelegate
   // -------------------------------------------

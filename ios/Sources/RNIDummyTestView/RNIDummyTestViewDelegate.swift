@@ -10,8 +10,8 @@ import DGSwiftUtilities
 
 @objc
 public final class RNIDummyTestViewDelegate: UIView, RNIContentView {
-  
-  public static var propKeyPathMap: Dictionary<String, PartialKeyPath<RNIDummyTestViewDelegate>> {
+
+  public static var propKeyPathMap: PropKeyPathMap {
     return [
       "someBool": \.someBool,
       "someString": \.someString,

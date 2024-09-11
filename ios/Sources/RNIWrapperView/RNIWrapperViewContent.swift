@@ -22,8 +22,7 @@ public final class RNIWrapperViewContent: UIView, RNIContentViewInternal {
   // MARK: - Static Properties
   // -------------------------
   
-  public static var propKeyPathMap:
-    Dictionary<String, PartialKeyPath<RNIWrapperViewContent>> = [:];
+  public static var propKeyPathMap: PropKeyPathMap = [:];
   
   // MARK: - Properties - RNIContentViewDelegate
   // -------------------------------------------
