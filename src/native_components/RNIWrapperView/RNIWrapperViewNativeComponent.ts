@@ -5,12 +5,12 @@ import type { HostComponent, ViewProps } from 'react-native';
 // stubs
 export interface NativeProps extends ViewProps {
   // common/shared props
-  rawDataForNative: string;
+  rawDataForNative?: string;
 
   // common/shared events
-  onDidSetViewID: BubblingEventHandler<{}>;
-  onViewWillRecycle: BubblingEventHandler<{}>;
-  onRawNativeEvent: BubblingEventHandler<{}>;
+  onDidSetViewID?: BubblingEventHandler<{}>;
+  onViewWillRecycle?: BubblingEventHandler<{}>;
+  onRawNativeEvent?: BubblingEventHandler<{}>;
 };
 
 // stubs

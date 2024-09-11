@@ -28,4 +28,8 @@ export type Merge<A, B> = {
 
 export type Merge3<A, B, C> = Merge<Merge<A, B>, C>;
 
-export type ConvertPropertiesToAny<T> = { [K in keyof T]: any };
+export type ConvertPropertiesToAny<T> = { 
+  [K in keyof T]: K extends undefined ? undefined | any : any;
+};
+
+export type Combine<T> = T extends infer U ? { [K in keyof U]: U[K] } : never 

@@ -18,7 +18,7 @@ type RNIDetachedViewNativeComponentBaseProps =
   NativeComponentBasePropsInternal<RNIDetachedViewNativeComponentProps>;
 
 export type RNIDetachedNativeViewBaseProps = RemapObject<RNIDetachedViewNativeComponentBaseProps, {
-  // events
+  shouldImmediatelyDetach?: boolean;
   onContentViewDidDetach?: OnContentViewDidDetachEvent;
 }>;
 
