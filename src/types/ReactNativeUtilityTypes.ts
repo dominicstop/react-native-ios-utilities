@@ -61,106 +61,10 @@ import type { SharedViewPropsInternal } from "./SharedViewPropsInternal";
 export type NativeComponentBaseProps<T extends SharedViewEvents> =
   Omit<T, keyof (ViewProps & SharedViewEvents)>;
 
-
-
-
-//export type MatchesKeys<T, U> = `${T}` extends keyof U ? 123 : false;
-// type Foo<T, U = ConvertPropertiesToAny<InternalViewProps>> = keyof T extends keyof U ? U : never; 
-// type Foo<T, U> = { [KT in keyof T]: U[KT]  }
-
-// type CommonKeys<S, T> = {
-//   [K in keyof S & keyof T]: 
-//     [S[K], T[K]] extends [T[K], S[K]] ? K : never
-// }[keyof S & keyof T];
-
-// type MustHaveKeys<V, S extends Record<keyof V, any>> = S;
-
-
-// const a = {  b: 1 }
-// const b = { a: 1 }
-// export const z: CommonKeys<typeof a, typeof b> = 'a';
-
-// type HasKeys<T> = {
-//  [P in keyof T]: any;
-// }
-
-// type Bar<T extends Record<keyof InternalViewProps, any>, U> = Omit<U, keyof (
-//     ViewProps
-//   & SharedViewPropsInternal
-//   & SharedViewEvents
-//   & SharedViewEventsInternal
-// )>;
-
-
-// type RNIDetachedViewNativeComponentBaseProps = NativeComponentBasePropsInternal<
-//   Required<RNIDetachedViewNativeComponentProps>, 
-//   RNIDetachedViewNativeComponentProps
-// >;
-
-// type Foo<T> = NativeComponentBasePropsInternal<
-//   Required<T>, 
-//   T
-// >;
-
-
-// type Foo<T> = T extends infer R ? R : any;
-
-// const x: Foo<string>;
-
-
-// export type NativeComponentBasePropsInternal<
-//   T extends Record<keyof InternalViewProps, unknown>,
-//   U
-// > = Omit<U, keyof (
-//     ViewProps
-//   & SharedViewPropsInternal
-//   & SharedViewEvents
-//   & SharedViewEventsInternal
-// )>;
-
-
-// export type NativeComponentBasePropsInternal<
-  //T extends MatchesKeys<T, InternalViewProps>
-  //T extends Foo<Required<T>>
-  //T extends HasKeys<InternalViewProps>
-  // T extends MustHaveKeys<T, InternalViewProps>
-  //U = Required<T>,
-  //T extends Record<keyof InternalViewProps, unknown>,
-  //T extends {[K in keyof T]: unknown}
-  //T extends {[K in keyof Required<Omit<T, keyof ViewProps>>]: unknown}
-//   RawProps,
-//   BaseProps = Omit<RawProps, keyof ViewProps>,
-//   Props = Omit<RawProps, keyof (
-//       ViewProps
-//     & SharedViewPropsInternal
-//     & SharedViewEvents
-//     & SharedViewEventsInternal
-//   )>
-// > = Required<BaseProps> extends {[K in keyof Required<InternalViewProps>]: unknown} 
-//   ? Props 
-//   : never;
-
-// Omit<T, keyof (
-//   ViewProps
-// & SharedViewPropsInternal
-// & SharedViewEvents
-// & SharedViewEventsInternal
-// )>;
-
-// export type NativeComponentBasePropsInternal2<T extends Record<keyof InternalViewProps, unknown>> = 
-//  NativeComponentBasePropsInternal<Required<T>, T>;
-
-// export type A<T, U> = keyof T extends keyof U ? any : never;
-
-
-// export type B<T> = keyof T
-
-
 type InternalViewProps =
     SharedViewEvents
   & SharedViewEventsInternal
   & SharedViewPropsInternal;
-
 
 /**
  * Please see `NativeComponentBaseProps` type first.
