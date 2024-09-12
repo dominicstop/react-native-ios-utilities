@@ -20,6 +20,8 @@ public class RNIBaseViewEventBroadcaster: NSObject {
 
   public var reactViewPropUpdatesDelegates: MulticastDelegate<RNIViewPropUpdatesNotifiable> = .init();
   
+  public var contentViewInternalEvents: MulticastDelegate<RNIViewInternalEventsNotifiable> = .init();
+  
   // MARK: Visible to Obj-C
   // ----------------------
   

@@ -57,10 +57,29 @@ public extension RNIContentViewInternal {
       );
     }
     set {
-      self.setInjectedValue(
-        forKey: PropertyKeys.rawDataForNative,
-        value: newValue
-      );
+      defer {
+        self.setInjectedValue(
+          forKey: PropertyKeys.rawDataForNative,
+          value: newValue
+        );
+      };
+      
+      guard let parentReactView = self.parentReactView else { return };
+      
+      let contentViewInternalEvents =
+        parentReactView.eventBroadcaster.contentViewInternalEvents;
+      
+      let hasListeners = contentViewInternalEvents.delegateCount > 0;
+      
+      guard hasListeners else { return };
+      let oldValue = self.rawDataForNative;
+      
+      contentViewInternalEvents.invoke {
+        $0.notifyOnPropsForNativeDidChange(
+          oldValue: oldValue,
+          newValue: newValue
+        );
+      };
     }
   };
 };
