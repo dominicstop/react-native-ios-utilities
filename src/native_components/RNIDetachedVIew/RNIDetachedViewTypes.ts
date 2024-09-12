@@ -26,6 +26,9 @@ export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNati
   // shared/internal props
   | 'rawDataForNative'
 
+  // props
+  | 'shouldImmediatelyDetach'
+
   // events
   | 'onContentViewDidDetach'
 >>;

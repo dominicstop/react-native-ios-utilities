@@ -24,7 +24,9 @@ public final class RNIDetachedViewContent:
   // MARK: - Static Properties
   // -------------------------
   
-  public static var propKeyPathMap: PropKeyPathMap = [:];
+  public static var propKeyPathMap: PropKeyPathMap = [
+    "shouldImmediatelyDetach": \.shouldImmediatelyDetach,
+  ];
   
   // MARK: - Properties - RNIContentViewDelegate
   // -------------------------------------------
@@ -41,6 +43,13 @@ public final class RNIDetachedViewContent:
   // --------------------------
   
   public var reactProps: NSDictionary = [:];
+  
+  public var shouldImmediatelyDetach = false {
+    willSet {
+      guard newValue else { return };
+      try? self.detachIfNeeded();
+    }
+  };
 
   // MARK: Init
   // ----------
@@ -51,6 +60,15 @@ public final class RNIDetachedViewContent:
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented");
+  };
+  
+  // MARK: - View Lifecycle
+  // ----------------------
+  
+  public override func willMove(toWindow newWindow: UIWindow?) {
+    if self.shouldImmediatelyDetach {
+      try? self.detachIfNeeded();
+    };
   };
   
   // MARK: - Methods
@@ -83,10 +101,18 @@ public final class RNIDetachedViewContent:
     self.didDetach = true;
     self.dispatchEvent(for: .onContentViewDidDetach, withPayload: [:]);
   };
+  
+  func detachIfNeeded() throws {
+    guard !self.didDetach else {
+      return;
+    };
+    
+    try self.detach();
+  };
 };
 
 // MARK: - RNIDetachedViewDelegate+RNIContentViewDelegate
-// --------------------------------------------------
+// ------------------------------------------------------
 
 extension RNIDetachedViewContent: RNIContentViewDelegate {
 
@@ -154,7 +180,7 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
           
-          try self.detach();
+          try self.detachIfNeeded();
             
           let childVC = RNIBaseViewController();
           childVC.rootReactView = viewToDetach;
@@ -176,7 +202,7 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
           
-          try self.detach();
+          try self.detachIfNeeded();
           
           let modalVC = RNIBaseViewController();
           modalVC.rootReactView = viewToDetach;

@@ -21,7 +21,7 @@ export const RNIDetachedView = React.forwardRef<
   const [viewID, setViewID] = React.useState<StateViewID>();
   const [reactTag, setReactTag] = React.useState<StateReactTag>();
 
-  const [isDetached, setIsDetached] = React.useState(false);
+  const [isDetachedInNative, setIsDetachedInNative] = React.useState(false);
 
   React.useImperativeHandle(ref, () => ({
     getReactTag: () => {
@@ -34,7 +34,7 @@ export const RNIDetachedView = React.forwardRef<
       if(viewID == null) return;
       const module = Helpers.getRNIUtilitiesModule();
 
-      setIsDetached(true);
+      setIsDetachedInNative(true);
       await module.viewCommandRequest(
         /* viewID     : */ viewID,
         /* commandName: */ 'attachToWindow',
@@ -45,7 +45,7 @@ export const RNIDetachedView = React.forwardRef<
       if(viewID == null) return;
       const module = Helpers.getRNIUtilitiesModule();
 
-      setIsDetached(true);
+      setIsDetachedInNative(true);
       await module.viewCommandRequest(
         /* viewID     : */ viewID,
         /* commandName: */ 'presentInModal',
@@ -56,6 +56,9 @@ export const RNIDetachedView = React.forwardRef<
 
   const shouldEnableDebugBackgroundColors = 
     props.shouldEnableDebugBackgroundColors ?? false;
+
+  const shouldImmediatelyDetach = props.shouldImmediatelyDetach ?? false;
+  const isDetached = shouldImmediatelyDetach || isDetachedInNative;
 
   const children = React.Children.map(props.children, (child) => {
     return React.cloneElement(
@@ -85,7 +88,7 @@ export const RNIDetachedView = React.forwardRef<
       onContentViewDidDetach={(event) => {
         props.onContentViewDidDetach?.(event);
         event.stopPropagation();
-        setIsDetached(true);
+        setIsDetachedInNative(true);
       }}
     >
       {children}
