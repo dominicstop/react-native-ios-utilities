@@ -29,6 +29,8 @@ RCT_EXPORT_MODULE(RNIWrapperView)
 }
 #endif
 
+RNI_EXPORT_VIEW_PROPERTY(rawDataForNative, *NSDictionary)
+
 RNI_EXPORT_VIEW_EVENT(onDidSetViewID, RCTBubblingEventBlock)
 RNI_EXPORT_VIEW_EVENT(onViewWillRecycle, RCTBubblingEventBlock)
 RNI_EXPORT_VIEW_EVENT(onRawNativeEvent, RCTBubblingEventBlock)
