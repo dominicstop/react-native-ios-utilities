@@ -17,4 +17,6 @@ public protocol RNIViewPropHandling where Self:
   associatedtype Events: RawRepresentable<String> & CaseIterable;
   
   static var propKeyPathMap: PropKeyPathMap { get };
+  
+  static var propKeyPathMapInternal: PropKeyPathMap? { get };
 };

@@ -10,7 +10,14 @@ import DGSwiftUtilities
 
 
 public extension RNIViewPropHandling where Self: RNIViewPropDelegate  {
-
+  
+  static var propKeyPathMapInternal: PropKeyPathMap? {
+    return nil;
+  };
+  
+  // MARK: - RNIViewPropHandling+StringKeyPathMapping
+  // ------------------------------------------------
+  
   static var partialKeyPathMap: Dictionary<String, PartialKeyPath<Self>> {
     return Self.propKeyPathMap;
   };

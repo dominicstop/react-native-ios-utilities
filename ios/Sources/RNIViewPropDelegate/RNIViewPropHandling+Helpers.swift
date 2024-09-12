@@ -10,20 +10,31 @@ import Foundation
 
 public extension RNIViewPropHandling where Self: RNIViewPropDelegate  {
   
+  // MARK: TODO - Impl. caching
+  static var propKeyPathMapCombined: PropKeyPathMap {
+    if let propKeyPathMapInternal = Self.propKeyPathMapInternal {
+      return Self.propKeyPathMap.merging(propKeyPathMapInternal) { (current, _) in
+        return current;
+      };
+    };
+    
+    return Self.propKeyPathMap;
+  };
+  
   var allSupportedEventsAsStrings: [String] {
-    Events.allCases.map {
+    Self.Events.allCases.map {
       $0.rawValue;
     };
   };
   
   var allSupportedPropsAsStrings: [String] {
-    Self.propKeyPathMap.map {
+    Self.propKeyPathMapCombined.map {
       $0.key;
     };
   };
   
   var allSupportedPropsTypeMap: [String: String] {
-    return Self.propKeyPathMap.reduce(into: [:]) { (result, tuple) in
+    Self.propKeyPathMapCombined.reduce(into: [:]) { (result, tuple) in
       result[tuple.key] = tuple.value.valueTypeAsString;
     }
   };
