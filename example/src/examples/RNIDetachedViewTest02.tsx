@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, RNIDetachedViewContent, CardButton, type RNIDetachedViewRef, type AlignmentPositionConfig, type RNIDetachedViewProps } from 'react-native-ios-utilities';
+import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, RNIDetachedViewContent, CardButton, type RNIDetachedViewRef, type AlignmentPositionConfig, type RNIDetachedViewProps, Helpers } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
 
 
@@ -110,6 +110,7 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
 export function RNIDetachedViewTest02(props: ExampleItemProps) {
   const detachedViewRef = React.useRef<RNIDetachedViewRef | null>(null);
 
+  const [didPresent, setDidPresent] = React.useState(false);
   const [didDetach, setDidDetach] = React.useState(false);
   const [mountDetachedView, setMountDetachedView] = React.useState(true);
 
@@ -177,6 +178,36 @@ export function RNIDetachedViewTest02(props: ExampleItemProps) {
     shouldImmediatelyDetach: true,
   };
 
+  const onRenderCallbackRef = React.useRef<() => void | undefined>();
+
+  React.useEffect(() => {
+    onRenderCallbackRef.current?.();
+  });
+
+  const remountDetachedView = async () => {
+    if(!mountDetachedView) return;
+    setMountDetachedView(false);
+    setDidDetach(false);
+    setDidPresent(false);
+
+    await Promise.race([
+      new Promise<void>((resolve) => {
+        onRenderCallbackRef.current = () => {
+          resolve();
+        };
+      }),
+      Helpers.timeout(250),
+    ]);
+
+    setMountDetachedView(true);
+  };
+
+  const remountDetachedViewIfNeeded = () => {
+    if(!didPresent) return;
+    setDidPresent(false);
+    remountDetachedView();
+  };
+
   return (
     <ExampleItemCard
       style={props.style}
@@ -236,6 +267,7 @@ export function RNIDetachedViewTest02(props: ExampleItemProps) {
       <ObjectPropertyDisplay
         recursiveStyle={styles.debugDisplayInner}
         object={{
+          didPresent,
           isIntervalRunning,
           didDetach, 
           mountDetachedView,
@@ -267,6 +299,7 @@ export function RNIDetachedViewTest02(props: ExampleItemProps) {
           detachedViewRef.current?.attachToWindow({
             contentPositionConfig,
           });
+          setDidPresent(true);
         }}
       />
       <CardButton
@@ -276,16 +309,18 @@ export function RNIDetachedViewTest02(props: ExampleItemProps) {
           detachedViewRef.current?.presentInModal({
             contentPositionConfig,
           });
+          setDidPresent(true);
         }}
       />
-      <CardButton
-        title={`${mountDetachedView ? 'Unmount' : 'Mount'} WrapperView`}
-        subtitle={'Toggle mounting for `RNIDetachedView` component'}
-        onPress={() => {
-          setMountDetachedView(prevValue => !prevValue);
-          setDidDetach(false);
-        }}
-      />
+      {(didPresent) && (
+        <CardButton
+          title={`Remount RNIDetachedView`}
+          subtitle={'Toggle mounting for `RNIDetachedView` component'}
+          onPress={() => {
+            remountDetachedView();
+          }}
+        />
+      )}
       <CardButton
         title={"Next `ContentPositionConfig`"}
         subtitle={
@@ -294,6 +329,7 @@ export function RNIDetachedViewTest02(props: ExampleItemProps) {
         }
         onPress={() => {
           setContentPositionConfigPresetCounter(prevValue => prevValue + 1);
+          remountDetachedViewIfNeeded();
         }}
       />
     </ExampleItemCard>
