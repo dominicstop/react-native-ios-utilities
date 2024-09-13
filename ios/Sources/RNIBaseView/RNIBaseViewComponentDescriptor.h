@@ -69,7 +69,7 @@ public:
       layoutableShadowNode.setPositionType(stateData.positionType);
     };
     
-#if DEBUG
+#if DEBUG && FALSE
     std::cout
       << "RNIBaseViewComponentDescriptor.adopt"
       << "\n - getComponentName: " << layoutableShadowNode.getComponentName()
