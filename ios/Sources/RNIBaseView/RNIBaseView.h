@@ -132,6 +132,8 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 - (void)detachReactTouchHandler;
 
+- (void)reAttachCotentDelegate;
+
 #if RCT_NEW_ARCH_ENABLED
 - (void)setPadding:(UIEdgeInsets)padding;
 

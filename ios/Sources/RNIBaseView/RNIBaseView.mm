@@ -597,6 +597,16 @@ static BOOL SHOULD_LOG = NO;
 #endif
 }
 
+- (void)reAttachCotentDelegate
+{
+  if(self.contentDelegate == nil){
+    return;
+  };
+  
+  [self.contentDelegate removeFromSuperview];
+  [self setupAttachContentDelegate];
+}
+
 // MARK: - RNIContentViewParentDelegate Commands (Fabric Only)
 // -----------------------------------------------------------
 

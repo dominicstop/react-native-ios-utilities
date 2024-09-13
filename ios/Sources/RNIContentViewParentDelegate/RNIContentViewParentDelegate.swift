@@ -52,6 +52,8 @@ public protocol RNIContentViewParentDelegate where Self: ReactView {
   
   func detachReactTouchHandler();
   
+  func reAttachCotentDelegate();
+  
   // MARK: Methods (Fabric Only)
   // --------------------------
   
