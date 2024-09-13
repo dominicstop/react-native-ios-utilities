@@ -10,7 +10,6 @@ export function RNIDetachedViewContent(
   props: React.PropsWithChildren<RNIDetachedViewContentProps>
 ) {
   const wrapperStyle: StyleProp<ViewStyle> = [
-    styles.wrapperView,
     props.shouldEnableDebugBackgroundColors && styles.wrapperViewDebug,
     props.contentContainerStyle,
   ];
@@ -23,6 +22,11 @@ export function RNIDetachedViewContent(
           ? wrapperStyle 
           : []
         ),
+        (props.isDetached 
+          ? styles.wrapperViewDetached
+          : styles.wrapperViewAttached
+        ),
+        props.style,
       ]}
     >
       {IS_USING_NEW_ARCH ? (
