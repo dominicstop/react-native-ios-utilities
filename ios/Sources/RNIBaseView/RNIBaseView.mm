@@ -883,6 +883,12 @@ static BOOL SHOULD_LOG = NO;
                                               oldLayoutMetrics:layoutMetricsOld
                                               newLayoutMetrics:layoutMetricsNew];
   
+  BOOL didChangeSize =
+    oldLayoutMetrics.frame.size != layoutMetrics.frame.size;
+    
+  if(didChangeSize) {
+    [self invalidateIntrinsicContentSize];
+  };
   
   [super updateLayoutMetrics:layoutMetrics oldLayoutMetrics:oldLayoutMetrics];
 }

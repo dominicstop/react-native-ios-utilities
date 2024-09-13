@@ -38,7 +38,6 @@ open class RNIBaseViewController: UIViewController {
     );
     
     NSLayoutConstraint.activate(constraints);
-    
     rootReactView.reactViewLifecycleDelegates.add(self);
   };
 
@@ -47,7 +46,48 @@ open class RNIBaseViewController: UIViewController {
       return;
     };
     
-    rootReactView.setSize(self.view.bounds.size);
+    func log(){
+      print(
+        "RNIBaseViewController.viewDidLayoutSubviews",
+        "\n - self.positionConfig:", self.positionConfig,
+        "\n - rootView.size:", self.view.bounds.size,
+        "\n - rootView.globalFrame:", self.view.globalFrame?.debugDescription ?? "N/A",
+        "\n - rootView.layer.frame:", self.view.layer.presentation()?.frame.debugDescription ?? "N/A",
+        "\n - rootReactView.size:", rootReactView.bounds.size,
+        "\n - rootReactView.cachedLayoutMetrics.contentFrame:", rootReactView.cachedLayoutMetrics?.contentFrame.debugDescription ?? "N/A",
+        "\n - rootReactView.globalFrame:", rootReactView.globalFrame?.debugDescription ?? "N/A",
+        "\n - rootReactView.layer.frame:", rootReactView.layer.presentation()?.frame.debugDescription ?? "N/A",
+        "\n - contentDelegate.bounds.size:", rootReactView.contentDelegate.bounds.size,
+        "\n - contentDelegate.globalFrame:", rootReactView.contentDelegate.globalFrame?.debugDescription ?? "N/A",
+        "\n - contentDelegate.layer.frame:", rootReactView.contentDelegate.layer.presentation()?.frame.debugDescription ?? "N/A",
+        "\n"
+      );
+    };
+    
+    log();
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+      log();
+    };
+    
+    let nextSize: CGSize? = {
+      switch (self.positionConfig.horizontalAlignment, self.positionConfig.verticalAlignment) {
+        case (.stretch, .stretch):
+          fallthrough;
+          
+        case (.stretchTarget, .stretchTarget):
+          return self.view.bounds.size;
+          
+        
+        default:
+          return nil;
+      };
+    }();
+    
+    guard let nextSize = nextSize else {
+      return;
+    };
+    
+    rootReactView.setSize(nextSize);
   };
 };
 

@@ -56,6 +56,11 @@ using namespace facebook::react;
 @implementation RNIWrapperView {
 }
 
+- (CGSize)intrinsicContentSize
+{
+  return self.cachedLayoutMetrics.frame.size;
+};
+
 // MARK: - RNIBaseView
 // -------------------
 
