@@ -184,7 +184,9 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         title={'Present In View Controller'}
         subtitle={'Detach and present'}
         onPress={() => {
-          detachedViewRef.current?.presentInModal();
+          detachedViewRef.current?.presentInModal({
+            contentPositionConfig,
+          });
         }}
       />
       <CardButton
