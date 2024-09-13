@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   detachedView: {
     position: 'absolute',
     pointerEvents: 'none',
+    opacity: 0,
   },
   detachedViewDebug: {
     backgroundColor: 'rgba(255,0,0,0.3)',

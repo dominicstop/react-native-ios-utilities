@@ -93,9 +93,9 @@ public final class RNIDetachedViewContent:
     #if RCT_NEW_ARCH_ENABLED
     parentReactView.setPositionType(.absolute);
     parentReactView.backgroundColor = .clear;
-    parentReactView.alpha = 0.01;
+    self.alpha = 0.01;
     #else
-    
+    self.alpha = 0.01;
     parentReactView.removeFromSuperview();
     #endif
     
