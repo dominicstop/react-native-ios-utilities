@@ -2,18 +2,26 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, RNIDetachedViewContent, CardButton, type RNIDetachedViewRef, type AlignmentPositionConfig } from 'react-native-ios-utilities';
+import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, RNIDetachedViewContent, CardButton, type RNIDetachedViewRef, type AlignmentPositionConfig, type RNIDetachedViewProps } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
 
+var shouldImmediatelyDetachCached = false;
 
 export function RNIDetachedViewTest01(props: ExampleItemProps) {
   const detachedViewRef = React.useRef<RNIDetachedViewRef | null>(null);
 
   const [didDetach, setDidDetach] = React.useState(false);
-  const [isIntervalRunning, setIsIntervalRunning] = React.useState(false);
-  const [counter, setCounter] = React.useState(0);
+  
+  const [
+    shouldImmediatelyDetach, 
+    setShouldImmediatelyDetach
+  ] = React.useState(shouldImmediatelyDetachCached);
+
   const [mountDetachedView, setMountDetachedView] = React.useState(true);
 
+  const [isIntervalRunning, setIsIntervalRunning] = React.useState(false);
+  const [counter, setCounter] = React.useState(0);
+  
   const counterIntervalID = React.useRef<NodeJS.Timeout | undefined>();
 
   const stopTimer = () => {
@@ -67,6 +75,11 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
     verticalAlignment: 'stretchTarget',
   };
 
+  const detachedViewProps: RNIDetachedViewProps = {
+    shouldEnableDebugBackgroundColors: false,
+    shouldImmediatelyDetach,
+  };
+
   return (
     <ExampleItemCard
       style={props.style}
@@ -81,7 +94,7 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         <RNIDetachedView 
           ref={detachedViewRef}
           style={styles.detachedView}
-          shouldEnableDebugBackgroundColors={false}
+          {...detachedViewProps}
           onContentViewDidDetach={() => {
             setDidDetach(true);
           }}
@@ -138,7 +151,8 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
           didDetach, 
           mountDetachedView,
           shouldFillParent,
-          ...contentPositionConfig
+          contentPositionConfig,
+          detachedViewProps,
         }}
       />
       <CardButton
@@ -179,6 +193,15 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
         onPress={() => {
           setMountDetachedView(prevValue => !prevValue);
           setDidDetach(false);
+        }}
+      />
+      <CardButton
+        title={`Toggle shouldImmediatelyDetach Prop`}
+        subtitle={`shouldImmediatelyDetach: ${shouldImmediatelyDetach}`}
+        onPress={() => {
+          const nextValue = !shouldImmediatelyDetach;
+          setShouldImmediatelyDetach(nextValue);
+          shouldImmediatelyDetachCached = nextValue;
         }}
       />
     </ExampleItemCard>
