@@ -32,7 +32,10 @@ export function RNIDetachedViewContent(
       {IS_USING_NEW_ARCH ? (
         props.children
       ) : (
-        <View style={wrapperStyle}>
+        <View style={[
+          styles.innerWrapperContainerForPaper,
+          ...wrapperStyle,
+        ]}>
           {props.children}
         </View>
       )}
@@ -47,5 +50,8 @@ const styles = StyleSheet.create({
   },
   wrapperViewDebug: {
     backgroundColor: 'rgba(255,0,255,0.3)',
+  },
+  innerWrapperContainerForPaper: {
+    flex: 1,
   },
 });
