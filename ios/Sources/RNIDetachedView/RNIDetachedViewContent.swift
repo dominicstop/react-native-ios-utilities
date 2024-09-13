@@ -46,7 +46,10 @@ public final class RNIDetachedViewContent:
   
   public var shouldImmediatelyDetach = false {
     willSet {
-      guard newValue else { return };
+      guard newValue,
+            self.window != nil
+      else { return };
+      
       try? self.detachIfNeeded();
     }
   };
