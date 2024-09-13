@@ -9,7 +9,7 @@ export type ExampleItemCardProps = {
   index?: number;
   title?: string;
   subtitle?: string;
-  description?: string[];
+  description?: Array<string | undefined>;
 
   style?: ViewStyle;
   extraContentContainerStyle?: ViewStyle;
@@ -19,8 +19,10 @@ export type ExampleItemCardProps = {
 
 export function ExampleItemCard(props: ExampleItemCardProps) {
 
-  const descriptionMain = props.description?.[0];
-  const descriptionSub  = props.description?.slice(1);
+  const descriptionFiltered = props.description?.filter(item => item != null);
+
+  const descriptionMain = descriptionFiltered?.[0];
+  const descriptionSub  = descriptionFiltered?.slice(1);
 
   const colors = props.colorPalette ?? Colors.BLUE;
 

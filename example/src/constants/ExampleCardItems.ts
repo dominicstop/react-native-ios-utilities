@@ -1,8 +1,11 @@
 import { HomeScreen } from "../components/HomeScreen";
 import { AppMetadataCard } from "../examples/AppMetadataCard";
-import { RNIDetachedViewTest01 } from "../examples/RNIDetachedViewTest01";
+
 import { RNIDummyTest01Screen } from "../examples/RNIDummyTest01Screen";
+
 import { RNIWrapperViewTest01 } from "../examples/RNIWrapperViewTest01";
+import { RNIDetachedViewTest01 } from "../examples/RNIDetachedViewTest01";
+import { RNIDetachedViewTest02 } from "../examples/RNIDetachedViewTest02";
 
 import type { ExampleItemProps } from "../examples/SharedExampleTypes";
 import type { RouteEntry } from "./Routes";
@@ -57,6 +60,10 @@ export const EXAMPLE_ITEMS: Array<ExampleItem> = (() => {
     {
       type: 'card',
       component: RNIDetachedViewTest01,
+    },
+    {
+      type: 'card',
+      component: RNIDetachedViewTest02,
     },
   ]; 
 
