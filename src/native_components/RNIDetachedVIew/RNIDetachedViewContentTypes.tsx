@@ -1,4 +1,4 @@
-import type { ViewProps } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import type { RNIWrapperViewProps } from "../RNIWrapperView";
 import type { RNIDetachedViewProps } from "./RNIDetachedViewTypes";
 
@@ -8,7 +8,7 @@ export type RNIDetachedViewContentInheritedProps = Pick<RNIDetachedViewProps,
 >;
 
 export type RNIDetachedViewContentBaseProps = {
-  contentContainerStyle?: ViewProps['style'];
+  contentContainerStyle?: ViewStyle;
   isDetached?: boolean;
 };
 

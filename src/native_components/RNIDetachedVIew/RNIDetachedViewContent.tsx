@@ -19,7 +19,6 @@ export function RNIDetachedViewContent(
     <RNIWrapperView
       {...props}
       style={[
-        props.style,
         ...(IS_USING_NEW_ARCH 
           ? wrapperStyle 
           : []
@@ -38,14 +37,11 @@ export function RNIDetachedViewContent(
 };
 
 const styles = StyleSheet.create({
-  wrapperView: {
-    flex: 1,
+  wrapperViewAttached: {
+  },
+  wrapperViewDetached: {
   },
   wrapperViewDebug: {
-    backgroundColor: 'rgba(0,0,255,0.3)',
-  },
-  wrapperContentContainer: {
-    flex: 1,
-    alignSelf: 'stretch',
+    backgroundColor: 'rgba(255,0,255,0.3)',
   },
 });
