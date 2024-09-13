@@ -202,10 +202,20 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
           
+          let contentPositionConfig: AlignmentPositionConfig = try {
+            let dictConfig = try commandArguments.getValueFromDictionary(
+              forKey: "contentPositionConfig",
+              type: Dictionary<String, Any>.self
+            );
+            
+            return try .init(fromDict: dictConfig);
+          }();
+          
           try self.detachIfNeeded();
           
           let modalVC = RNIBaseViewController();
           modalVC.rootReactView = viewToDetach;
+          modalVC.positionConfig = contentPositionConfig;
           modalVC.view.backgroundColor = .systemGray;
           
           let rootVC = window.rootViewController!;

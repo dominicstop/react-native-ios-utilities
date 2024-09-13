@@ -14,7 +14,9 @@ export type RNIDetachedViewRef = {
     contentPositionConfig: AlignmentPositionConfig;
   }) => Promise<void>;
 
-  presentInModal: () => Promise<void>;
+  presentInModal: (commandParams: {
+    contentPositionConfig: AlignmentPositionConfig;
+  }) => Promise<void>;
 };
 
 export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNativeViewProps,
