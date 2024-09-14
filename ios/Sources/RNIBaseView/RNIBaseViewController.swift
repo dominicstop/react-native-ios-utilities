@@ -7,6 +7,9 @@
 
 import Foundation
 
+#if !RCT_NEW_ARCH_ENABLED
+import React
+#endif
 
 /// Holds/wraps a `RNIBaseView` instance (i.e. `RNIContentViewParentDelegate`)
 ///
@@ -57,6 +60,7 @@ open class RNIBaseViewController: UIViewController {
         "\n - rootReactView.cachedLayoutMetrics.contentFrame:", rootReactView.cachedLayoutMetrics?.contentFrame.debugDescription ?? "N/A",
         "\n - rootReactView.globalFrame:", rootReactView.globalFrame?.debugDescription ?? "N/A",
         "\n - rootReactView.layer.frame:", rootReactView.layer.presentation()?.frame.debugDescription ?? "N/A",
+        "\n - rootReactView.intrinsicContentSize:", rootReactView.intrinsicContentSize,
         "\n - contentDelegate.bounds.size:", rootReactView.contentDelegate.bounds.size,
         "\n - contentDelegate.globalFrame:", rootReactView.contentDelegate.globalFrame?.debugDescription ?? "N/A",
         "\n - contentDelegate.layer.frame:", rootReactView.contentDelegate.layer.presentation()?.frame.debugDescription ?? "N/A",
@@ -64,30 +68,82 @@ open class RNIBaseViewController: UIViewController {
       );
     };
     
+    #if DEBUG
     log();
     DispatchQueue.main.asyncAfter(deadline: .now() + 2){
       log();
     };
+    #endif
     
-    let nextSize: CGSize? = {
-      switch (self.positionConfig.horizontalAlignment, self.positionConfig.verticalAlignment) {
-        case (.stretch, .stretch):
-          fallthrough;
-          
-        case (.stretchTarget, .stretchTarget):
-          return self.view.bounds.size;
-          
+    switch (
+      self.positionConfig.horizontalAlignment,
+      self.positionConfig.verticalAlignment
+    ) {
+      case (.stretch, .stretch):
+        fallthrough;
         
-        default:
-          return nil;
-      };
-    }();
-    
-    guard let nextSize = nextSize else {
-      return;
+      case (.stretchTarget, .stretchTarget):
+        rootReactView.setSize(self.view.bounds.size);
+        
+      case (.stretchTarget, _):
+        fallthrough;
+        
+      case(.stretch, _):
+        let newWidth = self.view.bounds.width;
+        
+        #if RCT_NEW_ARCH_ENABLED
+        // TBA
+        #else
+        guard let shadowView = rootReactView.cachedShadowView,
+              rootReactView.intrinsicContentSize.width != newWidth
+        else {
+          return;
+        };
+        
+        rootReactView.intrinsicContentSizeOverride = .init(
+          width: newWidth,
+          height: 0
+        );
+        
+        shadowView.minWidth = .init(
+          value: Float(newWidth),
+          unit: .point
+        );
+        
+        shadowView.dirtyLayout();
+        #endif
+
+        case (_, .stretchTarget):
+          fallthrough;
+
+        case (_, .stretch):
+          let newHeight = self.view.bounds.height;
+          
+          #if RCT_NEW_ARCH_ENABLED
+          // TBA
+          #else
+          guard let shadowView = rootReactView.cachedShadowView,
+                rootReactView.intrinsicContentSize.height != newHeight
+          else {
+            return;
+          };
+          
+          rootReactView.intrinsicContentSizeOverride = .init(
+            width: 0,
+            height: newHeight
+          );
+
+          shadowView.minHeight = .init(
+            value: Float(newHeight),
+            unit: .point
+          );
+          
+          shadowView.dirtyLayout();
+          #endif
+
+      default:
+        break;
     };
-    
-    rootReactView.setSize(nextSize);
   };
 };
 
