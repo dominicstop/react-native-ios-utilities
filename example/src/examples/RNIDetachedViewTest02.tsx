@@ -101,6 +101,12 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   //
   //   * the position of the view is always on the right side of the modal for some
   //     reason (maybe: autolayout cannot compute the horizontal axis?)
+  //
+  // * 2024-09-15-04:58 (PST)
+  //   * The view now positions correctly, yay
+  //
+  //   * Cause: `VerticalAlignmentPosition` was generating the wrong vertical 
+  //     constraint
   {
     desc: "Attach to left, and fill height (no specified size)",
     config: {
