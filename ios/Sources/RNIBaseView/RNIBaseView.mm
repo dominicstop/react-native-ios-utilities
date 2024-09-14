@@ -83,6 +83,10 @@ static BOOL SHOULD_LOG = NO;
 @synthesize reactSubviewRegistry;
 @synthesize intrinsicContentSizeOverride;
 
+#if RCT_NEW_ARCH_ENABLED
+@synthesize reactSubviews;
+#endif
+
 // MARK: - Init + Setup
 // --------------------
 

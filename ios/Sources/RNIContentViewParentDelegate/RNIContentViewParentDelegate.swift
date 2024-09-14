@@ -37,12 +37,14 @@ public protocol RNIContentViewParentDelegate where Self: ReactView {
   
   var viewID: String? { get };
   
-  var reactSubviews: [UIView] { get };
-  
   var intrinsicContentSizeOverride: CGSize { get set };
   
   // MARK: - Properties (Paper Only)
   // -------------------------------
+  
+  #if RCT_NEW_ARCH_ENABLED
+  var reactSubviews: [UIView] { get };
+  #endif
   
   var cachedShadowView: RCTShadowView? { get };
   
@@ -76,6 +78,18 @@ public protocol RNIContentViewParentDelegate where Self: ReactView {
   func requestToUpdateState(_ nextState: RNIBaseViewState);
   #endif
 };
+
+// MARK: - RNIContentViewParentDelegate+PaperHelpers
+// -------------------------------------------------
+
+#if !RCT_NEW_ARCH_ENABLED
+public extension RNIContentViewParentDelegate {
+  
+  var reactSubviews: [UIView] {
+    self.reactSubviews();
+  };
+};
+#endif
 
 // MARK: - RNIContentViewParentDelegate+Helpers
 // --------------------------------------------
