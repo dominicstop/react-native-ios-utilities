@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, type ViewStyle } from 'react-native';
 
 import { ExampleItemCard, ObjectPropertyDisplay, Colors, RNIDetachedView, RNIDetachedViewContent, CardButton, type RNIDetachedViewRef, type AlignmentPositionConfig, type RNIDetachedViewProps, Helpers } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
@@ -9,6 +9,7 @@ import type { ExampleItemProps } from './SharedExampleTypes';
 const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   desc?: string;
   config: AlignmentPositionConfig;
+  style?: ViewStyle;
 }> = [
   // tests 01: as big as possible
   {
@@ -56,7 +57,15 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
     },
   },
 
-  // tests 03: no specified size + fill width
+  // tests 03: no specified size + fill width 
+  // * Mixed sizing, i.e. one of the sizes (either width/height) is set on 
+  //  native, and the other is set in react/JS
+
+  // Observations (paper):
+  // * 2024-09-14-23:32 (PST) 
+  //   * the view jumps around, but eventually settles
+  //   * Because autolayout doesn't know the size of the react view yet, and/or
+  //     the size from autolayout/native isn't set yet. 
   {
     desc: "Attach to top, and fill width (no specified size)",
     config: {
@@ -127,7 +136,8 @@ export function RNIDetachedViewTest02(props: ExampleItemProps) {
 
   const { 
     desc: contentPositionConfigDesc, 
-    config: contentPositionConfig 
+    config: contentPositionConfig,
+    style: extraStyle
   } = CONTENT_POSITION_CONFIG_PRESETS[contentPositionConfigPresetIndex]!;
   
   const counterIntervalID = React.useRef<NodeJS.Timeout | undefined>();
@@ -224,7 +234,10 @@ export function RNIDetachedViewTest02(props: ExampleItemProps) {
       {mountDetachedView && (
         <RNIDetachedView 
           ref={detachedViewRef}
-          style={styles.detachedView}
+          style={[
+            styles.detachedView,
+            extraStyle,
+          ]}
           {...detachedViewProps}
           onContentViewDidDetach={() => {
             setDidDetach(true);
