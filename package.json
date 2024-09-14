@@ -52,7 +52,7 @@
     "nuke:all": "yarn run nuke:node-modules ; yarn run nuke:example-pods",
     "update-dep": "yarn add react-native-ios-utilities --dev ; cd example ; yarn add react-native-ios-utilities ; cd ..",
     "update-dep:next": "yarn add react-native-ios-utilities@next --dev ; cd example ; yarn add react-native-ios-utilities@next ; cd .. ; yarn run build:update-version",
-    "update-dep:pods": "cd example/ios ; pod install --repo-update ; pod update DGSwiftUtilities ComputableLayout VisualEffectBlurView ; cd ../.. ; yarn run build:update-version",
+    "update-dep:pods": "cd example/ios ; pod install --repo-update ; pod update DGSwiftUtilities ComputableLayout ; cd ../.. ; yarn run build:update-version",
     "initialize": "yarn initialize:js ; yarn run pod-install",
     "initialize:js": "yarn install ; cd example ; yarn install ; cd ..",
     "initialize:reset": "yarn run nuke:all && yarn run initialize"
