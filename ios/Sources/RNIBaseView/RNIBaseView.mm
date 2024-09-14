@@ -453,6 +453,27 @@ static BOOL SHOULD_LOG = NO;
                               propValue:propValue];
 }
 
+- (void)_getAndSetShadowViewIfNeededWithCompletionHandler:(nullable RNIPaperShadowViewCompletionBlock)completionBlock
+{
+  if(self.cachedShadowView != nil){
+    if(completionBlock != nil){
+      completionBlock(self.cachedShadowView);
+    };
+    return;
+  };
+    
+  [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
+    self.cachedShadowView = shadowView;
+    if(shadowView == nil){
+      return;
+    };
+    
+    if(completionBlock != nil){
+      completionBlock(shadowView);
+    };
+  }];
+}
+
 - (void)_notifyDelegateForLayoutMetricsUpdate
 {
   if(self.cachedShadowView == nil){
@@ -735,6 +756,7 @@ static BOOL SHOULD_LOG = NO;
   
   [[RNIViewRegistry shared] registerViewUsingReactTagForView:self];
   
+  [self _getAndSetShadowViewIfNeededWithCompletionHandler:nil];
   [self.eventBroadcaster notifyOnViewWillMoveToWindowWithSender:self
                                                       newWindow:newWindow];
 }
@@ -769,19 +791,10 @@ static BOOL SHOULD_LOG = NO;
   [super layoutSubviews];
   
   #if !RCT_NEW_ARCH_ENABLED
-  if(self.cachedShadowView == nil){
-    [self reactGetShadowViewWithCompletionHandler:^(RCTShadowView *shadowView) {
-      self.cachedShadowView = shadowView;
-      if(shadowView == nil){
-        return;
-      };
-      
-      [self _notifyDelegateForLayoutMetricsUpdate];
-    }];
-    
-  } else {
-    [self _notifyDelegateForLayoutMetricsUpdate];
-  };
+  __weak id _self = self;
+  [self _getAndSetShadowViewIfNeededWithCompletionHandler:^(RCTShadowView *shadowView) {
+    [_self _notifyDelegateForLayoutMetricsUpdate];
+  }];
   
   RNILog(
     @"%@\n%@ %d\n%@ %@\n%@ %@\n%@ %@",

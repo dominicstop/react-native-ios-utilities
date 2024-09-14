@@ -69,13 +69,18 @@ typedef NS_ENUM(NSInteger, RNIPositionType);
 
 - (nonnull NSDictionary *)rawProps;
 
-// MARK: - Properties - Paper Only
+// MARK: - Properties - RNIContentViewParentDelegate (Paper Only)
+// --------------------------------------------------------------
+
+#if !RCT_NEW_ARCH_ENABLED
+@property (nonatomic, weak, nullable) RCTShadowView *cachedShadowView;
+#endif
+
+// MARK: - Properties (Paper Only)
 // -------------------------------
 
 #if !RCT_NEW_ARCH_ENABLED
 @property (nonatomic, weak, nullable) RCTBridge *bridge;
-
-@property (nonatomic, weak, nullable) RCTShadowView *cachedShadowView;
 
 @property (nonatomic, strong, nonnull) RNIBaseViewPaperEventHandler *reactEventHandler;
 

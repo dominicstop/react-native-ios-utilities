@@ -6,8 +6,11 @@
 //
 
 import UIKit
-import React
 import DGSwiftUtilities
+
+#if !RCT_NEW_ARCH_ENABLED
+import React
+#endif
 
 
 #if RCT_NEW_ARCH_ENABLED
@@ -35,6 +38,12 @@ public protocol RNIContentViewParentDelegate where Self: ReactView {
   var viewID: String? { get };
   
   var reactSubviews: [UIView] { get };
+  
+  
+  // MARK: Fabric Only
+  // -----------------
+  
+  var cachedShadowView: RCTShadowView? { get };
   
   // MARK: Methods
   // -------------
