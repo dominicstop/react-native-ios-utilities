@@ -766,11 +766,12 @@ static BOOL SHOULD_LOG = NO;
   if(shouldAttachContentDelegate){
     [self setupAttachContentDelegate];
   };
+#else
+  [self _getAndSetShadowViewIfNeededWithCompletionHandler:nil];
 #endif
   
   [[RNIViewRegistry shared] registerViewUsingReactTagForView:self];
-  
-  [self _getAndSetShadowViewIfNeededWithCompletionHandler:nil];
+
   [self.eventBroadcaster notifyOnViewWillMoveToWindowWithSender:self
                                                       newWindow:newWindow];
 }

@@ -45,7 +45,9 @@ open class RNIBaseViewController: UIViewController {
     rootReactView.reactViewLifecycleDelegates.add(self);
     
     // MARK: Setup Constraints
+    #if !RCT_NEW_ARCH_ENABLED
     rootReactView.removeAllAncestorConstraints();
+    #endif
     
     rootReactView.translatesAutoresizingMaskIntoConstraints = false;
     self.view.addSubview(rootReactView);
