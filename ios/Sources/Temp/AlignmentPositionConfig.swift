@@ -25,6 +25,35 @@ public struct AlignmentPositionConfig {
   public var shouldPreferHeightAnchor: Bool?;
   public var shouldPreferWidthAnchor: Bool?;
   
+  // MARK: - Computed Properties
+  // ---------------------------
+  
+  public var hasExplicitHeight: Bool {
+    self.preferredHeight != nil;
+  };
+  
+  public var hasExplicitWidth: Bool {
+    self.preferredWidth != nil;
+  };
+  
+  public var hasExplicitSizeOnBothAxis: Bool {
+    self.hasExplicitHeight && self.hasExplicitWidth;
+  };
+  
+  public var hasExplicitSizeOnEitherAxis: Bool {
+    self.hasExplicitHeight || self.hasExplicitWidth;
+  };
+  
+  public var isStretchingOnBothAxis: Bool {
+       self.horizontalAlignment.isStretching
+    && self.verticalAlignment.isStretching
+  };
+  
+  public var isStretchingOnEitherAxis: Bool {
+       self.horizontalAlignment.isStretching
+    || self.verticalAlignment.isStretching
+  };
+  
   // MARK: - Init
   // ------------
   
