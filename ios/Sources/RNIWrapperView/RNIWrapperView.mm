@@ -58,7 +58,18 @@ using namespace facebook::react;
 
 - (CGSize)intrinsicContentSize
 {
-  return self.cachedLayoutMetrics.frame.size;
+  CGSize reactSize = self.cachedLayoutMetrics.frame.size;
+  CGSize newSize = [super intrinsicContentSize];
+  
+  if(newSize.width == 0){
+    newSize.width = reactSize.width;
+  };
+  
+  if(newSize.height == 0){
+    newSize.height = reactSize.height;
+  };
+  
+  return newSize;
 };
 
 // MARK: - RNIBaseView

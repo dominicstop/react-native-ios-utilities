@@ -39,9 +39,10 @@ public protocol RNIContentViewParentDelegate where Self: ReactView {
   
   var reactSubviews: [UIView] { get };
   
+  var intrinsicContentSizeOverride: CGSize { get set };
   
-  // MARK: Fabric Only
-  // -----------------
+  // MARK: - Properties (Paper Only)
+  // -------------------------------
   
   var cachedShadowView: RCTShadowView? { get };
   

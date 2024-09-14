@@ -81,6 +81,7 @@ static BOOL SHOULD_LOG = NO;
 
 @synthesize viewID;
 @synthesize reactSubviewRegistry;
+@synthesize intrinsicContentSizeOverride;
 
 // MARK: - Init + Setup
 // --------------------
@@ -255,6 +256,7 @@ static BOOL SHOULD_LOG = NO;
 - (void)initCommon
 {
   self.recycleCount = @0;
+  self.intrinsicContentSizeOverride = CGSizeZero;
   
   self.eventBroadcaster =
     [[RNIBaseViewEventBroadcaster alloc] initWithParentReactView:self];
@@ -492,6 +494,14 @@ static BOOL SHOULD_LOG = NO;
   [self.eventBroadcaster notifyOnUpdateLayoutMetricsWithSender:self
                                               oldLayoutMetrics:oldLayoutMetrics
                                               newLayoutMetrics:newLayoutMetrics];
+                                              
+  BOOL didChangeSize =
+       oldLayoutMetrics.frame.size.height != newLayoutMetrics.frame.size.height
+    || oldLayoutMetrics.frame.size.width  != newLayoutMetrics.frame.size.width;
+    
+  if(didChangeSize) {
+    [self invalidateIntrinsicContentSize];
+  };
 }
 #endif
 
@@ -825,6 +835,11 @@ static BOOL SHOULD_LOG = NO;
 {
   [self.eventBroadcaster notifyOnViewWillRemoveSubviewWithSender:self
                                                          subview:subview];
+};
+
+- (CGSize)intrinsicContentSize
+{
+  return self.intrinsicContentSizeOverride;
 };
 
 // MARK: - React Lifecycle (Fabric Only)
