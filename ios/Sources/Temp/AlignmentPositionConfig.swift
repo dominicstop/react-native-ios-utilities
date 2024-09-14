@@ -54,6 +54,11 @@ public struct AlignmentPositionConfig {
     || self.verticalAlignment.isStretching
   };
   
+  public var isStretchingOnOneAxisOnly: Bool {
+       ( self.horizontalAlignment.isStretching && !self.verticalAlignment.isStretching)
+    || (!self.horizontalAlignment.isStretching &&  self.verticalAlignment.isStretching);
+  };
+  
   // MARK: - Init
   // ------------
   
