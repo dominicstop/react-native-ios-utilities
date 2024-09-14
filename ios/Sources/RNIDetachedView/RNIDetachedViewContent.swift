@@ -251,7 +251,7 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
   
   #if !RCT_NEW_ARCH_ENABLED
   public func notifyOnViewWillInvalidate(sender: RNIContentViewParentDelegate) {
-    sender.reactSubviews.forEach {
+    sender.allReactSubviews.forEach {
       $0.removeFromSuperview();
     };
   };
