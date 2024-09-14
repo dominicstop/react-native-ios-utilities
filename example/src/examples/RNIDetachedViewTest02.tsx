@@ -12,6 +12,7 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   style?: ViewStyle;
 }> = [
   // tests 01: as big as possible
+  // * Size is determined from native (autolayout)
   {
     desc: "Stretch and fill",
     config: {
@@ -21,6 +22,7 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   },
 
   // tests 02: no specified size, centered
+  // * Size is determined from react/js side (yoga)
   {
     desc: "Attach to center (no specified size)",
     config: {
@@ -58,9 +60,9 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   },
 
   // tests 03: no specified size + fill width 
-  // * Mixed sizing, i.e. one of the sizes (either width/height) is set on 
-  //  native, and the other is set in react/JS
-
+  // * Mixed sizing, i.e. the width is set on native (autolayout), and the 
+  //   height is set in react/JS (yoga)
+  //
   // Observations (paper):
   // * 2024-09-14-23:32 (PST) 
   //   * the view jumps around, but eventually settles
@@ -89,6 +91,16 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   },
 
   // tests 04: no specified size + fill height
+  // * Mixed sizing, i.e. the height is set on native (autolayout), and the 
+  //   width is set in react/JS (yoga)
+  //
+  // Observations (paper):
+  // * 2024-09-15-03:09 (PST) 
+  //   * the view's height + width is correct (and resizes when the react child changes
+  //     size), but it's position is wrong
+  //
+  //   * the position of the view is always on the right side of the modal for some
+  //     reason (maybe: autolayout cannot compute the horizontal axis?)
   {
     desc: "Attach to left, and fill height (no specified size)",
     config: {
