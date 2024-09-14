@@ -32,6 +32,10 @@ open class RNIBaseViewController: UIViewController {
       return;
     };
     
+    #if DEBUG
+    self.log();
+    #endif
+    
     rootReactView.removeAllAncestorConstraints();
     
     rootReactView.translatesAutoresizingMaskIntoConstraints = false;
@@ -57,6 +61,13 @@ open class RNIBaseViewController: UIViewController {
       return;
     };
     
+    #if DEBUG
+    self.log();
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+      self.log();
+    };
+    #endif
+    
     self.positionConfig.setIntrinsicContentSizeOverrideIfNeeded(
       forRootReactView: rootReactView,
       withSize: self.view.bounds.size
@@ -67,6 +78,61 @@ open class RNIBaseViewController: UIViewController {
       attachingTo: self.view
     );
   };
+  
+  // MARK: Functions
+  // ---------------
+  
+  #if DEBUG
+  func log(funcString: String = #function){
+    print(
+      "RNIBaseViewController.\(funcString)",
+      "\n - positionConfig:", self.positionConfig,
+      
+      "\n - window.size:",
+        self.view.window?.bounds.size.debugDescription ?? "N/A",
+        
+      "\n - view.size:", self.view.bounds.size,
+      
+      "\n - view.globalFrame:",
+        self.view.globalFrame?.debugDescription ?? "N/A",
+        
+      "\n - view.layer.frame:",
+        self.view.layer.presentation()?.frame.debugDescription ?? "N/A",
+        
+      "\n - superview.size:",
+        self.view.superview?.bounds.size.debugDescription ?? "N/A",
+      
+      "\n - superview.globalFrame:",
+        self.view.superview?.globalFrame?.debugDescription ?? "N/A",
+        
+      "\n - rootReactView.size:",
+        self.rootReactView?.bounds.size.debugDescription ?? "N/A",
+        
+      "\n - rootReactView.cachedLayoutMetrics.contentFrame:",
+        self.rootReactView?.cachedLayoutMetrics?.contentFrame.debugDescription ?? "N/A",
+        
+      "\n - rootReactView.globalFrame:",
+        self.rootReactView?.globalFrame?.debugDescription ?? "N/A",
+        
+      "\n - rootReactView.layer.frame:",
+        self.rootReactView?.layer.presentation()?.frame.debugDescription ?? "N/A",
+        
+      "\n - rootReactView.intrinsicContentSize:",
+        self.rootReactView?.intrinsicContentSize.debugDescription ?? "N/A",
+        
+      "\n - contentDelegate.bounds.size:",
+        self.rootReactView?.contentDelegate.bounds.size.debugDescription ?? "N/A",
+        
+      "\n - contentDelegate.globalFrame:",
+        self.rootReactView?.contentDelegate.globalFrame?.debugDescription ?? "N/A",
+        
+      "\n - contentDelegate.layer.frame:",
+        self.rootReactView?.contentDelegate.layer.presentation()?.frame.debugDescription ?? "N/A",
+        
+      "\n"
+    );
+  };
+  #endif
 };
 
 extension RNIBaseViewController: RNIViewLifecycle {
