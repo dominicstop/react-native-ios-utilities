@@ -23,29 +23,33 @@ open class RNIBaseViewController: UIViewController {
   /// Position config for `rootReactView`
   public var positionConfig: AlignmentPositionConfig = .default;
   
+  // MARK: - Computed Properties
+  // ---------------------------
+  
   public var contentView: RNIContentViewDelegate? {
     self.rootReactView?.contentDelegate;
   };
+  
+  // MARK: - View Controller Lifecycle
+  // ---------------------------------
 
   public override func viewDidLoad() {
     guard let rootReactView = self.rootReactView else {
       return;
     };
     
-    #if DEBUG
+    #if DEBUG && false
     self.log();
     #endif
     
+    rootReactView.reactViewLifecycleDelegates.add(self);
+    
+    // MARK: Setup Constraints
     rootReactView.removeAllAncestorConstraints();
     
     rootReactView.translatesAutoresizingMaskIntoConstraints = false;
     self.view.addSubview(rootReactView);
-    
-    self.positionConfig.setIntrinsicContentSizeOverrideIfNeeded(
-      forRootReactView: rootReactView,
-      withSize: self.view.bounds.size
-    );
-    
+        
     let constraints = self.positionConfig.createConstraints(
       forView: rootReactView,
       attachingTo: self.view,
@@ -53,7 +57,26 @@ open class RNIBaseViewController: UIViewController {
     );
     
     NSLayoutConstraint.activate(constraints);
-    rootReactView.reactViewLifecycleDelegates.add(self);
+    
+    // MARK: Set Initial Size
+    let hasValidSize = !self.view.bounds.size.isZero;
+    if hasValidSize {
+      self.positionConfig.setIntrinsicContentSizeOverrideIfNeeded(
+        forRootReactView: rootReactView,
+        withSize: self.view.bounds.size
+      );
+    };
+    
+    let shouldSetSize =
+         hasValidSize
+      && self.positionConfig.isStretchingOnBothAxis;
+      
+    if shouldSetSize {
+      self.positionConfig.applySize(
+        toRootReactView: rootReactView,
+        attachingTo: self.view
+      );
+    };
   };
 
   public override func viewDidLayoutSubviews() {
@@ -61,7 +84,7 @@ open class RNIBaseViewController: UIViewController {
       return;
     };
     
-    #if DEBUG
+    #if DEBUG && false
     self.log();
     DispatchQueue.main.asyncAfter(deadline: .now() + 2){
       self.log();
@@ -79,8 +102,8 @@ open class RNIBaseViewController: UIViewController {
     );
   };
   
-  // MARK: Functions
-  // ---------------
+  // MARK: Methods
+  // --------------
   
   #if DEBUG
   func log(funcString: String = #function){
