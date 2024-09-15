@@ -18,6 +18,11 @@
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>
 
+#if DEBUG
+#include <iostream>
+#endif
+
+
 
 namespace facebook::react {
 
@@ -42,13 +47,14 @@ public:
     RNIBaseViewState
   >;
   
-#if REACT_NATIVE_TARGET_VERSION <= 74
-  virtual Point getContentOriginOffset() const override {
-#else
-  virtual Point getContentOriginOffset() const {
-#endif
-    auto stateData = this->getStateData();
-    return stateData.contentOffset;
+  using ConcreteViewShadowNode::ConcreteViewShadowNode;
+  
+  static ShadowNodeTraits BaseTraits() {
+    auto traits = ConcreteViewShadowNode::BaseTraits();
+    
+    // style is modified
+    traits.set(ShadowNodeTraits::Trait::DirtyYogaNode);
+    return traits;
   }
   
   // NOTE: impl. in subclass to customize initial state
@@ -58,6 +64,78 @@ public:
       const ComponentDescriptor& /*componentDescriptor*/
   ) {
     return {};
+  };
+  
+  
+  
+#if REACT_NATIVE_TARGET_VERSION <= 74
+  virtual Point getContentOriginOffset() const override {
+#else
+  virtual Point getContentOriginOffset() const {
+#endif
+    auto stateData = this->getStateData();
+    return stateData.contentOffset;
+  }
+  
+  void applyLayoutFromStateIfNeeded() {
+    ConcreteViewShadowNode::ensureUnsealed();
+    
+    auto rawState = this->getState();
+
+    auto state = std::dynamic_pointer_cast<
+      const ConcreteState<RNIBaseViewState>
+    >(rawState);
+     
+    if(state == nullptr){
+      return;
+    };
+    
+    RNIBaseViewState stateData = state->getData();
+    LayoutMetrics layoutMetrics = this->getLayoutMetrics();
+    
+    Size newSize = stateData.frameSize;
+    Size oldSize = layoutMetrics.frame.size;
+    
+    // NOTE: `Size` impl. custom `!=` op overload for checking inequality
+    bool didChangeSize = newSize != oldSize;
+    
+    if (didChangeSize && stateData.shouldSetSize) {
+      this->setSize(newSize);
+    };
+    
+    if(stateData.shouldSetPadding){
+      this->setPadding(stateData.padding);
+    };
+    
+    if(stateData.shouldSetPositionType){
+      this->setPositionType(stateData.positionType);
+    };
+
+  #if DEBUG && false
+    std::cout
+      << "RNIBaseViewShadowNode::applyLayoutFromStateIfNeeded"
+      << "\n - getComponentName: " << this->getComponentName()
+      << "\n - getComponentHandle: " << this->getComponentHandle()
+      << "\n - getTag: " << this->getTag()
+      << "\n - getSurfaceId: " << this->getSurfaceId()
+      << "\n - oldSize: " << oldSize.width << ", " << oldSize.height
+      << "\n - newSize: " << newSize.width << ", " << newSize.height
+      << "\n - didChangeSize: " << didChangeSize
+      << "\n - state, shouldSetSize: " << stateData.shouldSetSize
+      << "\n - state, frameSize.height: " << stateData.frameSize.height
+      << "\n - state, frameSize.width: " << stateData.frameSize.width
+      << "\n - state, contentOffset.x: " << stateData.contentOffset.x
+      << "\n - state, contentOffset.y: " << stateData.contentOffset.y
+      << "\n - state, shouldSetPadding: " << stateData.shouldSetPadding
+      << "\n - state, padding.top: " << stateData.padding.top
+      << "\n - state, padding.bottom: " << stateData.padding.bottom
+      << "\n - state, padding.left: " << stateData.padding.left
+      << "\n - state, padding.right: " << stateData.padding.right
+      << "\n - state, shouldSetPositionType: " << stateData.shouldSetPositionType
+      << "\n - state, positionType: " << stateData.positionType
+      << "\n"
+      << std::endl;
+  #endif
   }
 };
 
