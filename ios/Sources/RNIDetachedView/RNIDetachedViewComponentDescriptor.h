@@ -17,8 +17,10 @@
 
 namespace facebook::react {
 
-class RNIDetachedViewComponentDescriptor final
-  : public RNIBaseViewComponentDescriptor<RNIDetachedViewShadowNode> {
+class RNIDetachedViewComponentDescriptor final : public RNIBaseViewComponentDescriptor<
+  RNIDetachedViewShadowNode,
+  RNIDetachedViewComponentName
+> {
   
 public:
   using RNIBaseViewComponentDescriptor::RNIBaseViewComponentDescriptor;

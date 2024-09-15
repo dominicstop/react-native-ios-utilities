@@ -17,8 +17,10 @@
 
 namespace facebook::react {
 
-class RNIWrapperViewComponentDescriptor final
-  : public RNIBaseViewComponentDescriptor<RNIWrapperViewShadowNode> {
+class RNIWrapperViewComponentDescriptor final : public RNIBaseViewComponentDescriptor<
+  RNIWrapperViewShadowNode,
+  RNIWrapperViewComponentName
+> {
   
 public:
   using RNIBaseViewComponentDescriptor::RNIBaseViewComponentDescriptor;

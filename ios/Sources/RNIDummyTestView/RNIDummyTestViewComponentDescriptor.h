@@ -16,8 +16,10 @@
 
 namespace facebook::react {
 
-class RNIDummyTestViewComponentDescriptor final
-  : public RNIBaseViewComponentDescriptor<RNIDummyTestViewShadowNode> {
+class RNIDummyTestViewComponentDescriptor final : public RNIBaseViewComponentDescriptor<
+  RNIDummyTestViewShadowNode,
+  RNIDummyTestViewComponentName
+> {
   
 public:
   using RNIBaseViewComponentDescriptor::RNIBaseViewComponentDescriptor;
