@@ -743,6 +743,46 @@ static BOOL SHOULD_LOG = NO;
       
     newState.positionType = positionTypeReact;
   };
+
+  if(stateFromSwift.minSize) {
+    CGSize minSizeObjc = stateFromSwift.minSize.CGSizeValue;
+    
+    auto minSizeReact =
+      [RNIObjcUtils convertToReactSizeForSize:minSizeObjc];
+      
+    newState.maxSize = minSizeReact;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.shouldSetMinHeight) {
+    newState.shouldSetMinHeight = stateFromSwift.shouldSetMinHeight.boolValue;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.shouldSetMinWidth) {
+    newState.shouldSetMinWidth = stateFromSwift.shouldSetMinWidth.boolValue;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.maxSize) {
+    CGSize maxSizeObjc = stateFromSwift.maxSize.CGSizeValue;
+    
+    auto maxSizeReact =
+      [RNIObjcUtils convertToReactSizeForSize:maxSizeObjc];
+      
+    newState.maxSize = maxSizeReact;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.shouldSetMaxWidth) {
+    newState.shouldSetMaxWidth = stateFromSwift.shouldSetMaxWidth.boolValue;
+    doesNeedLayout = YES;
+  };
+  
+  if(stateFromSwift.shouldSetMaxHeight) {
+    newState.shouldSetMaxHeight = stateFromSwift.shouldSetMaxHeight.boolValue;
+    doesNeedLayout = YES;
+  };
   
   self->_state->updateState(std::move(newState));
   
