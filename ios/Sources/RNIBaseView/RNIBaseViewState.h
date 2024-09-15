@@ -30,13 +30,10 @@ public:
   // MARK: Properties
   // ----------------
   
-  bool shouldSetSize = false;
-  bool shouldSetPadding = false;
-  bool shouldSetPositionType = false;
-  
   // frameHeight
   // frameWidth
   Size frameSize;
+  bool shouldSetSize = false;
   
   // contentOffsetX
   // contentOffsetY
@@ -47,8 +44,10 @@ public:
   // paddingLeft
   // paddingRight
   RectangleEdges<Float> padding;
+  bool shouldSetPadding = false;
   
   YGPositionType positionType;
+  bool shouldSetPositionType = false;
   
   // MARK: - Init
   // ------------
