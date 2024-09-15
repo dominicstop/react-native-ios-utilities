@@ -85,8 +85,8 @@ public extension AlignmentPositionConfig {
         #if RCT_NEW_ARCH_ENABLED
         rootReactView.requestToUpdateState(
           .init(
-            shouldSetMinWidth: true,
-            maxSize: .init(width: newWidth, height: 0)
+            minSize: .init(width: newWidth, height: 0),
+            shouldSetMinWidth: true
           )
         );
         #else
@@ -113,8 +113,8 @@ public extension AlignmentPositionConfig {
           #if RCT_NEW_ARCH_ENABLED
           rootReactView.requestToUpdateState(
             .init(
-              shouldSetMinHeight: true,
-              maxSize: .init(width: 0, height: newHeight)
+              minSize: .init(width: 0, height: newHeight),
+              shouldSetMinHeight: true
             )
           );
           #else

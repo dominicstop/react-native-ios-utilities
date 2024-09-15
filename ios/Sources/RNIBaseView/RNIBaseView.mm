@@ -750,7 +750,7 @@ static BOOL SHOULD_LOG = NO;
     auto minSizeReact =
       [RNIObjcUtils convertToReactSizeForSize:minSizeObjc];
       
-    newState.maxSize = minSizeReact;
+    newState.minSize = minSizeReact;
     doesNeedLayout = YES;
   };
   
