@@ -83,7 +83,12 @@ public extension AlignmentPositionConfig {
         let newWidth = targetView.bounds.width;
         
         #if RCT_NEW_ARCH_ENABLED
-        // TBA
+        rootReactView.requestToUpdateState(
+          .init(
+            shouldSetMinWidth: true,
+            maxSize: .init(width: newWidth, height: 0)
+          )
+        );
         #else
         guard let shadowView = rootReactView.cachedShadowView,
               CGFloat(shadowView.minWidth.value) != newWidth
@@ -106,7 +111,12 @@ public extension AlignmentPositionConfig {
           let newHeight = targetView.bounds.height;
           
           #if RCT_NEW_ARCH_ENABLED
-          // TBA
+          rootReactView.requestToUpdateState(
+            .init(
+              shouldSetMinHeight: true,
+              maxSize: .init(width: 0, height: newHeight)
+            )
+          );
           #else
           guard let shadowView = rootReactView.cachedShadowView,
                 CGFloat(shadowView.minHeight.value) != newHeight
