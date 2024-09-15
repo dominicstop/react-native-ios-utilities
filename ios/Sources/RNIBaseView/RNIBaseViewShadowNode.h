@@ -118,21 +118,47 @@ public:
       state->updateState(std::move(newStateData));
     };
     
-//    yoga::Node &yogaNode = this->yogaNode_;
-//    yoga::Style &yogaStyle = yogaNode.style();
-//
-//    yogaStyle.setMaxDimension(
-//      yoga::Dimension::Width,
-//      yoga::value::points(50)
-//    );
-//
-//    yogaStyle.setMaxDimension(
-//      yoga::Dimension::Height,
-//      yoga::value::points(50)
-//    );
-//
-//    yogaNode.setDirty(true);
-//    
+    yoga::Node &yogaNode = this->yogaNode_;
+    yoga::Style &yogaStyle = yogaNode.style();
+    
+    bool doesNeedLayout = false;
+    
+    if(stateData.shouldSetMinWidth) {
+      doesNeedLayout = true;
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Width,
+        yoga::value::points(stateData.minSize.width)
+      );
+    };
+    
+    if(stateData.shouldSetMinHeight) {
+      doesNeedLayout = true;
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Height,
+        yoga::value::points(stateData.minSize.height)
+      );
+    };
+    
+    if(stateData.shouldSetMaxWidth) {
+      doesNeedLayout = true;
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Width,
+        yoga::value::points(stateData.maxSize.width)
+      );
+    };
+    
+    if(stateData.shouldSetMaxHeight) {
+      doesNeedLayout = true;
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Height,
+        yoga::value::points(stateData.maxSize.height)
+      );
+    };
+    
+    if(doesNeedLayout){
+      yogaNode.setDirty(true);
+    };
+    
     #if DEBUG && FALSE
     Size newSize = stateData.frameSize;
     Size oldSize = layoutMetrics.frame.size;
@@ -147,6 +173,7 @@ public:
       << "\n - oldSize: " << oldSize.width << ", " << oldSize.height
       << "\n - newSize: " << newSize.width << ", " << newSize.height
       << "\n - didChangeSize: " << didChangeSize
+      << "\n - doesNeedLayout:" << doesNeedLayout
       << "\n - state, shouldSetSize: " << stateData.shouldSetSize
       << "\n - state, frameSize.height: " << stateData.frameSize.height
       << "\n - state, frameSize.width: " << stateData.frameSize.width
@@ -159,6 +186,12 @@ public:
       << "\n - state, padding.right: " << stateData.padding.right
       << "\n - state, shouldSetPositionType: " << stateData.shouldSetPositionType
       << "\n - state, positionType: " << stateData.positionType
+      << "\n - state, minSize: " << stateData.minSize.width << ", " << stateData.minSize.height
+      << "\n - state, shouldSetMinHeight: " << stateData.shouldSetMinHeight
+      << "\n - state, shouldSetMinWidth: " << stateData.shouldSetMinWidth
+      << "\n - state, maxSize: " << stateData.maxSize.width << ", " << stateData.maxSize.height
+      << "\n - state, shouldSetMaxWidth: " << stateData.shouldSetMaxWidth
+      << "\n - state, shouldSetMaxHeight: " << stateData.shouldSetMaxHeight
       << "\n"
       << std::endl;
     #endif
