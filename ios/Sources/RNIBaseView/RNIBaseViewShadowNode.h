@@ -8,7 +8,9 @@
 #if __cplusplus
 #pragma once
 
-#include <react-native-ios-utilities/RNIBaseViewState.h>
+#include "RNIBaseViewProps.h"
+#include "RNIBaseViewState.h"
+#include "RNIBaseViewEventEmitter.h"
 
 #include <react/renderer/components/RNIUtilitiesSpec/EventEmitters.h>
 #include <react/renderer/components/RNIUtilitiesSpec/Props.h>
@@ -21,8 +23,8 @@ namespace facebook::react {
 
 template <
   const char* concreteComponentName,
-  typename ViewPropsT = ViewProps,
-  typename ViewEventEmitterT = ViewEventEmitter
+  typename ViewPropsT = RNIBaseViewProps,
+  typename ViewEventEmitterT = RNIBaseViewEventEmitter
 >
 class JSI_EXPORT RNIBaseViewShadowNode : public ConcreteViewShadowNode<
   concreteComponentName,
@@ -32,12 +34,13 @@ class JSI_EXPORT RNIBaseViewShadowNode : public ConcreteViewShadowNode<
 > {
 
 public:
-  using ConcreteViewShadowNode<
+
+  using ConcreteViewShadowNode = ConcreteViewShadowNode<
     concreteComponentName,
     ViewPropsT,
     ViewEventEmitterT,
     RNIBaseViewState
-  >::ConcreteViewShadowNode;
+  >;
   
 #if REACT_NATIVE_TARGET_VERSION <= 74
   virtual Point getContentOriginOffset() const override {

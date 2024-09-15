@@ -22,11 +22,8 @@ namespace facebook::react {
 
 JSI_EXPORT extern const char RNIDummyTestViewComponentName[] = "RNIDummyTestView";
 
-class JSI_EXPORT RNIDummyTestViewShadowNode final : public RNIBaseViewShadowNode<
-  RNIDummyTestViewComponentName,
-  RNIBaseViewProps,
-  RNIBaseViewEventEmitter
-> {
+class JSI_EXPORT RNIDummyTestViewShadowNode final :
+  public RNIBaseViewShadowNode<RNIDummyTestViewComponentName> {
 
 public:
   using RNIBaseViewShadowNode::RNIBaseViewShadowNode;

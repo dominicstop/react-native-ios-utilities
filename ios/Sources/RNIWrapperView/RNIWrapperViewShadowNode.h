@@ -9,8 +9,6 @@
 #pragma once
 
 #include <react-native-ios-utilities/RNIBaseViewShadowNode.h>
-#include <react-native-ios-utilities/RNIBaseViewProps.h>
-#include <react-native-ios-utilities/RNIBaseViewEventEmitter.h>
 
 #include <react/renderer/components/RNIUtilitiesSpec/EventEmitters.h>
 #include <react/renderer/components/RNIUtilitiesSpec/Props.h>
@@ -23,11 +21,8 @@ namespace facebook::react {
 
 JSI_EXPORT extern const char RNIWrapperViewComponentName[] = "RNIWrapperView";
 
-class JSI_EXPORT RNIWrapperViewShadowNode final : public RNIBaseViewShadowNode<
-  RNIWrapperViewComponentName,
-  RNIBaseViewProps,
-  RNIBaseViewEventEmitter
-> {
+class JSI_EXPORT RNIWrapperViewShadowNode final :
+  public RNIBaseViewShadowNode<RNIWrapperViewComponentName> {
 
 public:
   using RNIBaseViewShadowNode::RNIBaseViewShadowNode;
