@@ -252,7 +252,7 @@ export function RNIDetachedViewTest02(props: ExampleItemProps) {
       index={props.index}
       title={'RNIDetachedViewTest02'}
       description={[
-        "TBA",
+        "Layout and sizing tests (autolayout + yoga)",
         contentPositionConfigDesc && (
             "\nPreset Desc: " 
           + contentPositionConfigDesc
