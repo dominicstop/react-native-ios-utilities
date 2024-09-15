@@ -11,14 +11,14 @@ import DGSwiftUtilities
 @objc(RNIBaseViewStateSwift)
 public class RNIBaseViewState: NSObject {
   
-  public var shouldSetSize: Bool?;
   public var frameSize: CGSize?;
+  public var shouldSetSize: Bool?;
   
-  public var shouldSetPadding: Bool?;
   public var padding: UIEdgeInsets?;
+  public var shouldSetPadding: Bool?;
   
-  public var shouldSetPositionType: Bool?;
   public var positionType: RNILayoutMetrics.RNIPositionType?;
+  public var shouldSetPositionType: Bool?;
   
   public var minSize: CGSize?;
   public var shouldSetMinHeight: Bool?;
@@ -30,15 +30,6 @@ public class RNIBaseViewState: NSObject {
   
   // MARK: - Computed Properties
   // ---------------------------
-    
-  @objc(shouldSetSize)
-  public var shouldSetSizeBoxed: NSNumber? {
-    guard let shouldSetSize = self.shouldSetSize else {
-      return nil;
-    };
-    
-    return .init(booleanLiteral: shouldSetSize);
-  };
   
   @objc(frameSize)
   public var frameSizeBoxed: NSValue? {
@@ -49,13 +40,13 @@ public class RNIBaseViewState: NSObject {
     return .init(cgSize: frameSize);
   };
   
-  @objc(shouldSetPadding)
-  public var shouldSetPaddingBoxed: NSNumber? {
-    guard let shouldSetPadding = self.shouldSetPadding else {
+  @objc(shouldSetSize)
+  public var shouldSetSizeBoxed: NSNumber? {
+    guard let shouldSetSize = self.shouldSetSize else {
       return nil;
     };
     
-    return .init(booleanLiteral: shouldSetPadding);
+    return .init(booleanLiteral: shouldSetSize);
   };
   
   @objc(padding)
@@ -67,13 +58,13 @@ public class RNIBaseViewState: NSObject {
     return .init(uiEdgeInsets: padding);
   };
   
-  @objc(shouldSetPositionType)
-  public var shouldSetPositionTypeBoxed: NSNumber? {
-    guard let shouldSetPositionType = self.shouldSetPositionType else {
+  @objc(shouldSetPadding)
+  public var shouldSetPaddingBoxed: NSNumber? {
+    guard let shouldSetPadding = self.shouldSetPadding else {
       return nil;
     };
     
-    return .init(booleanLiteral: shouldSetPositionType);
+    return .init(booleanLiteral: shouldSetPadding);
   };
   
   @objc(positionType)
@@ -83,6 +74,15 @@ public class RNIBaseViewState: NSObject {
     };
     
     return .init(integerLiteral: positionType.rawValue);
+  };
+  
+  @objc(shouldSetPositionType)
+  public var shouldSetPositionTypeBoxed: NSNumber? {
+    guard let shouldSetPositionType = self.shouldSetPositionType else {
+      return nil;
+    };
+    
+    return .init(booleanLiteral: shouldSetPositionType);
   };
   
   @objc(minSize)
