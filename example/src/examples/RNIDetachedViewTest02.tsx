@@ -60,6 +60,7 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   },
 
   // tests 03: no specified size + fill width 
+  //
   // * Mixed sizing, i.e. the width is set on native (autolayout), and the 
   //   height is set in react/JS (yoga)
   //
@@ -68,6 +69,14 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   //   * the view jumps around, but eventually settles
   //   * Because autolayout doesn't know the size of the react view yet, and/or
   //     the size from autolayout/native isn't set yet. 
+  //
+  // Observations (fabric):
+  // * 2024-09-16-05:12 (PST)
+  //  * the counter doesn't resize, and always sticks to the left of the modal
+  //  * however the counter's parent container does resize properly
+  //
+  // * 2024-09-16-05:58 (PST)
+  //  * the counter now sizes correctly
   {
     desc: "Attach to top, and fill width (no specified size)",
     config: {
@@ -91,6 +100,7 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   },
 
   // tests 04: no specified size + fill height
+  //
   // * Mixed sizing, i.e. the height is set on native (autolayout), and the 
   //   width is set in react/JS (yoga)
   //
