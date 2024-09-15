@@ -66,8 +66,6 @@ public:
     return {};
   };
   
-  
-  
 #if REACT_NATIVE_TARGET_VERSION <= 74
   virtual Point getContentOriginOffset() const override {
 #else
@@ -93,14 +91,19 @@ public:
     RNIBaseViewState stateData = state->getData();
     LayoutMetrics layoutMetrics = this->getLayoutMetrics();
     
-    Size newSize = stateData.frameSize;
-    Size oldSize = layoutMetrics.frame.size;
+    bool shouldUpdateState = false;
+    RNIBaseViewState newStateData = RNIBaseViewState(stateData);
     
-    // NOTE: `Size` impl. custom `!=` op overload for checking inequality
-    bool didChangeSize = newSize != oldSize;
-    
-    if (didChangeSize && stateData.shouldSetSize) {
-      this->setSize(newSize);
+    if (stateData.shouldSetSize) {
+      Size newSize = stateData.frameSize;
+      Size oldSize = layoutMetrics.frame.size;
+      
+      // NOTE: `Size` impl. custom `!=` op overload for checking inequality
+      bool didChangeSize = newSize != oldSize;
+      
+      if(didChangeSize){
+        this->setSize(newSize);
+      };
     };
     
     if(stateData.shouldSetPadding){
@@ -110,8 +113,31 @@ public:
     if(stateData.shouldSetPositionType){
       this->setPositionType(stateData.positionType);
     };
-
-  #if DEBUG && false
+    
+    if(shouldUpdateState){
+      state->updateState(std::move(newStateData));
+    };
+    
+//    yoga::Node &yogaNode = this->yogaNode_;
+//    yoga::Style &yogaStyle = yogaNode.style();
+//
+//    yogaStyle.setMaxDimension(
+//      yoga::Dimension::Width,
+//      yoga::value::points(50)
+//    );
+//
+//    yogaStyle.setMaxDimension(
+//      yoga::Dimension::Height,
+//      yoga::value::points(50)
+//    );
+//
+//    yogaNode.setDirty(true);
+//    
+    #if DEBUG && FALSE
+    Size newSize = stateData.frameSize;
+    Size oldSize = layoutMetrics.frame.size;
+    bool didChangeSize = newSize != oldSize;
+    
     std::cout
       << "RNIBaseViewShadowNode::applyLayoutFromStateIfNeeded"
       << "\n - getComponentName: " << this->getComponentName()
@@ -135,7 +161,7 @@ public:
       << "\n - state, positionType: " << stateData.positionType
       << "\n"
       << std::endl;
-  #endif
+    #endif
   }
 };
 
