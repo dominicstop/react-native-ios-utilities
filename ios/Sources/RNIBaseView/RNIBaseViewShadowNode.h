@@ -192,6 +192,11 @@ public:
       << "\n - state, maxSize: " << stateData.maxSize.width << ", " << stateData.maxSize.height
       << "\n - state, shouldSetMaxWidth: " << stateData.shouldSetMaxWidth
       << "\n - state, shouldSetMaxHeight: " << stateData.shouldSetMaxHeight
+      << "\n - state, shouldSetMaxHeight: " << stateData.shouldSetMaxHeight
+      << "\n - style, minHeight: " << yogaStyle.minDimension(yoga::Dimension::Height).value().unwrap()
+      << "\n - style, maxHeight: " << yogaStyle.maxDimension(yoga::Dimension::Height).value().unwrap()
+      << "\n - style, minWidth: " << yogaStyle.minDimension(yoga::Dimension::Width).value().unwrap()
+      << "\n - style, maxWidth: " << yogaStyle.maxDimension(yoga::Dimension::Width).value().unwrap()
       << "\n"
       << std::endl;
     #endif
