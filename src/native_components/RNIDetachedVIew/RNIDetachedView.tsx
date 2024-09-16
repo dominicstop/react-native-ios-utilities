@@ -85,10 +85,14 @@ export const RNIDetachedView = React.forwardRef<
         props.onDidSetViewID?.(event);
         event.stopPropagation();
       }}
+      onViewDidDetachFromParent={(event) => {
+        props.onViewDidDetachFromParent?.(event);
+        event.stopPropagation();
+        setIsDetachedInNative(true);
+      }}
       onContentViewDidDetach={(event) => {
         props.onContentViewDidDetach?.(event);
         event.stopPropagation();
-        setIsDetachedInNative(true);
       }}
     >
       {children}
