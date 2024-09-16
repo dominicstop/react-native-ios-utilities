@@ -38,7 +38,9 @@ public final class RNIDetachedViewContent:
   // ------------------
   
   public var didDetach = false;
-  public var viewToDetach: RNIContentViewParentDelegate?;
+  
+  public var viewsToDetach: [RNIContentViewParentDelegate] = [];
+  public var detachedViews: [RNIContentViewParentDelegate] = [];
   
   // MARK: - Properties - Props
   // --------------------------
@@ -51,8 +53,20 @@ public final class RNIDetachedViewContent:
             self.window != nil
       else { return };
       
-      try? self.detachIfNeeded();
+      try? self.detach();
+      try? self.detachSubviews();
     }
+  };
+  
+  // MARK: - Computed Properties
+  // ---------------------------
+  
+  public var hasViewsToDetach: Bool {
+    self.viewsToDetach.count > 0;
+  };
+  
+  public var hasDetachedViews: Bool {
+    self.detachedViews.count > 0;
   };
 
   // MARK: Init
@@ -71,25 +85,34 @@ public final class RNIDetachedViewContent:
   
   public override func willMove(toWindow newWindow: UIWindow?) {
     if self.shouldImmediatelyDetach {
-      try? self.detachIfNeeded();
+      try? self.detach();
+      try? self.detachSubviews();
     };
   };
   
   // MARK: - Methods
   // ---------------
   
-  func detach() throws {
+  func register(subviewToDetach subview: RNIContentViewParentDelegate){
+    self.viewsToDetach.append(subview);
+  };
+  
+  public func detach() throws {
     guard !self.didDetach else {
-      throw RNIUtilitiesError(errorCode: .illegalState);
+      throw RNIUtilitiesError(
+        errorCode: .illegalState,
+        description: "Already detached"
+      );
     };
-    
+  
     guard let parentReactView = self.parentReactView else {
-      throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
+      throw RNIUtilitiesError(
+        errorCode: .unexpectedNilValue,
+        description: "Could not get parentReactView"
+      );
     };
     
-    guard let viewToDetach = self.viewToDetach else {
-      throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
-    };
+    self.dispatchEvent(for: .OnViewDidDetachFromParent, withPayload: [:]);
     
     #if RCT_NEW_ARCH_ENABLED
     parentReactView.setPositionType(.absolute);
@@ -100,18 +123,44 @@ public final class RNIDetachedViewContent:
     parentReactView.removeFromSuperview();
     #endif
     
+    self.didDetach = true;
+  };
+  
+  public func detach(
+    subview viewToDetach: RNIContentViewParentDelegate
+  ) throws {
+    
+    let matchIndex = self.viewsToDetach.enumerated().first {
+      $0.element === viewToDetach;
+    };
+    
+    guard let matchIndex = matchIndex else {
+      throw RNIUtilitiesError(
+        errorCode: .guardCheckFailed,
+        description: "Subview to detach does not exists in `viewsToDetach`"
+      );
+    };
+    
+    self.viewsToDetach.remove(at: matchIndex.offset);
+    self.detachedViews.append(viewToDetach);
+    
+    viewToDetach.removeFromSuperview();
     viewToDetach.attachReactTouchHandler();
     
-    self.didDetach = true;
     self.dispatchEvent(for: .onContentViewDidDetach, withPayload: [:]);
   };
   
-  func detachIfNeeded() throws {
-    guard !self.didDetach else {
-      return;
+  public func detachSubviews() throws {
+    guard self.hasViewsToDetach else {
+      throw RNIUtilitiesError(
+        errorCode: .illegalState,
+        description: "There are no subviews to detach"
+      );
     };
-    
-    try self.detach();
+  
+    try self.viewsToDetach.forEach {
+      try self.detach(subview: $0);
+    };
   };
 };
 
@@ -135,7 +184,11 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
     self.addSubview(childComponentView);
     
     if let viewToDetach = childComponentView as? RNIContentViewParentDelegate {
-      self.viewToDetach = viewToDetach;
+      self.register(subviewToDetach: viewToDetach);
+      
+      if self.shouldImmediatelyDetach {
+        try? self.detach(subview: viewToDetach);
+      };
     };
   };
   
@@ -180,11 +233,12 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             return try .init(fromDict: dictConfig);
           }();
           
-          guard let viewToDetach = self.viewToDetach else {
+          try? self.detach();
+          try? self.detachSubviews();
+          
+          guard let viewToDetach = self.detachedViews.first else {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
-          
-          try self.detachIfNeeded();
             
           let childVC = RNIBaseViewController();
           childVC.rootReactView = viewToDetach;
@@ -201,8 +255,11 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
           guard let window = UIApplication.shared.activeWindow else {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
+          
+          try? self.detach();
+          try? self.detachSubviews();
         
-          guard let viewToDetach = self.viewToDetach else {
+          guard let viewToDetach = self.detachedViews.first else {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
           
@@ -214,8 +271,6 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             
             return try .init(fromDict: dictConfig);
           }();
-          
-          try self.detachIfNeeded();
           
           let modalVC = RNIBaseViewController();
           modalVC.rootReactView = viewToDetach;
