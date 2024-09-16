@@ -19,6 +19,7 @@ public final class RNIDetachedViewContent:
   public enum Events: String, CaseIterable, RNIViewInternalEvents {
     case onRawNativeEvent;
     case onContentViewDidDetach;
+    case OnViewDidDetachFromParent;
   };
   
   // MARK: - Static Properties

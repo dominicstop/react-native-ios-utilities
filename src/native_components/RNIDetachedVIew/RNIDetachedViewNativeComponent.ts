@@ -17,6 +17,7 @@ export interface NativeProps extends ViewProps {
 
   // event prop stubs
   onContentViewDidDetach?: BubblingEventHandler<{}>;
+  onViewDidDetachFromParent?: BubblingEventHandler<{}>;
 };
 
 // stubs

@@ -5,7 +5,7 @@ import {
   type NativeProps as RNIDetachedViewNativeComponentProps
 } from './RNIDetachedViewNativeComponent';
 
-import type { OnContentViewDidDetachEvent } from './RNIDetachedViewEvents';
+import type { OnContentViewDidDetachEvent, OnViewDidDetachFromParentEvent } from './RNIDetachedViewEvents';
 
 import type { SharedViewEvents } from '../../types/SharedViewEvents';
 import type { SharedViewEventsInternal } from '../../types/SharedViewEventsInternal';
@@ -20,6 +20,7 @@ type RNIDetachedViewNativeComponentBaseProps =
 export type RNIDetachedNativeViewBaseProps = RemapObject<RNIDetachedViewNativeComponentBaseProps, {
   shouldImmediatelyDetach: boolean;
   onContentViewDidDetach: OnContentViewDidDetachEvent;
+  onViewDidDetachFromParent: OnViewDidDetachFromParentEvent;
 }>;
 
 export type RNIDetachedNativeViewProps = 

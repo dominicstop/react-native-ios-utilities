@@ -33,6 +33,7 @@ export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNati
 
   // events
   | 'onContentViewDidDetach'
+  | 'onViewDidDetachFromParent'
 >>;
 
 export type RNIDetachedViewBaseProps = {
