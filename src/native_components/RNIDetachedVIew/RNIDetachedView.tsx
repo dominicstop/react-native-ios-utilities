@@ -37,6 +37,9 @@ export const RNIDetachedView = React.forwardRef<
     getViewID: () => {
       return viewID;
     },
+    getDetachedSubviewsMap: () => {
+      return detachedSubviewsMap;
+    },
     attachToWindow: async (commandArgs) => {
       if(viewID == null) return;
       const module = Helpers.getRNIUtilitiesModule();

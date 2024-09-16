@@ -4,6 +4,7 @@ import type { ViewProps } from "react-native";
 import type { RNIDetachedNativeViewProps } from "./RNIDetachedNativeView";
 import type { StateReactTag, StateViewID } from "../../types/SharedStateTypes";
 import type { AlignmentPositionConfig } from "../../types/DGSwiftUtilities";
+import type { DetachedSubviewsMap } from "./DetachedSubviewsMap";
 
 
 export type RNIDetachedViewRef = {
@@ -17,6 +18,8 @@ export type RNIDetachedViewRef = {
   presentInModal: (commandParams: {
     contentPositionConfig: AlignmentPositionConfig;
   }) => Promise<void>;
+
+  getDetachedSubviewsMap: () => DetachedSubviewsMap;
 };
 
 export type RNIDetachedViewInheritedOptionalProps = Partial<Pick<RNIDetachedNativeViewProps,
