@@ -22,7 +22,7 @@ export function RNIDetachedViewContent(
           ? wrapperStyle 
           : []
         ),
-        (props.isDetached 
+        (props.isParentDetached 
           ? styles.wrapperViewDetached
           : styles.wrapperViewAttached
         ),

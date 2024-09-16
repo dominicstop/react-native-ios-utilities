@@ -64,7 +64,7 @@ export const RNIDetachedView = React.forwardRef<
     return React.cloneElement(
       child as React.ReactElement<RNIDetachedViewContentProps>, 
       {
-        isDetached,
+        isParentDetached: isDetached,
         shouldEnableDebugBackgroundColors,
       }
     );

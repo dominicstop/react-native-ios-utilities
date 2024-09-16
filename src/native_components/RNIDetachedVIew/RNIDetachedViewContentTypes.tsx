@@ -9,7 +9,7 @@ export type RNIDetachedViewContentInheritedProps = Pick<RNIDetachedViewProps,
 
 export type RNIDetachedViewContentBaseProps = {
   contentContainerStyle?: ViewStyle;
-  isDetached?: boolean;
+  isParentDetached?: boolean;
 };
 
 export type RNIDetachedViewContentProps = 
