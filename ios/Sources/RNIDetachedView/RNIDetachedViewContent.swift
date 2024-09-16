@@ -57,7 +57,7 @@ public final class RNIDetachedViewContent:
             self.window != nil
       else { return };
       
-      try? self.detach();
+      try? self.detachFromParent();
       try? self.detachSubviews();
     }
   };
@@ -115,7 +115,7 @@ public final class RNIDetachedViewContent:
   
   public override func willMove(toWindow newWindow: UIWindow?) {
     if self.shouldImmediatelyDetach {
-      try? self.detach();
+      try? self.detachFromParent();
       try? self.detachSubviews();
     };
   };
@@ -131,7 +131,7 @@ public final class RNIDetachedViewContent:
     };
   };
   
-  public func detach() throws {
+  public func detachFromParent() throws {
     guard !self.didDetach else {
       throw RNIUtilitiesError(
         errorCode: .illegalState,
@@ -164,8 +164,8 @@ public final class RNIDetachedViewContent:
     };
   };
   
-  public func detach(
-    subview viewToDetach: RNIContentViewParentDelegate
+  public func detachSubview(
+    _ viewToDetach: RNIContentViewParentDelegate
   ) throws {
     
     let matchIndex = self.viewsToDetach.enumerated().first {
@@ -217,7 +217,7 @@ public final class RNIDetachedViewContent:
     };
   
     try self.viewsToDetach.forEach {
-      try self.detach(subview: $0);
+      try self.detachSubview($0);
     };
   };
 };
@@ -245,7 +245,7 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
       self.register(subviewToDetach: viewToDetach);
       
       if self.shouldImmediatelyDetach {
-        try? self.detach(subview: viewToDetach);
+        try? self.detachSubview(viewToDetach);
       };
     };
   };
@@ -291,7 +291,7 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             return try .init(fromDict: dictConfig);
           }();
           
-          try? self.detach();
+          try? self.detachFromParent();
           try? self.detachSubviews();
           
           guard let viewToDetach = self.detachedViews.first else {
@@ -314,7 +314,7 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
             throw RNIUtilitiesError(errorCode: .unexpectedNilValue);
           };
           
-          try? self.detach();
+          try? self.detachFromParent();
           try? self.detachSubviews();
         
           guard let viewToDetach = self.detachedViews.first else {
