@@ -91,7 +91,7 @@ type InternalViewProps =
 export type NativeComponentBasePropsInternal<
   RawNativeProps,
   BaseNativeProps = Omit<RawNativeProps, keyof ViewProps>,
-  PropsToRemap = Omit<RawNativeProps, keyof ViewProps & InternalViewProps>
+  PropsToRemap = Omit<RawNativeProps, keyof (ViewProps & InternalViewProps)>
 > = Required<BaseNativeProps> extends {[K in keyof Required<InternalViewProps>]: unknown} 
   ? PropsToRemap 
   : never;
