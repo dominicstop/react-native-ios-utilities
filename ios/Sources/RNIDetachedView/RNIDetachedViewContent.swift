@@ -43,6 +43,9 @@ public final class RNIDetachedViewContent:
   public var viewsToDetach: [RNIContentViewParentDelegate] = [];
   public var detachedViews: [RNIContentViewParentDelegate] = [];
   
+  public var eventDelegates:
+    MulticastDelegate<RNIDetachedViewEventsNotifiable> = .init();
+  
   // MARK: - Properties - Props
   // --------------------------
   
@@ -60,9 +63,24 @@ public final class RNIDetachedViewContent:
   };
   
   public var reactChildrenCount: Int = 0;
-  private var reactChildrenCountProp: NSNumber = 0 {
+  var reactChildrenCountProp: NSNumber = 0 {
     willSet {
-      self.reactChildrenCount = newValue.intValue;
+      let oldCount = self.reactChildrenCount;
+      let newCount = newValue.intValue;
+      
+      guard oldCount != newCount else {
+        return;
+      };
+      
+      self.reactChildrenCount = newCount;
+      
+      self.eventDelegates.invoke {
+        $0.onReactChildrenCountDidChange(
+          sender: self,
+          oldCount: oldCount,
+          newCount: newCount
+        );
+      };
     }
   };
   
@@ -76,7 +94,11 @@ public final class RNIDetachedViewContent:
   public var hasDetachedViews: Bool {
     self.detachedViews.count > 0;
   };
-
+    
+  public var didDetachAllViews: Bool {
+    self.viewsToDetach.count == self.detachedViews.count;
+  };
+  
   // MARK: Init
   // ----------
   
@@ -103,6 +125,10 @@ public final class RNIDetachedViewContent:
   
   func register(subviewToDetach subview: RNIContentViewParentDelegate){
     self.viewsToDetach.append(subview);
+    self.eventDelegates.invoke {
+      $0.didReceiveSubviewToDetach(
+        sender: self, subview: subview);
+    };
   };
   
   public func detach() throws {
@@ -132,6 +158,10 @@ public final class RNIDetachedViewContent:
     #endif
     
     self.didDetach = true;
+    
+    self.eventDelegates.invoke {
+      $0.didDetachFromParent(sender: self);
+    };
   };
   
   public func detach(
@@ -172,6 +202,10 @@ public final class RNIDetachedViewContent:
       for: .onContentViewDidDetach,
       withPayload: [:]
     );
+    
+    self.eventDelegates.invoke {
+      $0.didDetachContent(sender: self, subview: viewToDetach);
+    };
   };
   
   public func detachSubviews() throws {
