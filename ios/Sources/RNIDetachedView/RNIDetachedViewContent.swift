@@ -19,7 +19,7 @@ public final class RNIDetachedViewContent:
   public enum Events: String, CaseIterable, RNIViewInternalEvents {
     case onRawNativeEvent;
     case onContentViewDidDetach;
-    case OnViewDidDetachFromParent;
+    case onViewDidDetachFromParent;
   };
   
   // MARK: - Static Properties
@@ -112,7 +112,7 @@ public final class RNIDetachedViewContent:
       );
     };
     
-    self.dispatchEvent(for: .OnViewDidDetachFromParent, withPayload: [:]);
+    self.dispatchEvent(for: .onViewDidDetachFromParent, withPayload: [:]);
     
     #if RCT_NEW_ARCH_ENABLED
     parentReactView.setPositionType(.absolute);
