@@ -1064,9 +1064,10 @@ static BOOL SHOULD_LOG = NO;
 
 -(void) prepareForRecycle
 {
-  // reset flags
+  // reset values
   self->_didDispatchEventOnDidSetViewID = NO;
-
+  self.intrinsicContentSizeOverride = CGSizeZero;
+  
   // increment `recycleCount`
   self.recycleCount =
     [NSNumber numberWithInt:[self.recycleCount intValue] + 1];
