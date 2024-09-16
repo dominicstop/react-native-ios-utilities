@@ -76,6 +76,7 @@ export const RNIDetachedView = React.forwardRef<
       {
         isParentDetached: isDetached,
         shouldEnableDebugBackgroundColors,
+        detachedSubviewsMap,
       }
     );
   });
