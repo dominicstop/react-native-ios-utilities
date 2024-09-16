@@ -147,7 +147,23 @@ public final class RNIDetachedViewContent:
     viewToDetach.removeFromSuperview();
     viewToDetach.attachReactTouchHandler();
     
-    self.dispatchEvent(for: .onContentViewDidDetach, withPayload: [:]);
+    var eventPayload: Dictionary<String, Any> = [:];
+    if let reactTag = viewToDetach.reactTag {
+      eventPayload["reactTag"] = reactTag;
+    };
+    
+    if let nativeID = viewToDetach.nativeID {
+      eventPayload["nativeID"] = nativeID;
+    };
+    
+    if let viewID = viewToDetach.viewID {
+      eventPayload["viewID"] = viewID;
+    };
+    
+    self.dispatchEvent(
+      for: .onContentViewDidDetach,
+      withPayload: [:]
+    );
   };
   
   public func detachSubviews() throws {
