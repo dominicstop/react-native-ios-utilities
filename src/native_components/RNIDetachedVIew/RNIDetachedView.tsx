@@ -8,6 +8,8 @@ import type {
   RNIDetachedViewRef, 
 } from './RNIDetachedViewTypes';
 
+import { DEFAULT_DETACHED_SUBVIEW_ENTRY, type DetachedSubviewsMap } from './DetachedSubviewsMap';
+
 import type { RNIDetachedViewContentProps } from './RNIDetachedViewContentTypes';
 import type { StateViewID, StateReactTag } from '../../types/SharedStateTypes';
 
@@ -22,6 +24,11 @@ export const RNIDetachedView = React.forwardRef<
   const [reactTag, setReactTag] = React.useState<StateReactTag>();
 
   const [isDetachedInNative, setIsDetachedInNative] = React.useState(false);
+
+  const [
+    detachedSubviewsMap, 
+    setDetachedSubviewsMap
+  ] = React.useState<DetachedSubviewsMap>({});
 
   React.useImperativeHandle(ref, () => ({
     getReactTag: () => {
@@ -93,6 +100,18 @@ export const RNIDetachedView = React.forwardRef<
       onContentViewDidDetach={(event) => {
         props.onContentViewDidDetach?.(event);
         event.stopPropagation();
+
+        const detachedSubviewViewID = event.nativeEvent.viewID;
+        const prevEntry = detachedSubviewsMap[detachedSubviewViewID];
+
+        setDetachedSubviewsMap({
+          ...detachedSubviewsMap,
+          [detachedSubviewViewID]: {
+            ...DEFAULT_DETACHED_SUBVIEW_ENTRY,
+            ...prevEntry,
+            didDetachFromOriginalParent: true,
+          },
+        });
       }}
     >
       {children}
