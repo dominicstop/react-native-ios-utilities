@@ -27,6 +27,7 @@ public final class RNIDetachedViewContent:
   
   public static var propKeyPathMap: PropKeyPathMap = [
     "shouldImmediatelyDetach": \.shouldImmediatelyDetach,
+    "reactChildrenCount": \.reactChildrenCountProp,
   ];
   
   // MARK: - Properties - RNIContentViewDelegate
@@ -55,6 +56,13 @@ public final class RNIDetachedViewContent:
       
       try? self.detach();
       try? self.detachSubviews();
+    }
+  };
+  
+  public var reactChildrenCount: Int = 0;
+  private var reactChildrenCountProp: NSNumber = 0 {
+    willSet {
+      self.reactChildrenCount = newValue.intValue;
     }
   };
   

@@ -70,6 +70,8 @@ export const RNIDetachedView = React.forwardRef<
   const shouldImmediatelyDetach = props.shouldImmediatelyDetach ?? false;
   const isDetached = shouldImmediatelyDetach || isDetachedInNative;
 
+  const reactChildrenCount = React.Children.count(props.children);
+
   const children = React.Children.map(props.children, (child) => {
     return React.cloneElement(
       child as React.ReactElement<RNIDetachedViewContentProps>, 
@@ -89,6 +91,7 @@ export const RNIDetachedView = React.forwardRef<
         shouldEnableDebugBackgroundColors && styles.detachedViewDebug,
         props.style,
       ]}
+      reactChildrenCount={reactChildrenCount}
       onDidSetViewID={(event) => {
         setViewID(event.nativeEvent.viewID);
         setReactTag(event.nativeEvent.reactTag);

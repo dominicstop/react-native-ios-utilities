@@ -35,6 +35,8 @@ RNI_EXPORT_VIEW_EVENT(onDidSetViewID, RCTBubblingEventBlock)
 RNI_EXPORT_VIEW_EVENT(onViewWillRecycle, RCTBubblingEventBlock)
 RNI_EXPORT_VIEW_EVENT(onRawNativeEvent, RCTBubblingEventBlock)
 
+RNI_EXPORT_VIEW_PROPERTY(reactChildrenCount, *NSNumber);
+
 RNI_EXPORT_VIEW_EVENT(onViewDidDetachFromParent, RCTBubblingEventBlock)
 RNI_EXPORT_VIEW_EVENT(onContentViewDidDetach, RCTBubblingEventBlock)
 

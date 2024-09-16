@@ -21,6 +21,7 @@ export type RNIDetachedNativeViewBaseProps = RemapObject<RNIDetachedViewNativeCo
   shouldImmediatelyDetach: boolean;
   onContentViewDidDetach: OnContentViewDidDetachEvent;
   onViewDidDetachFromParent: OnViewDidDetachFromParentEvent;
+  reactChildrenCount: number;
 }>;
 
 export type RNIDetachedNativeViewProps = 

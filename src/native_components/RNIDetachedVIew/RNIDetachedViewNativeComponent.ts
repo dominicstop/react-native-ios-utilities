@@ -1,5 +1,5 @@
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import type { BubblingEventHandler } from 'react-native/Libraries/Types/CodegenTypes';
+import type { BubblingEventHandler, Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 import type { HostComponent, ViewProps } from 'react-native';
 
 // stubs
@@ -14,6 +14,7 @@ export interface NativeProps extends ViewProps {
 
   // value prop stubs
   shouldImmediatelyDetach?: boolean;
+  reactChildrenCount: Int32;
 
   // event prop stubs
   onContentViewDidDetach?: BubblingEventHandler<{}>;
