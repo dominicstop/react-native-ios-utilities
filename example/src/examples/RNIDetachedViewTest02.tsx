@@ -24,12 +24,17 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   // tests 02: no specified size, centered
   // * Size is determined from react/js side (yoga)
   // 
+  // Observations (fabric):
   // * 2024-09-17-03:21 (PST)
   //  * after cycling through the presets, the counter no longer
   //    sizes correctly (the position is correct)
   //
   //  * the parent stretches to fill the space, and does not 
   //    match the size of the counter
+  //
+  // * 2024-09-17-05:06 (PST)
+  //   * fixed, bug caused by not resetting `intrinsicContentSizeOverride`
+  //     when view is being recycled/reused.
   //
   {
     desc: "Attach to center (no specified size)",
