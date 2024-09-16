@@ -23,6 +23,14 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
 
   // tests 02: no specified size, centered
   // * Size is determined from react/js side (yoga)
+  // 
+  // * 2024-09-17-03:21 (PST)
+  //  * after cycling through the presets, the counter no longer
+  //    sizes correctly (the position is correct)
+  //
+  //  * the parent stretches to fill the space, and does not 
+  //    match the size of the counter
+  //
   {
     desc: "Attach to center (no specified size)",
     config: {
@@ -77,6 +85,7 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   //
   // * 2024-09-16-05:58 (PST)
   //  * the counter now sizes correctly
+  //
   {
     desc: "Attach to top, and fill width (no specified size)",
     config: {
@@ -117,6 +126,7 @@ const CONTENT_POSITION_CONFIG_PRESETS: Array<{
   //
   //   * Cause: `VerticalAlignmentPosition` was generating the wrong vertical 
   //     constraint
+  //
   {
     desc: "Attach to left, and fill height (no specified size)",
     config: {
