@@ -26,7 +26,7 @@ This library is being re-written to support the new architecture. Please see thi
 
 ## Acknowledgements
 
-The initial fabric rewrite (i.e. version `5.x`) was made possible through a generous `$3,250` sponsorship by [natew](https://github.com/natew) + [tamagui](https://github.com/tamagui/tamagui) over the course of ≈ 3.5 months (from: 05/27/24 to 09/24).
+The initial fabric rewrite (i.e. version `5.x`) was made possible through a generous `$3,250` sponsorship by [natew](https://github.com/natew) + [tamagui](https://github.com/tamagui/tamagui) over the course of ≈ 3.5 months (from: `05/27/24` to `09/24`) 🐦✨
 
 <br>
 
