@@ -1,4 +1,4 @@
-import type { HostComponent, ViewProps } from 'react-native';
+import { requireNativeComponent, type ViewProps } from 'react-native';
 import type {
   DirectEventHandler,
   BubblingEventHandler,
@@ -7,7 +7,6 @@ import type {
   Double
 } from 'react-native/Libraries/Types/CodegenTypes';
 
-import { default as RNIDummyTestViewNativeComponent } from './RNIDummyTestViewNativeComponent';
 import type { SharedViewEvents } from '../../types/SharedViewEvents';
 
 
@@ -51,4 +50,4 @@ export type RNIDummyTestNativeViewProps =
   & RNIDummyTestNativeViewBaseProps;
 
 export const RNIDummyTestNativeView = 
-  RNIDummyTestViewNativeComponent as unknown as HostComponent<RNIDummyTestNativeViewProps>;
+  requireNativeComponent<RNIDummyTestNativeViewProps>("RNIDummyTestView");

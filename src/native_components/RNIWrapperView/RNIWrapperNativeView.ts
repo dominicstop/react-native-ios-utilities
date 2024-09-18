@@ -1,7 +1,6 @@
-import type { HostComponent, ViewProps } from 'react-native';
+import { requireNativeComponent, type ViewProps } from 'react-native';
 
 import { 
-  default as RNIWrapperViewNativeComponent,
   type NativeProps as RNIWrapperViewNativeComponentProps
 } from './RNIWrapperViewNativeComponent';
 
@@ -28,4 +27,4 @@ export type RNIWrapperNativeViewProps =
   & RNIWrapperNativeViewBaseProps;
 
 export const RNIWrapperNativeView = 
-  RNIWrapperViewNativeComponent as unknown as HostComponent<RNIWrapperNativeViewProps>;
+  requireNativeComponent<RNIWrapperNativeViewProps>("RNIWrapperView");
