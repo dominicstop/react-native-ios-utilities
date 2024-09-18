@@ -1,5 +1,4 @@
 export * from './native_components/RNIDetachedVIew';
-export * from './native_components/RNIDetachedViewContent';
 
 export { 
   RNIWrapperView as WrapperView,
