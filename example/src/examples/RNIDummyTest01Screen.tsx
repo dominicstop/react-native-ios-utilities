@@ -2,7 +2,9 @@
 import * as React from 'react';
 
 import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
-import { RNIDummyTestNativeView, type RNIUtilitiesModule as RNIUtilitiesModuleType, RNIDummyTestViewModule, type SharedNativeValueMap } from 'react-native-ios-utilities';
+import { type RNIUtilitiesModule as RNIUtilitiesModuleType, type SharedNativeValueMap } from 'react-native-ios-utilities';
+
+import { RNIDummyTestNativeView, RNIDummyTestViewModule } from '../../../src/native_components/RNIDummyTestView';
 
 const TEST_OBJECT = {
   someBool: true,
