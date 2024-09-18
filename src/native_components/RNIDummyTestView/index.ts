@@ -1,2 +1,2 @@
 export * from './RNIDummyTestNativeView';
-export { default as RNIDummyTestViewModule } from './RNIDummyTestViewModule';
+export * from './RNIDummyTestViewModule';

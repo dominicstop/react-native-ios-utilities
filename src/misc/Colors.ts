@@ -1,4 +1,4 @@
-export const BLACK = {
+const BLACK = {
   100: '#F5F5F5',
   200: '#EEEEEE',
   300: '#E0E0E0',
@@ -10,7 +10,7 @@ export const BLACK = {
   900: '#212121',
 };
 
-export const GREY = {
+const GREY = {
   50 : '#FAFAFA',
   100: '#F5F5F5',
   200: '#EEEEEE',
@@ -23,7 +23,7 @@ export const GREY = {
   900: '#212121',
 };
 
-export const BLUE_GREY = {
+const BLUE_GREY = {
   50 : '#ECEFF1',
   100: '#CFD8DC',
   200: '#B0BEC5',
@@ -36,7 +36,7 @@ export const BLUE_GREY = {
   900: '#263238',
 };
 
-export const RED = {
+const RED = {
   50  : '#FFEBEE',
   100 : '#FFCDD2',
   200 : '#EF9A9A',
@@ -53,7 +53,7 @@ export const RED = {
   A700: '#D50000',
 };
 
-export const PINK = {
+const PINK = {
   '50'  : '#FCE4EC',
   '100' : '#F8BBD0',
   '200' : '#F48FB1',
@@ -70,7 +70,7 @@ export const PINK = {
   'A700': '#C51162',
 };
 
-export const VIOLET = {
+const VIOLET = {
   '100'  :'#E1BEE7',
   '200'  :'#CE93D8',
   '300'  :'#BA68C8',
@@ -83,7 +83,7 @@ export const VIOLET = {
   'A700' :'#AA00FF',
 };
 
-export const PURPLE = {
+const PURPLE = {
   '25'   :'#f1edf7',
   '50'   :'#EDE7F6',
   '100'  :'#D1C4E9',
@@ -105,7 +105,7 @@ export const PURPLE = {
   'A700' :'#6200EA',
 };
 
-export const INDIGO = {
+const INDIGO = {
   '50'  : '#E8EAF6',
   '100' : '#C5CAE9',
   '200' : '#9FA8DA',
@@ -125,7 +125,7 @@ export const INDIGO = {
   'A700': '#304FFE',
 };
 
-export const BLUE = {
+const BLUE = {
   '50'  : '#E3F2FD',
   '100' : '#BBDEFB',
   '200' : '#90CAF9',
@@ -145,7 +145,7 @@ export const BLUE = {
   'A700': '#2962FF',
 };
 
-export const GREEN = {
+const GREEN = {
   50  : '#E8F5E9',
   100 : '#C8E6C9',
   200 : '#A5D6A7',
@@ -162,7 +162,7 @@ export const GREEN = {
   A700: '#00C853',
 };
 
-export const LIGHT_GREEN = {
+const LIGHT_GREEN = {
   '50'  : '#F1F8E9',
   '100' : '#DCEDC8',
   '200' : '#C5E1A5',
@@ -179,7 +179,7 @@ export const LIGHT_GREEN = {
   'A700': '#64DD17',
 };
 
-export const YELLOW = {
+const YELLOW = {
   '50'  : '#FFFDE7',
   '100' : '#FFF9C4',
   '200' : '#FFF59D',
@@ -196,7 +196,7 @@ export const YELLOW = {
   'A700': '#FFD600',
 };
 
-export const AMBER = {
+const AMBER = {
   '50'  : '#FFF8E1',
   '100' : '#FFECB3',
   '200' : '#FFE082',
@@ -213,7 +213,7 @@ export const AMBER = {
   'A700': '#FFAB00',
 };
 
-export const ORANGE = {
+const ORANGE = {
   '50'  : '#FFF3E0',
   '100' : '#FFE0B2',
   '200' : '#FFCC80',
@@ -229,4 +229,21 @@ export const ORANGE = {
   'A200': '#FFAB40',
   'A400': '#FF9100',
   'A700': '#FF6D00',
+};
+
+export const Colors = {
+  BLACK,
+  GREY,
+  BLUE_GREY,
+  RED,
+  PINK,
+  VIOLET,
+  PURPLE,
+  INDIGO,
+  BLUE,
+  GREEN,
+  LIGHT_GREEN,
+  YELLOW,
+  AMBER,
+  ORANGE,
 };

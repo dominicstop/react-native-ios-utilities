@@ -31,8 +31,5 @@ export * from './example_components/ObjectPropertyDisplay';
 export * from './example_components/Spacer';
 export * from './example_components/ViewShapes';
 
-import * as Colors from './misc/Colors';
-export { Colors };
-
-import * as Helpers from './misc/Helpers';
-export { Helpers };
+export * from './misc/Colors';
+export * from './misc/Helpers';

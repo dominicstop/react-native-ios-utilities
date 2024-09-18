@@ -13,7 +13,7 @@ import { DEFAULT_DETACHED_SUBVIEW_ENTRY, type DetachedSubviewsMap } from './Deta
 import type { RNIDetachedViewContentProps } from './RNIDetachedViewContentTypes';
 import type { StateViewID, StateReactTag } from '../../types/SharedStateTypes';
 
-import * as Helpers from '../../misc/Helpers';
+import { Helpers } from '../../misc/Helpers';
 
 
 export const RNIDetachedView = React.forwardRef<

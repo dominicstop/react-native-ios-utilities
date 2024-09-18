@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
 
-import * as Colors from '../../misc/Colors';
+import { Colors } from '../../misc/Colors';
 
 
 export const CardBody: React.FC<React.PropsWithChildren<{

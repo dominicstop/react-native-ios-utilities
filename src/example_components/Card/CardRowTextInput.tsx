@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
-import * as Colors  from '../../misc/Colors';
+import { Colors }  from '../../misc/Colors';
 
 
 export class CardRowTextInput extends React.PureComponent<{

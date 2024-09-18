@@ -2,7 +2,7 @@ import { RNIUtilitiesModule, type SharedNativeValueMap } from '../../native_modu
 
 const MODULE_NAME = "RNIDummyTestViewModule";
 
-async function somePromiseCommandThatWillAlwaysResolve(
+export async function somePromiseCommandThatWillAlwaysResolve(
   someString: string,
   someNumber: number,
   someBool: boolean,
@@ -25,7 +25,7 @@ async function somePromiseCommandThatWillAlwaysResolve(
   );
 };
 
-async function somePromiseCommandThatWillAlwaysReject(){
+export async function somePromiseCommandThatWillAlwaysReject(){
   await RNIUtilitiesModule.moduleCommandRequest(
     MODULE_NAME,  
     "somePromiseCommandThatWillAlwaysReject",
@@ -33,40 +33,31 @@ async function somePromiseCommandThatWillAlwaysReject(){
   );
 };
 
-function overwriteModuleSharedValues(newValues: SharedNativeValueMap) {
+export function overwriteModuleSharedValues(newValues: SharedNativeValueMap) {
   RNIUtilitiesModule.overwriteModuleSharedValues(
     MODULE_NAME,
     newValues
   );
 };
 
-function getAllModuleSharedValues(): {
+export function getAllModuleSharedValues(): {
   someNumber: number | undefined
 } {
   //@ts-ignore
   return RNIUtilitiesModule.getAllModuleSharedValues(MODULE_NAME);
 }
 
-function getSharedValueSomeNumber(): number | undefined {
+export function getSharedValueSomeNumber(): number | undefined {
   return RNIUtilitiesModule.getModuleSharedValue(
     MODULE_NAME,  
     "someNumber"
   );
 };
 
-function setSharedValueSomeNumber(newValue: number | undefined){
+export function setSharedValueSomeNumber(newValue: number | undefined){
   RNIUtilitiesModule.setModuleSharedValue(
     MODULE_NAME,  
     "someNumber",
     newValue
   );
-};
-
-export default {
-  somePromiseCommandThatWillAlwaysResolve,
-  somePromiseCommandThatWillAlwaysReject,
-  getAllModuleSharedValues,
-  overwriteModuleSharedValues,
-  getSharedValueSomeNumber,
-  setSharedValueSomeNumber
 };
