@@ -4,6 +4,14 @@
   "description": "Utilities for react-native + iOS and wrappers for using swift together with fabric/paper + JSI",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      }
+    }
+  },
   "react-native": "src/index",
   "source": "src/index",
   "files": [
@@ -147,7 +155,12 @@
     "source": "src",
     "output": "lib",
     "targets": [
-      "module",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
       [
         "typescript",
         {
