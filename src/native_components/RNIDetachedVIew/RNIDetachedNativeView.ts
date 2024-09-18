@@ -1,6 +1,10 @@
-import { requireNativeComponent, type ViewProps } from 'react-native';
+import type { HostComponent, ViewProps } from 'react-native';
 
-import { type NativeProps as RNIDetachedViewNativeComponentProps } from './RNIDetachedViewNativeComponent';
+import { 
+  default as RNIDetachedViewNativeComponent,
+  type NativeProps as RNIDetachedViewNativeComponentProps
+} from './RNIDetachedViewNativeComponent';
+
 import type { OnContentViewDidDetachEvent, OnViewDidDetachFromParentEvent } from './RNIDetachedViewEvents';
 
 import type { SharedViewEvents } from '../../types/SharedViewEvents';
@@ -28,4 +32,4 @@ export type RNIDetachedNativeViewProps =
   & RNIDetachedNativeViewBaseProps;
 
 export const RNIDetachedNativeView = 
-  requireNativeComponent<RNIDetachedNativeViewProps>("RNIDetachedView");
+  RNIDetachedViewNativeComponent as unknown as HostComponent<RNIDetachedNativeViewProps>;
