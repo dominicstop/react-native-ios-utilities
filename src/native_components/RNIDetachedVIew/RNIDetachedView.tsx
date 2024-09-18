@@ -10,7 +10,7 @@ import type {
 
 import { DEFAULT_DETACHED_SUBVIEW_ENTRY, type DetachedSubviewsMap } from './DetachedSubviewsMap';
 
-import type { RNIDetachedViewContentProps } from './RNIDetachedViewContentTypes';
+import type { RNIDetachedViewContentProps } from '../RNIDetachedViewContent';
 import type { StateViewID, StateReactTag } from '../../types/SharedStateTypes';
 
 import { Helpers } from '../../misc/Helpers';

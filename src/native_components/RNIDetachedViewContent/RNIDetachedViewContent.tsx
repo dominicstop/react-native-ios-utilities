@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { RNIWrapperView } from '../RNIWrapperView';
-import { DEFAULT_DETACHED_SUBVIEW_ENTRY } from './DetachedSubviewsMap';
+import { DEFAULT_DETACHED_SUBVIEW_ENTRY } from '../RNIDetachedVIew';
 import type { RNIDetachedViewContentProps } from './RNIDetachedViewContentTypes';
 
 import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
