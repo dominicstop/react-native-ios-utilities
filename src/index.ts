@@ -1,12 +1,6 @@
-export * from './components/RNIDetachedViewContent';
 
 export * from './native_components/RNIDetachedVIew';
-
-export { 
-  RNIWrapperView as WrapperView,
-  type RNIWrapperViewProps as WrapperViewProps,
-  type RNIWrapperViewRef as WrapperViewRef,
-} from './native_components/RNIWrapperView';
+export * from './native_components/RNIWrapperView';
 
 export * from './native_modules/RNIUtilitiesModule';
 
