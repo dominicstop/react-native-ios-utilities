@@ -1,4 +1,4 @@
-import type { OnDidSetViewIDEventPayload } from "../types/SharedViewEvents";
+import type { OnDidSetViewIDEventPayload } from "../../types/SharedViewEvents";
 
 export type DetachedSubviewEntry = {
   didDetachFromOriginalParent: boolean;
@@ -10,5 +10,3 @@ export type DetachedSubviewsMap =
 export const DEFAULT_DETACHED_SUBVIEW_ENTRY: DetachedSubviewEntry = Object.freeze({
   didDetachFromOriginalParent: false,
 });
-
-console.log("DetachedSubviewsMap.ts");

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import type { ViewProps } from 'react-native';
+import type { HostComponent, ViewProps } from 'react-native';
 
 import { 
   default as RNIWrapperViewNativeComponent,
@@ -28,13 +27,5 @@ export type RNIWrapperNativeViewProps =
   & SharedViewPropsInternal
   & RNIWrapperNativeViewBaseProps;
 
-export function RNIWrapperNativeView(props: RNIWrapperNativeViewProps){
-  return React.createElement(
-    RNIWrapperViewNativeComponent,
-    props as any
-  );
-};
-
-
-console.log("RNIWrapperNativeView.ts");
-
+export const RNIWrapperNativeView = 
+  RNIWrapperViewNativeComponent as unknown as HostComponent<RNIWrapperNativeViewProps>;
