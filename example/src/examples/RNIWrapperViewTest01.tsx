@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { ExampleItemCard, WrapperView, type OnDidSetViewIDEventPayload, ObjectPropertyDisplay, Colors, type OnViewWillRecycleEventPayload } from 'react-native-ios-utilities';
+import { ExampleItemCard, RNIWrapperView, type OnDidSetViewIDEventPayload, ObjectPropertyDisplay, Colors, type OnViewWillRecycleEventPayload } from 'react-native-ios-utilities';
 import type { ExampleItemProps } from './SharedExampleTypes';
 
 
@@ -16,7 +16,7 @@ export function RNIWrapperViewTest01(props: ExampleItemProps) {
     React.useState<OnViewWillRecycleEventPayload['recycleCount'] | undefined>();
   
   return (
-    <WrapperView
+    <RNIWrapperView
       style={props.style}
       onDidSetViewID={({nativeEvent}) => {
         setReactTag(nativeEvent.reactTag);
@@ -39,7 +39,7 @@ export function RNIWrapperViewTest01(props: ExampleItemProps) {
           object={{reactTag, viewID, viewRecycleCount}}
         />
       </ExampleItemCard>
-    </WrapperView>
+    </RNIWrapperView>
   );
 };
 
