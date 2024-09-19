@@ -100,10 +100,10 @@ export function RNIDetachedViewTest01(props: ExampleItemProps) {
           }}
         >
           <RNIDetachedViewContent
-            contentContainerStyle={[
-              styles.detachedContentContainer,
-              styles.detachedContentContainerDetached,
-            ]}
+            contentContainerStyle={{
+              ...styles.detachedContentContainer,
+              ...styles.detachedContentContainerDetached,
+            }}
           >
             <TouchableOpacity 
               style={[
