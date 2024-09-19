@@ -1,4 +1,5 @@
-import type { HostComponent, ViewProps } from 'react-native';
+import * as React from 'react';
+import type { ViewProps } from 'react-native';
 
 import { 
   default as RNIDetachedViewNativeComponent,
@@ -34,5 +35,9 @@ export type RNIDetachedNativeViewProps =
   & SharedViewPropsInternal
   & RNIDetachedNativeViewBaseProps;
 
-export const RNIDetachedNativeView = 
-  RNIDetachedViewNativeComponent as unknown as HostComponent<RNIDetachedNativeViewProps>;
+export function RNIDetachedNativeView(props: RNIDetachedNativeViewProps){
+  return React.createElement(
+    RNIDetachedViewNativeComponent,
+    props as any
+  );
+};
