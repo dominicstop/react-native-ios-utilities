@@ -1,2 +1,2 @@
 export * from './RNIUtilitiesModule';
-export * from './RNIUtilitiesModuleTypes';
+export type * from './RNIUtilitiesModuleTypes';

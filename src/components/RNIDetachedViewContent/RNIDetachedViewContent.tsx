@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { RNIWrapperView } from '../RNIWrapperView';
-import { DEFAULT_DETACHED_SUBVIEW_ENTRY } from './DetachedSubviewsMap';
-import type { RNIDetachedViewContentProps } from './RNIDetachedViewContentTypes';
+import { RNIWrapperView } from '../../native_components/RNIWrapperView';
 
-import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
+import type { RNIDetachedViewContentProps } from './RNIDetachedViewContentTypes';
 import type { StateViewID } from '../../types/SharedStateTypes';
+
+import { DEFAULT_DETACHED_SUBVIEW_ENTRY } from '../../constants/DetachedSubviewsMap';
+import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
 
 
 console.log("RNIDetachedViewContent.ts");

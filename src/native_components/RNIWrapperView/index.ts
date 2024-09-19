@@ -1,2 +1,2 @@
 export * from './RNIWrapperView';
-export * from './RNIWrapperViewTypes';
+export type * from './RNIWrapperViewTypes';

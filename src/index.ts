@@ -1,3 +1,5 @@
+export * from './components/RNIDetachedViewContent';
+
 export * from './native_components/RNIDetachedVIew';
 
 export { 
@@ -11,21 +13,29 @@ export * from './native_modules/RNIUtilitiesModule';
 export * from './constants/UIBlurEffectStyles';
 export * from './constants/UIVibrancyEffectStyles';
 
-export * from './types/ComputableLayout';
-export * from './types/DGSwiftUtilities';
-export * from './types/NativeTypes';
-export * from './types/ImageItemConfig';
+export type * from './types/ComputableLayout';
+export type * from './types/DGSwiftUtilities';
+export type * from './types/NativeTypes';
+export type * from './types/ImageItemConfig';
 
-export * from './types/SharedViewEvents';
-export * from './types/SharedViewEventsInternal';
-export * from './types/MiscTypes';
-export * from './types/NativeError';
-export * from './types/SharedPropTypes';
-export * from './types/SharedStateTypes';
-export * from './types/UtilityTypes';
-export * from './types/ReactNativeUtilityTypes';
+export type * from './types/SharedViewEvents';
+export type * from './types/SharedViewEventsInternal';
+export type * from './types/MiscTypes';
+export type * from './types/NativeError';
+export type * from './types/SharedPropTypes';
+export type * from './types/SharedStateTypes';
+export type * from './types/UtilityTypes';
+export type * from './types/ReactNativeUtilityTypes';
 
-export * from './example_components/Card';
+export * from './example_components/CardBody';
+export * from './example_components/CardTitle';
+export * from './example_components/CardButton';
+export * from './example_components/CardRowLabelDisplay';
+export * from './example_components/CardRowSwitch';
+export * from './example_components/CardRowStepper';
+export * from './example_components/CardRowTextInput';
+export * from './example_components/CardRowColorPicker';
+
 export * from './example_components/ExampleItemCard';
 export * from './example_components/ObjectPropertyDisplay';
 export * from './example_components/Spacer';

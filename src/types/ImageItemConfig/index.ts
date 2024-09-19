@@ -1,9 +1,9 @@
 
 
-export * from './ImageGradientConfig';
-export * from './ImageItemConfig';
-export * from './ImageLoadingConfig';
-export * from './ImageMiscTypes';
-export * from './ImageOptions';
-export * from './ImageRectConfig';
-export * from './ImageSystemConfig';
+export type * from './ImageGradientConfig';
+export type * from './ImageItemConfig';
+export type * from './ImageLoadingConfig';
+export type * from './ImageMiscTypes';
+export type * from './ImageOptions';
+export type * from './ImageRectConfig';
+export type * from './ImageSystemConfig';

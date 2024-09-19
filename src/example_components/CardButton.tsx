@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { type StyleProp, StyleSheet, Text, TouchableOpacity, type ViewStyle, type GestureResponderEvent } from 'react-native';
 
-import { Colors } from '../../misc/Colors';
+import { Colors } from '../misc/Colors';
 
 
 /**

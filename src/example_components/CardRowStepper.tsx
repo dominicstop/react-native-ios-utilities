@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-import { Colors }  from '../../misc/Colors';
+import { Colors }  from '../misc/Colors';
 
 
 export function CardRowStepper(props: {

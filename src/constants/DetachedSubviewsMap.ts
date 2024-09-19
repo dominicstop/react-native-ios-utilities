@@ -1,4 +1,4 @@
-import type { OnDidSetViewIDEventPayload } from "../../types/SharedViewEvents";
+import type { OnDidSetViewIDEventPayload } from "../types/SharedViewEvents";
 
 export type DetachedSubviewEntry = {
   didDetachFromOriginalParent: boolean;
