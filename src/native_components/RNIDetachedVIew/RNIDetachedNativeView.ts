@@ -1,5 +1,4 @@
-import * as React from 'react';
-import type { ViewProps } from 'react-native';
+import type { HostComponent, ViewProps } from 'react-native';
 
 import { 
   default as RNIDetachedViewNativeComponent,
@@ -13,9 +12,6 @@ import type { SharedViewEventsInternal } from '../../types/SharedViewEventsInter
 import type { SharedViewPropsInternal } from '../../types/SharedViewPropsInternal';
 import type { RemapObject } from '../../types/UtilityTypes';
 import type { NativeComponentBasePropsInternal } from '../../types/ReactNativeUtilityTypes';
-
-
-console.log("RNIDetachedNativeView.ts");
 
 
 type RNIDetachedViewNativeComponentBaseProps = 
@@ -35,9 +31,5 @@ export type RNIDetachedNativeViewProps =
   & SharedViewPropsInternal
   & RNIDetachedNativeViewBaseProps;
 
-export function RNIDetachedNativeView(props: RNIDetachedNativeViewProps){
-  return React.createElement(
-    RNIDetachedViewNativeComponent,
-    props as any
-  );
-};
+export const RNIDetachedNativeView = 
+  RNIDetachedViewNativeComponent as unknown as HostComponent<RNIDetachedNativeViewProps>;

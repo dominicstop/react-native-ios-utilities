@@ -6,9 +6,6 @@ import type { RNIWrapperViewProps, RNIWrapperViewRef } from './RNIWrapperViewTyp
 import type { StateReactTag, StateViewID } from '../../types/SharedStateTypes';
 
 
-console.log("RNIWrapperView.ts");
-
-
 export const RNIWrapperView = React.forwardRef<
   RNIWrapperViewRef, 
   RNIWrapperViewProps

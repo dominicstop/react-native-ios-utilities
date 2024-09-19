@@ -26,5 +26,3 @@ export default codegenNativeComponent<NativeProps>('RNIDetachedView', {
   excludedPlatforms: ['android'],
   interfaceOnly: true,
 }) as HostComponent<NativeProps>;
-
-console.log("RNIDetachedViewNativeComponent.ts");

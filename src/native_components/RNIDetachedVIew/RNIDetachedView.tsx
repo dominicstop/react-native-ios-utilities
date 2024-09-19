@@ -2,22 +2,13 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { RNIDetachedNativeView } from './RNIDetachedNativeView';
+import { DEFAULT_DETACHED_SUBVIEW_ENTRY, type DetachedSubviewsMap } from './DetachedSubviewsMap';
 
-import type { 
-  RNIDetachedViewProps, 
-  RNIDetachedViewRef, 
-} from './RNIDetachedViewTypes';
+import type { RNIDetachedViewProps, RNIDetachedViewRef, } from './RNIDetachedViewTypes';
+import type { RNIDetachedViewContentProps } from './RNIDetachedViewContentTypes';
 
-import { DEFAULT_DETACHED_SUBVIEW_ENTRY, type DetachedSubviewsMap } from '../../constants/DetachedSubviewsMap';
-
-import type { RNIDetachedViewContentProps } from '../../components/RNIDetachedViewContent';
 import type { StateViewID, StateReactTag } from '../../types/SharedStateTypes';
-
 import { Helpers } from '../../misc/Helpers';
-
-
-console.log("RNIDetachedView.ts");
-
 
 
 export const RNIDetachedView = React.forwardRef<
