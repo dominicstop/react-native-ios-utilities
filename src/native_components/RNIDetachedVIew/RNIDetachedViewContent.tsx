@@ -9,6 +9,9 @@ import { IS_USING_NEW_ARCH } from '../../constants/LibEnv';
 import type { StateViewID } from '../../types/SharedStateTypes';
 
 
+console.log("RNIDetachedViewContent.ts");
+
+
 export function RNIDetachedViewContent(
   props: React.PropsWithChildren<RNIDetachedViewContentProps>
 ) {

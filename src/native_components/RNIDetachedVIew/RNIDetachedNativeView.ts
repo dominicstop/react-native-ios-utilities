@@ -14,6 +14,9 @@ import type { RemapObject } from '../../types/UtilityTypes';
 import type { NativeComponentBasePropsInternal } from '../../types/ReactNativeUtilityTypes';
 
 
+console.log("RNIDetachedNativeView.ts");
+
+
 type RNIDetachedViewNativeComponentBaseProps = 
   NativeComponentBasePropsInternal<RNIDetachedViewNativeComponentProps>;
 

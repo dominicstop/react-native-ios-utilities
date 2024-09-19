@@ -29,3 +29,7 @@ export type RNIWrapperNativeViewProps =
 
 export const RNIWrapperNativeView = 
   RNIWrapperViewNativeComponent as unknown as HostComponent<RNIWrapperNativeViewProps>;
+
+
+console.log("RNIWrapperNativeView.ts");
+

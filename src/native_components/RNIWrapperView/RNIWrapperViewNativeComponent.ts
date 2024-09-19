@@ -18,3 +18,5 @@ export default codegenNativeComponent<NativeProps>('RNIWrapperView', {
   excludedPlatforms: ['android'],
   interfaceOnly: true,
 }) as HostComponent<NativeProps>;
+
+console.log("RNIWrapperViewNativeComponent.ts");

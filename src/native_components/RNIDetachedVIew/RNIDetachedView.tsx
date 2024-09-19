@@ -16,6 +16,10 @@ import type { StateViewID, StateReactTag } from '../../types/SharedStateTypes';
 import { Helpers } from '../../misc/Helpers';
 
 
+console.log("RNIDetachedView.ts");
+
+
+
 export const RNIDetachedView = React.forwardRef<
   RNIDetachedViewRef, 
   RNIDetachedViewProps
