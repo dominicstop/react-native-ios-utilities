@@ -8,7 +8,7 @@ Please see the [version compatibility](#version-compatibility) table for referen
 
 ## 🚧⚠️ Re-Write WIP 🚧⚠️
 
-This library is being re-written to support the new architecture. Please see this is [issue](https://github.com/dominicstop/react-native-ios-context-menu/issues/100#issuecomment-2077986438) for progress 😔
+This library is being re-written to support both the new + old architecture. Please see this is [issue](https://github.com/dominicstop/react-native-ios-context-menu/issues/100#issuecomment-2077986438) for progress 😔
 
 **Overview**:
 
@@ -19,7 +19,7 @@ This library is being re-written to support the new architecture. Please see thi
 - [`RNIBaseViewController`](ios/Sources/RNIBaseView/RNIBaseViewController.swift): A base implementation of a view controller that wraps a paper/fabric view and handles its sizing + layout when attached to non-react view.
 - [`RNIUtilitiesModule`](src/native_modules/RNIUtilitiesModule/RNIUtilitiesModule.ts): A helper JSI module that allows for sharing sync data between swift and js, and sending async commands to either views that conform to `RNIContentViewDelegate`, or objects that conform to [`RNIModuleCommandRequestHandling `](ios/Sources/RNIUtilitiesModule/RNIModuleCommandRequestHandling.swift) (please see the [js](src/native_components/RNIDummyTestView/RNIDummyTestViewModule.ts) + [swift](ios/Sources/RNIDummyTestView/RNIDummyTestViewModuleRequestHandler.swift) impl. of `RNIDummyTestViewModule` for a crude example).
 
-- **Types and Parsing**: Contains [typescript definitions](src/types) for native types so they can be represented in JS, as well as the associated code to parse them in native (e.g. [`InitializableFromDictionary`](ios/Sources/Extensions+InitializableFromDictionary), [`InitializableFromString`](ios/Sources/Extensions+InitializableFromString), dictionary helpers, etc).
+- **Types and Parsing**: Contains [typescript definitions](src/types) for native types (e.g. `UIKit`, `CoreGraphics` primitives, etc) so they can be represented in JS, as well as the associated code to parse them in native (e.g. [`InitializableFromDictionary`](ios/Sources/Extensions+InitializableFromDictionary), [`InitializableFromString`](ios/Sources/Extensions+InitializableFromString), dictionary helpers, etc).
 - **Misc**: Contains a bunch of helpers + extensions for working with RN across swift/objc/c++, and has a dependency to [`DGSwiftUtilities`](https://github.com/dominicstop/DGSwiftUtilities/tree/main/Sources) for more helpers + utilities written in swift.
 
 <br><br>
@@ -30,7 +30,7 @@ The initial fabric rewrite (i.e. version `5.x`) was made possible through a gene
 
 <br>
 
-Very special thanks to: [junzhengca](https://github.com/junzhengca), [brentvatne](https://github.com/brentvatne), and [expo](https://github.com/expo) for sponsoring my work 🥺
+very special thanks to: [junzhengca](https://github.com/junzhengca), [brentvatne](https://github.com/brentvatne), and [expo](https://github.com/expo) for sponsoring my work 🥺 (if you have the means to do so, please considering sponsoring [here](https://github.com/sponsors/dominicstop))
 
 <br><br>
 
