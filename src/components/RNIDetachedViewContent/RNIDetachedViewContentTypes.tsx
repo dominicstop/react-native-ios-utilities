@@ -1,8 +1,9 @@
 import type { ViewStyle } from 'react-native';
 
 import type { RNIWrapperViewProps } from "../../native_components/RNIWrapperView";
-import type { RNIDetachedViewProps } from "./RNIDetachedViewTypes";
-import type { DetachedSubviewsMap } from "./DetachedSubviewsMap";
+import type { RNIDetachedViewProps } from "../../native_components/RNIDetachedVIew";
+
+import type { DetachedSubviewsMap } from '../../constants/DetachedSubviewsMap';
 
 
 export type RNIDetachedViewContentInheritedProps = Pick<RNIDetachedViewProps, 

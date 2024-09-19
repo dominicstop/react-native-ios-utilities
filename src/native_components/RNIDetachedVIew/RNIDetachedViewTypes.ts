@@ -2,10 +2,10 @@ import type { PropsWithChildren } from "react";
 import type { ViewProps } from "react-native";
 
 import type { RNIDetachedNativeViewProps } from "./RNIDetachedNativeView";
-import type { DetachedSubviewsMap } from "./DetachedSubviewsMap";
 
 import type { StateReactTag, StateViewID } from "../../types/SharedStateTypes";
 import type { AlignmentPositionConfig } from "../../types/DGSwiftUtilities";
+import type { DetachedSubviewsMap } from "../../constants/DetachedSubviewsMap";
 
 
 export type RNIDetachedViewRef = {
