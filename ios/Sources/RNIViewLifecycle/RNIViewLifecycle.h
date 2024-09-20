@@ -7,10 +7,10 @@
 
 
 @protocol RNIViewLifecycleCommonSwift;
-@protocol RNIViewLifecycleFabricSwift;
+@protocol RNIViewPropUpdatesNotifiableSwift;
 
 #if RCT_NEW_ARCH_ENABLED
-@protocol RNIViewPropUpdatesNotifiableSwift;
+@protocol RNIViewLifecycleFabricSwift;
 #else
 @protocol RNIViewLifecyclePaperSwift;
 #endif
