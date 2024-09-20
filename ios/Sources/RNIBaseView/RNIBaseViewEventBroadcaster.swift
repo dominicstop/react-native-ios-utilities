@@ -36,7 +36,10 @@ public class RNIBaseViewEventBroadcaster: NSObject {
       return;
     };
     
-    self.reactViewLifecycleDelegates.add(contentDelegate);
+    if let viewLifecycleDelegate = contentDelegate as? RNIViewLifecycle {
+      self.reactViewLifecycleDelegates.add(viewLifecycleDelegate);
+    };
+    
     self.reactViewPropUpdatesDelegates.add(contentDelegate);
   };
 };
@@ -51,7 +54,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleCommon {
     sender: RNIContentViewParentDelegate
   ) {
     self.reactViewLifecycleDelegates.invoke {
-      $0.notifyOnInit?(sender: sender);
+      $0.notifyOnInit(sender: sender);
     };
   };
   
@@ -62,7 +65,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleCommon {
     newLayoutMetrics: RNILayoutMetrics
   ) {
     self.reactViewLifecycleDelegates.invoke {
-      $0.notifyOnUpdateLayoutMetrics?(
+      $0.notifyOnUpdateLayoutMetrics(
         sender: sender,
         oldLayoutMetrics: oldLayoutMetrics,
         newLayoutMetrics: newLayoutMetrics
@@ -75,7 +78,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleCommon {
     sender: RNIContentViewParentDelegate
   ) {
     self.reactViewLifecycleDelegates.invoke {
-      $0.notifyOnRequestForCleanup?(sender: sender);
+      $0.notifyOnRequestForCleanup(sender: sender);
     };
   };
 };
@@ -93,7 +96,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
     newState: NSDictionary
   ) {
     self.reactViewLifecycleDelegates.invoke {
-      $0.notifyOnUpdateState?(
+      $0.notifyOnUpdateState(
         sender: sender,
         oldState: oldState,
         newState: newState
@@ -108,7 +111,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
     updateMask: RNIComponentViewUpdateMask
   ) {
     self.reactViewLifecycleDelegates.invoke {
-      $0.notifyOnFinalizeUpdates?(
+      $0.notifyOnFinalizeUpdates(
         sender: sender,
         updateMaskRaw: updateMaskRaw,
         updateMask: updateMask
@@ -121,7 +124,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
     sender: RNIContentViewParentDelegate
   ) {
     self.reactViewLifecycleDelegates.invoke {
-      $0.notifyOnPrepareForReuse?(sender: sender);
+      $0.notifyOnPrepareForReuse(sender: sender);
     };
   };
 };
@@ -137,7 +140,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecyclePaper {
     sender: RNIContentViewParentDelegate
   ) {
     self.reactViewLifecycleDelegates.invoke {
-      $0.notifyOnViewWillInvalidate?(sender: sender);
+      $0.notifyOnViewWillInvalidate(sender: sender);
     };
   };
   
@@ -151,7 +154,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecyclePaper {
     notification: Notification
   ) {
     self.reactViewLifecycleDelegates.invoke {
-      $0.notifyOnBridgeWillReload?(
+      $0.notifyOnBridgeWillReload(
         sender: sender,
         notification: notification
       );

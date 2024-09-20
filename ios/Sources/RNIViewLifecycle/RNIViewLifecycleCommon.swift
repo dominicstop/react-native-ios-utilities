@@ -7,24 +7,45 @@
 
 import Foundation
 
-
-@objc(RNIViewLifecycleCommonSwift)
 public protocol RNIViewLifecycleCommon {
 
-  @objc
-  optional func notifyOnInit(
+  func notifyOnInit(
     sender: RNIContentViewParentDelegate
   );
   
-  @objc
-  optional func notifyOnUpdateLayoutMetrics(
+  func notifyOnUpdateLayoutMetrics(
     sender: RNIContentViewParentDelegate,
     oldLayoutMetrics: RNILayoutMetrics,
     newLayoutMetrics: RNILayoutMetrics
   );
   
-  @objc
-  optional func notifyOnRequestForCleanup(
+  func notifyOnRequestForCleanup(
     sender: RNIContentViewParentDelegate
   );
+};
+
+// MARK: - RNIViewLifecycleCommon+Default
+// --------------------------------------
+
+public extension RNIViewLifecycleCommon {
+  
+  func notifyOnInit(
+    sender: RNIContentViewParentDelegate
+  ) {
+    // no-op
+  };
+  
+  func notifyOnUpdateLayoutMetrics(
+    sender: RNIContentViewParentDelegate,
+    oldLayoutMetrics: RNILayoutMetrics,
+    newLayoutMetrics: RNILayoutMetrics
+  ) {
+    // no-op
+  };
+  
+  func notifyOnRequestForCleanup(
+    sender: RNIContentViewParentDelegate
+  ) {
+    // no-op
+  };
 };

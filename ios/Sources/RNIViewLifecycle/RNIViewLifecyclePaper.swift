@@ -9,11 +9,9 @@ import Foundation
 
 
 #if !RCT_NEW_ARCH_ENABLED
-@objc(RNIViewLifecyclePaperSwift)
 public protocol RNIViewLifecyclePaper {
 
-  @objc
-  optional func notifyOnViewWillInvalidate(
+  func notifyOnViewWillInvalidate(
     sender: RNIContentViewParentDelegate
   );
   
@@ -21,10 +19,29 @@ public protocol RNIViewLifecyclePaper {
   // ------------------
   
   /// Note: Only gets invoked in paper for some reason
-  @objc
-  optional func notifyOnBridgeWillReload(
+  func notifyOnBridgeWillReload(
     sender: RNIContentViewParentDelegate,
     notification: Notification
   );
+};
+
+// MARK: - RNIViewLifecyclePaper+Default
+// -------------------------------------
+
+public extension RNIViewLifecyclePaper {
+
+  func notifyOnViewWillInvalidate(
+    sender: RNIContentViewParentDelegate
+  ) {
+    // no-op
+  };
+  
+  /// Note: Only gets invoked in paper for some reason
+  func notifyOnBridgeWillReload(
+    sender: RNIContentViewParentDelegate,
+    notification: Notification
+  ) {
+    // no-op
+  };
 };
 #endif

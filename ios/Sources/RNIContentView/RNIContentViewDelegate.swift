@@ -11,7 +11,7 @@ import DGSwiftUtilities
 
 @objc
 public protocol RNIContentViewDelegate:
-  RNIViewPropDelegate, RNIViewLifecycle where Self: UIView  {
+  RNIViewPropDelegate where Self: UIView  {
   
   // MARK: - Fabric + Paper
   // ----------------------
