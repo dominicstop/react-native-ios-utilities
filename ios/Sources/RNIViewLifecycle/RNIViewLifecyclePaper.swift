@@ -9,7 +9,7 @@ import Foundation
 
 
 #if !RCT_NEW_ARCH_ENABLED
-@objc
+@objc(RNIViewLifecyclePaperSwift)
 public protocol RNIViewLifecyclePaper {
 
   @objc

@@ -8,7 +8,7 @@
 import Foundation
 
 
-@objc
+@objc(RNIViewLifecycleCommonSwift)
 public protocol RNIViewLifecycleCommon {
 
   @objc

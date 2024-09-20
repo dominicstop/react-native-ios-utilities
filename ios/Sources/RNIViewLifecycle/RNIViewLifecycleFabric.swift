@@ -9,7 +9,7 @@ import Foundation
 
 
 #if RCT_NEW_ARCH_ENABLED
-@objc
+@objc(RNIViewLifecycleFabricSwift)
 public protocol RNIViewLifecycleFabric {
 
   @objc
