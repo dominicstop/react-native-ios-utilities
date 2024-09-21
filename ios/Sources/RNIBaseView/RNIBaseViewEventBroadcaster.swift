@@ -40,7 +40,9 @@ public class RNIBaseViewEventBroadcaster: NSObject {
       self.reactViewLifecycleDelegates.add(viewLifecycleDelegate);
     };
     
-    self.reactViewPropUpdatesDelegates.add(contentDelegate);
+    if let propUpdateDelegate = contentDelegate as? RNIViewPropUpdatesNotifiable {
+      self.reactViewPropUpdatesDelegates.add(propUpdateDelegate);
+    };
   };
 };
 
@@ -173,7 +175,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewPropUpdatesNotifiable {
     sender: RNIContentViewParentDelegate
   ) {
     self.reactViewPropUpdatesDelegates.invoke {
-      $0.notifyDidSetProps?(sender: sender);
+      $0.notifyDidSetProps(sender: sender);
     };
   };
   
@@ -188,7 +190,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewPropUpdatesNotifiable {
     newProps: NSDictionary
   ) {
     self.reactViewPropUpdatesDelegates.invoke {
-      $0.notifyOnUpdateProps?(
+      $0.notifyOnUpdateProps(
         sender: sender,
         oldProps: oldProps,
         newProps: newProps
@@ -206,7 +208,7 @@ extension RNIBaseViewEventBroadcaster: RNIViewPropUpdatesNotifiable {
     changedProps: Array<String>
   ) {
     self.reactViewPropUpdatesDelegates.invoke {
-      $0.notifyDidSetProps?(
+      $0.notifyDidSetProps(
         sender: sender,
         changedProps: changedProps
       );

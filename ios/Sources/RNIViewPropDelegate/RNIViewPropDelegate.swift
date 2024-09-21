@@ -10,7 +10,7 @@ import DGSwiftUtilities
 
 
 @objc
-public protocol RNIViewPropDelegate: RNIViewPropUpdatesNotifiable {
+public protocol RNIViewPropDelegate {
   
   typealias KeyPathRoot = Self;
   

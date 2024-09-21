@@ -8,20 +8,17 @@
 import Foundation
 
 
-@objc
 public protocol RNIViewPropUpdatesNotifiable {
   
-  @objc
-  optional func notifyDidSetProps(
+  func notifyDidSetProps(
     sender: RNIContentViewParentDelegate
   );
   
-  // MARK: Fabric Only
-  // -----------------
+  // MARK: - Fabric Only
+  // -------------------
   
   #if RCT_NEW_ARCH_ENABLED
-  @objc
-  optional func notifyOnUpdateProps(
+  func notifyOnUpdateProps(
     sender: RNIContentViewParentDelegate,
     oldProps: NSDictionary,
     newProps: NSDictionary
@@ -36,5 +33,39 @@ public protocol RNIViewPropUpdatesNotifiable {
     sender: RNIContentViewParentDelegate,
     changedProps: Array<String>
   );
+  #endif
+};
+
+
+public extension RNIViewPropUpdatesNotifiable {
+
+  func notifyDidSetProps(
+    sender: RNIContentViewParentDelegate
+  ) {
+    // no-op
+  };
+  
+  // MARK: Fabric Only
+  // -----------------
+  
+  #if RCT_NEW_ARCH_ENABLED
+  func notifyOnUpdateProps(
+    sender: RNIContentViewParentDelegate,
+    oldProps: NSDictionary,
+    newProps: NSDictionary
+  ) {
+    // no-op
+  };
+  #else
+  
+  // MARK: - Paper-Only
+  // ------------------
+  
+  func notifyDidSetProps(
+    sender: RNIContentViewParentDelegate,
+    changedProps: Array<String>
+  ) {
+    // no-op
+  };
   #endif
 };

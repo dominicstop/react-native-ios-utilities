@@ -11,13 +11,11 @@ import Foundation
 #if RCT_NEW_ARCH_ENABLED
 public typealias RNIViewLifecycle =
     RNIViewLifecycleCommon
-  & RNIViewLifecycleFabric
-  & RNIViewPropUpdatesNotifiable;
+  & RNIViewLifecycleFabric;
 #else
 public typealias RNIViewLifecycle =
     RNIViewLifecycleCommon
-  & RNIViewLifecyclePaper
-  & RNIViewPropUpdatesNotifiable;
+  & RNIViewLifecyclePaper;
 #endif
 
 
