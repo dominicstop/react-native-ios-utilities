@@ -28,8 +28,7 @@ public protocol RNIViewPropUpdatesNotifiable {
   // MARK: - Paper-Only
   // ------------------
   
-  @objc
-  optional func notifyDidSetProps(
+  func notifyDidSetProps(
     sender: RNIContentViewParentDelegate,
     changedProps: Array<String>
   );
