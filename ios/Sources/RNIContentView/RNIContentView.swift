@@ -9,9 +9,10 @@ import Foundation
 import DGSwiftUtilities
 
 
-public protocol RNIContentView: RNIViewPropHandling, RNIViewLifecycle
-  where Self: RNIContentViewDelegate & StringKeyPathMapping {
-  
+public protocol RNIContentView:
+  RNIViewLifecycle, RNIViewPropUpdatesNotifiable, RNIViewPropHandling
+    where Self: RNIContentViewDelegate & StringKeyPathMapping
+{
   var horizontalAlignment: HorizontalAlignmentPosition { get };
   var verticalAlignment: VerticalAlignmentPosition { get }
 };
