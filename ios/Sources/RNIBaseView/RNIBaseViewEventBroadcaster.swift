@@ -83,6 +83,21 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleCommon {
       $0.notifyOnRequestForCleanup(sender: sender);
     };
   };
+  
+  #if DEBUG
+  @objc
+  public func notifyOnReactAppWillReload(
+    sender: RNIContentViewParentDelegate,
+    notification: NSNotification
+  ) {
+    self.reactViewLifecycleDelegates.invoke {
+      $0.notifyOnReactAppWillReload(
+        sender: sender,
+        notification: notification
+      );
+    };
+  };
+  #endif
 };
 
 // MARK: - RNIViewLifecycleFabric

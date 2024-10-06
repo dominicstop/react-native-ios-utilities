@@ -1121,6 +1121,10 @@ static BOOL SHOULD_LOG = NO;
   [self.eventBroadcaster
     notifyOnReloadCommandInvokedWithSender:self
                               notification:notification];
+                              
+  [self.eventBroadcaster
+    notifyOnReactAppWillReloadWithSender:self
+                            notification:notification];
   
   [self.eventBroadcaster notifyOnRequestForCleanupWithSender:self];
 }
@@ -1207,6 +1211,10 @@ static BOOL SHOULD_LOG = NO;
 {
   [self.eventBroadcaster notifyOnBridgeWillReloadWithSender:self
                                                notification:notification];
+                                               
+  [self.eventBroadcaster
+    notifyOnReactAppWillReloadWithSender:self
+                            notification:notification];
   
   [self.eventBroadcaster notifyOnRequestForCleanupWithSender:self];
 }

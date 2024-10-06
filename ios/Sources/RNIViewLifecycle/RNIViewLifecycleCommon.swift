@@ -22,6 +22,13 @@ public protocol RNIViewLifecycleCommon {
   func notifyOnRequestForCleanup(
     sender: RNIContentViewParentDelegate
   );
+  
+  #if DEBUG
+  func notifyOnReactAppWillReload(
+    sender: RNIContentViewParentDelegate,
+    notification: NSNotification
+  );
+  #endif
 };
 
 // MARK: - RNIViewLifecycleCommon+Default
@@ -48,4 +55,13 @@ public extension RNIViewLifecycleCommon {
   ) {
     // no-op
   };
+  
+  #if DEBUG
+  func notifyOnReactAppWillReload(
+    sender: RNIContentViewParentDelegate,
+    notification: NSNotification
+  ) {
+    // no-op
+  };
+  #endif
 };
