@@ -33,6 +33,11 @@
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 #include <react/renderer/graphics/Float.h>
 #include <react/renderer/core/graphicsConversions.h>
+
+#if DEBUG
+#import <React/RCTReloadCommand.h>
+#endif
+
 #else
 #import "RNIBaseViewPaperEventHandler.h"
 #import "RNIBaseViewPaperPropHandler.h"
@@ -99,6 +104,14 @@ static BOOL SHOULD_LOG = NO;
     
     self->_reactSubviewsShim = [NSMutableArray new];
     self->_queuedEvents = [NSMutableArray new];
+    
+#if DEBUG
+  [[NSNotificationCenter defaultCenter]
+    addObserver:self
+       selector:@selector(handleOnReloadNotification:)
+           name:RCTTriggerReloadCommandNotification
+         object:nil];
+#endif
     
     [self initCommon];
   };
@@ -1101,6 +1114,17 @@ static BOOL SHOULD_LOG = NO;
   
   [super prepareForRecycle];
 }
+
+#if DEBUG
+- (void)handleOnReloadNotification:(NSNotification *)notification
+{
+  [self.eventBroadcaster
+    notifyOnReloadCommandInvokedWithSender:self
+                              notification:notification];
+  
+  [self.eventBroadcaster notifyOnRequestForCleanupWithSender:self];
+}
+#endif
 #else
 
 // MARK: - React Lifecycle (Paper Only)

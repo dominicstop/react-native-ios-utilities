@@ -129,6 +129,19 @@ extension RNIBaseViewEventBroadcaster: RNIViewLifecycleFabric {
       $0.notifyOnPrepareForReuse(sender: sender);
     };
   };
+  
+  @objc
+  public func notifyOnReloadCommandInvoked(
+    sender: RNIContentViewParentDelegate,
+    notification: Notification
+  ) {
+    self.reactViewLifecycleDelegates.invoke {
+      $0.notifyOnReloadCommandInvoked(
+        sender: sender,
+        notification: notification
+      );
+    };
+  };
 };
 #else
 

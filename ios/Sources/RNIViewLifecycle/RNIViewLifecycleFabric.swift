@@ -26,6 +26,11 @@ public protocol RNIViewLifecycleFabric {
   func notifyOnPrepareForReuse(
     sender: RNIContentViewParentDelegate
   );
+  
+  func notifyOnReloadCommandInvoked(
+    sender: RNIContentViewParentDelegate,
+    notification: Notification
+  );
 };
 
 // MARK: - RNIViewLifecyclePaper+Default
@@ -51,6 +56,13 @@ public extension RNIViewLifecycleFabric {
   
   func notifyOnPrepareForReuse(
     sender: RNIContentViewParentDelegate
+  ) {
+    // no-op
+  };
+  
+  func notifyOnReloadCommandInvoked(
+    sender: RNIContentViewParentDelegate,
+    notification: Notification
   ) {
     // no-op
   };
