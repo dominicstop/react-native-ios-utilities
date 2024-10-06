@@ -9,7 +9,7 @@ import Foundation
 import DGSwiftUtilities
 
 @objc(RNIBaseViewStateSwift)
-public class RNIBaseViewState: NSObject {
+open class RNIBaseViewState: NSObject {
   
   public var frameSize: CGSize?;
   public var shouldSetSize: Bool?;
@@ -142,7 +142,7 @@ public class RNIBaseViewState: NSObject {
   // MARK: - Init
   // ------------
   
-  init(
+  public init(
     shouldSetSize: Bool? = nil,
     frameSize: CGSize? = nil,
     shouldSetPadding: Bool? = nil,
