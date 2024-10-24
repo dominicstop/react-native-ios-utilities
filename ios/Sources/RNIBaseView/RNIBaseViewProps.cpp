@@ -22,16 +22,11 @@ RNIBaseViewProps::RNIBaseViewProps(
   
   std::unordered_map<std::string, folly::dynamic> propsMap = std::move(sourceProps.propsMap);
 
-  const auto& dynamic = static_cast<folly::dynamic>(rawProps);
+  const auto& dynamicProps = static_cast<folly::dynamic>(rawProps);
 
-  for (const auto& pair : dynamic.items()) {
-      const auto& name = pair.first.getString();
-      shadowNodeProps->setProp(
-          context,
-          RAW_PROPS_KEY_HASH(name),
-          name.c_str(),
-          RawValue(pair.second));
-    }
+  for (const auto& pair : dynamicProps.items()) {
+    const auto& name = pair.first.getString();
+    propsMap[name] = pair.second;
   }
   
   this->propsMap = propsMap;
