@@ -27,7 +27,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TamaguiBox" translatesAutoresizingMaskIntoConstraints="NO" id="AiI-V1-5uy">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PuzzleBoxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="AiI-V1-5uy" userLabel="PuzzleBoxIcon">
                                 <rect key="frame" x="75" y="283" width="225" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="Uwv-Jo-ccL"/>
@@ -55,7 +55,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="TamaguiBox" width="1024" height="1024"/>
+        <image name="PuzzleBoxIcon" width="1024" height="1024"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
