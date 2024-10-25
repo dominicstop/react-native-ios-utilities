@@ -14,18 +14,6 @@ import { ROUTE_KEYS } from "./constants/RouteKeys";
 const shouldEnableTabs =
   SHARED_ENV.enableReactNavigation && SHARED_ENV.enableTabNavigation;
 
-function NavigationBarBanner(){
-  return (
-    <Image
-      source={(SHARED_ENV.shouldSetAppBackground
-        ? require("./assets/tamagui-banner-rainbow-logo-white.png")
-        : require("./assets/tamagui-banner-rainbow-logo-black.png")
-      )}
-      style={styles.navigationBarBannerImage}
-    />
-  );
-};
-
 function Tab1StackScreen() {
   if (shouldEnableTabs) {
     const Tab1Stack = createNativeStackNavigator();
@@ -80,12 +68,6 @@ export default function App() {
               key={item.routeKey}
               name={item.routeKey}
               component={item.component}
-              options={{
-                ...(item.routeKey === 'home' && {
-                  headerTitle: NavigationBarBanner,
-                  headerTitleAlign: "center",
-                }),
-              }}
             />
           ))}
         </Stack.Navigator>
