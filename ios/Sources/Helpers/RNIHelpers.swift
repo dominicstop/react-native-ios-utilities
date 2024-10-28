@@ -13,28 +13,14 @@ public class RNIHelpers {
 
   public static var debugShouldLogViewRegistryEntryRemoval = false;
   
+  @available(*, deprecated)
   public static var bridge: RCTBridge? {
-    guard let keyWindow = UIApplication.shared.activeWindow,
-          let rootVC = keyWindow.rootViewController,
-          let rootView = rootVC.view,
-          let rootReactView = rootView as? RCTRootView
-    else {
-      return nil;
-    };
-    
-    return rootReactView.bridge;
+    RCTBridge.current();
   };
   
-  static weak var _bridge: RCTBridge?;
+  @available(*, deprecated)
   public static var cachedBridge: RCTBridge? {
-    if let _bridge = Self._bridge {
-      return _bridge;
-    };
-    
-    let bridge = Self.bridge;
-    Self._bridge = bridge;
-    
-    return bridge;
+    Self.bridge;
   };
   
   public static let osVersion = ProcessInfo().operatingSystemVersion;
