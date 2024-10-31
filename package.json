@@ -53,15 +53,16 @@
     "pod-install:old": "cd example/ios && RCT_NEW_ARCH_ENABLED=0 pod install ; rm -rfv ./.xcode.env.local ; cd ../.. ; yarn run build:update-version",
     "pod-install:reopen": "yarn run close:ios ; yarn run pod-install ; yarn run open:ios",
     "pod-install:reopen-old": "yarn run close:ios ; yarn run pod-install:old ; yarn run open:ios",
-    "nuke:node-modules": "rm -rfv ./yarn.lock ./node_modules ; cd example ; rm -rfv ./node_modules ; cd ../..",
+    "nuke:node-modules": "rm -rfv ./yarn.lock ./node_modules ; cd example ; rm -rfv ./node_modules ./yarn.lock ; cd ../..",
     "nuke:example-pods": "cd example/ios ; pod cache clean --all ; rm -rfv ./Pods ./build ./Podfile.lock ; cd ../..",
-    "nuke:all": "yarn run nuke:node-modules ; yarn run nuke:example-pods",
+    "nuke:cache-js": "watchman watch-del-all ; rm -rfv $TMPDIR/react-* ; rm -rfv $TMPDIR/react-native-packager-cache-* ; rm -rfv $TMPDIR/metro-bundler-cache-* ; rm -rfv $TMPDIR/haste-map-* ;  rm -rfv rm -rf $TMPDIR/metro-cache ; npm cache clean --force ; npm cache verify ; yarn cache clean ; rm -rfv ~/.yarn/berry/cache",
+    "nuke:all": "yarn run nuke:example-pods ; yarn run nuke:cache-js ; npm run nuke:node-modules",
     "update-dep": "yarn add react-native-ios-utilities --dev ; cd example ; yarn add react-native-ios-utilities ; cd ..",
     "update-dep:next": "yarn add react-native-ios-utilities@next --dev ; cd example ; yarn add react-native-ios-utilities@next ; cd .. ; yarn run build:update-version",
     "update-dep:pods": "cd example/ios ; pod install --repo-update ; pod update DGSwiftUtilities ComputableLayout ; cd ../.. ; yarn run build:update-version",
-    "initialize": "yarn initialize:js ; yarn run pod-install",
+    "initialize": "yarn run initialize:js ; yarn run pod-install",
     "initialize:js": "yarn install ; cd example ; yarn install ; cd ..",
-    "initialize:reset": "yarn run nuke:all && yarn run initialize"
+    "initialize:reset": "npm run nuke:all ; yarn ; npm run initialize"
   },
   "keywords": [
     "react-native",
