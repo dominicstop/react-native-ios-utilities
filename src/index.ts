@@ -1,5 +1,5 @@
 
-export * from './native_components/RNIDetachedVIew';
+export * from './native_components/RNIDetachedView';
 export * from './native_components/RNIWrapperView';
 
 export * from './native_modules/RNIUtilitiesModule';
