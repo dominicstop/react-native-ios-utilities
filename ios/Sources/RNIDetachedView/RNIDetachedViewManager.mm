@@ -29,7 +29,7 @@ RCT_EXPORT_MODULE(RNIDetachedView)
 #ifndef RCT_NEW_ARCH_ENABLED
 - (UIView *)view
 {
-  return [[RNIDetachedView new] initWithBridge:self.bridge];
+  return [[RNIDetachedView alloc] initWithBridge:self.bridge];
 }
 #endif
 
