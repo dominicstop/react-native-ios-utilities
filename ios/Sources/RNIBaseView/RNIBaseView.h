@@ -6,9 +6,17 @@
 //
 
 #import <UIKit/UIKit.h>
+
+
+#if __has_include(<react_native_ios_utilities/RNIRegistrableView.h>)
+#import "react_native_ios_utilities/RNIRegistrableView.h"
+#import "react_native_ios_utilities/RNIViewCommandRequestHandling.h"
+#import "react_native_ios_utilities/RNIContentViewParentDelegate.h"
+#else
 #import "react-native-ios-utilities/RNIRegistrableView.h"
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 #import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
+#endif
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/RCTViewComponentView.h>

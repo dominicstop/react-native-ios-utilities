@@ -8,7 +8,11 @@
 #import <Foundation/Foundation.h>
 
 #import "RNIObjcUtils.h"
+#if __has_include(<react_native_ios_utilities/Swift.h>)
+#import <react_native_ios_utilities/Swift.h>
+#else
 #import "react-native-ios-utilities/Swift.h"
+#endif
 
 #import <React/RCTBridge.h>
 #import <React/RCTBridge+Private.h>

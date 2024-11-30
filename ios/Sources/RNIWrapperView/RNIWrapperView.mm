@@ -7,17 +7,28 @@
 
 #import "RNIWrapperView.h"
 
-#import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
-
-#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
-#import "react-native-ios-utilities/RNIObjcUtils.h"
+#if __has_include(<react_native_ios_utilities/Swift.h>)
+#import <react_native_ios_utilities/Swift.h>
+#import <react_native_ios_utilities/RNIContentViewParentDelegate.h>
+#import <react_native_ios_utilities/UIApplication+RNIHelpers.h>
+#import <react_native_ios_utilities/RNIObjcUtils.h>
+#else
+#import <react-native-ios-utilities/Swift.h>
+#import <react-native-ios-utilities/RNIContentViewParentDelegate.h>
+#import <react-native-ios-utilities/UIApplication+RNIHelpers.h>
+#import <react-native-ios-utilities/RNIObjcUtils.h>
+#endif
 
 #if RCT_NEW_ARCH_ENABLED
 #include "RNIWrapperViewComponentDescriptor.h"
-
-#include "react-native-ios-utilities/RNIBaseViewState.h"
+#if __has_include(<react_native_ios_utilities/RNIBaseViewState.h>)
+#import <react_native_ios_utilities/RNIBaseViewState.h>
+#import <react_native_ios_utilities/RNIBaseViewProps.h>
+#else
+#include <react-native-ios-utilities/RNIBaseViewState.h>
 #include "react-native-ios-utilities/RNIBaseViewProps.h"
+#endif
+
 
 #import <React/RCTConversions.h>
 #import <React/RCTFabricComponentsPlugins.h>
