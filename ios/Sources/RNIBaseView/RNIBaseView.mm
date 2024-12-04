@@ -272,7 +272,7 @@ static BOOL SHOULD_LOG = NO;
       return [viewDelegateClass new];
     };
     
-    return [[viewDelegateClass alloc] initWithFrame:self.frame];
+    return [[viewDelegateClass new] initWithFrame:self.frame];
   }();
   
   viewDelegate.parentReactView = self;
