@@ -8,7 +8,11 @@
 #import "RNIWrapperView.h"
 #import <objc/runtime.h>
 
+#if __has_include(<react_native_ios_utilities/RNIBaseViewUtils.h>)
+#import <react_native_ios_utilities/RNIBaseViewUtils.h>
+#else
 #import "react-native-ios-utilities/RNIBaseViewUtils.h"
+#endif
 
 #import "RCTBridge.h"
 #import <React/RCTViewManager.h>
@@ -25,7 +29,7 @@ RCT_EXPORT_MODULE(RNIWrapperView)
 #ifndef RCT_NEW_ARCH_ENABLED
 - (UIView *)view
 {
-  return [[RNIWrapperView new] initWithBridge:self.bridge];
+  return [[RNIWrapperView alloc] initWithBridge:self.bridge];
 }
 #endif
 

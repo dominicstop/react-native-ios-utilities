@@ -6,19 +6,31 @@
 //
 
 #import "RNIBaseView.h"
-#import "react-native-ios-utilities/Swift.h"
 
 #import <objc/runtime.h>
 
-#import "react-native-ios-utilities/RNIUtilitiesModule.h"
-#import "react-native-ios-utilities/RNIViewRegistry.h"
+#if __has_include(<react_native_ios_utilities/RNIUtilitiesModule.h>)
+#import <react_native_ios_utilities/Swift.h>
+#import <react_native_ios_utilities/RNIUtilitiesModule.h>
+#import <react_native_ios_utilities/RNIViewRegistry.h>
+#import <react_native_ios_utilities/RNIContentViewParentDelegate.h>
+#import <react_native_ios_utilities/RNIViewCommandRequestHandling.h>
 
+#import <react_native_ios_utilities/RNIObjcUtils.h>
+#import <react_native_ios_utilities/UIApplication+RNIHelpers.h>
+#import <react_native_ios_utilities/UIView+RNIHelpers.h>
+
+#else
+#import <react-native-ios-utilities/Swift.h>
+#import <react-native-ios-utilities/RNIUtilitiesModule.h>
+#import <react-native-ios-utilities/RNIViewRegistry.h>
 #import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
 #import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
 
 #import "react-native-ios-utilities/RNIObjcUtils.h"
 #import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
 #import "react-native-ios-utilities/UIView+RNIHelpers.h"
+#endif
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #include "RNIBaseViewState.h"
@@ -42,8 +54,13 @@
 #import "RNIBaseViewPaperEventHandler.h"
 #import "RNIBaseViewPaperPropHandler.h"
 
+#if __has_include("react_native_ios_utilities/RNIBaseViewPaperPropHolder.h")
+#import "react_native_ios_utilities/RNIBaseViewPaperPropHolder.h"
+#import "react_native_ios_utilities/UIView+RNIPaperHelpers.h"
+#else
 #import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 #import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
+#endif
 
 #import <React/UIView+React.h>
 #import <React/RCTShadowView.h>
@@ -260,7 +277,7 @@ static BOOL SHOULD_LOG = NO;
       return [viewDelegateClass new];
     };
     
-    return [[viewDelegateClass new] initWithFrame:self.frame];
+    return [[viewDelegateClass alloc] initWithFrame:self.frame];
   }();
   
   viewDelegate.parentReactView = self;
