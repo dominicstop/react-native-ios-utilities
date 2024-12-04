@@ -54,13 +54,8 @@
 #import "RNIBaseViewPaperEventHandler.h"
 #import "RNIBaseViewPaperPropHandler.h"
 
-#if __has_include("react_native_ios_utilities/RNIBaseViewPaperPropHolder.h")
-#import "react_native_ios_utilities/RNIBaseViewPaperPropHolder.h"
-#import "react_native_ios_utilities/UIView+RNIPaperHelpers.h"
-#else
 #import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
 #import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
-#endif
 
 #import <React/UIView+React.h>
 #import <React/RCTShadowView.h>
