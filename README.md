@@ -38,7 +38,7 @@ very special thanks to: [junzhengca](https://github.com/junzhengca), [brentvatne
 
 <br>
 
-Thank you for contributing to this library: [SamuelScheit](https://github.com/SamuelScheit) ([`pr-#6`](https://github.com/dominicstop/react-native-ios-utilities/pull/6)) 💫
+Thank you very much for contributing to this library: [SamuelScheit](https://github.com/SamuelScheit) ([`pr-#6`](https://github.com/dominicstop/react-native-ios-utilities/pull/6)), [coolsoftwaretyler](https://github.com/coolsoftwaretyler) ([`pr-#11`](https://github.com/dominicstop/react-native-ios-utilities/pull/11)) 💫
 
 <br><br>
 
