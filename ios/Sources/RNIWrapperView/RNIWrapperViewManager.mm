@@ -29,7 +29,7 @@ RCT_EXPORT_MODULE(RNIWrapperView)
 #ifndef RCT_NEW_ARCH_ENABLED
 - (UIView *)view
 {
-  return [[RNIWrapperView alloc] initWithBridge:self.bridge];
+  return [[RNIWrapperView new] initWithBridge:self.bridge];
 }
 #endif
 
