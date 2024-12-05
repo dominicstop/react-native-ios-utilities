@@ -1,9 +1,9 @@
 name: build-example-ios
 on:
+  workflow_dispatch:
+  
   release:
     types: [published]
-    
-  workflow_dispatch:
   
 jobs:
   build:
