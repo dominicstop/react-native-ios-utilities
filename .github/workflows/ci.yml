@@ -1,25 +1,24 @@
 name: build-example-ios
 on:
-  push:
-    branches: [ "github-actions-test" ]
+  release:
+    types: [published]
     
   workflow_dispatch:
   
-
 jobs:
   build:
     name: Build example app
     runs-on: macos-14
 
     steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
       - name: Show self-hosted machine infomation
         run: uname -a
 
       - name: Check Xcode version
         run: /usr/bin/xcodebuild -version
-        
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.1
         
       - name: Checkout repo from main branch
         uses: actions/checkout@v4
@@ -65,8 +64,39 @@ jobs:
             cd example
             yarn install
 
-      - name: Run `pod-install` (fabric, static library)
-        run: yarn run pod-install
+      - name: 1/4 - Run `pod-install` (fabric, static library)
+        run: yarn pod-install:new-static
 
-      - name: Build example (fabric, static library)
+      - name: 1/4 - Build example (fabric, static library)
         run: yarn run build:ios
+
+      - name: 1/4 - Clear/reset example pods
+        run: yarn run nuke:example-pods
+
+      - name: 2/4 - Run `pod-install` (fabric, dynamic frameworks)
+        run: yarn pod-install:new-dynamic
+
+      - name: 2/4 - Build example (fabric, dynamic frameworks)
+        run: yarn run build:ios
+
+      - name: 2/4 - Clear/reset example pods
+        run: yarn run nuke:example-pods
+
+      - name: 3/4 - Run `pod-install` (paper, static library)
+        run: yarn pod-install:old-static
+
+      - name: 3/4 - Build example (paper, static library)
+        run: yarn run build:ios
+
+      - name: 3/4 - Clear/reset example pods
+        run: yarn run nuke:example-pods
+
+      - name: 4/4 - Run `pod-install` (paper, dynamic frameworks)
+        run: yarn pod-install:old-dynamic
+
+      - name: 4/4 - Build example (paper, dynamic frameworks)
+        run: yarn run build:ios
+
+      - name: 4/4 - Clear/reset example pods
+        run: yarn run nuke:example-pods
+
