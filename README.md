@@ -1,5 +1,7 @@
 # react-native-ios-utilities
 
+[![build-example-ios](https://github.com/dominicstop/react-native-ios-utilities/actions/workflows/build-example-ios.yml/badge.svg)](https://github.com/dominicstop/react-native-ios-utilities/actions/workflows/build-example-ios.yml)
+
 hello, this is a helper library, and doesn’t really do anything on it’s own. This library is meant to be used as a dependency for other libraries — i.e. as a way to share code, and prevent duplicated logic.
 
 Please see the [version compatibility](#version-compatibility) table for reference.
