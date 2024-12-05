@@ -9,7 +9,7 @@
 #import "RNIBaseViewPaperEventHolder.h"
 
 #import "RNIBaseViewPaperEventHandler.h"
-#import "RNIObjcUtils"
+#import "RNIObjcUtils.h"
 
 #if DEBUG
 #import "RNIBaseView.h"
