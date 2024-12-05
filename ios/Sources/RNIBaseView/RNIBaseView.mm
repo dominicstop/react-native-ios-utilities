@@ -6,31 +6,17 @@
 //
 
 #import "RNIBaseView.h"
-
 #import <objc/runtime.h>
 
-#if __has_include(<react_native_ios_utilities/RNIUtilitiesModule.h>)
-#import <react_native_ios_utilities/Swift.h>
-#import <react_native_ios_utilities/RNIUtilitiesModule.h>
-#import <react_native_ios_utilities/RNIViewRegistry.h>
-#import <react_native_ios_utilities/RNIContentViewParentDelegate.h>
-#import <react_native_ios_utilities/RNIViewCommandRequestHandling.h>
+#import "Swift.h"
+#import "RNIUtilitiesModule.h"
+#import "RNIViewRegistry.h"
+#import "RNIContentViewParentDelegate.h"
+#import "RNIViewCommandRequestHandling.h"
 
-#import <react_native_ios_utilities/RNIObjcUtils.h>
-#import <react_native_ios_utilities/UIApplication+RNIHelpers.h>
-#import <react_native_ios_utilities/UIView+RNIHelpers.h>
-
-#else
-#import <react-native-ios-utilities/Swift.h>
-#import <react-native-ios-utilities/RNIUtilitiesModule.h>
-#import <react-native-ios-utilities/RNIViewRegistry.h>
-#import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
-#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
-
-#import "react-native-ios-utilities/RNIObjcUtils.h"
-#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
-#import "react-native-ios-utilities/UIView+RNIHelpers.h"
-#endif
+#import "RNIObjcUtils.h"
+#import "UIApplication+RNIHelpers.h"
+#import "UIView+RNIHelpers.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #include "RNIBaseViewState.h"

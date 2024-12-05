@@ -5,31 +5,18 @@
 //  Created by Dominic Go on 5/8/24.
 //
 
+#import "UIView+RNIHelpers.h"
 #import <objc/runtime.h>
 
-#import "UIView+RNIHelpers.h"
-
-#if __has_include(<react_native_ios_utilities/Swift.h>)
-#import <react_native_ios_utilities/Swift.h>
-#import <react_native_ios_utilities/RNIObjcUtils.h>
-#else
-#import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/RNIObjcUtils.h"
-#endif
+#import "Swift.h"
+#import "RNIObjcUtils.h"
 
 #if RCT_NEW_ARCH_ENABLED
-#if __has_include(<react_native_ios_utilities/UIView+RNIFabricHelpers.h>)
-#import <react_native_ios_utilities/UIView+RNIFabricHelpers.h>
-#else
-#import "react-native-ios-utilities/UIView+RNIFabricHelpers.h"
-#endif
+#import "UIView+RNIFabricHelpers.h"
 #import <React/RCTViewComponentView.h>
 #else
-#if __has_include(<react_native_ios_utilities/UIView+RNIPaperHelpers.h>)
-#import <react_native_ios_utilities/UIView+RNIPaperHelpers.h>
-#else
-#import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
-#endif
+#import "UIView+RNIPaperHelpers.h"
+
 #import <React/RCTView.h>
 #import <React/UIView+React.h>
 #import <React/RCTUIManager.h>

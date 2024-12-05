@@ -4,21 +4,16 @@
 //
 //  Created by Dominic Go on 5/13/24.
 //
+
 #import "RNIDummyTestView.h"
-
-#if __has_include(<react_native_ios_utilities/Swift.h>)
-#import <react_native_ios_utilities/Swift.h>
-#import <react_native_ios_utilities/RNIBaseViewUtils.h>
-#else
-#import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/RNIBaseViewUtils.h"
-#endif
-
 #import <objc/runtime.h>
 
+#import "Swift.h"
+#import "RNIBaseViewUtils.h"
+
+#import "RCTBridge.h"
 #import <React/RCTViewManager.h>
 #import <React/RCTUIManager.h>
-#import "RCTBridge.h"
 
 
 @interface RNIDummyTestViewManager : RCTViewManager

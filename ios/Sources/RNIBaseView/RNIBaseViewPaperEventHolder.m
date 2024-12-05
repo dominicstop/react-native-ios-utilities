@@ -7,13 +7,9 @@
 
 #if !RCT_NEW_ARCH_ENABLED
 #import "RNIBaseViewPaperEventHolder.h"
-#import "RNIBaseViewPaperEventHandler.h"
 
-#if __has_include(<react_native_ios_utilities/RNIObjcUtils.h>)
-#import <react_native_ios_utilities/RNIObjcUtils.h>
-#else
-#import <react-native-ios-utilities/RNIObjcUtils.h>
-#endif
+#import "RNIBaseViewPaperEventHandler.h"
+#import "RNIObjcUtils"
 
 #if DEBUG
 #import "RNIBaseView.h"
