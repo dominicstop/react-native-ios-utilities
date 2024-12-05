@@ -81,7 +81,7 @@ jobs:
       - name: 1/4 - Build example (fabric, static library)
         run: yarn run build:ios
 
-      - name: 1/4 - Clear/reset example pods
+      - name: Clear/reset example pods
         run: yarn run nuke:example-pods
 
       - name: 2/4 - Run `pod-install` (fabric, dynamic frameworks)
@@ -90,7 +90,7 @@ jobs:
       - name: 2/4 - Build example (fabric, dynamic frameworks)
         run: yarn run build:ios
 
-      - name: 2/4 - Clear/reset example pods
+      - name: Clear/reset example pods
         run: yarn run nuke:example-pods
 
       - name: 3/4 - Run `pod-install` (paper, static library)
@@ -99,7 +99,7 @@ jobs:
       - name: 3/4 - Build example (paper, static library)
         run: yarn run build:ios
 
-      - name: 3/4 - Clear/reset example pods
+      - name: Clear/reset example pods
         run: yarn run nuke:example-pods
 
       - name: 4/4 - Run `pod-install` (paper, dynamic frameworks)
@@ -107,7 +107,3 @@ jobs:
 
       - name: 4/4 - Build example (paper, dynamic frameworks)
         run: yarn run build:ios
-
-      - name: 4/4 - Clear/reset example pods
-        run: yarn run nuke:example-pods
-
