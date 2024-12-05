@@ -4,11 +4,19 @@ on:
   
   release:
     types: [published]
-  
+
+  pull_request:
+    types: 
+      - closed
+
+    branches:
+      - 'master'
+
 jobs:
   build:
     name: Build example app
     runs-on: macos-14
+    if: ${{ (github.event.pull_request.merged == true) || (github.event_name != 'pull_request') }}
 
     steps:
       - name: Cancel previous runs
@@ -63,6 +71,9 @@ jobs:
             yarn install 
             cd example
             yarn install
+
+      - name: Build JS
+        run: yarn run bob build
 
       - name: 1/4 - Run `pod-install` (fabric, static library)
         run: yarn pod-install:new-static
