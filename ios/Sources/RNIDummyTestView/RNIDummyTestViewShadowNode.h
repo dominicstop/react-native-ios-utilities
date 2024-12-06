@@ -7,9 +7,16 @@
 #if __cplusplus
 #pragma once
 
-#import "RNIBaseViewShadowNode.h"
-#import "RNIBaseViewProps.h"
-#import "RNIBaseViewEventEmitter.h"
+#if __has_include(<react_native_ios_utilities/RNIBaseViewShadowNode.h>)
+#import <react_native_ios_utilities/RNIBaseViewShadowNode.h>
+#import <react_native_ios_utilities/RNIBaseViewProps.h>
+#import <react_native_ios_utilities/RNIBaseViewEventEmitter.h>
+#else
+#include <react-native-ios-utilities/RNIBaseViewShadowNode.h>
+#include <react-native-ios-utilities/RNIBaseViewProps.h>
+#include <react-native-ios-utilities/RNIBaseViewEventEmitter.h>
+#endif
+
 
 #include <react/renderer/components/RNIUtilitiesSpec/EventEmitters.h>
 #include <react/renderer/components/RNIUtilitiesSpec/Props.h>

@@ -7,10 +7,17 @@
 
 #import "RNIUtilitiesModule.h"
 
-#import "Swift.h"
-#import "RNIViewRegistry.h"
-#import "RNIViewCommandRequestHandling.h"
-#import "RNIObjcUtils.h"
+#if __has_include(<react_native_ios_utilities/Swift.h>)
+#import <react_native_ios_utilities/Swift.h>
+#import <react_native_ios_utilities/RNIViewRegistry.h>
+#import <react_native_ios_utilities/RNIViewCommandRequestHandling.h>
+#import <react_native_ios_utilities/RNIObjcUtils.h>
+#else
+#import "react-native-ios-utilities/Swift.h"
+#import "react-native-ios-utilities/RNIViewRegistry.h"
+#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
+#import "react-native-ios-utilities/RNIObjcUtils.h"
+#endif
 
 #import <React/RCTBridge+Private.h>
 #import <React/RCTBridge.h>

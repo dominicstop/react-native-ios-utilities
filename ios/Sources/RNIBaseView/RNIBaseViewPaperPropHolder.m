@@ -5,10 +5,16 @@
 //  Created by Dominic Go on 5/23/24.
 //
 
+#import "RNIBaseViewPaperPropHolder.h"
+#if __has_include(<react_native_ios_utilities/RNIObjcUtils.h>)
+#import <react_native_ios_utilities/RNIObjcUtils.h>
+#else
+#import <react-native-ios-utilities/RNIObjcUtils.h>
+#endif
+
 #if !RCT_NEW_ARCH_ENABLED
 #import "RNIBaseViewPaperPropHolder.h"
 #import "RNIBaseViewPaperPropHandler.h"
-#import "RNIObjcUtils.h"
 
 #if DEBUG
 #import "RNIBaseView.h"

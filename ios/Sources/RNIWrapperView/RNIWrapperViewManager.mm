@@ -8,7 +8,11 @@
 #import "RNIWrapperView.h"
 #import <objc/runtime.h>
 
-#import "RNIBaseViewUtils.h"
+#if __has_include(<react_native_ios_utilities/RNIBaseViewUtils.h>)
+#import <react_native_ios_utilities/RNIBaseViewUtils.h>
+#else
+#import "react-native-ios-utilities/RNIBaseViewUtils.h"
+#endif
 
 #import "RCTBridge.h"
 #import <React/RCTViewManager.h>

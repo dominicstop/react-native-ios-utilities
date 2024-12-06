@@ -11,7 +11,11 @@
 #include "RNIWrapperViewShadowNode.h"
 #include "RNIBaseViewComponentDescriptor.h"
 
-#import "RNIBaseViewState.h"
+#if __has_include(<react_native_ios_utilities/RNIBaseViewState.h>)
+#import <react_native_ios_utilities/RNIBaseViewState.h>
+#else
+#include <react-native-ios-utilities/RNIBaseViewState.h>
+#endif
 
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 

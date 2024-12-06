@@ -6,10 +6,13 @@
 //
 
 #import "RNIViewRegistry.h"
-
 #import "RNIRegistrableView.h"
-#import "RNIObjcUtils.h"
 
+#if __has_include(<react_native_ios_utilities/RNIObjcUtils.h>)
+#import <react_native_ios_utilities/RNIObjcUtils.h>
+#else
+#import <react-native-ios-utilities/RNIObjcUtils.h>
+#endif
 
 static BOOL SHOULD_LOG = NO;
 
