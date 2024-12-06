@@ -1,11 +1,6 @@
 name: build-example-ios
 on:
   workflow_dispatch:
-    inputs:
-      refToBuild:
-        description: 'Specific Commit SHA (Optional)'
-        required: false
-        type: string
   
   release:
     types: [published]
@@ -25,7 +20,6 @@ jobs:
 
     steps:
       - name: Cancel previous runs
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.refToBuild == '' }}
         uses: styfle/cancel-workflow-action@0.9.1
 
       - name: Show self-hosted machine infomation
@@ -33,37 +27,9 @@ jobs:
 
       - name: Check Xcode version
         run: /usr/bin/xcodebuild -version
-
-      # Setup (Checkout)
-
-      - name: Checkout (Specific Ref) 
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.refToBuild != '' }}
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.refToBuild }}
-
+        
       - name: Checkout repo from main branch
-        if: ${{ github.event.inputs.refToBuild == '' }}
         uses: actions/checkout@v4
-
-      # Set Commit Status
-
-      - name: Set Env COMMIT_SHA to Specific Commit
-        if: ${{ github.event.inputs.refToBuild != '' }}
-        run: echo "COMMIT_SHA=${{ github.event.inputs.refToBuild }}" >> $GITHUB_ENV
-
-      - name: Set Env COMMIT_SHA to Github Context
-        if: ${{ github.event.inputs.refToBuild == '' }}
-        run: echo "COMMIT_SHA=${{ github.sha }}" >> $GITHUB_ENV
-
-      - name: Set latest commit status as pending
-        uses: myrotvorets/set-commit-status-action@master
-        with:
-          sha: ${{ env.COMMIT_SHA }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: pending
-
-      # Setup (Build Env)
 
       - name: Install Apple certificate and provisioning profile
         env:
@@ -76,25 +42,20 @@ jobs:
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-
           # import certificate and provisioning profile from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
           echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
-
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
           # import certificate to keychain
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
-
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-
       - uses: actions/setup-node@v4
         with:
           node-version: 'v18.12.1'
@@ -105,9 +66,6 @@ jobs:
             yarn install 
             cd example
             yarn install
-
-      # Build Start...
-
       - name: Build JS
         run: yarn run bob build
 
@@ -143,13 +101,3 @@ jobs:
 
       - name: 4/4 - Build example (paper, dynamic frameworks)
         run: yarn run build:ios
-
-      # Build Complete
- 
-      - name: Set latest commit status as ${{ job.status }}
-        uses: myrotvorets/set-commit-status-action@master
-        if: always()
-        with:
-          sha: ${{ env.COMMIT_SHA }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
