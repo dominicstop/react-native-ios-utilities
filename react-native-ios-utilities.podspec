@@ -16,8 +16,12 @@ fabric_compiler_flags = '-DRN_FABRIC_ENABLED -DRCT_NEW_ARCH_ENABLED'
 folly_version = '2022.05.16.00'
 folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -Wno-comma -Wno-shorten-64-to-32'
 
-puts "reactNativeTargetVersion: #{reactNativeVersion}"
-puts "fabric_enabled: #{fabric_enabled}"
+linkage = ENV['USE_FRAMEWORKS']
+
+puts "react-native-ios-utilities"
+puts " - reactNativeTargetVersion: #{reactNativeVersion}"
+puts " - fabric_enabled: #{fabric_enabled}"
+puts " - linkage: #{linkage}"
 
 Pod::Spec.new do |s|
   s.name           = "react-native-ios-utilities"
