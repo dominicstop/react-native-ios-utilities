@@ -11,7 +11,7 @@
 #import <objc/runtime.h>
 
 #import "RNIObjcUtils.h"
-#import "Swift.h"
+#import "../../Swift.h"
 
 #if __cplusplus && RCT_NEW_ARCH_ENABLED
 #import "UIView+RNIHelpers.h"

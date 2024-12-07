@@ -8,7 +8,7 @@
 #import <objc/runtime.h>
 
 #import "UIView+RNIHelpers.h"
-#import "Swift.h"
+#import "../../Swift.h"
 #import "RNIObjcUtils.h"
 
 #if RCT_NEW_ARCH_ENABLED

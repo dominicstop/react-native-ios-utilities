@@ -7,7 +7,7 @@
 
 #import "RNIWrapperView.h"
 
-#import "Swift.h"
+#import "../../Swift.h"
 #import "RNIContentViewParentDelegate.h"
 
 #import "UIApplication+RNIHelpers.h"

@@ -6,7 +6,7 @@
 //
 
 #import "RNIUtilitiesModule.h"
-#import "Swift.h"
+#import "../../Swift.h"
 #import "RNIViewRegistry.h"
 #import "RNIViewCommandRequestHandling.h"
 #import "RNIObjcUtils.h"

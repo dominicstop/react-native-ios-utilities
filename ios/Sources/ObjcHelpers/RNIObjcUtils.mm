@@ -8,13 +8,13 @@
 #import <Foundation/Foundation.h>
 
 #import "RNIObjcUtils.h"
-#import "Swift.h"
+#import "../../Swift.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTBridge+Private.h>
 
 #import <React/RCTShadowView.h>
-#import <React/RCTShadowView+Layout.h>
+#import <React/RCTShadowView+Layout.h> 
 
 #if __cplusplus
 #import <folly/dynamic.h>

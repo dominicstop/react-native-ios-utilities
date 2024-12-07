@@ -6,7 +6,7 @@
 //
 #import "RNIDummyTestView.h"
 
-#import "Swift.h"
+#import "../../Swift.h"
 #import "RNIBaseViewUtils.h"
 
 #import <objc/runtime.h>
