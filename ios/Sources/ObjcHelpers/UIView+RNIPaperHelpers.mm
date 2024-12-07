@@ -7,9 +7,9 @@
 
 #import "UIView+RNIPaperHelpers.h"
 
-#import "react-native-ios-utilities/RNIBaseView.h"
-#import "react-native-ios-utilities/UIView+RNIHelpers.h"
-#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
+#import "RNIBaseView.h"
+#import "UIView+RNIHelpers.h"
+#import "UIApplication+RNIHelpers.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTBridge+Private.h>

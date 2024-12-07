@@ -6,10 +6,10 @@
 //
 
 #import "RNIUtilitiesModule.h"
-#import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/RNIViewRegistry.h"
-#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
-#import "react-native-ios-utilities/RNIObjcUtils.h"
+#import "Swift.h"
+#import "RNIViewRegistry.h"
+#import "RNIViewCommandRequestHandling.h"
+#import "RNIObjcUtils.h"
 
 #import <React/RCTBridge+Private.h>
 #import <React/RCTBridge.h>

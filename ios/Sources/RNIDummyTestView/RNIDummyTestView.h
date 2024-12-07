@@ -7,7 +7,7 @@
 
 //#import <React/RCTComponent.h>
 
-#import <react-native-ios-utilities/RNIBaseView.h>
+#import "RNIBaseView.h"
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/RCTViewComponentView.h>

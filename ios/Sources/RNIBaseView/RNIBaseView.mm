@@ -6,19 +6,19 @@
 //
 
 #import "RNIBaseView.h"
-#import "react-native-ios-utilities/Swift.h"
+#import "Swift.h"
 
 #import <objc/runtime.h>
 
-#import "react-native-ios-utilities/RNIUtilitiesModule.h"
-#import "react-native-ios-utilities/RNIViewRegistry.h"
+#import "RNIUtilitiesModule.h"
+#import "RNIViewRegistry.h"
 
-#import "react-native-ios-utilities/RNIContentViewParentDelegate.h"
-#import "react-native-ios-utilities/RNIViewCommandRequestHandling.h"
+#import "RNIContentViewParentDelegate.h"
+#import "RNIViewCommandRequestHandling.h"
 
-#import "react-native-ios-utilities/RNIObjcUtils.h"
-#import "react-native-ios-utilities/UIApplication+RNIHelpers.h"
-#import "react-native-ios-utilities/UIView+RNIHelpers.h"
+#import "RNIObjcUtils.h"
+#import "UIApplication+RNIHelpers.h"
+#import "UIView+RNIHelpers.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #include "RNIBaseViewState.h"
@@ -42,8 +42,8 @@
 #import "RNIBaseViewPaperEventHandler.h"
 #import "RNIBaseViewPaperPropHandler.h"
 
-#import "react-native-ios-utilities/RNIBaseViewPaperPropHolder.h"
-#import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
+#import "RNIBaseViewPaperPropHolder.h"
+#import "UIView+RNIPaperHelpers.h"
 
 #import <React/UIView+React.h>
 #import <React/RCTShadowView.h>

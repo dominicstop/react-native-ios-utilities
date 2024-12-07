@@ -8,7 +8,7 @@
 #import "RNIViewRegistry.h"
 #import "RNIRegistrableView.h"
 
-#import "react-native-ios-utilities/RNIObjcUtils.h"
+#import "RNIObjcUtils.h"
 
 static BOOL SHOULD_LOG = NO;
 

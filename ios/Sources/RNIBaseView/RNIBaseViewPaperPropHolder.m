@@ -6,7 +6,7 @@
 //
 
 #import "RNIBaseViewPaperPropHolder.h"
-#import "react-native-ios-utilities/RNIObjcUtils.h"
+#import "RNIObjcUtils.h"
 
 #if !RCT_NEW_ARCH_ENABLED
 #import "RNIBaseViewPaperPropHolder.h"

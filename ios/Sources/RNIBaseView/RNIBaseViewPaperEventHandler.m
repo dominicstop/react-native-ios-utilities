@@ -10,7 +10,7 @@
 #import "RNIBaseViewPaperEventHolder.h"
 #import "RNIBaseView.h"
 
-#import "react-native-ios-utilities/RNIObjcUtils.h"
+#import "RNIObjcUtils.h"
 
 #import <objc/runtime.h>
 

@@ -10,8 +10,8 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
-#import "react-native-ios-utilities/RNIObjcUtils.h"
-#import "react-native-ios-utilities/Swift.h"
+#import "RNIObjcUtils.h"
+#import "Swift.h"
 
 #if __cplusplus && RCT_NEW_ARCH_ENABLED
 #import "UIView+RNIHelpers.h"

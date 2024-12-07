@@ -6,8 +6,8 @@
 //
 #import "RNIDummyTestView.h"
 
-#import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/RNIBaseViewUtils.h"
+#import "Swift.h"
+#import "RNIBaseViewUtils.h"
 
 #import <objc/runtime.h>
 

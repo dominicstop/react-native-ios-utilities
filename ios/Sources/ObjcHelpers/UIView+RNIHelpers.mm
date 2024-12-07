@@ -8,14 +8,14 @@
 #import <objc/runtime.h>
 
 #import "UIView+RNIHelpers.h"
-#import "react-native-ios-utilities/Swift.h"
-#import "react-native-ios-utilities/RNIObjcUtils.h"
+#import "Swift.h"
+#import "RNIObjcUtils.h"
 
 #if RCT_NEW_ARCH_ENABLED
-#import "react-native-ios-utilities/UIView+RNIFabricHelpers.h"
+#import "UIView+RNIFabricHelpers.h"
 #import <React/RCTViewComponentView.h>
 #else
-#import "react-native-ios-utilities/UIView+RNIPaperHelpers.h"
+#import "UIView+RNIPaperHelpers.h"
 #import <React/RCTView.h>
 #import <React/UIView+React.h>
 #import <React/RCTUIManager.h>

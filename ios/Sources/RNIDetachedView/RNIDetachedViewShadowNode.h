@@ -8,7 +8,7 @@
 #if __cplusplus
 #pragma once
 
-#include <react-native-ios-utilities/RNIBaseViewShadowNode.h>
+#include "RNIBaseViewShadowNode.h"
 
 #include <react/renderer/components/RNIUtilitiesSpec/EventEmitters.h>
 #include <react/renderer/components/RNIUtilitiesSpec/Props.h>
