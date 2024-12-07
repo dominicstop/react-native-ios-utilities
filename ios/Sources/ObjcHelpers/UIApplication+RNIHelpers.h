@@ -16,9 +16,9 @@
 @class RCTScheduler;
 
 #if __cplusplus
- namespace facebook::react {
-   class UIManager;
- }
+namespace facebook::react {
+  class UIManager;
+}
 #endif
 
 @interface UIApplication (RNIHelpers)
