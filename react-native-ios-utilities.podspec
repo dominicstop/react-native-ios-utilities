@@ -37,7 +37,7 @@ Pod::Spec.new do |s|
   s.swift_version  = '5.4'
 
   s.static_framework = true
-  s.header_dir     = 'react-native-ios-utilities'
+  s.header_dir       = 'react-native-ios-utilities'
 
   header_search_paths = [
     '"$(PODS_ROOT)/boost"',
@@ -112,6 +112,8 @@ Pod::Spec.new do |s|
     exclude_files.append('ios/Fabric/')
     exclude_files.append('common/cpp/fabric/')
   end
+
+  s.public_header_files = 'Sources/**/*.h'
 
   s.exclude_files = exclude_files
   s.compiler_flags = compiler_flags
