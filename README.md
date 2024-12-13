@@ -2,7 +2,7 @@
 
 [![build-example-ios](https://github.com/dominicstop/react-native-ios-utilities/actions/workflows/build-example-ios.yml/badge.svg)](https://github.com/dominicstop/react-native-ios-utilities/actions/workflows/build-example-ios.yml)
 
-hello, this is a helper library, and doesn’t really do anything on it’s own. This library is meant to be used as a dependency for other libraries — i.e. as a way to share code, and prevent duplicated logic.
+hello, this is a helper library, and doesn’t really do anything on it’s own. This library is meant to be used as a dependency for some other libraries i am making — i.e. as a way to share code, and prevent duplicated logic.
 
 Please see the [version compatibility](#version-compatibility) table for reference.
 
@@ -32,11 +32,11 @@ Development and maintenance of this library was generously sponsored by [beatgig
 
 <br>
 
-The initial fabric rewrite (i.e. version `5.x`) was made possible through a generous `$3,750` sponsorship by [natew](https://github.com/natew) + [tamagui](https://github.com/tamagui/tamagui) over the course of 4 months (from: `05/27/24` to `09/30/24`) 🐦✨
+The initial fabric rewrite (i.e. version `5.x`) was made possible through a generous `$3,750` sponsorship by [tamagui](https://github.com/tamagui/tamagui) over the course of 4 months (from: `05/27/24` to `09/30/24`) 🐦✨
 
 <br>
 
-very special thanks to: [junzhengca](https://github.com/junzhengca), [brentvatne](https://github.com/brentvatne), [expo](https://github.com/expo), [EvanBacon](https://github.com/EvanBacon), [corasan](https://github.com/corasan), [lauridskern](https://github.com/lauridskern), and [ronintechnologies](https://github.com/ronintechnologies) for becoming a monthly sponsor, and thank you [fobos531](https://github.com/fobos531) for being a one time sponsor 🥺 (if you have the means to do so, please considering sponsoring [here](https://github.com/sponsors/dominicstop))
+very special thanks to: [junzhengca](https://github.com/junzhengca), [brentvatne](https://github.com/brentvatne), [expo](https://github.com/expo), [EvanBacon](https://github.com/EvanBacon), [corasan](https://github.com/corasan), [lauridskern](https://github.com/lauridskern), [ronintechnologies](https://github.com/ronintechnologies), and [gerzonc](https://github.com/gerzonc) for becoming a monthly sponsor, and thank you [fobos531](https://github.com/fobos531) for being a one time sponsor 🥺 (if you have the means to do so, please considering sponsoring [here](https://github.com/sponsors/dominicstop))
 
 <br>
 
