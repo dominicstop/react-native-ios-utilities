@@ -59,7 +59,7 @@ cd ios && pod install
 | ----------------------------------------------------- | :----------------------------------------------------------- |
 | `react-native-ios-utilities`<br/>**Version**: `4.3.x` | `react-native-ios-context-menu`<br/>**Version**: `2.4.x`<br/><br/>`react-native-text-input-wrapper`<br/>**Version**: `0.1.x`<br><br>`react-native-ios-adaptive-modal`<br/>**Version**: `0.6.x`<br> |
 | `react-native-ios-utilities`<br>**Version**: `4.4.x`  | `react-native-ios-context-menu`<br/>**Version**: `2.5.x`<br/><br/>`react-native-text-input-wrapper`<br/>**Version**: `0.1.x`<br/><br/>`react-native-ios-adaptive-modal`<br/>**Version**: `0.7.x`<br> |
-| `react-native-ios-utilities`<br/>**Version**: `5.x`   | `react-native-ios-context-menu`<br/>**Version**: `3.x`<br/><br>`react-native-ios-visual-effect-view`<br>**Version**: `0.x` |
+| `react-native-ios-utilities`<br/>**Version**: `5.x`   | `react-native-ios-context-menu`<br/>**Version**: `3.x`<br/><br>`react-native-ios-visual-effect-view`<br>**Version**: `0.x`<br><br>`react-native-ios-modal`<br>**Version**: `3.x` |
 
 
 
