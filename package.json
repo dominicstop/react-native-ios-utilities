@@ -71,7 +71,7 @@
     "initialize:js": "yarn install ; cd example ; yarn install ; cd ..",
     "initialize:reset": "npm run nuke:all ; yarn ; npm run initialize",
     "test-build:all": "sh ./scripts/test-builds.sh",
-    "test-build:all-quick": "sh ./scripts/test-builds-quick.sh"
+    "test-build:all-quick": "sh ./scripts/test-builds.sh quick"
   },
   "keywords": [
     "react-native",

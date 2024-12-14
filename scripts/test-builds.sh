@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# value: either "quick" or "not-quick"
+# default: "not-quick"
+BUILD_MODE="${1:-not-quick}"
+
 NEW_ARCH_STATIC_DEBUG=PENDING 
 OLD_ARCH_STATIC_DEBUG=PENDING
 NEW_ARCH_STATIC_RELEASE=PENDING 
@@ -8,7 +12,8 @@ OLD_ARCH_STATIC_RELEASE=PENDING
 OLD_ARCH_DYNAMIC=PENDING
 
 log_build_status() {
-  echo "\n\n\nBUILD RESULTS...";
+  echo "\n\n\nBUILD RESULTS..."
+  echo "BUILD_MODE: $BUILD_MODE"
   echo "Build - NEW_ARCH_STATIC_DEBUG: ${NEW_ARCH_STATIC_DEBUG}"
   echo "Build - OLD_ARCH_STATIC_DEBUG: ${OLD_ARCH_STATIC_DEBUG}"
   echo "Build - NEW_ARCH_STATIC_RELEASE: ${NEW_ARCH_STATIC_RELEASE}"
@@ -19,13 +24,23 @@ log_build_status() {
 }
 
 clear_cache(){
-  echo '\nclearing pods + derived data...'
-  yarn run nuke:example-pods
-  yarn run nuke:derived-data 
+  echo "\nBUILD_MODE: $BUILD_MODE"
+
+  # Check the value of BUILD_MODE
+  if [ "$BUILD_MODE" = "quick" ]; then
+    echo "Skipping cleanup..."
+
+  elif [ "$BUILD_MODE" = "not-quick" ]; then
+    echo 'clearing pods + derived data...'
+    yarn run nuke:example-pods
+    yarn run nuke:derived-data 
+  else
+    echo "Invalid BUILD_MODE. Please use 'quick' or 'not-quick'."
+  fi
 }
 
 build_A1(){
-  log_build_status;
+  log_build_status
   clear_cache;
 
   echo '\n\nBuild - new-arch (fabric) + static, debug: Begin...\n'
@@ -36,7 +51,7 @@ build_A1(){
     NEW_ARCH_STATIC_DEBUG=SUCCESS;
   else
     NEW_ARCH_STATIC_DEBUG=FAILED;
-  fi;
+  fi
 }
 
 build_A2(){ 
@@ -51,7 +66,7 @@ build_A2(){
     OLD_ARCH_STATIC_DEBUG=SUCCESS;
   else
     OLD_ARCH_STATIC_DEBUG=FAILED;
-  fi;
+  fi
 }
 
 build_B1(){ 
@@ -66,7 +81,7 @@ build_B1(){
     NEW_ARCH_STATIC_RELEASE=SUCCESS;
   else
     NEW_ARCH_STATIC_RELEASE=FAILED;
-  fi;
+  fi
 }
 
 build_B2(){ 
@@ -81,7 +96,7 @@ build_B2(){
     OLD_ARCH_STATIC_RELEASE=SUCCESS;
   else
     OLD_ARCH_STATIC_RELEASE=FAILED;
-  fi;
+  fi
 }
 
 # build_C1(){
@@ -96,7 +111,7 @@ build_B2(){
 #   NEW_ARCH_DYNAMIC=SUCCESS;
 # else
 #   NEW_ARCH_DYNAMIC=FAILED;
-# fi;
+# fi
 # }
 
 build_C2(){
@@ -111,14 +126,14 @@ build_C2(){
     OLD_ARCH_DYNAMIC=SUCCESS;
   else
     OLD_ARCH_DYNAMIC=FAILED;
-  fi;
+  fi
 }
 
-build_A1()
-build_A2()
-build_B1()
-build_B2()
-build_C2()
+build_A1
+build_A2
+build_B1
+build_B2
+build_C2
 
 echo "\n\n All Builds Completed..."
 log_build_status
