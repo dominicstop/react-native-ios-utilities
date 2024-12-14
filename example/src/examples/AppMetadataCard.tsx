@@ -25,6 +25,7 @@ export function AppMetadataCard(props: ExampleItemProps) {
           libraryName: LibraryPackageConfig.name,
           libraryVersion: LibraryPackageConfig.version,
           IS_USING_NEW_ARCH,
+          __DEV__,
           exampleDependencies: ExamplePackageConfig.dependencies,
         }}
       />
