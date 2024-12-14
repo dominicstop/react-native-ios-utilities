@@ -45,6 +45,7 @@
     "build": "yarn run build:js ; yarn run build:ios",
     "build:js": "yarn run lint ; yarn run lint:circular-dep ; yarn run typescript ; yarn run bob build",
     "build:ios": "sh ./scripts/build-ios.sh",
+    "build:ios-release": "sh ./scripts/build-ios.sh Release",
     "build:ios-info": "cd ./example/ios ; xcodebuild -project ./*.xcodeproj -showBuildSettings -list ; xcodebuild -project ./*.xcodeproj -showBuildSettings",
     "run:release": "cd example && npx react-native run-ios --configuration Release",
     "run:debug": "cd example && npx react-native run-ios --configuration Debug",
