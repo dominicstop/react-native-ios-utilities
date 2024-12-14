@@ -10,10 +10,7 @@
 #import "RNIBaseViewPaperEventHandler.h"
 
 #import "RNIObjcUtils.h"
-
-#if DEBUG
 #import "RNIBaseView.h"
-#endif
 
 static BOOL SHOULD_LOG = NO;
 

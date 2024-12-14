@@ -12,9 +12,8 @@
 #import "RNIBaseViewPaperPropHolder.h"
 #import "RNIBaseViewPaperPropHandler.h"
 
-#if DEBUG
 #import "RNIBaseView.h"
-#endif
+
 
 static BOOL SHOULD_LOG = NO;
 

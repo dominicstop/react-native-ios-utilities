@@ -17,13 +17,14 @@
 #if __cplusplus
 #include "RNIUtilitiesTurboModule.h"
 
-#include <jsi/jsi.h>
 #import <folly/dynamic.h>
 #import <React/RCTConversions.h>
 #import <React/RCTFollyConvert.h>
 
-#if DEBUG
+#include <jsi/jsi.h>
 #include <string>
+
+#if DEBUG
 #include <iostream>
 #endif
 

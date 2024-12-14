@@ -10,9 +10,9 @@
 #include "RNICxxUtils.h"
 
 #include <jsi/JSIDynamic.h>
+#include <string>
 
 #if DEBUG
-#include <string>
 #include <iostream>
 #endif
 
