@@ -1,15 +1,19 @@
 #!/bin/bash
 
-NEW_ARCH_STATIC=PENDING 
-OLD_ARCH_STATIC=PENDING 
-NEW_ARCH_DYNAMIC=PENDING 
+NEW_ARCH_STATIC_DEBUG=PENDING 
+OLD_ARCH_STATIC_DEBUG=PENDING
+NEW_ARCH_STATIC_RELEASE=PENDING 
+OLD_ARCH_STATIC_RELEASE=PENDING
+# NEW_ARCH_DYNAMIC=PENDING 
 OLD_ARCH_DYNAMIC=PENDING
 
 log_build_status() {
   echo "\n\n\nBUILD RESULTS...";
-  echo "Build - NEW_ARCH_STATIC: ${NEW_ARCH_STATIC}"
-  echo "Build - OLD_ARCH_STATIC: ${OLD_ARCH_STATIC}"
-  echo "Build - NEW_ARCH_DYNAMIC: ${NEW_ARCH_DYNAMIC}"
+  echo "Build - NEW_ARCH_STATIC_DEBUG: ${NEW_ARCH_STATIC_DEBUG}"
+  echo "Build - OLD_ARCH_STATIC_DEBUG: ${OLD_ARCH_STATIC_DEBUG}"
+  echo "Build - NEW_ARCH_STATIC_RELEASE: ${NEW_ARCH_STATIC_RELEASE}"
+  echo "Build - OLD_ARCH_STATIC_RELEASE: ${OLD_ARCH_STATIC_RELEASE}"
+  # echo "Build - NEW_ARCH_DYNAMIC: ${NEW_ARCH_DYNAMIC}"
   echo "Build - OLD_ARCH_DYNAMIC: ${OLD_ARCH_DYNAMIC}"
   echo "\n\n"
 }
@@ -20,57 +24,101 @@ clear_cache(){
   yarn run nuke:derived-data 
 }
 
-log_build_status;
-clear_cache;
+build_A1(){
+  log_build_status;
+  clear_cache;
 
-echo '\n\nBuild - new-arch (fabric) + static: Begin...\n'
-yarn run pod-install:new-static
-yarn run build:ios ;
+  echo '\n\nBuild - new-arch (fabric) + static, debug: Begin...\n'
+  yarn run pod-install:new-static
+  yarn run build:ios ;
 
-if [ $? -eq 0 ]; then
-  NEW_ARCH_STATIC=SUCCESS;
-else
-  NEW_ARCH_STATIC=FAILED;
-fi;
+  if [ $? -eq 0 ]; then
+    NEW_ARCH_STATIC_DEBUG=SUCCESS;
+  else
+    NEW_ARCH_STATIC_DEBUG=FAILED;
+  fi;
+}
 
-log_build_status
-clear_cache
+build_A2(){ 
+  log_build_status
+  clear_cache
 
-echo '\n\nBuild - old-arch (paper) + static: Begin...'
-yarn run pod-install:old-static
-yarn run build:ios ; 
+  echo '\n\nBuild - old-arch (paper) + static, debug: Begin...'
+  yarn run pod-install:old-static
+  yarn run build:ios ; 
 
-if [ $? -eq 0 ]; then
-  OLD_ARCH_STATIC=SUCCESS;
-else
-  OLD_ARCH_STATIC=FAILED;
-fi;
+  if [ $? -eq 0 ]; then
+    OLD_ARCH_STATIC_DEBUG=SUCCESS;
+  else
+    OLD_ARCH_STATIC_DEBUG=FAILED;
+  fi;
+}
 
-log_build_status
-clear_cache
+build_B1(){ 
+  log_build_status
+  clear_cache
 
-echo '\nBuild - new-arch (fabric) + dynamic: Begin...\n'
-yarn run pod-install:new-dynamic
-yarn run build:ios ; 
+  echo '\n\nBuild - new-arch (fabric) + static, release: Begin...'
+  yarn run pod-install:new-static
+  yarn run build:ios-release ; 
 
-if [ $? -eq 0 ]; then
-  NEW_ARCH_DYNAMIC=SUCCESS;
-else
-  NEW_ARCH_DYNAMIC=FAILED;
-fi;
+  if [ $? -eq 0 ]; then
+    NEW_ARCH_STATIC_RELEASE=SUCCESS;
+  else
+    NEW_ARCH_STATIC_RELEASE=FAILED;
+  fi;
+}
 
-log_build_status;
-clear_cache;
+build_B2(){ 
+  log_build_status
+  clear_cache
 
-echo 'Build - old-arch (paper) + static: Begin...'
-yarn run pod-install:old-dynamic
-yarn run build:ios ;
+  echo '\n\nBuild - old-arch (paper) + static, release: Begin...'
+  yarn run pod-install:old-static
+  yarn run build:ios-release ; 
 
-if [ $? -eq 0 ]; then
-  OLD_ARCH_DYNAMIC=SUCCESS;
-else
-  OLD_ARCH_DYNAMIC=FAILED;
-fi;
+  if [ $? -eq 0 ]; then
+    OLD_ARCH_STATIC_RELEASE=SUCCESS;
+  else
+    OLD_ARCH_STATIC_RELEASE=FAILED;
+  fi;
+}
+
+# build_C1(){
+# log_build_status
+# clear_cache
+
+# echo '\nBuild - new-arch (fabric) + dynamic: Begin...\n'
+# yarn run pod-install:new-dynamic
+# yarn run build:ios ; 
+
+# if [ $? -eq 0 ]; then
+#   NEW_ARCH_DYNAMIC=SUCCESS;
+# else
+#   NEW_ARCH_DYNAMIC=FAILED;
+# fi;
+# }
+
+build_C2(){
+  log_build_status;
+  clear_cache;
+
+  echo 'Build - old-arch (paper) + static: Begin...'
+  yarn run pod-install:old-dynamic
+  yarn run build:ios ;
+
+  if [ $? -eq 0 ]; then
+    OLD_ARCH_DYNAMIC=SUCCESS;
+  else
+    OLD_ARCH_DYNAMIC=FAILED;
+  fi;
+}
+
+build_A1()
+build_A2()
+build_B1()
+build_B2()
+build_C2()
 
 echo "\n\n All Builds Completed..."
 log_build_status
