@@ -11,6 +11,7 @@ export type * from './types/ComputableLayout';
 export type * from './types/DGSwiftUtilities';
 export type * from './types/NativeTypes';
 export type * from './types/ImageItemConfig';
+export type * from './types/ImageConfig';
 
 export type * from './types/SharedViewEvents';
 export type * from './types/SharedViewEventsInternal';
