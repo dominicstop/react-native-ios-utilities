@@ -20,22 +20,22 @@ extension RNIUtilitiesManager: RNIUtilitiesManagerEventsNotifiable {
     oldEntries: Dictionary<String, Any>
   ) {
   
-    VerboseErrorSharedEnv.overrideShouldLogFileMetadata = try? sharedEnv.getValueFromDictionary(
+    VerboseErrorSharedEnv.overrideShouldLogFileMetadata = try? sharedEnv.getValue(
       forKey: "overrideShouldLogFileMetadata",
       type: Bool.self
     );
     
-    VerboseErrorSharedEnv.overrideShouldLogFilePath = try? sharedEnv.getValueFromDictionary(
+    VerboseErrorSharedEnv.overrideShouldLogFilePath = try? sharedEnv.getValue(
       forKey: "overrideShouldLogFilePath",
       type: Bool.self
     );
     
-    VerboseErrorSharedEnv.overrideEnableLogStackTrace = try? sharedEnv.getValueFromDictionary(
+    VerboseErrorSharedEnv.overrideEnableLogStackTrace = try? sharedEnv.getValue(
       forKey: "overrideEnableLogStackTrace",
       type: Bool.self
     );
     
-    // if let flag = try? sharedEnv.getValueFromDictionary(
+    // if let flag = try? sharedEnv.getValue(
     //   forKey: "debugShouldLogViewRegistryEntryRemoval",
     //   type: Bool.self
     // ) {

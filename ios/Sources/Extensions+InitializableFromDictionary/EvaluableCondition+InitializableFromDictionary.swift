@@ -12,11 +12,11 @@ import ComputableLayout
 extension EvaluableCondition: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString: String = try dict.getValueFromDictionary(forKey: "mode");
+    let modeString: String = try dict.getValue(forKey: "mode");
     
     switch modeString {
       case "frameRect":
-        let frameRect = try dict.getValueFromDictionary(
+        let frameRect = try dict.getValue(
           forKey: "of",
           type: FrameRectValue.self
         );
@@ -27,7 +27,7 @@ extension EvaluableCondition: InitializableFromDictionary {
           valueType: CGFloat.self
         );
         
-        let condition = try dict.getValueFromDictionary(
+        let condition = try dict.getValue(
           forKey: "condition",
           type: NumericLogicalExpression<CGFloat>.self
         );
@@ -39,7 +39,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         );
 
       case "size":
-        let sizeValue = try dict.getValueFromDictionary(
+        let sizeValue = try dict.getValue(
           forKey: "of",
           type: SizeValue.self
         );
@@ -50,7 +50,7 @@ extension EvaluableCondition: InitializableFromDictionary {
           valueType: CGFloat.self
         );
         
-        let condition = try dict.getValueFromDictionary(
+        let condition = try dict.getValue(
           forKey: "condition",
           type: NumericLogicalExpression<CGFloat>.self
         );
@@ -68,7 +68,7 @@ extension EvaluableCondition: InitializableFromDictionary {
           valueType: CGFloat.self
         );
         
-        let condition = try dict.getValueFromDictionary(
+        let condition = try dict.getValue(
           forKey: "condition",
           type: NumericLogicalExpression<CGFloat>.self
         );
@@ -79,7 +79,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         );
 
       case "deviceIdiom":
-        let value = try dict.getEnumFromDictionary(
+        let value = try dict.getEnum(
           forKey: "isEqualTo",
           type: UIUserInterfaceIdiom.self
         );
@@ -87,7 +87,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .deviceIdiom(is: value);
 
       case "deviceOrientation":
-        let value = try dict.getEnumFromDictionary(
+        let value = try dict.getEnum(
           forKey: "isEqualTo",
           type: UIDeviceOrientation.self
         );
@@ -95,7 +95,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .deviceOrientation(is: value);
 
       case "horizontalSizeClass":
-        let value = try dict.getEnumFromDictionary(
+        let value = try dict.getEnum(
           forKey: "isEqualTo",
           type: UIUserInterfaceSizeClass.self
         );
@@ -103,7 +103,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .horizontalSizeClass(is: value);
 
       case "verticalSizeClass":
-        let value = try dict.getEnumFromDictionary(
+        let value = try dict.getEnum(
           forKey: "isEqualTo",
           type: UIUserInterfaceSizeClass.self
         );
@@ -114,7 +114,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         // TODO: WIP - To be implemented
         fatalError("WIP - To be implemented");
         
-        // let value = try dict.getEnumFromDictionary(
+        // let value = try dict.getEnum(
         //   forKey: "isEqualTo",
         //   type: UserInterfaceStyle.self
         // );
@@ -127,7 +127,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         // TODO: WIP - To be implemented
         fatalError("WIP - To be implemented");
         
-        // let value = try dict.getEnumFromDictionary(
+        // let value = try dict.getEnum(
         //   forKey: "isEqualTo",
         //   type: UserInterfaceLevel.self
         // );
@@ -137,7 +137,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         // );
         
       case "interfaceOrientation":
-        let value = try dict.getEnumFromDictionary(
+        let value = try dict.getEnum(
           forKey: "isEqualTo",
           type: UIInterfaceOrientation.self
         );
@@ -148,7 +148,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         // TODO: WIP - To be implemented
         fatalError("WIP - To be implemented");
         
-        // let value = try dict.getEnumFromDictionary(
+        // let value = try dict.getEnum(
         //   forKey: "isEqualTo",
         //   type: UserInterfaceActiveAppearance.self
         // );
@@ -158,7 +158,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         // );
 
       case "layoutDirection":
-        let value = try dict.getEnumFromDictionary(
+        let value = try dict.getEnum(
           forKey: "isEqualTo",
           type: UITraitEnvironmentLayoutDirection.self
         );
@@ -190,17 +190,17 @@ extension EvaluableCondition: InitializableFromDictionary {
           valueType: String.self
         );
         
-        let stringComparisonMode = try dict.getEnumFromDictionary(
+        let stringComparisonMode = try dict.getEnum(
           forKey: "stringComparisonMode",
           type: StringComparisonMode.self
         );
         
-        let isCaseSensitive = try dict.getValueFromDictionary(
+        let isCaseSensitive = try dict.getValue(
           forKey: "isCaseSensitive",
           type: Bool.self
         );
         
-        let stringValue = try dict.getValueFromDictionary(
+        let stringValue = try dict.getValue(
           forKey: "stringValue",
           type: String.self
         );
@@ -213,7 +213,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         );
 
       case "customFlag":
-        let flag = try dict.getValueFromDictionary(
+        let flag = try dict.getValue(
           forKey: "value",
           type: Bool.self
         );
@@ -221,7 +221,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .customFlag(flag);
 
       case "negate":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "value",
           type: EvaluableCondition.self
         );
@@ -229,7 +229,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .negate(value);
 
       case "ifAnyAreTrue":
-        let valuesRaw = try dict.getValueFromDictionary(
+        let valuesRaw = try dict.getValue(
           forKey: "values",
           type: Array<Dictionary<String, Any>>.self
         );
@@ -241,7 +241,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .ifAnyAreTrue(values);
 
       case "ifAllAreTrue":
-        let valuesRaw = try dict.getValueFromDictionary(
+        let valuesRaw = try dict.getValue(
           forKey: "values",
           type: Array<Dictionary<String, Any>>.self
         );

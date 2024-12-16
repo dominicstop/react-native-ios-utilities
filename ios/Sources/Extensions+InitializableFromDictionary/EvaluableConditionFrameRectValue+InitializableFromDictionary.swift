@@ -11,7 +11,7 @@ import ComputableLayout
 
 extension EvaluableConditionFrameRectValue: InitializableFromDictionary {
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString: String = try dict.getValueFromDictionary(forKey: "mode");
+    let modeString: String = try dict.getValue(forKey: "mode");
     
     switch modeString {
       case "window":
@@ -24,7 +24,7 @@ extension EvaluableConditionFrameRectValue: InitializableFromDictionary {
         self = .statusBar;
         
       case "custom":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "value",
           type: CGRect.self
         );

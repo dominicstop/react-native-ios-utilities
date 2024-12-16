@@ -11,12 +11,12 @@ import DGSwiftUtilities
 extension CGSize: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let width = try dict.getValueFromDictionary(
+    let width = try dict.getValue(
       forKey: "width",
       type: CGFloat.self
     );
     
-    let height = try dict.getValueFromDictionary(
+    let height = try dict.getValue(
       forKey: "height",
       type: CGFloat.self
     );

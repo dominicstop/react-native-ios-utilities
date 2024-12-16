@@ -79,22 +79,22 @@ final class RNIDummyTestViewModuleRequestHandler: RNIModuleCommandRequestHandlin
   ) throws {
   
     let someString: String =
-      try commandArgs.getValueFromDictionary(forKey: "someString");
+      try commandArgs.getValue(forKey: "someString");
       
     let someNumber: Double =
-      try commandArgs.getValueFromDictionary(forKey: "someNumber");
+      try commandArgs.getValue(forKey: "someNumber");
       
     let someBool: Bool =
-      try commandArgs.getValueFromDictionary(forKey: "someBool");
+      try commandArgs.getValue(forKey: "someBool");
       
     let someObject: Dictionary<String, Any> =
-      try commandArgs.getValueFromDictionary(forKey: "someObject");
+      try commandArgs.getValue(forKey: "someObject");
       
     let someArray: NSArray =
-      try commandArgs.getValueFromDictionary(forKey: "someArray");
+      try commandArgs.getValue(forKey: "someArray");
       
     let someStringOptional: String? =
-      try? commandArgs.getValueFromDictionary(forKey: "someStringOptional");
+      try? commandArgs.getValue(forKey: "someStringOptional");
     
     resolve([
       "message": "Command received",

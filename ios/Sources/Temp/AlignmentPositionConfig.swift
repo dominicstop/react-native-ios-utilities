@@ -141,34 +141,34 @@ extension AlignmentPositionConfig: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
     self.horizontalAlignment =
-      try dict.getEnumFromDictionary(forKey: "horizontalAlignment");
+      try dict.getEnum(forKey: "horizontalAlignment");
       
     self.verticalAlignment =
-      try dict.getEnumFromDictionary(forKey: "verticalAlignment");
+      try dict.getEnum(forKey: "verticalAlignment");
       
     self.preferredHeight =
-      try? dict.getValueFromDictionary(forKey: "preferredHeight");
+      try? dict.getValue(forKey: "preferredHeight");
       
     self.preferredWidth =
-      try? dict.getValueFromDictionary(forKey: "preferredWidth");
+      try? dict.getValue(forKey: "preferredWidth");
       
     self.marginTop =
-      try? dict.getValueFromDictionary(forKey: "marginTop");
+      try? dict.getValue(forKey: "marginTop");
       
     self.marginBottom =
-      try? dict.getValueFromDictionary(forKey: "marginBottom");
+      try? dict.getValue(forKey: "marginBottom");
       
     self.marginLeading =
-      try? dict.getValueFromDictionary(forKey: "marginLeading");
+      try? dict.getValue(forKey: "marginLeading");
       
     self.marginTrailing =
-      try? dict.getValueFromDictionary(forKey: "marginTrailing");
+      try? dict.getValue(forKey: "marginTrailing");
       
     self.shouldPreferHeightAnchor =
-      try? dict.getValueFromDictionary(forKey: "shouldPreferHeightAnchor");
+      try? dict.getValue(forKey: "shouldPreferHeightAnchor");
       
     self.shouldPreferWidthAnchor =
-      try? dict.getValueFromDictionary(forKey: "shouldPreferWidthAnchor");
+      try? dict.getValue(forKey: "shouldPreferWidthAnchor");
   };
 };
 

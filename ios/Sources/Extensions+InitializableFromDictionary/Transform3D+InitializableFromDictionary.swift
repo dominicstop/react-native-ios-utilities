@@ -15,57 +15,57 @@ import DGSwiftUtilities
 extension Transform3D: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) {
-    let translateX = try? dict.getValueFromDictionary(
+    let translateX = try? dict.getValue(
       forKey: "translateX",
       type: NSNumber.self
     );
     
-    let translateY = try? dict.getValueFromDictionary(
+    let translateY = try? dict.getValue(
       forKey: "translateY",
       type: NSNumber.self
     );
     
-    let translateZ = try? dict.getValueFromDictionary(
+    let translateZ = try? dict.getValue(
       forKey: "translateZ",
       type: NSNumber.self
     );
     
-    let scaleX = try? dict.getValueFromDictionary(
+    let scaleX = try? dict.getValue(
       forKey: "scaleX",
       type: NSNumber.self
     );
     
-    let scaleY = try? dict.getValueFromDictionary(
+    let scaleY = try? dict.getValue(
       forKey: "scaleY",
       type: NSNumber.self
     );
     
-    let rotateX = try? dict.getValueFromDictionary(
+    let rotateX = try? dict.getValue(
       forKey: "rotateX",
       type: Angle<CGFloat>.self
     );
     
-    let rotateY = try? dict.getValueFromDictionary(
+    let rotateY = try? dict.getValue(
       forKey: "rotateY",
       type: Angle<CGFloat>.self
     );
     
-    let rotateZ = try? dict.getValueFromDictionary(
+    let rotateZ = try? dict.getValue(
       forKey: "rotateZ",
       type: Angle<CGFloat>.self
     );
     
-    let perspective = try? dict.getValueFromDictionary(
+    let perspective = try? dict.getValue(
       forKey: "perspective",
       type: NSNumber.self
     );
     
-    let skewX = try? dict.getValueFromDictionary(
+    let skewX = try? dict.getValue(
       forKey: "skewX",
       type: NSNumber.self
     );
     
-    let skewY = try? dict.getValueFromDictionary(
+    let skewY = try? dict.getValue(
       forKey: "skewY",
       type: NSNumber.self
     );

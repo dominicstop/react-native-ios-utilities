@@ -13,7 +13,7 @@ import ComputableLayout
 extension EvaluableConditionSizeValue: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString: String = try dict.getValueFromDictionary(forKey: "mode");
+    let modeString: String = try dict.getValue(forKey: "mode");
     
     switch modeString {
       case "window":
@@ -29,7 +29,7 @@ extension EvaluableConditionSizeValue: InitializableFromDictionary {
         self = .targetView;
         
       case "custom":
-        let size = try dict.getValueFromDictionary(
+        let size = try dict.getValue(
           forKey: "value",
           type: CGSize.self
         );

@@ -12,11 +12,11 @@ import ComputableLayout
 extension ComputableLayoutValueEvaluableCondition: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString: String = try dict.getValueFromDictionary(forKey: "mode");
+    let modeString: String = try dict.getValue(forKey: "mode");
     
     switch modeString {
       case "isNilOrZero":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "value",
           type: ComputableLayoutValueMode.self
         );

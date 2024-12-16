@@ -11,7 +11,7 @@ import DGSwiftUtilities
 extension Angle: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString = try dict.getValueFromDictionary(
+    let modeString = try dict.getValue(
       forKey: "mode",
       type: String.self
     );
@@ -21,7 +21,7 @@ extension Angle: InitializableFromDictionary {
         self = .zero;
         
       case "radians":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "value",
           type: T.self
         );
@@ -29,7 +29,7 @@ extension Angle: InitializableFromDictionary {
         self = .radians(value);
         
       case "degrees":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "value",
           type: T.self
         );

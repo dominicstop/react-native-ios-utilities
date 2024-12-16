@@ -13,14 +13,14 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
     
-    let modeString: String = try dict.getValueFromDictionary(forKey: "mode");
+    let modeString: String = try dict.getValue(forKey: "mode");
     
     switch modeString {
       case "stretch":
         self = .stretch;
         
       case "constant":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "value",
           type: NSNumber.self
         );
@@ -28,12 +28,12 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         self = .constant(value.doubleValue);
         
       case "percent":
-        let percentTarget = try? dict.getEnumFromDictionary(
+        let percentTarget = try? dict.getEnum(
           forKey: "relativeTo",
           type: ComputableLayoutValuePercentTarget.self
         );
         
-        let percentValue = try dict.getValueFromDictionary(
+        let percentValue = try dict.getValue(
           forKey: "percentValue",
           type: NSNumber.self
         );
@@ -73,7 +73,7 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         );
         
       case "multipleValues":
-        let valuesRaw = try dict.getValueFromDictionary(
+        let valuesRaw = try dict.getValue(
           forKey: "values",
           type: Array<Dictionary<String, Any>>.self
         );
@@ -85,17 +85,17 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         self = .multipleValues(values);
         
       case "conditionalLayoutValue":
-        let condition = try dict.getValueFromDictionary(
+        let condition = try dict.getValue(
           forKey: "condition",
           type: ComputableLayoutValueEvaluableCondition.self
         );
         
-        let trueValue = try? dict.getValueFromDictionary(
+        let trueValue = try? dict.getValue(
           forKey: "trueValue",
           type: ComputableLayoutValueMode.self
         );
         
-        let falseValue = try? dict.getValueFromDictionary(
+        let falseValue = try? dict.getValue(
           forKey: "falseValue",
           type: ComputableLayoutValueMode.self
         );
@@ -107,17 +107,17 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         );
         
       case "conditionalValue":
-        let condition = try dict.getValueFromDictionary(
+        let condition = try dict.getValue(
           forKey: "condition",
           type: EvaluableCondition.self
         );
         
-        let trueValue = try? dict.getValueFromDictionary(
+        let trueValue = try? dict.getValue(
           forKey: "condition",
           type: ComputableLayoutValueMode.self
         );
         
-        let falseValue = try? dict.getValueFromDictionary(
+        let falseValue = try? dict.getValue(
           forKey: "condition",
           type: ComputableLayoutValueMode.self
         );

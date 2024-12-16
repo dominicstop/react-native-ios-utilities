@@ -12,11 +12,11 @@ import DGSwiftUtilities
 extension CGRect: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    if let origin = try? dict.getValueFromDictionary(
+    if let origin = try? dict.getValue(
          forKey: "dx",
          type: CGPoint.self
        ),
-       let size = try? dict.getValueFromDictionary(
+       let size = try? dict.getValue(
          forKey: "dy",
          type: CGSize.self
        ) {
@@ -24,22 +24,22 @@ extension CGRect: InitializableFromDictionary {
       self.init(origin: origin, size: size);
     };
     
-    let x = try dict.getValueFromDictionary(
+    let x = try dict.getValue(
       forKey: "x",
       type: CGFloat.self
     );
     
-    let y = try dict.getValueFromDictionary(
+    let y = try dict.getValue(
       forKey: "y",
       type: CGFloat.self
     );
     
-    let width = try dict.getValueFromDictionary(
+    let width = try dict.getValue(
       forKey: "width",
       type: CGFloat.self
     );
     
-    let height = try dict.getValueFromDictionary(
+    let height = try dict.getValue(
       forKey: "height",
       type: CGFloat.self
     );

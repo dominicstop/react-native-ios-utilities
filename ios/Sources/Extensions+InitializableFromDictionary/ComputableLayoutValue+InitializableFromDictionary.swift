@@ -12,27 +12,27 @@ import ComputableLayout
 extension ComputableLayoutValue: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let mode = try dict.getValueFromDictionary(
+    let mode = try dict.getValue(
       forKey: "mode",
       type: ComputableLayoutValueMode.self
     );
     
-    let offsetValue = try? dict.getValueFromDictionary(
+    let offsetValue = try? dict.getValue(
       forKey: "offsetValue",
       type: ComputableLayoutValueMode.self
     );
     
-    let offsetOperation = try? dict.getEnumFromDictionary(
+    let offsetOperation = try? dict.getEnum(
       forKey: "offsetOperation",
       type: NumericOperation.self
     );
     
-    let minValue = try? dict.getValueFromDictionary(
+    let minValue = try? dict.getValue(
       forKey: "minValue",
       type: ComputableLayoutValueMode.self
     );
     
-    let maxValue = try? dict.getValueFromDictionary(
+    let maxValue = try? dict.getValue(
       forKey: "maxValue",
       type: ComputableLayoutValueMode.self
     );

@@ -11,7 +11,7 @@ import DGSwiftUtilities
 extension AnimationConfig: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString = try dict.getValueFromDictionary(
+    let modeString = try dict.getValue(
       forKey: "mode",
       type: String.self
     );
@@ -27,12 +27,12 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
       case "presetCurve":
-        let duration = try dict.getValueFromDictionary(
+        let duration = try dict.getValue(
           forKey: "duration",
           type: TimeInterval.self
         );
         
-        let curve = try dict.getValueFromDictionary(
+        let curve = try dict.getValue(
           forKey: "curve",
           type: UIView.AnimationCurve.self
         );
@@ -43,12 +43,12 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
       case "presetSpring":
-        let duration = try dict.getValueFromDictionary(
+        let duration = try dict.getValue(
           forKey: "duration",
           type: TimeInterval.self
         );
         
-        let dampingRatio = try dict.getValueFromDictionary(
+        let dampingRatio = try dict.getValue(
           forKey: "dampingRatio",
           type: CGFloat.self
         );
@@ -59,17 +59,17 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
       case "bezierCurve":
-        let duration = try dict.getValueFromDictionary(
+        let duration = try dict.getValue(
           forKey: "duration",
           type: TimeInterval.self
         );
         
-        let controlPoint1 = try dict.getValueFromDictionary(
+        let controlPoint1 = try dict.getValue(
           forKey: "controlPoint1",
           type: CGPoint.self
         );
         
-        let controlPoint2 = try dict.getValueFromDictionary(
+        let controlPoint2 = try dict.getValue(
           forKey: "controlPoint2",
           type: CGPoint.self
         );
@@ -81,22 +81,22 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
       case "springDamping":
-        let duration = try dict.getValueFromDictionary(
+        let duration = try dict.getValue(
           forKey: "duration",
           type: TimeInterval.self
         );
         
-        let dampingRatio = try dict.getValueFromDictionary(
+        let dampingRatio = try dict.getValue(
           forKey: "dampingRatio",
           type: CGFloat.self
         );
         
-        let initialVelocity = try? dict.getValueFromDictionary(
+        let initialVelocity = try? dict.getValue(
           forKey: "initialVelocity",
           type: CGVector.self
         );
         
-        let maxVelocity = try? dict.getValueFromDictionary(
+        let maxVelocity = try? dict.getValue(
           forKey: "maxVelocity",
           type: CGFloat.self
         );
@@ -109,32 +109,32 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
       case "springPhysics":
-        let duration = try dict.getValueFromDictionary(
+        let duration = try dict.getValue(
           forKey: "duration",
           type: TimeInterval.self
         );
         
-        let mass = try dict.getValueFromDictionary(
+        let mass = try dict.getValue(
           forKey: "mass",
           type: CGFloat.self
         );
         
-        let stiffness = try dict.getValueFromDictionary(
+        let stiffness = try dict.getValue(
           forKey: "stiffness",
           type: CGFloat.self
         );
         
-        let damping = try dict.getValueFromDictionary(
+        let damping = try dict.getValue(
           forKey: "damping",
           type: CGFloat.self
         );
         
-        let initialVelocity = try? dict.getValueFromDictionary(
+        let initialVelocity = try? dict.getValue(
           forKey: "initialVelocity",
           type: CGVector.self
         );
         
-        let maxVelocity = try? dict.getValueFromDictionary(
+        let maxVelocity = try? dict.getValue(
           forKey: "maxVelocity",
           type: CGFloat.self
         );
@@ -149,17 +149,17 @@ extension AnimationConfig: InitializableFromDictionary {
         );
         
       case "springGesture":
-        let duration = try dict.getValueFromDictionary(
+        let duration = try dict.getValue(
           forKey: "duration",
           type: TimeInterval.self
         );
         
-        let dampingRatio = try dict.getValueFromDictionary(
+        let dampingRatio = try dict.getValue(
           forKey: "dampingRatio",
           type: CGFloat.self
         );
         
-        let maxGestureVelocity = try dict.getValueFromDictionary(
+        let maxGestureVelocity = try dict.getValue(
           forKey: "maxGestureVelocity",
           type: CGFloat.self
         );

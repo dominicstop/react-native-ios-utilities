@@ -12,12 +12,12 @@ import DGSwiftUtilities
 extension CGPoint: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let x = try dict.getValueFromDictionary(
+    let x = try dict.getValue(
       forKey: "x",
       type: NSNumber.self
     );
     
-    let y = try dict.getValueFromDictionary(
+    let y = try dict.getValue(
       forKey: "y",
       type: NSNumber.self
     );

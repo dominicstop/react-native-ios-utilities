@@ -11,14 +11,14 @@ import DGSwiftUtilities
 extension NumericLogicalExpression: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString: String = try dict.getValueFromDictionary(forKey: "mode");
+    let modeString: String = try dict.getValue(forKey: "mode");
     
     switch modeString {
       case "any":
         self = .any;
         
       case "isLessThan":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "toValue",
           type: T.self
         );
@@ -26,7 +26,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isLessThan(toValue: value);
         
       case "isLessThanOrEqual":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "toValue",
           type: T.self
         );
@@ -34,7 +34,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isLessThanOrEqual(toValue: value);
         
       case "isEqual":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "toValue",
           type: T.self
         );
@@ -42,7 +42,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isEqual(toValue: value);
         
       case "isGreaterThan":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "toValue",
           type: T.self
         );
@@ -50,7 +50,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isGreaterThan(toValue: value);
         
       case "isGreaterThanOrEqual":
-        let value = try dict.getValueFromDictionary(
+        let value = try dict.getValue(
           forKey: "toValue",
           type: T.self
         );
@@ -58,17 +58,17 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isGreaterThanOrEqual(toValue: value);
         
       case "isBetweenRange":
-        let start = try dict.getValueFromDictionary(
+        let start = try dict.getValue(
           forKey: "start",
           type: T.self
         );
         
-        let end = try dict.getValueFromDictionary(
+        let end = try dict.getValue(
           forKey: "end",
           type: T.self
         );
         
-        let isInclusive = try dict.getValueFromDictionary(
+        let isInclusive = try dict.getValue(
           forKey: "toValue",
           type: Bool.self
         );

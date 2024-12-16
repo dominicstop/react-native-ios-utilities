@@ -14,72 +14,72 @@ extension ComputableLayout: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
 
-    let horizontalAlignment = try dict.getEnumFromDictionary(
+    let horizontalAlignment = try dict.getEnum(
       forKey: "horizontalAlignment",
       type: ComputableLayoutHorizontalAlignment.self
     );
     
-    let verticalAlignment = try dict.getEnumFromDictionary(
+    let verticalAlignment = try dict.getEnum(
       forKey: "verticalAlignment",
       type: ComputableLayoutVerticalAlignment.self
     );
     
-    let width = try dict.getValueFromDictionary(
+    let width = try dict.getValue(
       forKey: "width",
       type: ComputableLayoutValue.self
     );
     
-    let height = try dict.getValueFromDictionary(
+    let height = try dict.getValue(
       forKey: "height",
       type: ComputableLayoutValue.self
     );
     
-    let marginLeft = try? dict.getValueFromDictionary(
+    let marginLeft = try? dict.getValue(
       forKey: "marginLeft",
       type: ComputableLayoutValue.self
     );
     
-    let marginRight = try? dict.getValueFromDictionary(
+    let marginRight = try? dict.getValue(
       forKey: "marginRight",
       type: ComputableLayoutValue.self
     );
     
-    let marginTop = try? dict.getValueFromDictionary(
+    let marginTop = try? dict.getValue(
       forKey: "marginTop",
       type: ComputableLayoutValue.self
     );
     
-    let marginBottom = try? dict.getValueFromDictionary(
+    let marginBottom = try? dict.getValue(
       forKey: "marginBottom",
       type: ComputableLayoutValue.self
     );
     
-    let paddingLeft = try? dict.getValueFromDictionary(
+    let paddingLeft = try? dict.getValue(
       forKey: "paddingLeft",
       type: ComputableLayoutValue.self
     );
     
-    let paddingRight = try? dict.getValueFromDictionary(
+    let paddingRight = try? dict.getValue(
       forKey: "paddingRight",
       type: ComputableLayoutValue.self
     );
     
-    let paddingTop = try? dict.getValueFromDictionary(
+    let paddingTop = try? dict.getValue(
       forKey: "paddingTop",
       type: ComputableLayoutValue.self
     );
     
-    let paddingBottom = try? dict.getValueFromDictionary(
+    let paddingBottom = try? dict.getValue(
       forKey: "paddingBottom",
       type: ComputableLayoutValue.self
     );
     
-    let offsetX = try? dict.getValueFromDictionary(
+    let offsetX = try? dict.getValue(
       forKey: "offsetX",
       type: ComputableLayoutValue.self
     );
     
-    let offsetY = try? dict.getValueFromDictionary(
+    let offsetY = try? dict.getValue(
       forKey: "offsetY",
       type: ComputableLayoutValue.self
     );
