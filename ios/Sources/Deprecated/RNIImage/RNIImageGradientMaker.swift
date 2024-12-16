@@ -151,7 +151,7 @@ public struct RNIImageGradientMaker {
     
     self.type = {
       guard let string = dict["type"] as? String,
-            let type = try? CAGradientLayerType(fromString: string)
+            let type = CAGradientLayerType(fromString: string)
       else { return .axial };
       
       return type;
