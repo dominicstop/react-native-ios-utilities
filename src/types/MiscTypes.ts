@@ -21,7 +21,12 @@ export type DynamicColor = {
     dark: string;
     light: string;
   };
+} | {
+  dark: string;
+  light: string;
 };
+
+export type ColorValue = string | DynamicColor;
 
 // Native Type: `RNINativeViewIdentifier`
 export type NativeViewIdentifier = {
