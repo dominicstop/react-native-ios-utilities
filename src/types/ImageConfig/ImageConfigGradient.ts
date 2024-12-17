@@ -1,4 +1,5 @@
-import type { ColorValue, PointPreset } from "../MiscTypes";
+import type { PointPreset } from "../DGSwiftUtilities";
+import type { ColorValue } from "../MiscTypes";
 import type { CAGradientLayerType, CGPoint, CGSize } from "../NativeTypes";
 
 

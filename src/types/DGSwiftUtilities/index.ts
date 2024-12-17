@@ -6,3 +6,4 @@ export * from './VerticalAlignmentPosition';
 export * from './Transform3D';
 export * from './VerticalAnchorPositionMode';
 export * from './AlignmentPositionConfig';
+export * from './PointPreset';
