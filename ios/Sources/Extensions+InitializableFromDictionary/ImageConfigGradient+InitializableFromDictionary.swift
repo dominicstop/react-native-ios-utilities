@@ -47,7 +47,7 @@ extension ImageConfigGradient: InitializableFromDictionary {
       type: CGPoint.self
     );
     
-    let startPointPreset = try? dict.getValue(
+    let startPointPreset = try? dict.getEnum(
       forKey: "startPointPreset",
       type: PointPreset.self
     );
@@ -67,12 +67,12 @@ extension ImageConfigGradient: InitializableFromDictionary {
       type: CGPoint.self
     );
     
-    let endPointPreset = try? dict.getValue(
+    let endPointPreset = try? dict.getEnum(
       forKey: "endPointPreset",
       type: PointPreset.self
     );
     
-    guard let endPoint = endPoint ?? startPointPreset?.point else {
+    guard let endPoint = endPoint ?? endPointPreset?.point else {
       throw RNIUtilitiesError(
         errorCode: .invalidArgument,
         description: "Could not parse value for key: endPoint",
@@ -85,6 +85,7 @@ extension ImageConfigGradient: InitializableFromDictionary {
     self.init(
       type: type,
       colors: colors,
+      locations: locations,
       startPoint: startPoint,
       endPoint: endPoint,
       size: size,
