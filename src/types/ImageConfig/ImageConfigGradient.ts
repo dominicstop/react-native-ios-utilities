@@ -5,8 +5,8 @@ import type { CAGradientLayerType, CGPoint, CGSize } from "../NativeTypes";
 
 export type ImageConfigGradientBase = {
   type: CAGradientLayerType;
-  colors: [ColorValue];
-  locations?: [number];
+  colors: Array<ColorValue>;
+  locations?: Array<number>;
   size: CGSize;
   cornerRadius?: number;
 };
