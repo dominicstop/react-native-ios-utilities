@@ -1,14 +1,5 @@
 import type { OnDidSetViewIDEventPayload } from "./SharedViewEvents";
 
-export type PointPreset = 
-  | 'top' 
-  | 'bottom' 
-  | 'left' 
-  | 'right'
-  | 'bottomLeft' 
-  | 'bottomRight' 
-  | 'topLeft' 
-  | 'topRight';
 
 export type Point = {
   x: number;
