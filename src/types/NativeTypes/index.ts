@@ -7,3 +7,4 @@ export * from './UIOrientation';
 export * from './UIViewTypes';
 export * from './UIImageSymbolConfiguration';
 export * from './CAGradientLayer';
+export * from './CALayer';
