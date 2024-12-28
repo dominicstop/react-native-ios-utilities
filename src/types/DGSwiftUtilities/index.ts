@@ -10,3 +10,4 @@ export * from './PointPreset';
 export * from './BaseViewKeyframeConfig';
 export * from './BasicViewKeyframe';
 export * from './BaseLayerKeyframeConfig';
+export * from './GenericViewKeyframe';
