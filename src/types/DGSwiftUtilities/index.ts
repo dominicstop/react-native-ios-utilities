@@ -7,3 +7,5 @@ export * from './Transform3D';
 export * from './VerticalAnchorPositionMode';
 export * from './AlignmentPositionConfig';
 export * from './PointPreset';
+export * from './BaseViewKeyframeConfig';
+export * from './BasicViewKeyframe';
