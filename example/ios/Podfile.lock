@@ -2,7 +2,7 @@ PODS:
   - boost (1.84.0)
   - ComputableLayout (0.7.0):
     - DGSwiftUtilities (~> 0.11)
-  - DGSwiftUtilities (0.41.0)
+  - DGSwiftUtilities (0.43.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.75.2)
   - fmt (9.1.0)
@@ -1242,7 +1242,7 @@ PODS:
     - Yoga
   - react-native-ios-utilities (5.0.0-55):
     - ComputableLayout (~> 0.7)
-    - DGSwiftUtilities (~> 0.41)
+    - DGSwiftUtilities (~> 0.43)
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1849,7 +1849,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 4cb898d0bf20404aab1850c656dcea009429d6c1
   ComputableLayout: c50faffac4ed9f8f05b0ce5e6f3a60df1f6042c8
-  DGSwiftUtilities: 3d5c730bfe8ba21e6b7fb877038719debbf36d7c
+  DGSwiftUtilities: 49539fcb5c39940a826d3b77f08e12fdad5fa19b
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   FBLazyVector: 38bb611218305c3bc61803e287b8a81c6f63b619
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
@@ -1884,7 +1884,7 @@ SPEC CHECKSUMS:
   React-logger: 8db32983d75dc2ad54f278f344ccb9b256e694fc
   React-Mapbuffer: db173bede5ac5cb1c82d4a6a8597477ba87c5648
   React-microtasksnativemodule: a5cd87542a308060e645d337b036733c327dc01b
-  react-native-ios-utilities: be7dbcf027c651d97f78a82e9650df9889a8dffd
+  react-native-ios-utilities: 3339e5cc884e0dd24599ee05310a0ba60affa094
   react-native-safe-area-context: b7c0ac799a7718ed070974ad6d0c8045c455838a
   React-nativeconfig: 5fc2b05a590eb704128f5a4fc8ea6fa7b847e6e8
   React-NativeModulesApple: 88313414ddffd1758f76042733e8f0297acfd502
