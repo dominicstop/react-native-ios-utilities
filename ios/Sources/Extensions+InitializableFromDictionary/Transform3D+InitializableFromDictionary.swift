@@ -11,7 +11,7 @@ import DGSwiftUtilities
 import Foundation
 import DGSwiftUtilities
 
-// TODO: Move to `DGSwiftUtilities`
+
 extension Transform3D: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) {
@@ -89,5 +89,20 @@ extension Transform3D: InitializableFromDictionary {
   @available(*, deprecated, message: "Please use init(fromDict:) instead")
   init(dict: Dictionary<String, Any>) {
     self.init(fromDict: dict);
+  };
+};
+
+// MARK: - Dictionary+Transform3D
+// ------------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getTransform(forKey key: String) throws -> Transform3D {
+    let transformDict = try self.getDict(forKey: key)
+    return .init(fromDict: transformDict);
+  };
+  
+  func getValue(forKey key: String) throws -> Transform3D {
+    try self.getTransform(forKey: key);
   };
 };

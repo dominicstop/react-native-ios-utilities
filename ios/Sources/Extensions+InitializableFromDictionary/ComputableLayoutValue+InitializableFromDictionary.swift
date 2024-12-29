@@ -9,6 +9,7 @@ import Foundation
 import DGSwiftUtilities
 import ComputableLayout
 
+
 extension ComputableLayoutValue: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
@@ -44,5 +45,20 @@ extension ComputableLayoutValue: InitializableFromDictionary {
       minValue: minValue,
       maxValue: maxValue
     );
+  };
+};
+
+// MARK: - Dictionary+ComputableLayoutValue
+// -----------------------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getComputableLayoutValue(forKey key: String) throws -> ComputableLayoutValue {
+    let dictConfig = try self.getDict(forKey: key)
+    return try .init(fromDict: dictConfig);
+  };
+  
+  func getValue(forKey key: String) throws -> ComputableLayoutValue {
+    try self.getComputableLayoutValue(forKey: key);
   };
 };

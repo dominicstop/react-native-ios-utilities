@@ -178,3 +178,18 @@ extension AnimationConfig: InitializableFromDictionary {
     };
   };
 };
+
+// MARK: - Dictionary+AnimationConfig
+// ----------------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getAnimationConfig(forKey key: String) throws -> AnimationConfig {
+    let dictConfig = try self.getDict(forKey: key)
+    return try .init(fromDict: dictConfig);
+  };
+  
+  func getValue(forKey key: String) throws -> AnimationConfig {
+    try self.getAnimationConfig(forKey: key);
+  };
+};

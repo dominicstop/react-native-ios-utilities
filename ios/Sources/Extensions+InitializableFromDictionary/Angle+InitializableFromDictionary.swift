@@ -44,3 +44,22 @@ extension Angle: InitializableFromDictionary {
     };
   };
 };
+
+// MARK: - Dictionary+CGSize
+// -------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getAngle<T>(
+    forKey key: String,
+    type: T.Type = T.self
+  ) throws -> Angle<T> {
+  
+    let angleDict = try self.getDict(forKey: key)
+    return try .init(fromDict: angleDict);
+  };
+  
+  func getValue(forKey key: String) throws -> Angle<CGFloat> {
+    try self.getAngle(forKey: key);
+  };
+};

@@ -19,3 +19,18 @@ extension BasicViewKeyframe: InitializableFromDictionary {
     self.transform = try? dict.getTransform(forKey: "transform");
   };
 };
+
+// MARK: - Dictionary+BasicViewKeyframe
+// ------------------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getBasicKeyframe<T>(forKey key: String) throws -> BasicViewKeyframe<T> {
+    let dictConfig = try self.getDict(forKey: key)
+    return .init(fromDict: dictConfig);
+  };
+  
+  func getValue<T>(forKey key: String) throws -> BasicViewKeyframe<T> {
+    try self.getBasicKeyframe(forKey: key);
+  };
+};

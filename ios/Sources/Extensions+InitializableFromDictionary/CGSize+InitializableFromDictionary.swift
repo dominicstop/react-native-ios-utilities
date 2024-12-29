@@ -27,3 +27,18 @@ extension CGSize: InitializableFromDictionary {
     )
   };
 };
+
+// MARK: - Dictionary+CGSize
+// -------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getSize(forKey key: String) throws -> CGSize {
+    let sizeDict = try self.getDict(forKey: key)
+    return try .init(fromDict: sizeDict);
+  };
+  
+  func getValue(forKey key: String) throws -> CGSize {
+    try self.getSize(forKey: key);
+  };
+};

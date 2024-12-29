@@ -9,7 +9,6 @@ import Foundation
 import DGSwiftUtilities
 
 
-// TODO: Move to `DGSwiftUtilities`
 extension CGPoint: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
@@ -17,5 +16,20 @@ extension CGPoint: InitializableFromDictionary {
     let y: CGFloat = try dict.getNumber(forKey: "y");
     
     self.init(x: x, y: y);
+  };
+};
+
+// MARK: - Dictionary+CGPoint
+// --------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getPoint(forKey key: String) throws -> CGPoint {
+    let dictConfig = try self.getDict(forKey: key)
+    return try .init(fromDict: dictConfig);
+  };
+  
+  func getValue(forKey key: String) throws -> CGPoint {
+    try self.getPoint(forKey: key);
   };
 };

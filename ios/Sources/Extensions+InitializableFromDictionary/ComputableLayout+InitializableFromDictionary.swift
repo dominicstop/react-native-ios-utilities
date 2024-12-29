@@ -102,3 +102,18 @@ extension ComputableLayout: InitializableFromDictionary {
     );
   };
 };
+
+// MARK: - Dictionary+ComputableLayout
+// -----------------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getComputableLayoutConfig(forKey key: String) throws -> ComputableLayout {
+    let dictConfig = try self.getDict(forKey: key)
+    return try .init(fromDict: dictConfig);
+  };
+  
+  func getValue(forKey key: String) throws -> ComputableLayout {
+    try self.getComputableLayoutConfig(forKey: key);
+  };
+};

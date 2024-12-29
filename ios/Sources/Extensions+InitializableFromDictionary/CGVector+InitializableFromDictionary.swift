@@ -18,3 +18,18 @@ extension CGVector: InitializableFromDictionary {
     self.init(dx: dx, dy: dy);
   };
 };
+
+// MARK: - Dictionary+CGVector
+// ---------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getVector(forKey key: String) throws -> CGVector {
+    let dictConfig = try self.getDict(forKey: key)
+    return try .init(fromDict: dictConfig);
+  };
+  
+  func getValue(forKey key: String) throws -> CGVector {
+    try self.getVector(forKey: key);
+  };
+};

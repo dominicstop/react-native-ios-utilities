@@ -93,3 +93,18 @@ extension ImageConfigGradient: InitializableFromDictionary {
     );
   };
 };
+
+// MARK: - Dictionary+ImageConfigGradient
+// --------------------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getImageGradientConfig(forKey key: String) throws -> ImageConfigGradient {
+    let dictConfig = try self.getDict(forKey: key)
+    return try .init(fromDict: dictConfig);
+  };
+  
+  func getValue(forKey key: String) throws -> ImageConfigGradient {
+    try self.getImageGradientConfig(forKey: key);
+  };
+};

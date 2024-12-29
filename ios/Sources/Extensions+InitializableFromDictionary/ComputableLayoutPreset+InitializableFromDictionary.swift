@@ -12,70 +12,6 @@ import ComputableLayout
 
 extension ComputableLayoutPreset: InitializableFromDictionary {
 
-  public init(fromString string: String) throws {
-    switch string {
-      case "automatic":
-        self = .automatic;
-        
-      case "offscreenBottom":
-        self = .offscreenBottom;
-        
-      case "offscreenTop":
-        self = .offscreenTop;
-        
-      case "offscreenLeft":
-        self = .offscreenLeft;
-        
-      case "offscreenRight":
-        self = .offscreenRight;
-        
-      case "halfOffscreenBottom":
-        self = .halfOffscreenBottom;
-        
-      case "halfOffscreenTop":
-        self = .halfOffscreenTop;
-        
-      case "halfOffscreenLeft":
-        self = .halfOffscreenLeft;
-        
-      case "halfOffscreenRight":
-        self = .halfOffscreenRight;
-        
-      case "edgeBottom":
-        self = .edgeBottom;
-        
-      case "edgeTop":
-        self = .edgeTop;
-        
-      case "edgeLeft":
-        self = .edgeLeft;
-        
-      case "edgeRight":
-        self = .edgeRight;
-        
-      case "fitScreen":
-        self = .fitScreen;
-        
-      case "fitScreenHorizontally":
-        self = .fitScreenHorizontally;
-        
-      case "fitScreenVertically":
-        self = .fitScreenVertically;
-        
-      case "center":
-        self = .center;
-        
-      default:
-        throw RNIUtilitiesError(
-          errorCode: .invalidValue,
-          description: "Invalid string value",
-          extraDebugValues: [
-            "string": string
-          ]
-        );
-    };
-  };
-
   public init(fromDict dict: Dictionary<String, Any>) throws {
     let modeString = try dict.getString(forKey: "mode");
     
@@ -102,5 +38,20 @@ extension ComputableLayoutPreset: InitializableFromDictionary {
           ]
         );
     };
+  };
+};
+
+// MARK: - Dictionary+ComputableLayoutPreset
+// -----------------------------------------
+
+public extension Dictionary where Key == String {
+  
+  func getComputableLayoutPreset(forKey key: String) throws -> ComputableLayoutPreset {
+    let dictConfig = try self.getDict(forKey: key)
+    return try .init(fromDict: dictConfig);
+  };
+  
+  func getValue(forKey key: String) throws -> ComputableLayoutPreset {
+    try self.getComputableLayoutPreset(forKey: key);
   };
 };

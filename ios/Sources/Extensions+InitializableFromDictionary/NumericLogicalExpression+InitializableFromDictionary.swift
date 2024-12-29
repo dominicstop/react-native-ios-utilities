@@ -8,6 +8,7 @@
 import Foundation
 import DGSwiftUtilities
 
+
 extension NumericLogicalExpression: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
@@ -90,4 +91,3 @@ extension NumericLogicalExpression: InitializableFromDictionary {
     };
   };
 };
-

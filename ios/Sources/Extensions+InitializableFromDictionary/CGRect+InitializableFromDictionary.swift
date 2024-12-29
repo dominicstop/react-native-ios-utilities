@@ -8,41 +8,20 @@
 import Foundation
 import DGSwiftUtilities
 
-// TODO: Move to `DGSwiftUtilities`
+
 extension CGRect: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    if let origin = try? dict.getValue(
-         forKey: "dx",
-         type: CGPoint.self
-       ),
-       let size = try? dict.getValue(
-         forKey: "dy",
-         type: CGSize.self
-       ) {
-      
+    if let origin = try? dict.getPoint(forKey: "origin"),
+       let size = try? dict.getSize(forKey: "size")
+    {
       self.init(origin: origin, size: size);
     };
     
-    let x = try dict.getValue(
-      forKey: "x",
-      type: CGFloat.self
-    );
-    
-    let y = try dict.getValue(
-      forKey: "y",
-      type: CGFloat.self
-    );
-    
-    let width = try dict.getValue(
-      forKey: "width",
-      type: CGFloat.self
-    );
-    
-    let height = try dict.getValue(
-      forKey: "height",
-      type: CGFloat.self
-    );
+    let x: CGFloat = try dict.getValue(forKey: "x");
+    let y: CGFloat = try dict.getValue(forKey: "y");
+    let width: CGFloat = try dict.getValue(forKey: "width");
+    let height: CGFloat = try dict.getValue(forKey: "height");
     
     self.init(
       x: x,
@@ -52,3 +31,5 @@ extension CGRect: InitializableFromDictionary {
     );
   };
 };
+
+
