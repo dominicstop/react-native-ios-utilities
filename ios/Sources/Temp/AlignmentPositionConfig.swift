@@ -165,10 +165,10 @@ extension AlignmentPositionConfig: InitializableFromDictionary {
       try? dict.getNumber(forKey: "marginTrailing");
       
     self.shouldPreferHeightAnchor =
-      try? dict.getValue(forKey: "shouldPreferHeightAnchor");
+      try? dict.getBool(forKey: "shouldPreferHeightAnchor");
       
     self.shouldPreferWidthAnchor =
-      try? dict.getValue(forKey: "shouldPreferWidthAnchor");
+      try? dict.getBool(forKey: "shouldPreferWidthAnchor");
   };
 };
 

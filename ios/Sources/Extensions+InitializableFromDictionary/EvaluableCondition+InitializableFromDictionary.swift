@@ -196,11 +196,7 @@ extension EvaluableCondition: InitializableFromDictionary {
           type: StringComparisonMode.self
         );
         
-        let isCaseSensitive = try dict.getValue(
-          forKey: "isCaseSensitive",
-          type: Bool.self
-        );
-        
+        let isCaseSensitive = try dict.getBool(forKey: "isCaseSensitive");
         let stringValue = try dict.getString(forKey: "stringValue");
         
         self = .deviceString(
@@ -211,11 +207,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         );
 
       case "customFlag":
-        let flag = try dict.getValue(
-          forKey: "value",
-          type: Bool.self
-        );
-        
+        let flag = try dict.getBool(forKey: "value");
         self = .customFlag(flag);
 
       case "negate":
