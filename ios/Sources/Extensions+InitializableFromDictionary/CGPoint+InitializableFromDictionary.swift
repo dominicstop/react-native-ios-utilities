@@ -8,23 +8,14 @@
 import Foundation
 import DGSwiftUtilities
 
+
 // TODO: Move to `DGSwiftUtilities`
 extension CGPoint: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let x = try dict.getValue(
-      forKey: "x",
-      type: NSNumber.self
-    );
+    let x: CGFloat = try dict.getNumber(forKey: "x");
+    let y: CGFloat = try dict.getNumber(forKey: "y");
     
-    let y = try dict.getValue(
-      forKey: "y",
-      type: NSNumber.self
-    );
-    
-    self.init(
-      x: x.doubleValue,
-      y: y.doubleValue
-    );
+    self.init(x: x, y: y);
   };
 };

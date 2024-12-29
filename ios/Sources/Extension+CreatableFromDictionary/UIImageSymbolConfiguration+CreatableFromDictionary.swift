@@ -38,14 +38,16 @@ extension UIImage.SymbolConfiguration: CreatableFromDictionary {
       return Self.init(textStyle: textStyle, scale: scale);
     };
     
-    if let weight = try? dict.getValue(forKey: "weight", type: UIImage.SymbolWeight.self) {
+    if let weight: UIImage.SymbolWeight = try? dict.getEnum(forKey: "weight") {
       return Self.init(weight: weight);
     };
     
+    // TODO: use `FontConfig`
     if let font = try? dict.getValue(forKey: "font", type: UIFont.self) {
       return Self.init(font: font);
     };
     
+    // TODO: use `FontConfig`
     if let font = try? dict.getValue(forKey: "font", type: UIFont.self),
        let scale = try? dict.getValue(forKey: "scale", type: UIImage.SymbolScale.self) {
        
@@ -59,7 +61,7 @@ extension UIImage.SymbolConfiguration: CreatableFromDictionary {
     };
     
     if #available(iOS 15.0, *),
-       let paletteColorsRaw = try? dict.getValue(forKey: "paletteColors", type: Array<Any>.self) {
+       let paletteColorsRaw = try? dict.getArray(forKey: "paletteColors") {
        
       let paletteColors: [UIColor] = paletteColorsRaw.compactMap {
         .parseColor(value: $0);
@@ -68,7 +70,7 @@ extension UIImage.SymbolConfiguration: CreatableFromDictionary {
       return Self.init(paletteColors: paletteColors);
     };
     
-    if let modifier = try? dict.getValue(forKey: "modifier", type: String.self) {
+    if let modifier = try? dict.getString(forKey: "modifier") {
       switch modifier {
         case "preferringMulticolor":
           guard #available(iOS 15.0, *) else {
@@ -113,7 +115,10 @@ extension UIImage.SymbolConfiguration: CreatableFromDictionary {
       };
     };
     
-    if let imageSymbolConfigItemsRaw = try? dict.getValue(forKey: "imageSymbolConfigItems", type: Array<Dictionary<String, Any>>.self) {
+    if let imageSymbolConfigItemsRaw = try? dict.getArray(
+      forKey: "imageSymbolConfigItems",
+      elementType: Dictionary<String, Any>.self
+    ) {
       let items: [Self] = imageSymbolConfigItemsRaw.compactMap {
         try? .create(fromDict: $0);
       };

@@ -77,18 +77,11 @@ extension ComputableLayoutPreset: InitializableFromDictionary {
   };
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString = try dict.getValue(
-      forKey: "mode",
-      type: String.self
-    );
+    let modeString = try dict.getString(forKey: "mode");
     
     switch modeString {
       case "preset":
-        let presetString = try dict.getValue(
-          forKey: "preset",
-          type: String.self
-        );
-        
+        let presetString = try dict.getString(forKey: "preset");
         self = try .init(fromString: presetString);
         
       case "layoutConfig":

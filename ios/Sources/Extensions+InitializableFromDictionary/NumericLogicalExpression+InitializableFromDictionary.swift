@@ -18,7 +18,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .any;
         
       case "isLessThan":
-        let value = try dict.getValue(
+        let value = try dict.getValueAndCast(
           forKey: "toValue",
           type: T.self
         );
@@ -26,7 +26,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isLessThan(toValue: value);
         
       case "isLessThanOrEqual":
-        let value = try dict.getValue(
+        let value = try dict.getValueAndCast(
           forKey: "toValue",
           type: T.self
         );
@@ -34,7 +34,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isLessThanOrEqual(toValue: value);
         
       case "isEqual":
-        let value = try dict.getValue(
+        let value = try dict.getValueAndCast(
           forKey: "toValue",
           type: T.self
         );
@@ -42,7 +42,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isEqual(toValue: value);
         
       case "isGreaterThan":
-        let value = try dict.getValue(
+        let value = try dict.getValueAndCast(
           forKey: "toValue",
           type: T.self
         );
@@ -50,7 +50,7 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isGreaterThan(toValue: value);
         
       case "isGreaterThanOrEqual":
-        let value = try dict.getValue(
+        let value = try dict.getValueAndCast(
           forKey: "toValue",
           type: T.self
         );
@@ -58,17 +58,17 @@ extension NumericLogicalExpression: InitializableFromDictionary {
         self = .isGreaterThanOrEqual(toValue: value);
         
       case "isBetweenRange":
-        let start = try dict.getValue(
+        let start = try dict.getValueAndCast(
           forKey: "start",
           type: T.self
         );
         
-        let end = try dict.getValue(
+        let end = try dict.getValueAndCast(
           forKey: "end",
           type: T.self
         );
         
-        let isInclusive = try dict.getValue(
+        let isInclusive = try dict.getValueAndCast(
           forKey: "toValue",
           type: Bool.self
         );

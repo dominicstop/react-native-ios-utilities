@@ -9,6 +9,7 @@ import Foundation
 import DGSwiftUtilities
 import ComputableLayout
 
+
 extension ComputableLayoutValueMode: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
@@ -20,12 +21,8 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         self = .stretch;
         
       case "constant":
-        let value = try dict.getValue(
-          forKey: "value",
-          type: NSNumber.self
-        );
-          
-        self = .constant(value.doubleValue);
+        let value: CGFloat = try dict.getValue(forKey: "value");
+        self = .constant(value);
         
       case "percent":
         let percentTarget = try? dict.getEnum(
@@ -33,18 +30,16 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
           type: ComputableLayoutValuePercentTarget.self
         );
         
-        let percentValue = try dict.getValue(
-          forKey: "percentValue",
-          type: NSNumber.self
-        );
+        let percentValue: CGFloat =
+          try dict.getValue(forKey: "percentValue");
         
         self = .percent(
           relativeTo: percentTarget ?? .targetSize,
-          percentValue: percentValue.doubleValue
+          percentValue: percentValue
         );
         
       case "safeAreaInsets":
-        let insetKey = try dict.getKeyPathFromDictionary(
+        let insetKey = try dict.getKeyPath(
           forKey: "insetKey",
           rootType: UIEdgeInsets.self,
           valueType: CGFloat.self
@@ -53,7 +48,7 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         self = .safeAreaInsets(insetKey: insetKey);
         
       case "keyboardScreenRect":
-        let rectKey = try dict.getKeyPathFromDictionary(
+        let rectKey = try dict.getKeyPath(
           forKey: "rectKey",
           rootType: CGRect.self,
           valueType: CGFloat.self
@@ -62,7 +57,7 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         self = .keyboardScreenRect(rectKey: rectKey);
         
       case "keyboardRelativeSize":
-        let sizeKey = try dict.getKeyPathFromDictionary(
+        let sizeKey = try dict.getKeyPath(
           forKey: "sizeKey",
           rootType: CGSize.self,
           valueType: CGFloat.self
@@ -73,9 +68,9 @@ extension ComputableLayoutValueMode: InitializableFromDictionary {
         );
         
       case "multipleValues":
-        let valuesRaw = try dict.getValue(
+        let valuesRaw = try dict.getArray(
           forKey: "values",
-          type: Array<Dictionary<String, Any>>.self
+          elementType: Dictionary<String, Any>.self
         );
         
         let values = valuesRaw.compactMap {

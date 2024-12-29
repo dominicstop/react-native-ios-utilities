@@ -8,23 +8,13 @@
 import Foundation
 import DGSwiftUtilities
 
-// TODO: Move to `DGSwiftUtilities`
+
 extension CGVector: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let dx = try dict.getValue(
-      forKey: "dx",
-      type: NSNumber.self
-    );
+    let dx: CGFloat = try dict.getNumber(forKey: "dx");
+    let dy: CGFloat = try dict.getNumber(forKey: "dy");
     
-    let dy = try dict.getValue(
-      forKey: "dy",
-      type: NSNumber.self
-    );
-    
-    self.init(
-      dx: dx.doubleValue,
-      dy: dy.doubleValue
-    );
+    self.init(dx: dx, dy: dy);
   };
 };

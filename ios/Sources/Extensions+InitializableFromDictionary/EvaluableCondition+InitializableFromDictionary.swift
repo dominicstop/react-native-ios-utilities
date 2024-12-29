@@ -9,6 +9,7 @@ import Foundation
 import DGSwiftUtilities
 import ComputableLayout
 
+
 extension EvaluableCondition: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
@@ -21,7 +22,7 @@ extension EvaluableCondition: InitializableFromDictionary {
           type: FrameRectValue.self
         );
         
-        let keyPath = try dict.getKeyPathFromDictionary(
+        let keyPath = try dict.getKeyPath(
           forKey: "valueForKey",
           rootType: CGRect.self,
           valueType: CGFloat.self
@@ -44,7 +45,7 @@ extension EvaluableCondition: InitializableFromDictionary {
           type: SizeValue.self
         );
         
-        let keyPath = try dict.getKeyPathFromDictionary(
+        let keyPath = try dict.getKeyPath(
           forKey: "valueForKey",
           rootType: CGSize.self,
           valueType: CGFloat.self
@@ -62,7 +63,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         );
 
       case "safeAreaInsets":
-        let keyPath = try dict.getKeyPathFromDictionary(
+        let keyPath = try dict.getKeyPath(
           forKey: "valueForKey",
           rootType: UIEdgeInsets.self,
           valueType: CGFloat.self
@@ -166,7 +167,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .layoutDirection(is: value);
 
       case "isFlagTrue":
-        let value = try dict.getKeyPathFromDictionary(
+        let value = try dict.getKeyPath(
           forKey: "isEqualToKey",
           rootType: EvaluableConditionContext.self,
           valueType: Bool.self
@@ -175,7 +176,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .isFlagTrue(forKey: value);
 
       case "deviceFlags":
-        let value = try dict.getKeyPathFromDictionary(
+        let value = try dict.getKeyPath(
           forKey: "isEqualToKey",
           rootType: UIDevice.self,
           valueType: Bool.self
@@ -184,7 +185,7 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .deviceFlags(forKey: value);
 
       case "deviceString":
-        let keyPath = try dict.getKeyPathFromDictionary(
+        let keyPath = try dict.getKeyPath(
           forKey: "isEqualToKey",
           rootType: UIDevice.self,
           valueType: String.self
@@ -200,10 +201,7 @@ extension EvaluableCondition: InitializableFromDictionary {
           type: Bool.self
         );
         
-        let stringValue = try dict.getValue(
-          forKey: "stringValue",
-          type: String.self
-        );
+        let stringValue = try dict.getString(forKey: "stringValue");
         
         self = .deviceString(
           forKey: keyPath,
@@ -229,9 +227,9 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .negate(value);
 
       case "ifAnyAreTrue":
-        let valuesRaw = try dict.getValue(
+        let valuesRaw = try dict.getArray(
           forKey: "values",
-          type: Array<Dictionary<String, Any>>.self
+          elementType: Dictionary<String, Any>.self
         );
         
         let values = valuesRaw.compactMap {
@@ -241,9 +239,9 @@ extension EvaluableCondition: InitializableFromDictionary {
         self = .ifAnyAreTrue(values);
 
       case "ifAllAreTrue":
-        let valuesRaw = try dict.getValue(
+        let valuesRaw = try dict.getArray(
           forKey: "values",
-          type: Array<Dictionary<String, Any>>.self
+          elementType: Dictionary<String, Any>.self
         );
         
         let values = valuesRaw.compactMap {

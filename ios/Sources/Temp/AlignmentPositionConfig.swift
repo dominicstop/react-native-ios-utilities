@@ -147,22 +147,22 @@ extension AlignmentPositionConfig: InitializableFromDictionary {
       try dict.getEnum(forKey: "verticalAlignment");
       
     self.preferredHeight =
-      try? dict.getValue(forKey: "preferredHeight");
+      try? dict.getNumber(forKey: "preferredHeight");
       
     self.preferredWidth =
-      try? dict.getValue(forKey: "preferredWidth");
+      try? dict.getNumber(forKey: "preferredWidth");
       
     self.marginTop =
-      try? dict.getValue(forKey: "marginTop");
+      try? dict.getNumber(forKey: "marginTop");
       
     self.marginBottom =
-      try? dict.getValue(forKey: "marginBottom");
+      try? dict.getNumber(forKey: "marginBottom");
       
     self.marginLeading =
-      try? dict.getValue(forKey: "marginLeading");
+      try? dict.getNumber(forKey: "marginLeading");
       
     self.marginTrailing =
-      try? dict.getValue(forKey: "marginTrailing");
+      try? dict.getNumber(forKey: "marginTrailing");
       
     self.shouldPreferHeightAnchor =
       try? dict.getValue(forKey: "shouldPreferHeightAnchor");

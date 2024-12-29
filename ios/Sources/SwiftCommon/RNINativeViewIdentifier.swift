@@ -66,10 +66,7 @@ extension RNINativeViewIdentifier: EnumCaseStringRepresentable {
 extension RNINativeViewIdentifier: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    if let viewID = try? dict.getValue(
-      forKey: "viewID",
-      type: String.self
-    ) {
+    if let viewID = try? dict.getString(forKey: "viewID") {
       self = .viewID(viewID);
       return;
     };

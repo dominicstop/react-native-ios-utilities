@@ -283,10 +283,8 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
           };
           
           let contentPositionConfig: AlignmentPositionConfig = try {
-            let dictConfig = try commandArguments.getValue(
-              forKey: "contentPositionConfig",
-              type: Dictionary<String, Any>.self
-            );
+            let dictConfig = try
+              commandArguments.getDict(forKey: "contentPositionConfig");
             
             return try .init(fromDict: dictConfig);
           }();
@@ -322,10 +320,8 @@ extension RNIDetachedViewContent: RNIContentViewDelegate {
           };
           
           let contentPositionConfig: AlignmentPositionConfig = try {
-            let dictConfig = try commandArguments.getValue(
-              forKey: "contentPositionConfig",
-              type: Dictionary<String, Any>.self
-            );
+            let dictConfig = try
+              commandArguments.getDict(forKey: "contentPositionConfig");
             
             return try .init(fromDict: dictConfig);
           }();

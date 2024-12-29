@@ -15,29 +15,29 @@ import DGSwiftUtilities
 extension Transform3D: InitializableFromDictionary {
 
   public init(fromDict dict: Dictionary<String, Any>) {
-    let translateX = try? dict.getValue(
+    let translateX = try? dict.getNumber(
       forKey: "translateX",
-      type: NSNumber.self
+      type: CGFloat.self
     );
     
-    let translateY = try? dict.getValue(
+    let translateY = try? dict.getNumber(
       forKey: "translateY",
-      type: NSNumber.self
+      type: CGFloat.self
     );
     
-    let translateZ = try? dict.getValue(
+    let translateZ = try? dict.getNumber(
       forKey: "translateZ",
-      type: NSNumber.self
+      type: CGFloat.self
     );
     
-    let scaleX = try? dict.getValue(
+    let scaleX = try? dict.getNumber(
       forKey: "scaleX",
-      type: NSNumber.self
+      type: CGFloat.self
     );
     
-    let scaleY = try? dict.getValue(
+    let scaleY = try? dict.getNumber(
       forKey: "scaleY",
-      type: NSNumber.self
+      type: CGFloat.self
     );
     
     let rotateX = try? dict.getValue(
@@ -55,33 +55,33 @@ extension Transform3D: InitializableFromDictionary {
       type: Angle<CGFloat>.self
     );
     
-    let perspective = try? dict.getValue(
+    let perspective = try? dict.getNumber(
       forKey: "perspective",
-      type: NSNumber.self
+      type: CGFloat.self
     );
     
-    let skewX = try? dict.getValue(
+    let skewX = try? dict.getNumber(
       forKey: "skewX",
-      type: NSNumber.self
+      type: CGFloat.self
     );
     
-    let skewY = try? dict.getValue(
+    let skewY = try? dict.getNumber(
       forKey: "skewY",
-      type: NSNumber.self
+      type: CGFloat.self
     );
     
     self.init(
-      translateX: translateX as? CGFloat,
-      translateY: translateY as? CGFloat,
-      translateZ: translateZ as? CGFloat,
-      scaleX: scaleX as? CGFloat,
-      scaleY: scaleY as? CGFloat,
+      translateX: translateX,
+      translateY: translateY,
+      translateZ: translateZ,
+      scaleX: scaleX,
+      scaleY: scaleY,
       rotateX: rotateX,
       rotateY: rotateY,
       rotateZ: rotateZ,
-      perspective: perspective as? CGFloat,
-      skewX: skewX as? CGFloat,
-      skewY: skewY as? CGFloat
+      perspective: perspective,
+      skewX: skewX,
+      skewY: skewY
     );
   };
 

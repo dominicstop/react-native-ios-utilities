@@ -11,10 +11,7 @@ import DGSwiftUtilities
 extension Angle: InitializableFromDictionary {
   
   public init(fromDict dict: Dictionary<String, Any>) throws {
-    let modeString = try dict.getValue(
-      forKey: "mode",
-      type: String.self
-    );
+    let modeString = try dict.getString(forKey: "mode");
     
     switch modeString {
       case "zero":
