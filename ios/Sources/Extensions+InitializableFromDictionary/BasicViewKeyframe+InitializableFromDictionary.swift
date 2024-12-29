@@ -16,14 +16,6 @@ extension BasicViewKeyframe: InitializableFromDictionary {
     
     self.opacity = try? dict.getNumber(forKey: "opacity");
     self.backgroundColor = try? dict.getColor(forKey: "backgroundColor");
-    
-    
-    self.transform = {
-      guard let transformDict = try? dict.getDict(forKey: "transform") else {
-        return nil;
-      };
-        
-      return .init(fromDict: transformDict);
-    }();
+    self.transform = try? dict.getTransform(forKey: "transform");
   };
 };
