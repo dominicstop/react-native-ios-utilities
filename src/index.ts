@@ -21,6 +21,7 @@ export type * from './types/SharedPropTypes';
 export type * from './types/SharedStateTypes';
 export type * from './types/UtilityTypes';
 export type * from './types/ReactNativeUtilityTypes';
+export type * from './types/SharedAnimationEvents';
 
 export * from './example_components/CardBody';
 export * from './example_components/CardTitle';
