@@ -13,6 +13,9 @@ import DGSwiftUtilities
 public protocol RNIContentViewDelegate:
   RNIViewPropDelegate where Self: UIView  {
   
+  typealias PromiseCompletionBlock = (_ args: NSDictionary) -> Void;
+  typealias PromiseRejectionBlock = (_ errorMessage: String) -> Void;
+  
   // MARK: - Fabric + Paper
   // ----------------------
   
@@ -55,8 +58,8 @@ public protocol RNIContentViewDelegate:
     sender: RNIContentViewParentDelegate,
     forCommandName commandName: String,
     withCommandArguments commandArguments: NSDictionary,
-    resolve resolveBlock: (NSDictionary) -> Void,
-    reject rejectBlock: (String) -> Void
+    resolve resolveBlock: @escaping PromiseCompletionBlock,
+    reject rejectBlock: @escaping PromiseRejectionBlock
   );
   
   // MARK: - Fabric Only
