@@ -1,6 +1,6 @@
 {
   "name": "react-native-ios-utilities",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Utilities for react-native + iOS and wrappers for using swift together with fabric/paper + JSI",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
