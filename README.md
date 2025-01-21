@@ -51,6 +51,42 @@ npm install react-native-ios-utilities@next
 cd ios && pod install
 ```
 
+<br>
+
+### Optional Extra Steps
+
+In your project's `Podfile`, you can also explicitly set `REACT_NATIVE_TARGET_VERSION` env. to your specific RN version (see code snippet below). 
+
+```ruby
+require 'json'
+
+reactNativeVersion = '0.0.0'
+begin
+  reactNativeVersion = `node --print "require('react-native/package.json').version"`
+rescue
+  reactNativeVersion = '0.0.0'
+end
+
+reactNativeTargetVersion = reactNativeVersion.split('.')[1].to_i
+ENV['REACT_NATIVE_TARGET_VERSION'] = reactNativeTargetVersion.to_s
+```
+
+<br>
+
+The `REACT_NATIVE_TARGET_VERSION` env. variable gets passed as a macro constant, and is used for conditional compilation (e.g. to fix code due to changes with the RN API).
+
+Alternatively, you can just set `RCT_NEW_ARCH_ENABLED` env. directly when you invoke `pod install` (e.g. `REACT_NATIVE_TARGET_VERSION=76 pod install`).
+
+When you run `pod install`, you should see the following output in the terminal:
+
+```
+react-native-ios-utilities
+ - reactNativeTargetVersion: 0.75.2
+ - reactNativeTargetVersionOverride: 76
+ - fabric_enabled: true
+ - linkage: static
+```
+
 <br><br>
 
 ## Version Compatibility
