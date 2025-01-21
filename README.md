@@ -36,11 +36,11 @@ The initial fabric rewrite (i.e. version `5.x`) was made possible through a gene
 
 <br>
 
-very special thanks to: [junzhengca](https://github.com/junzhengca), [brentvatne](https://github.com/brentvatne), [expo](https://github.com/expo), [EvanBacon](https://github.com/EvanBacon), [corasan](https://github.com/corasan), [lauridskern](https://github.com/lauridskern), [ronintechnologies](https://github.com/ronintechnologies), and [gerzonc](https://github.com/gerzonc) for becoming a monthly sponsor, and thank you [fobos531](https://github.com/fobos531) for being a one time sponsor 🥺 (if you have the means to do so, please considering sponsoring [here](https://github.com/sponsors/dominicstop))
+very special thanks to: [junzhengca](https://github.com/junzhengca), [brentvatne](https://github.com/brentvatne), [expo](https://github.com/expo), [EvanBacon](https://github.com/EvanBacon), [corasan](https://github.com/corasan), [lauridskern](https://github.com/lauridskern), [ronintechnologies](https://github.com/ronintechnologies), [gerzonc](https://github.com/gerzonc), and [edencakir](https://github.com/edencakir) for becoming a monthly sponsor, and thank you [fobos531](https://github.com/fobos531) for being a one time sponsor 🥺 (if you have the means to do so, please considering sponsoring [here](https://github.com/sponsors/dominicstop))
 
 <br>
 
-Thank you very much for contributing to this library: [SamuelScheit](https://github.com/SamuelScheit) ([`pr-#6`](https://github.com/dominicstop/react-native-ios-utilities/pull/6)), [coolsoftwaretyler](https://github.com/coolsoftwaretyler) ([`pr-#11`](https://github.com/dominicstop/react-native-ios-utilities/pull/11)) 💫
+Thank you very much for contributing to this library: [SamuelScheit](https://github.com/SamuelScheit) ([`pr-#6`](https://github.com/dominicstop/react-native-ios-utilities/pull/6)), [coolsoftwaretyler](https://github.com/coolsoftwaretyler) ([`pr-#11`](https://github.com/dominicstop/react-native-ios-utilities/pull/11)), [fobos531](https://github.com/fobos531) ([`pr-#18`](https://github.com/dominicstop/react-native-ios-utilities/pull/18)) 💫
 
 <br><br>
 
