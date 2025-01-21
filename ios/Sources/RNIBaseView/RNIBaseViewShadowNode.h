@@ -125,34 +125,64 @@ public:
     
     if(stateData.shouldSetMinWidth) {
       doesNeedLayout = true;
+      
+#if REACT_NATIVE_TARGET_VERSION >= 77
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Width,
+        yoga::StyleLength::points(stateData.minSize.width)
+      );
+#else
       yogaStyle.setMinDimension(
         yoga::Dimension::Width,
         yoga::value::points(stateData.minSize.width)
       );
+#endif
     };
     
     if(stateData.shouldSetMinHeight) {
       doesNeedLayout = true;
+    
+#if REACT_NATIVE_TARGET_VERSION >= 77
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Height,
+        yoga::StyleLength::points(stateData.minSize.height)
+      );
+#else
       yogaStyle.setMinDimension(
         yoga::Dimension::Height,
         yoga::value::points(stateData.minSize.height)
       );
+#endif
     };
     
     if(stateData.shouldSetMaxWidth) {
       doesNeedLayout = true;
+#if REACT_NATIVE_TARGET_VERSION >= 77
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Width,
+        yoga::StyleLength::points(stateData.maxSize.width)
+      );
+#else
       yogaStyle.setMinDimension(
         yoga::Dimension::Width,
         yoga::value::points(stateData.maxSize.width)
       );
+#endif
     };
     
     if(stateData.shouldSetMaxHeight) {
       doesNeedLayout = true;
+#if REACT_NATIVE_TARGET_VERSION >= 77
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Height,
+        yoga::StyleLength::points(stateData.maxSize.height)
+      );
+#else
       yogaStyle.setMinDimension(
         yoga::Dimension::Height,
         yoga::value::points(stateData.maxSize.height)
       );
+#endif
     };
     
     if(doesNeedLayout){
