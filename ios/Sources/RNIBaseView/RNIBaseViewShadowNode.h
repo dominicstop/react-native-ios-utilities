@@ -125,7 +125,11 @@ public:
     
     if(stateData.shouldSetMinWidth) {
       doesNeedLayout = true;
-      
+
+
+/// PR-#11 by: fobos531
+/// Link: https://github.com/dominicstop/react-native-ios-utilities/pull/18
+///
 #if REACT_NATIVE_TARGET_VERSION >= 77
       yogaStyle.setMinDimension(
         yoga::Dimension::Width,
