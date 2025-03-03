@@ -127,10 +127,15 @@ public:
       doesNeedLayout = true;
 
 
+#if REACT_NATIVE_TARGET_VERSION >= 78
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Width,
+        yoga::StyleLength::points(stateData.minSize.width)
+      );
 /// PR-#11 by: fobos531
 /// Link: https://github.com/dominicstop/react-native-ios-utilities/pull/18
 ///
-#if REACT_NATIVE_TARGET_VERSION >= 77
+#elif REACT_NATIVE_TARGET_VERSION >= 77
       yogaStyle.setMinDimension(
         yoga::Dimension::Width,
         yoga::StyleLength::points(stateData.minSize.width)
@@ -145,8 +150,13 @@ public:
     
     if(stateData.shouldSetMinHeight) {
       doesNeedLayout = true;
-    
-#if REACT_NATIVE_TARGET_VERSION >= 77
+
+#if REACT_NATIVE_TARGET_VERSION >= 78
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Height,
+        yoga::StyleLength::points(stateData.minSize.height)
+      );
+#elif REACT_NATIVE_TARGET_VERSION >= 77
       yogaStyle.setMinDimension(
         yoga::Dimension::Height,
         yoga::StyleLength::points(stateData.minSize.height)
@@ -161,7 +171,13 @@ public:
     
     if(stateData.shouldSetMaxWidth) {
       doesNeedLayout = true;
-#if REACT_NATIVE_TARGET_VERSION >= 77
+    
+#if REACT_NATIVE_TARGET_VERSION >= 78
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Width,
+        yoga::StyleLength::points(stateData.maxSize.width)
+      );
+#elif REACT_NATIVE_TARGET_VERSION >= 77
       yogaStyle.setMinDimension(
         yoga::Dimension::Width,
         yoga::StyleLength::points(stateData.maxSize.width)
@@ -176,7 +192,12 @@ public:
     
     if(stateData.shouldSetMaxHeight) {
       doesNeedLayout = true;
-#if REACT_NATIVE_TARGET_VERSION >= 77
+#if REACT_NATIVE_TARGET_VERSION >= 78
+      yogaStyle.setMinDimension(
+        yoga::Dimension::Height,
+        yoga::StyleLength::points(stateData.maxSize.height)
+      );
+#elif REACT_NATIVE_TARGET_VERSION >= 77
       yogaStyle.setMinDimension(
         yoga::Dimension::Height,
         yoga::StyleLength::points(stateData.maxSize.height)
