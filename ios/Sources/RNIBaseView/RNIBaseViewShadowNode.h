@@ -138,7 +138,7 @@ public:
 #elif REACT_NATIVE_TARGET_VERSION >= 77
       yogaStyle.setMinDimension(
         yoga::Dimension::Width,
-        yoga::StyleSizeLength::points(stateData.minSize.width)
+        yoga::StyleLength::points(stateData.minSize.width)
       );
 #else
       yogaStyle.setMinDimension(
@@ -154,7 +154,7 @@ public:
 #if REACT_NATIVE_TARGET_VERSION >= 78
       yogaStyle.setMinDimension(
         yoga::Dimension::Height,
-        yoga::StyleLength::points(stateData.minSize.height)
+        yoga::StyleSizeLength::points(stateData.minSize.height)
       );
 #elif REACT_NATIVE_TARGET_VERSION >= 77
       yogaStyle.setMinDimension(
