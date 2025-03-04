@@ -75,7 +75,7 @@ ENV['REACT_NATIVE_TARGET_VERSION'] = reactNativeTargetVersion.to_s
 
 The `REACT_NATIVE_TARGET_VERSION` env. variable gets passed as a macro constant, and is used for conditional compilation (e.g. to fix code due to changes with the RN API).
 
-Alternatively, you can just set `RCT_NEW_ARCH_ENABLED` env. directly when you invoke `pod install` (e.g. `REACT_NATIVE_TARGET_VERSION=76 pod install`).
+Alternatively, you can just set `REACT_NATIVE_TARGET_VERSION` env. directly when you invoke `pod install` (e.g. `REACT_NATIVE_TARGET_VERSION=76 pod install`).
 
 When you run `pod install`, you should see the following output in the terminal:
 
