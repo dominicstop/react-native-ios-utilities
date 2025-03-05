@@ -16,6 +16,22 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+should_install_locally = ENV['SHOULD_INSTALL_DEV_LIBRARIES_LOCALLY'] == '1'
+library_path_DGSwiftUtilities = ENV['PATH_DEV_LIBRARY_SWIFT_UTILITIES']
+should_install_locally_DGSwiftUtilities = should_install_locally && library_path_DGSwiftUtilities && File.exist?(library_path_DGSwiftUtilities)
+
+library_path_ComputableLayout = ENV['PATH_DEV_LIBRARY_COMPUTABLE_LAYOUT']
+should_install_locally_ComputableLayout = should_install_locally && library_path_ComputableLayout && File.exist?(library_path_ComputableLayout)
+
+puts "\nreact-native-ios-utilities - example"
+puts " - linkage: #{linkage}"
+puts " - SHOULD_INSTALL_DEV_LIBRARIES_LOCALLY: #{should_install_locally}"
+puts " - PATH_DEV_LIBRARY_SWIFT_UTILITIES: #{library_path_DGSwiftUtilities}"
+puts " - should_install_locally_DGSwiftUtilities: #{should_install_locally_DGSwiftUtilities}"
+puts " - PATH_DEV_LIBRARY_COMPUTABLE_LAYOUT: #{library_path_ComputableLayout}"
+puts " - should_install_locally_ComputableLayout: #{should_install_locally_ComputableLayout}"
+puts "\n"
+
 target 'IosUtilitiesExample' do
   config = use_native_modules!
 
@@ -24,6 +40,18 @@ target 'IosUtilitiesExample' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  if should_install_locally_DGSwiftUtilities
+    pod 'DGSwiftUtilities', :path => library_path_DGSwiftUtilities
+  else
+    pod 'DGSwiftUtilities', '~> 0.46'
+  end
+
+  if should_install_locally_ComputableLayout
+    pod 'ComputableLayout', :path => library_path_ComputableLayout
+  else
+    pod 'ComputableLayout', '~> 1.0'
+  end
 
   target 'IosUtilitiesExampleTests' do
     inherit! :complete
