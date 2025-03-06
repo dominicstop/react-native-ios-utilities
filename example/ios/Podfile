@@ -50,7 +50,7 @@ target 'IosUtilitiesExample' do
   if should_install_locally_ComputableLayout
     pod 'ComputableLayout', :path => library_path_ComputableLayout
   else
-    pod 'ComputableLayout', '~> 1.0'
+    pod 'ComputableLayout', '~> 0.7'
   end
 
   target 'IosUtilitiesExampleTests' do
