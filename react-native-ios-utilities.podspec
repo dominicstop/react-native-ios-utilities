@@ -1,25 +1,41 @@
 require 'json'
 
+absolute_react_native_path = ''
+if !ENV['REACT_NATIVE_PATH'].nil?
+  absolute_react_native_path = File.expand_path(ENV['REACT_NATIVE_PATH'], Pod::Config.instance.project_root)
+else
+  absolute_react_native_path = File.dirname(`node --print "require.resolve('react-native/package.json')"`)
+end
+
+unless defined?(install_modules_dependencies)
+  # `install_modules_dependencies` and `add_dependency` are defined in react_native_pods.rb.
+  # When running with `pod ipc spec`, these methods are not defined and we have to require manually.
+  require File.join(absolute_react_native_path, "scripts/react_native_pods")
+end
+
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
 reactNativeVersion = '0.0.0'
 begin
-  reactNativeVersion = `node --print "require('react-native/package.json').version"`
+  reactNativeVersion = `node --print "require('#{absolute_react_native_path}/package.json').version"`
 rescue
   reactNativeVersion = '0.0.0'
 end
 
 reactNativeTargetVersion = reactNativeVersion.split('.')[1].to_i
 
+use_hermes = ENV['USE_HERMES'] == nil || ENV['USE_HERMES'] == '1'
 fabric_enabled = ENV['RCT_NEW_ARCH_ENABLED'] == '1'
-fabric_compiler_flags = '-DRN_FABRIC_ENABLED -DRCT_NEW_ARCH_ENABLED'
+new_arch_enabled = ENV['RCT_NEW_ARCH_ENABLED'] == '1'
+
 folly_version = '2022.05.16.00'
-folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -Wno-comma -Wno-shorten-64-to-32'
+folly_compiler_flags = get_folly_config()[:compiler_flags]
+
+fabric_compiler_flags = '-DRN_FABRIC_ENABLED -DRCT_NEW_ARCH_ENABLED'
+compiler_flags = folly_compiler_flags + ' ' + "-DREACT_NATIVE_TARGET_VERSION=#{reactNativeTargetVersion}"
 
 linkage = ENV['USE_FRAMEWORKS']
 reactNativeTargetVersionOverride = ENV['REACT_NATIVE_TARGET_VERSION']
-
-use_hermes = ENV['USE_HERMES'] == nil || ENV['USE_HERMES'] == '1'
 
 puts "\nreact-native-ios-utilities"
 puts " - reactNativeTargetVersion: #{reactNativeVersion}"
@@ -33,11 +49,19 @@ if reactNativeTargetVersionOverride
   reactNativeTargetVersion = reactNativeTargetVersionOverride.to_i
 end
 
+if use_hermes
+  compiler_flags << ' -DUSE_HERMES'
+end
+
+if new_arch_enabled
+  compiler_flags << ' ' << fabric_compiler_flags
+end
 
 Pod::Spec.new do |s|
+
   s.name           = "react-native-ios-utilities"
   s.version        = package["version"]
-  s.summary        = package["description"]
+  s.summary    = package['description']
   s.homepage       = package["homepage"]
   s.license        = package["license"]
   s.authors        = package["author"]
@@ -50,13 +74,14 @@ Pod::Spec.new do |s|
   s.static_framework = true
   s.header_dir       = 'react-native-ios-utilities'
 
+
   header_search_paths = [
+    '"$(PODS_ROOT)/Headers/Private/React-Core"', 
     '"$(PODS_ROOT)/boost"',
     '"$(PODS_ROOT)/DoubleConversion"',
     '"$(PODS_ROOT)/RCT-Folly"',
     '"${PODS_ROOT}/Headers/Public/React-hermes"',
     '"${PODS_ROOT}/Headers/Public/hermes-engine"',
-    '"${PODS_ROOT}/Headers/Private/React-Core"',
     '"$(PODS_ROOT)/Headers/Private/Yoga"',
   ]
 
@@ -67,7 +92,6 @@ Pod::Spec.new do |s|
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-performancetimeline/React_performancetimeline.framework/Headers"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-runtimescheduler/React_runtimescheduler.framework/Headers"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-rendererconsistency/React_rendererconsistency.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-performancetimeline/React_performancetimeline.framework/Headers"',
       '"$(PODS_ROOT)/Headers/Public/ReactCommon"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-jserrorhandler/React_jserrorhandler.framework/Headers"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-jsinspector/jsinspector_modern.framework/Headers"',
@@ -75,21 +99,22 @@ Pod::Spec.new do |s|
   end
 
   # Swift/Objective-C compatibility
-  # prev: `pod_target_xcconfig`
-  s.user_target_xcconfig = {
+  s.pod_target_xcconfig = {
     'USE_HEADERMAP' => 'YES',
     'DEFINES_MODULE' => 'YES',
     'CLANG_CXX_LANGUAGE_STANDARD' => 'c++20',
     'SWIFT_COMPILATION_MODE' => 'wholemodule',
+    'OTHER_SWIFT_FLAGS' => "$(inherited) #{new_arch_enabled ? fabric_compiler_flags : ''}",
     'HEADER_SEARCH_PATHS' => header_search_paths.join(' '),
     "FRAMEWORK_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}/React-hermes\"",
     'OTHER_SWIFT_FLAGS' => "$(inherited) #{fabric_enabled ? fabric_compiler_flags : ''}"
   }
-  
+
   user_header_search_paths = [
     '"${PODS_CONFIGURATION_BUILD_DIR}/react-native-ios-utilities/Swift\ Compatibility\ Header"',
     '"$(PODS_ROOT)/Headers/Private/React-bridging/react/bridging"',
     '"$(PODS_CONFIGURATION_BUILD_DIR)/React-bridging/react_bridging.framework/Headers"',
+    # '"$(PODS_ROOT)/Headers/Private/Yoga"', 
   ]
 
   if fabric_enabled && ENV['USE_FRAMEWORKS']
@@ -106,35 +131,26 @@ Pod::Spec.new do |s|
     "HEADER_SEARCH_PATHS" => user_header_search_paths,
   }
 
-  compiler_flags = folly_compiler_flags + ' ' + "-DREACT_NATIVE_TARGET_VERSION=#{reactNativeTargetVersion}"
-  
   if use_hermes
-    compiler_flags << ' -DUSE_HERMES'
+    s.dependency 'hermes-engine'
+    add_dependency(s, "React-jsinspector", :framework_name => 'jsinspector_modern')
+  else
+    s.dependency 'React-jsc'
   end
 
   s.dependency 'React-Core'
   s.dependency 'ReactCommon/turbomodule/core'
+
   s.dependency 'React-RCTAppDelegate' if reactNativeTargetVersion >= 71
   s.dependency 'React-NativeModulesApple' if reactNativeTargetVersion >= 72
 
-  s.dependency 'DGSwiftUtilities', '~> 0.46'
-  s.dependency 'ComputableLayout', '~> 0.7'
-
   if fabric_enabled
-    compiler_flags << ' ' << fabric_compiler_flags
-
     s.dependency 'React-RCTFabric'
     s.dependency 'RCT-Folly', folly_version
   end
 
-  unless defined?(install_modules_dependencies)
-    # `install_modules_dependencies` is defined from react_native_pods.rb.
-    # when running with `pod ipc spec`, this method is not defined and we have to require manually.
-    require File.join(File.dirname(`node --print "require.resolve('react-native/package.json')"`), "scripts/react_native_pods")
-  end
-  install_modules_dependencies(s)
-
-  s.source_files = 'ios/**/*.{h,m,mm,swift,cpp}', 'common/cpp/**/*.{h,cpp}'
+  s.dependency 'DGSwiftUtilities', '~> 0.46'
+  s.dependency 'ComputableLayout', '~> 0.7'
 
   exclude_files = ['ios/Tests/']
   if !fabric_enabled
@@ -142,9 +158,13 @@ Pod::Spec.new do |s|
     exclude_files.append('common/cpp/fabric/')
   end
 
-  s.public_header_files = 'ios/**/*.h'
+  install_modules_dependencies(s)
 
+  s.source_files = 'ios/**/*.{h,m,mm,swift,cpp}', 'common/cpp/**/*.{h,cpp}'
   s.exclude_files = exclude_files
   s.compiler_flags = compiler_flags
+
+  s.public_header_files = 'ios/**/*.h'
   s.private_header_files = ['ios/**/*+Private.h', 'ios/**/Swift.h']
+
 end
