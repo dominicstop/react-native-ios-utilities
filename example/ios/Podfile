@@ -16,6 +16,8 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+use_hermes = ENV['USE_HERMES'] == nil || ENV['USE_HERMES'] == '1'
+
 should_install_locally = ENV['SHOULD_INSTALL_DEV_LIBRARIES_LOCALLY'] == '1'
 library_path_DGSwiftUtilities = ENV['PATH_DEV_LIBRARY_SWIFT_UTILITIES']
 should_install_locally_DGSwiftUtilities = should_install_locally && library_path_DGSwiftUtilities && File.exist?(library_path_DGSwiftUtilities)
@@ -24,6 +26,7 @@ library_path_ComputableLayout = ENV['PATH_DEV_LIBRARY_COMPUTABLE_LAYOUT']
 should_install_locally_ComputableLayout = should_install_locally && library_path_ComputableLayout && File.exist?(library_path_ComputableLayout)
 
 puts "\nreact-native-ios-utilities - example"
+puts " - hermes_enabled: #{use_hermes}"
 puts " - linkage: #{linkage}"
 puts " - SHOULD_INSTALL_DEV_LIBRARIES_LOCALLY: #{should_install_locally}"
 puts " - PATH_DEV_LIBRARY_SWIFT_UTILITIES: #{library_path_DGSwiftUtilities}"
@@ -37,6 +40,7 @@ target 'IosUtilitiesExample' do
 
   use_react_native!(
     :path => config[:reactNativePath],
+    :hermes_enabled => use_hermes,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
