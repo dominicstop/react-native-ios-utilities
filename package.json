@@ -182,6 +182,11 @@
   "codegenConfig": {
     "name": "RNIUtilitiesSpec",
     "type": "all",
-    "jsSrcsDir": "src"
+    "jsSrcsDir": "src",
+    "componentProvider": {
+      "RNIDetachedView": "RNIDetachedView",
+      "RNIDummyTestView": "RNIDummyTestView",
+      "RNIWrapperView": "RNIWrapperView"
+    }
   }
 }
