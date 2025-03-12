@@ -1,4 +1,5 @@
 {
   "name": "IosUtilitiesExample",
-  "displayName": "IosUtilitiesExample"
+  "displayName": "IosUtilitiesExample",
+  "jsEngine": "hermes"
 }
