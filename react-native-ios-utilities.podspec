@@ -26,7 +26,6 @@ reactNativeTargetVersion = reactNativeVersion.split('.')[1].to_i
 
 use_hermes = ENV['USE_HERMES'] == nil || ENV['USE_HERMES'] == '1'
 fabric_enabled = ENV['RCT_NEW_ARCH_ENABLED'] == '1'
-new_arch_enabled = ENV['RCT_NEW_ARCH_ENABLED'] == '1'
 
 folly_version = '2022.05.16.00'
 folly_compiler_flags = get_folly_config()[:compiler_flags]
@@ -53,7 +52,7 @@ if use_hermes
   compiler_flags << ' -DUSE_HERMES'
 end
 
-if new_arch_enabled
+if fabric_enabled
   compiler_flags << ' ' << fabric_compiler_flags
 end
 
@@ -61,7 +60,7 @@ Pod::Spec.new do |s|
 
   s.name           = "react-native-ios-utilities"
   s.version        = package["version"]
-  s.summary    = package['description']
+  s.summary        = package['description']
   s.homepage       = package["homepage"]
   s.license        = package["license"]
   s.authors        = package["author"]
@@ -74,15 +73,14 @@ Pod::Spec.new do |s|
   s.static_framework = true
   s.header_dir       = 'react-native-ios-utilities'
 
-
   header_search_paths = [
     '"$(PODS_ROOT)/Headers/Private/React-Core"', 
-    '"$(PODS_ROOT)/boost"',
+    # '"$(PODS_ROOT)/boost"',
     '"$(PODS_ROOT)/DoubleConversion"',
-    '"$(PODS_ROOT)/RCT-Folly"',
-    '"${PODS_ROOT}/Headers/Public/React-hermes"',
-    '"${PODS_ROOT}/Headers/Public/hermes-engine"',
-    '"$(PODS_ROOT)/Headers/Private/Yoga"',
+    # '"$(PODS_ROOT)/RCT-Folly"',
+    # '"${PODS_ROOT}/Headers/Public/React-hermes"',
+    # '"${PODS_ROOT}/Headers/Public/hermes-engine"',
+    # '"$(PODS_ROOT)/Headers/Private/Yoga"',
   ]
 
   if fabric_enabled && ENV['USE_FRAMEWORKS']
@@ -95,8 +93,15 @@ Pod::Spec.new do |s|
       '"$(PODS_ROOT)/Headers/Public/ReactCommon"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-jserrorhandler/React_jserrorhandler.framework/Headers"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-jsinspector/jsinspector_modern.framework/Headers"',
+      
+      '"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/folly.framework/Headers"',
+      '"${PODS_CONFIGURATION_BUILD_DIR}/fmt/fmt.framework/Headers"',
+      '"${PODS_CONFIGURATION_BUILD_DIR}/React-utils/React_utils.framework/Headers"',
+      '"${PODS_CONFIGURATION_BUILD_DIR}/React-debug/React_debug.framework/Headers"',
+      '"${PODS_CONFIGURATION_BUILD_DIR}/React-rendererdebug/React_rendererdebug.framework/Headers"',
     ])
   end
+  
 
   # Swift/Objective-C compatibility
   s.pod_target_xcconfig = {
@@ -104,7 +109,7 @@ Pod::Spec.new do |s|
     'DEFINES_MODULE' => 'YES',
     'CLANG_CXX_LANGUAGE_STANDARD' => 'c++20',
     'SWIFT_COMPILATION_MODE' => 'wholemodule',
-    'OTHER_SWIFT_FLAGS' => "$(inherited) #{new_arch_enabled ? fabric_compiler_flags : ''}",
+    'OTHER_SWIFT_FLAGS' => "$(inherited) #{fabric_enabled ? fabric_compiler_flags : ''}",
     'HEADER_SEARCH_PATHS' => header_search_paths.join(' '),
     "FRAMEWORK_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}/React-hermes\"",
     'OTHER_SWIFT_FLAGS' => "$(inherited) #{fabric_enabled ? fabric_compiler_flags : ''}"
@@ -114,7 +119,7 @@ Pod::Spec.new do |s|
     '"${PODS_CONFIGURATION_BUILD_DIR}/react-native-ios-utilities/Swift\ Compatibility\ Header"',
     '"$(PODS_ROOT)/Headers/Private/React-bridging/react/bridging"',
     '"$(PODS_CONFIGURATION_BUILD_DIR)/React-bridging/react_bridging.framework/Headers"',
-    # '"$(PODS_ROOT)/Headers/Private/Yoga"', 
+    '"$(PODS_ROOT)/Headers/Private/Yoga"', 
   ]
 
   if fabric_enabled && ENV['USE_FRAMEWORKS']
@@ -134,6 +139,7 @@ Pod::Spec.new do |s|
   if use_hermes
     s.dependency 'hermes-engine'
     add_dependency(s, "React-jsinspector", :framework_name => 'jsinspector_modern')
+    add_dependency(s, "React-jsinspectortracing", :framework_name => 'jsinspector_moderntracing')
   else
     s.dependency 'React-jsc'
   end
