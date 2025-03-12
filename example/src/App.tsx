@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { HomeScreen } from "./components/HomeScreen";
 
-import { SHARED_ENV } from "./constants/SharedEnv";
+import { IS_USING_NEW_ARCH, SHARED_ENV } from "./constants/SharedEnv";
 import { ROUTE_ITEMS } from "./constants/Routes";
 import { ROUTE_KEYS } from "./constants/RouteKeys";
 
@@ -29,6 +29,16 @@ function Tab1StackScreen() {
 }
 
 export default function App() {
+  console.log({
+    IS_USING_NEW_ARCH,
+  });
+
+  if(!SHARED_ENV.enableReactNavigation){
+    return(
+      <HomeScreen/>
+    );
+  };
+
   if (shouldEnableTabs) {
     const TabNavigator = createBottomTabNavigator();
 

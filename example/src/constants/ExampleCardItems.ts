@@ -9,6 +9,7 @@ import { RNIDetachedViewTest02 } from "../examples/RNIDetachedViewTest02";
 
 import type { ExampleItemProps } from "../examples/SharedExampleTypes";
 import type { RouteEntry } from "./Routes";
+import { SHARED_ENV } from "./SharedEnv";
 
 
 type ExampleItemBase = {
@@ -67,16 +68,20 @@ export const EXAMPLE_ITEMS: Array<ExampleItem> = (() => {
     },
   ]; 
 
-  // if (SHARED_ENV.enableReactNavigation) {
-  //   items.splice(0, 0, ...[DebugControls]);
-  // }
-
-  return [
+  const items: Array<ExampleItem> = [
     {
       type: 'card',
       component: AppMetadataCard,
     },
-    ...screenItems, 
-    ...cardItems
   ];
+
+  if(SHARED_ENV.enableReactNavigation){
+    items.push(...screenItems);
+  };
+
+  if(SHARED_ENV.shouldShowCardItems){
+    items.push(...cardItems);
+  };
+
+  return items;
 })();
