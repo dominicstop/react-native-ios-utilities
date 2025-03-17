@@ -1,11 +1,15 @@
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
+const { getConfig } = require('react-native-builder-bob/metro-config');
+
 const path = require('path');
 const escape = require('escape-string-regexp');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
-const pak = require('../package.json');
+
+const pkg = require('../package.json');
+
 
 const root = path.resolve(__dirname, '..');
-const modules = Object.keys({ ...pak.peerDependencies });
+const modules = Object.keys({ ...pkg.peerDependencies });
 
 /**
  * Metro configuration
@@ -49,4 +53,16 @@ const config = {
   },
 };
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+const defaultConfig = getConfig(getDefaultConfig(__dirname), {
+  root,
+  pkg,
+  project: __dirname,
+});
+
+/**
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
+ *
+ * @type {import('metro-config').MetroConfig}
+ */
+module.exports = mergeConfig(defaultConfig, config);
