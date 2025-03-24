@@ -138,10 +138,13 @@ Pod::Spec.new do |s|
 
   if use_hermes
     s.dependency 'hermes-engine'
-    add_dependency(s, "React-jsinspector", :framework_name => 'jsinspector_modern')
-    add_dependency(s, "React-jsinspectortracing", :framework_name => 'jsinspector_moderntracing')
   else
     s.dependency 'React-jsc'
+  end
+
+  if use_hermes && reactNativeTargetVersion >= 78
+    add_dependency(s, "React-jsinspector", :framework_name => 'jsinspector_modern')
+    add_dependency(s, "React-jsinspectortracing", :framework_name => 'jsinspector_moderntracing')
   end
 
   s.dependency 'React-Core'
@@ -159,6 +162,7 @@ Pod::Spec.new do |s|
   s.dependency 'ComputableLayout', '~> 0.7'
 
   exclude_files = ['ios/Tests/']
+  
   if !fabric_enabled
     exclude_files.append('ios/Fabric/')
     exclude_files.append('common/cpp/fabric/')
