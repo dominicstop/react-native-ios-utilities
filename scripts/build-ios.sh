@@ -2,7 +2,33 @@
 
 ARG_BUILD_CONFIG="${1:-DEBUG}"
 
-cd ./example/ios
+# `cd ./example/ios`
+IOS_DIR_ITEMS=(
+  "example/ios" 
+  "ios"
+)
+
+# set directory if needed
+if [ -d "ios" ]; then
+  for directory in "${IOS_DIR_ITEMS[@]}"; do
+    if [ -d "$directory" ]; then
+      cd "$directory"
+      echo "Current DIR: $(pwd)"
+      echo "Changed directory to: $directory"
+      break
+    fi
+  done
+fi
+
+WORKSPACE_FILE_NAME=$(
+  find . -name "*.xcworkspace" | head -n 1
+)
+
+# Check if no file was found
+if [ -z "$WORKSPACE_FILE_NAME" ]; then
+  echo "Error: No *.xcworkspace file found"
+  exit 1
+fi
 
 BUILD_INFO=$(
   xcodebuild \
@@ -25,6 +51,7 @@ SCHEME_NAME=$(
 )
 
 echo "Starting build..."
+echo " - Workspace File: - $WORKSPACE_FILE_NAME"
 echo " - Configuration: $ARG_BUILD_CONFIG"
 echo " - Scheme: $SCHEME_NAME"
 
