@@ -10705,7 +10705,7 @@ __metadata:
     react: 19.0.0
     react-native: 0.78.0
     react-native-builder-bob: ^0.20.0
-    release-it: ^16.2.1
+    release-it: ^16.3.0
     turbo: ^1.10.7
     typescript: ^5.2.2
   peerDependencies:
@@ -11109,7 +11109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"release-it@npm:^16.2.1":
+"release-it@npm:^16.3.0":
   version: 16.3.0
   resolution: "release-it@npm:16.3.0"
   dependencies:
