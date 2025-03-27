@@ -127,14 +127,15 @@ public:
       doesNeedLayout = true;
 
 
+/// PR: #11, #20 (by: fobos531)
+/// * https://github.com/dominicstop/react-native-ios-utilities/pull/20
+/// * https://github.com/dominicstop/react-native-ios-utilities/pull/18
+///
 #if REACT_NATIVE_TARGET_VERSION >= 78
       yogaStyle.setMinDimension(
         yoga::Dimension::Width,
         yoga::StyleSizeLength::points(stateData.minSize.width)
       );
-/// PR-#11 by: fobos531
-/// Link: https://github.com/dominicstop/react-native-ios-utilities/pull/18
-///
 #elif REACT_NATIVE_TARGET_VERSION >= 77
       yogaStyle.setMinDimension(
         yoga::Dimension::Width,
