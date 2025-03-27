@@ -34,7 +34,6 @@ namespace facebook::react {
 // MARK: React-Native Related
 // --------------------------
 
-#if __cplusplus
 - (nullable RCTAppDelegate * )reactAppDelegate;
 
 - (nullable RCTSurfacePresenterBridgeAdapter *)reactBridgeAdapter;
@@ -49,6 +48,7 @@ namespace facebook::react {
 
 - (nullable RCTScheduler *)reactScheduler;
 
+#if RCT_NEW_ARCH_ENABLED && __cplusplus
 - (nullable facebook::react::UIManager *)reactUIManager;
 #endif
 

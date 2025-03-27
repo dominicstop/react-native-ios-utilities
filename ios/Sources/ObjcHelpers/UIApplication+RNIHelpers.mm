@@ -5,18 +5,16 @@
 //  Created by Dominic Go on 5/8/24.
 //
 
-
 #import "UIApplication+RNIHelpers.h"
-
-#if __cplusplus
 #import "RCTAppDelegate.h"
 
 #import <React/RCTSurfacePresenter.h>
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <React/RCTMountingManager.h>
 #import <React/RCTComponentViewRegistry.h>
-#import <React/RCTScheduler.h>
 
+#if RCT_NEW_ARCH_ENABLED
+#import <React/RCTScheduler.h>
 #import <react/renderer/uimanager/UIManager.h>
 #endif
 
@@ -81,7 +79,6 @@
 // MARK: React-Native Related
 // --------------------------
 
-#if __cplusplus
 - (RCTAppDelegate *)reactAppDelegate
 {
   id<UIApplicationDelegate> appDelegate =
@@ -159,6 +156,7 @@
   return [reactSurfacePresenter scheduler];
 }
 
+#if RCT_NEW_ARCH_ENABLED && __cplusplus
 /// Note - Prefer to use:
 /// ```
 /// RCTScheduler *reactScheduler = [self reactScheduler];

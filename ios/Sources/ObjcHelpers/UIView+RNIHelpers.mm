@@ -14,8 +14,10 @@
 #if RCT_NEW_ARCH_ENABLED
 #import "UIView+RNIFabricHelpers.h"
 #import <React/RCTViewComponentView.h>
+
 #else
 #import "UIView+RNIPaperHelpers.h"
+
 #import <React/RCTView.h>
 #import <React/UIView+React.h>
 #import <React/RCTUIManager.h>
