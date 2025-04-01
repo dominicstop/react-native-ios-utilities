@@ -30,9 +30,6 @@ fabric_enabled = ENV['RCT_NEW_ARCH_ENABLED'] == '1'
 folly_version = '2022.05.16.00'
 folly_compiler_flags = get_folly_config()[:compiler_flags]
 
-fabric_compiler_flags = '-DRN_FABRIC_ENABLED -DRCT_NEW_ARCH_ENABLED'
-compiler_flags = folly_compiler_flags + ' ' + "-DREACT_NATIVE_TARGET_VERSION=#{reactNativeTargetVersion}"
-
 linkage = ENV['USE_FRAMEWORKS']
 reactNativeTargetVersionOverride = ENV['REACT_NATIVE_TARGET_VERSION']
 
@@ -47,6 +44,9 @@ puts "\n"
 if reactNativeTargetVersionOverride 
   reactNativeTargetVersion = reactNativeTargetVersionOverride.to_i
 end
+
+fabric_compiler_flags = '-DRN_FABRIC_ENABLED -DRCT_NEW_ARCH_ENABLED'
+compiler_flags = folly_compiler_flags + ' ' + "-DREACT_NATIVE_TARGET_VERSION=#{reactNativeTargetVersion}"
 
 if use_hermes
   compiler_flags << ' -DUSE_HERMES'
