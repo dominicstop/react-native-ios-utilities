@@ -9,7 +9,7 @@ platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
 # ENV['USE_FRAMEWORKS'] = 'dynamic'
-ENV['RCT_NEW_ARCH_ENABLED'] = '0'
+# ENV['RCT_NEW_ARCH_ENABLED'] = '0'
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
