@@ -39,8 +39,16 @@ BUILD_INFO=$(
 BUILD_CONFIG=""
 if [ "$ARG_BUILD_CONFIG" == "DEBUG" ]; then
   BUILD_CONFIG="Debug"
+
+elif [ "$ARG_BUILD_CONFIG" == "Debug" ]; then
+  BUILD_CONFIG="Debug"
+
 elif [ "$ARG_BUILD_CONFIG" == "RELEASE" ]; then
   BUILD_CONFIG="Release"
+
+elif [ "$ARG_BUILD_CONFIG" == "Release" ]; then
+  BUILD_CONFIG="Release"
+
 else
   echo "Error: Unknown build configuration '$ARG_BUILD_CONFIG'. Please specify 'DEBUG' or 'RELEASE'."
   exit 1
