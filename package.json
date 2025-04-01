@@ -24,7 +24,8 @@
     "!**/__fixtures__",
     "!**/__mocks__",
     "!**/.*",
-    "ReactNativeIosUtilities.podspec"
+    "ReactNativeIosUtilities.podspec",
+    "scripts"
   ],
   "scripts": {
     "example": "yarn workspace react-native-ios-utilities-example",
