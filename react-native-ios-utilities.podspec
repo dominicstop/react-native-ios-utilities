@@ -144,6 +144,8 @@ Pod::Spec.new do |s|
   if use_hermes && reactNativeTargetVersion >= 78
     add_dependency(s, "React-jsinspector", :framework_name => 'jsinspector_modern')
     add_dependency(s, "React-jsinspectortracing", :framework_name => 'jsinspector_moderntracing')
+    # bring in the new C-API runtime headers for React Native 0.79
+    add_dependency(s, "React-jsitooling", :framework_name => 'jsitooling')
   end
 
   s.dependency 'React-Core'
