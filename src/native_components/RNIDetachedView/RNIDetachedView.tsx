@@ -68,6 +68,9 @@ export const RNIDetachedView = React.forwardRef<
   const reactChildrenCount = React.Children.count(props.children);
 
   const children = React.Children.map(props.children, (child) => {
+    if (React.isValidElement(child) && child.type === React.Fragment) {
+      return child;
+    }
     return React.cloneElement(
       child as React.ReactElement<RNIDetachedViewContentProps>, 
       {
