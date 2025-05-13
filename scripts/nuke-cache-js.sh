@@ -1,14 +1,16 @@
 #!/bin/bash
 
-echo "Clearing RN/JS-Related Caches..."
+echo "Clearing RN/JS-Related Global Caches..."
 
 # Clear Watchman Watches
+watchman shutdown-server
 watchman watch-del-all
 
 # Remove temporary files and caches
 rm -rfv $TMPDIR/react-*
 rm -rfv $TMPDIR/react-native-packager-cache-*
 rm -rfv $TMPDIR/metro-bundler-cache-*
+rm -rfv $TMPDIR/metro-* 
 rm -rfv $TMPDIR/haste-map-*
 rm -rfv $TMPDIR/metro-cache
 
