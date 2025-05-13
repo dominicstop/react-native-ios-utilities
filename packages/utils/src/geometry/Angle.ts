@@ -2,7 +2,7 @@ import { Point } from "./Point";
 
 export type AngleUnit = 'radians' | 'degrees';
 
-export type AngleConfig = {
+export type AngleValue = {
   angleUnit: AngleUnit;
   angleValue: number;
 };
@@ -12,7 +12,7 @@ export class Angle {
   angleUnit!: AngleUnit;
   angleRawValue!: number;
 
-  constructor(args: AngleConfig){
+  constructor(args: AngleValue){
     this.angleUnit = args.angleUnit;
     this.angleRawValue = args.angleValue;
   };
