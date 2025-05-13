@@ -1,5 +1,5 @@
 import { Rect } from "./Rect";
-import { Angle } from "./Angle";
+import { Angle, AngleValue } from "./Angle";
 import { BoxedCircle } from "./BoxedCircle";
 import { Point } from "./Point";
 import { Line } from "./Line";
@@ -9,6 +9,7 @@ import { ArrayHelpers } from "../helpers";
 
 export type BoxedHexagonValue = {
   circumRadius: number;
+  startAngleOffset?: AngleValue;
 } & ({
   mode: 'relativeToOrigin';
   origin: Point;
@@ -21,9 +22,17 @@ export class BoxedHexagon {
 
   origin: Point;
   circumRadius: number;
+  startAngleOffset: Angle;
 
   constructor(args: BoxedHexagonValue){
     this.circumRadius = args.circumRadius;
+
+    const angleValue = args.startAngleOffset ?? {
+      angleUnit: 'degrees',
+      angleValue: 0,
+    };
+
+    this.startAngleOffset = new Angle(angleValue);
 
     this.origin = (() => {
       switch(args.mode){
@@ -80,7 +89,7 @@ export class BoxedHexagon {
     const angles: Array<Angle> = [];
     const minAngle = 360 / 6;
 
-    let currentAngle = 0;
+    let currentAngle = this.startAngleOffset.degrees;
     for(let i = 0; i < 6; i ++){
       currentAngle += minAngle;
 
@@ -203,6 +212,7 @@ export class BoxedHexagon {
       });
     });
   };
+  
   static computeHexagonsForFlowerArrangment(args: {
     circumRadius: number;
     centerPoint: Point;
