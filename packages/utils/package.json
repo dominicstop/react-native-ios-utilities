@@ -1,0 +1,64 @@
+{
+  "name": "@dominicstop/utils",
+  "packageManager": "yarn@3.6.1",
+  "version": "1.1.0",
+  "description": "Yet another event emitter written in typescript.",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/module/index.d.ts",
+  "source": "src/index",
+  "exports": {
+    "import": "./lib/module/index.js",
+    "require": "./lib/commonjs/index.js",
+    "types": "./lib/module/index.d.ts"
+  },
+  "files": [
+    "lib/**/*",
+    "src/**/*"
+  ],
+  "keywords": [
+    "emitter",
+    "event-emitter",
+    "typescript",
+    "typescript-event-emitter"
+  ],
+  "repository": "https://github.com/dominicstop/ts-event-emitter",
+  "author": "Dominic Go <dominicstop@gmail.com> (https://github.com/dominicstop)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dominicstop/ts-event-emitter/issues"
+  },
+  "homepage": "https://github.com/dominicstop/ts-event-emitter#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "release": "release-it --only-version",
+    "typescript": "tsc --noEmit --project tsconfig.json",
+    "build": "yarn run build:esm && yarn run build:cjs",
+    "build:esm": "tsc --project tsconfig.esm.json",
+    "build:cjs": "tsc --project tsconfig.cjs.json",
+    "clean": "rm -rf lib",  
+    "prebuild": "npm run clean",
+    "prepare": "npm run build"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "⚙️ chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    }
+  },
+  "devDependencies": {
+    "release-it": "^19.0.2",
+    "typescript": "^5.8.3"
+  }
+}

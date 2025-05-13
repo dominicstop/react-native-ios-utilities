@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib",
+    "rootDir": "src",
+    "declaration": true,
+    "module": "ESNext",
+    "target": "ES2020",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declarationMap": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/*",
+    "lib"
+  ]
+}

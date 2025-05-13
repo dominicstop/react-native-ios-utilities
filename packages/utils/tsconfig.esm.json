@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "outDir": "lib/module",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "noEmit": false
+  }
+}
