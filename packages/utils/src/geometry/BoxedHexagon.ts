@@ -173,7 +173,7 @@ export class BoxedHexagon {
     });
   };
 
-  static centerHexagons(args: {
+  static recenterHexagonsRelativeToPoint(args: {
     hexagons: Array<BoxedHexagon>;
     centerPoint: Point;
   }){

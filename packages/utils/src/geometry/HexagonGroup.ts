@@ -104,7 +104,7 @@ export class HexagonGroup {
 
     const boundingBox = Point.getBoundingBoxForPoints(allPoints);
 
-    BoxedHexagon.centerHexagons({
+    BoxedHexagon.recenterHexagonsRelativeToPoint({
       hexagons,
       centerPoint: args.centerPoint,
     });
@@ -150,7 +150,7 @@ export class HexagonGroup {
       };
 
       if(shouldReCenter){
-        BoxedHexagon.centerHexagons({
+        BoxedHexagon.recenterHexagonsRelativeToPoint({
           hexagons: hexagonGroup.hexagons,
           centerPoint: args.centerPoint,
         });
@@ -183,7 +183,7 @@ export class HexagonGroup {
       };
 
       if(shouldReCenter){
-        BoxedHexagon.centerHexagons({
+        BoxedHexagon.recenterHexagonsRelativeToPoint({
           hexagons,
           centerPoint: args.centerPoint,
         });
