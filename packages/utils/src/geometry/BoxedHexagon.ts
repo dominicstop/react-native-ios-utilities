@@ -226,7 +226,14 @@ export class BoxedHexagon {
   // MARK: Alias Init
   // ----------------
 
-  static createPresetHexagon(args: BoxedHexagonValue & { 
+  static initializeFromValue(args: BoxedHexagonValue): BoxedHexagon {
+    return new BoxedHexagon({
+      mode: 'relativeToCenter',
+      ...args,
+    });
+  };
+
+  static createPresetHexagon(args: BoxedHexagonInit & { 
     hexagonType: HexagonType
   }){
     // NOTE: 
