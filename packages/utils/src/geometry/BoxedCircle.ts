@@ -72,4 +72,15 @@ export class BoxedCircle {
       isClockwise: false,
     });
   };
+
+  // MARK: - Init Alias
+  // ------------------
+
+  static initializeFromValue(args: BoxedCircleValue): BoxedCircle {
+    return new BoxedCircle({
+      mode: 'relativeToCenter',
+      center: args.center,
+      radius: args.radius,
+    });
+  };
 };
