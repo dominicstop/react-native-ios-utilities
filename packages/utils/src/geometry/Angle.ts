@@ -100,8 +100,8 @@ export class Angle {
     const delta = angleLeading - angleTrailing;
     
     const needsAdj = isClockwise
-      ? delta < 0
-      : delta > 0;
+      ? delta > 0
+      : delta < 0;
     
     // amount to shift ccw direction
     const adj: number = (() => {
