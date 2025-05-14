@@ -9,12 +9,19 @@ export type AngleValue = {
 
 export class Angle {
 
-  angleUnit!: AngleUnit;
-  angleRawValue!: number;
+  angleUnit: AngleUnit;
+  angleRawValue: number;
 
   constructor(args: AngleValue){
     this.angleUnit = args.angleUnit;
     this.angleRawValue = args.angleValue;
+  };
+
+  get asValue(): AngleValue {
+    return {
+      angleUnit: this.angleUnit,
+      angleValue: this.angleRawValue,
+    };
   };
 
   get radians(): number {
