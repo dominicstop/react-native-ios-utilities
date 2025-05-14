@@ -108,6 +108,11 @@ export class Triangle {
   
     return area;
   };
+
+  get isCollinear(): boolean {
+    return isNaN(this.area) || this.area === 0;
+  };
+  
   // MARK: - Methods
   // ---------------
 
