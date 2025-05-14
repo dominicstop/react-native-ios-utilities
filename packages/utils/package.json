@@ -34,7 +34,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "release": "release-it --only-version",
     "typescript": "tsc --noEmit --project tsconfig.json",
