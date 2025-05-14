@@ -47,7 +47,7 @@
   },
   "release-it": {
     "git": {
-      "commitMessage": "⚙️ chore: release ${version}",
+      "commitMessage": "⚙️ Chore: utils - Release ${version}",
       "tagName": "v${version}"
     },
     "npm": {

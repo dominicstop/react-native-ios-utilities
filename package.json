@@ -127,7 +127,7 @@
   "packageManager": "yarn@3.6.1",
   "release-it": {
     "git": {
-      "commitMessage": "⚙️ Chore: Release ${version}",
+      "commitMessage": "⚙️ Chore: react-native-ios-utilities - Release ${version}",
       "tagName": "v${version}"
     },
     "npm": {
