@@ -67,6 +67,14 @@ export class BoxedHexagon {
   // MARK: Getters
   // -------------
 
+  get asValue(): BoxedHexagonValue {
+    return {
+      center: this.boundingRect.centerPoint,
+      circumRadius: this.circumRadius,
+      startAngleOffset: this.startAngleOffset.asValue,
+    };
+  };
+
   // distance between two adjacent points
   get sideLength(): number {
     return this.circumRadius;
