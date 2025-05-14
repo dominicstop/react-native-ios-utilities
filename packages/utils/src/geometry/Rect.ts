@@ -216,13 +216,14 @@ export class Rect {
   };
 
   applyScaleToNewSize(newSize: SizeValue){
-    let center = this.centerPoint;
+    const center = this.centerPoint;
 
-    let newX = center.x - (newSize.width / 2);
-    let newY = center.y - (newSize.height / 2);
+    const newX = center.x - (newSize.width / 2);
+    const newY = center.y - (newSize.height / 2);
 
     this.origin.x = newX;
     this.origin.y = newY;
+    this.size = newSize;
   };
 
   applyScaleByFactor(
