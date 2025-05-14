@@ -117,4 +117,16 @@ export class Point {
       });
     });
   };
+
+  static sumOfAllPoints(...points: Array<Point>){
+    let sumX = 0;
+    let sumY = 0;
+    
+    for (const point of points) {
+      sumX += point.x;
+      sumY += point.y;
+    };
+
+    return new Point({ x: sumX, y: sumY });
+  };
 };
