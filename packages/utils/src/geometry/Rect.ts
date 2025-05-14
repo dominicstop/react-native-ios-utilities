@@ -53,6 +53,58 @@ export class Rect {
     };
   };
 
+
+  // MARK: Getter + Setter
+  // ---------------------
+
+  get minX(): number {
+    return this.origin.x;
+  };
+
+  set minX(value: number) {
+    this.origin.x = value;
+  };
+
+  get minY(): number {
+    return this.origin.y;
+  };
+  
+  set minY(value: number) {
+    this.origin.y = value;
+  };
+
+  get midX(): number {
+    return this.origin.x + (this.size.width / 2);
+  };
+  
+  set midX(value: number) {
+    this.origin.x = value - (this.width / 2);
+  };
+
+  get midY(): number {
+    return this.origin.y + (this.size.height / 2);
+  };
+  
+  set midY(value: number) {
+    this.origin.y = value - (this.height / 2);
+  };
+  
+  get maxX(): number {
+    return this.origin.x + this.size.width;
+  };
+
+  set maxX(value: number) {
+    this.origin.x = value - this.width;
+  };
+
+  get maxY(): number {
+    return this.origin.y + this.size.height;
+  };
+  
+  set maxY(value: number) {
+    this.origin.y = value - this.height;
+  }
+  
   // MARK: Computed Properties
   // -------------------------
 
@@ -70,30 +122,6 @@ export class Rect {
       maxX: this.maxX,
       maxY: this.maxY,
     };
-  };
-
-  get minX(): number {
-    return this.origin.x;
-  };
-
-  get midX(): number {
-    return this.origin.x + (this.size.width / 2);
-  };
-
-  get maxX(): number {
-    return this.origin.x + this.size.width;
-  };
-
-  get minY(): number {
-    return this.origin.y;
-  };
-
-  get midY(): number {
-    return this.origin.y + (this.size.height / 2);
-  };
-
-  get maxY(): number {
-    return this.origin.y + this.size.height;
   };
 
   get centerPoint(): Point {
@@ -178,117 +206,6 @@ export class Rect {
 
   // MARK: Methods
   // -------------
-
-  adjustPoint(adjConfig: {
-    mode: 'topLeft';
-    minX?: number;
-    minY?: number;
-  } | {
-    mode: 'center';
-    midX?: number;
-    midY?: number;
-  } | {
-    mode: 'bottomRight'
-    maxX?: number;
-    maxY?: number;
-  } | {
-    mode: 'topRight';
-    maxX?: number;
-    minY?: number;
-  } | {
-    mode: 'bottomLeft';
-    minX?: number;
-    maxY?: number;
-  }){
-    let newX: number; 
-    let newY: number;
-
-    switch(adjConfig.mode){
-      case 'topLeft':
-        if(adjConfig.minX == null && adjConfig.minY == null) {
-          return;
-        };
-
-        this.origin.x = adjConfig.minX ?? this.minX;
-        this.origin.y = adjConfig.minY ?? this.minY;
-        break;
-      
-      case 'center':
-        if(adjConfig.midX == null && adjConfig.midY == null) {
-          return;
-        };
-
-        newX = (() => {
-          if(adjConfig.midX == null){
-            return this.midX;
-          };
-
-          return adjConfig.midX - (this.width / 2);
-        })();
-
-        newY = (() => {
-          if(adjConfig.midY == null){
-            return this.midY;
-          };
-
-          return adjConfig.midY - (this.height / 2);
-        })();
-
-        this.origin.x = newX;
-        this.origin.y = newY;
-        break;
-
-      case 'bottomRight':
-        if(adjConfig.maxX == null && adjConfig.maxY == null) {
-          return;
-        };
-
-        newX = (() => {
-          if(adjConfig.maxX == null){
-            return this.maxX;
-          };
-
-          return adjConfig.maxX - this.width;
-        })();
-
-        newY = (() => {
-          if(adjConfig.maxY == null){
-            return this.maxY;
-          };
-
-          return adjConfig.maxY - this.height;
-        })();
-
-        this.origin.x = newX;
-        this.origin.y = newY;
-        break;
-      
-      // Recursive
-      case 'topRight':
-        this.adjustPoint({ 
-          mode: 'bottomRight', 
-          maxX: adjConfig.maxX,
-        });
-
-        this.adjustPoint({ 
-          mode: 'topLeft', 
-          minY: adjConfig.minY
-        });
-        break;
-      
-      // Recursive
-      case 'bottomLeft':
-        this.adjustPoint({ 
-          mode: 'topLeft', 
-          minX: adjConfig.minX,
-        });
-
-        this.adjustPoint({ 
-          mode: 'bottomRight', 
-          maxY: adjConfig.maxY,
-        });
-    };
-  };
 
   setPointCenter(newCenterPoint: Point){
     const newX = newCenterPoint.x - (this.width / 2);
