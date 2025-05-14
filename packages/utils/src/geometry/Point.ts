@@ -43,6 +43,10 @@ export class Point {
     });
   };
 
+  getSum(...otherPoints: Array<Point>): Point {
+    return Point.sumOfAllPoints(this, ...otherPoints);
+  };
+
   static get zero(): Point {
     return new Point({ x: 0, y: 0 });
   }; 
