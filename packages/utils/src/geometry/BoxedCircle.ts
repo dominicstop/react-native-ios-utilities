@@ -65,6 +65,13 @@ export class BoxedCircle {
     });
   };
 
+  get asValue(): BoxedCircleValue {
+    return {
+      center: this.centerPoint,
+      radius: this.radius,
+    };
+  };
+
   pointAlongPath(angle: Angle): Point {
     return angle.getPointAlongCircle({
       centerPoint: this.centerPoint,
