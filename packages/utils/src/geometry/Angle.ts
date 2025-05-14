@@ -86,4 +86,61 @@ export class Angle {
 
     return new Point({x, y});
   };
+
+  computeMidAngle(args: {
+    otherAngle: Angle;
+    isClockwise: boolean;
+  }): Angle {
+
+    const isClockwise = args.isClockwise ?? true;
+
+    const angleLeading = this.normalized.degrees;
+    const angleTrailing = args.otherAngle.normalized.degrees;
+    
+    const delta = angleLeading - angleTrailing;
+    
+    const needsAdj = isClockwise
+      ? delta < 0
+      : delta > 0;
+    
+    // amount to shift ccw direction
+    const adj: number = (() => {
+      if(needsAdj){
+        return 0;
+      };
+      
+      return Math.abs(delta) / 2;
+    })();
+
+    const angleMidDeg: number = (() => {
+      if (adj == 0){
+        return (angleLeading + angleTrailing) / 2;
+      };
+      
+      // adjust by shifting counter clockwise
+      const angleLeadingShifted = new Angle({ 
+        angleUnit: 'degrees',  
+        angleValue: angleLeading + adj,
+      });
+
+      const angleTrailingShifted = new Angle({ 
+        angleUnit: 'degrees',  
+        angleValue: angleTrailing + adj,
+      });
+
+      // normalized to 0...360
+      let angleLeadingNormalized = angleLeadingShifted.normalized.degrees;
+      let angleTrailingNormalized = angleTrailingShifted.normalized.degrees;
+      
+      let angleMidShifted = (angleLeadingNormalized + angleTrailingNormalized) / 2;
+      
+      // undo shifting
+      return angleMidShifted - adj;
+    })();
+    
+    return new Angle({
+      angleUnit: 'degrees',
+      angleValue: angleMidDeg,
+    });
+  };
 };
