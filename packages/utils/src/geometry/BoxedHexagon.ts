@@ -10,13 +10,23 @@ export type HexagonType = 'pointyTopped' | 'flatTopped';
 export type BoxedHexagonValue = {
   circumRadius: number;
   startAngleOffset?: AngleValue;
-} & ({
-  mode: 'relativeToOrigin';
-  origin: Point;
-} | {
-  mode: 'relativeToCenter';
   center: Point;
-});
+};
+
+export type BoxedHexagonInit = (
+  Pick<BoxedHexagonValue, 
+    | 'circumRadius'
+    | 'startAngleOffset'
+  >
+) & (
+  {
+    mode: 'relativeToCenter'
+    center: Point;
+  } | {
+    mode: 'relativeToOrigin';
+    origin: Point;
+  }
+);
 
 export class BoxedHexagon {
 
@@ -24,7 +34,7 @@ export class BoxedHexagon {
   circumRadius: number;
   startAngleOffset: Angle;
 
-  constructor(args: BoxedHexagonValue){
+  constructor(args: BoxedHexagonInit){
     this.circumRadius = args.circumRadius;
 
     const angleValue = args.startAngleOffset ?? {
