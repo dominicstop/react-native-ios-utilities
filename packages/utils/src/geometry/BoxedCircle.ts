@@ -3,22 +3,27 @@ import { Point } from "./Point";
 import { Rect } from "./Rect";
 
 export type BoxedCircleValue = {
-  mode: 'relativeToOrigin';
-  origin: Point;
-  radius: number;
-} | {
-  mode: 'relativeToCenter';
   center: Point;
   radius: number;
 };
+
+export type BoxedCircleInit = (
+  BoxedCircleValue & {
+    mode: 'relativeToCenter';
+  }
+) | {
+  mode: 'relativeToOrigin';
+  origin: Point;
+  radius: number;
+}
 
 export class BoxedCircle {
   origin: Point;
   radius: number;
 
-  constructor(args: BoxedCircleValue){
+  constructor(args: BoxedCircleInit){
     this.radius = args.radius;
-    
+
     switch(args.mode) {
       case 'relativeToOrigin':
         this.origin = args.origin;
