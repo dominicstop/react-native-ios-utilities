@@ -7,3 +7,5 @@ export * from './Size';
 
 export * from './BoxedCircle';
 export * from './BoxedHexagon';
+
+export * from './HexagonGrid';
