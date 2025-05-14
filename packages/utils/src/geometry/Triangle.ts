@@ -95,6 +95,19 @@ export class Triangle {
     });
   };
 
+  get area(): number {
+    const { x: x1, y: y1 } = this.topPoint;
+    const { x: x2, y: y2 } = this.leadingPoint;
+    const { x: x3, y: y3 } = this.trailingPoint;
+  
+    const area = 0.5 * Math.abs(
+      x1 * (y2 - y3) +
+      x2 * (y3 - y1) +
+      x3 * (y1 - y2)
+    );
+  
+    return area;
+  };
   // MARK: - Methods
   // ---------------
 
