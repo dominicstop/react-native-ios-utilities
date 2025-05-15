@@ -42,10 +42,13 @@ android.iml
 
 # Cocoapods
 #
-example/ios/Pods
+Pods/
+**/Pods
 
 # Ruby
-example/vendor/
+vendor/
+**/vendor
+
 
 # node.js
 #
