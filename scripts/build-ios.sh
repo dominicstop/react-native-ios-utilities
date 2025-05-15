@@ -4,7 +4,8 @@ ARG_BUILD_CONFIG="${1:-DEBUG}"
 
 # `cd ./example/ios`
 IOS_DIR_ITEMS=(
-  "example/ios" 
+  "examples/example-core/ios"
+  "example/ios"
   "ios"
 )
 
