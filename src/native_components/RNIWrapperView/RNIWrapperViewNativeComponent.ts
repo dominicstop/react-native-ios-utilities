@@ -1,6 +1,6 @@
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import type { BubblingEventHandler } from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
 import type { HostComponent, ViewProps } from 'react-native';
+import type { BubblingEventHandler } from 'react-native/Libraries/Types/CodegenTypes';
 
 // stubs
 export interface NativeProps extends ViewProps {
@@ -11,7 +11,7 @@ export interface NativeProps extends ViewProps {
   onDidSetViewID?: BubblingEventHandler<{}>;
   onViewWillRecycle?: BubblingEventHandler<{}>;
   onRawNativeEvent?: BubblingEventHandler<{}>;
-};
+}
 
 // stubs
 export default codegenNativeComponent<NativeProps>('RNIWrapperView', {

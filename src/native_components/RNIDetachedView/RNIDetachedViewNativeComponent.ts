@@ -1,5 +1,8 @@
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import type { BubblingEventHandler, Int32 } from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
+import type {
+  BubblingEventHandler,
+  Int32,
+} from 'react-native/Libraries/Types/CodegenTypes';
 import type { HostComponent, ViewProps } from 'react-native';
 
 // stubs
@@ -19,7 +22,7 @@ export interface NativeProps extends ViewProps {
   // event prop stubs
   onContentViewDidDetach?: BubblingEventHandler<{}>;
   onViewDidDetachFromParent?: BubblingEventHandler<{}>;
-};
+}
 
 // stubs
 export default codegenNativeComponent<NativeProps>('RNIDetachedView', {
