@@ -41,7 +41,7 @@ puts " - linkage: #{linkage}"
 puts " - hermes enabled: #{use_hermes}"
 puts "\n"
 
-if reactNativeTargetVersionOverride 
+if reactNativeTargetVersionOverride
   reactNativeTargetVersion = reactNativeTargetVersionOverride.to_i
 end
 
@@ -67,14 +67,14 @@ Pod::Spec.new do |s|
 
   s.platforms      = { :ios => min_ios_version_supported }
   s.source         = { :git => "https://github.com/dominicstop/react-native-ios-utilities.git", :tag => "#{s.version}" }
-  
+
   s.swift_version  = '5.4'
 
   s.static_framework = true
   s.header_dir       = 'react-native-ios-utilities'
 
   header_search_paths = [
-    '"$(PODS_ROOT)/Headers/Private/React-Core"', 
+    '"$(PODS_ROOT)/Headers/Private/React-Core"',
     # '"$(PODS_ROOT)/boost"',
     '"$(PODS_ROOT)/DoubleConversion"',
     # '"$(PODS_ROOT)/RCT-Folly"',
@@ -92,16 +92,21 @@ Pod::Spec.new do |s|
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-rendererconsistency/React_rendererconsistency.framework/Headers"',
       '"$(PODS_ROOT)/Headers/Public/ReactCommon"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-jserrorhandler/React_jserrorhandler.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-jsinspector/jsinspector_modern.framework/Headers"',
-      
+
       '"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/folly.framework/Headers"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/fmt/fmt.framework/Headers"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-utils/React_utils.framework/Headers"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-debug/React_debug.framework/Headers"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/React-rendererdebug/React_rendererdebug.framework/Headers"',
     ])
+
+    if reactNativeTargetVersion < 80
+      header_search_paths.concat[
+        '"${PODS_CONFIGURATION_BUILD_DIR}/React-jsinspector/jsinspector_modern.framework/Headers"',
+      ]
+    end
   end
-  
+
 
   # Swift/Objective-C compatibility
   s.pod_target_xcconfig = {
@@ -118,7 +123,7 @@ Pod::Spec.new do |s|
     '"${PODS_CONFIGURATION_BUILD_DIR}/react-native-ios-utilities/Swift\ Compatibility\ Header"',
     '"$(PODS_ROOT)/Headers/Private/React-bridging/react/bridging"',
     '"$(PODS_CONFIGURATION_BUILD_DIR)/React-bridging/react_bridging.framework/Headers"',
-    '"$(PODS_ROOT)/Headers/Private/Yoga"', 
+    '"$(PODS_ROOT)/Headers/Private/Yoga"',
   ]
 
   if fabric_enabled && ENV['USE_FRAMEWORKS']
@@ -130,7 +135,7 @@ Pod::Spec.new do |s|
     user_header_search_paths << "\"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers/react/nativemodule/core\""
     user_header_search_paths << "\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTFabric/RCTFabric.framework/Headers\""
   end
-  
+
   s.user_target_xcconfig = {
     "HEADER_SEARCH_PATHS" => user_header_search_paths,
   }
@@ -166,10 +171,14 @@ Pod::Spec.new do |s|
   s.dependency 'ComputableLayout', '~> 0.7'
 
   exclude_files = ['ios/Tests/']
-  
+
   if !fabric_enabled
     exclude_files.append('ios/Fabric/')
     exclude_files.append('common/cpp/fabric/')
+  end
+
+  if fabric_enabled && ENV['USE_FRAMEWORKS'] && reactNativeTargetVersion >= 80
+    add_dependency(s, "React-jsinspectorcdp", :framework_name => 'jsinspector_moderncdp')
   end
 
   install_modules_dependencies(s)
