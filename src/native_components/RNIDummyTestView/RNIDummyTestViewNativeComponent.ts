@@ -1,7 +1,9 @@
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import type { DirectEventHandler, BubblingEventHandler } from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
+import type {
+  DirectEventHandler,
+  BubblingEventHandler,
+} from 'react-native/Libraries/Types/CodegenTypes';
 import type { HostComponent, ViewProps } from 'react-native';
-
 
 // stubs
 interface NativeProps extends ViewProps {
