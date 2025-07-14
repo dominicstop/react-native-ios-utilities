@@ -40,7 +40,7 @@ very special thanks to: [junzhengca](https://github.com/junzhengca), [brentvatne
 
 <br>
 
-Thank you very much for contributing to this library: [SamuelScheit](https://github.com/SamuelScheit) ([`pr-#6`](https://github.com/dominicstop/react-native-ios-utilities/pull/6)), [coolsoftwaretyler](https://github.com/coolsoftwaretyler) ([`pr-#11`](https://github.com/dominicstop/react-native-ios-utilities/pull/11)), [fobos531](https://github.com/fobos531) ([`pr-#18`](https://github.com/dominicstop/react-native-ios-utilities/pull/18), [`pr-#20`](https://github.com/dominicstop/react-native-ios-utilities/pull/20)), [itsramiel](https://github.com/itsramiel) ([`pr-27`](https://github.com/dominicstop/react-native-ios-utilities/pull/27)) 💫
+Thank you very much for contributing to this library: [SamuelScheit](https://github.com/SamuelScheit) ([`pr-#6`](https://github.com/dominicstop/react-native-ios-utilities/pull/6)), [coolsoftwaretyler](https://github.com/coolsoftwaretyler) ([`pr-#11`](https://github.com/dominicstop/react-native-ios-utilities/pull/11)), [fobos531](https://github.com/fobos531) ([`pr-#18`](https://github.com/dominicstop/react-native-ios-utilities/pull/18), [`pr-#20`](https://github.com/dominicstop/react-native-ios-utilities/pull/20)), [itsramiel](https://github.com/itsramiel) ([`pr-27`](https://github.com/dominicstop/react-native-ios-utilities/pull/27)), [Innei](https://github.com/Innei) ([`pr-25`](https://github.com/dominicstop/react-native-ios-utilities/pull/25)) 💫
 
 <br><br>
 
