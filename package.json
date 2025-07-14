@@ -186,10 +186,12 @@
     "name": "RNIUtilitiesSpec",
     "type": "all",
     "jsSrcsDir": "src",
-    "componentProvider": {
-      "RNIDetachedView": "RNIDetachedView",
-      "RNIDummyTestView": "RNIDummyTestView",
-      "RNIWrapperView": "RNIWrapperView"
+    "ios": {
+      "componentProvider": {
+        "RNIDetachedView": "RNIDetachedView",
+        "RNIDummyTestView": "RNIDummyTestView",
+        "RNIWrapperView": "RNIWrapperView"
+      }
     }
   }
 }
