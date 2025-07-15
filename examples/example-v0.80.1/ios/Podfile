@@ -36,7 +36,7 @@ puts " - PATH_DEV_LIBRARY_COMPUTABLE_LAYOUT: #{library_path_ComputableLayout}"
 puts " - should_install_locally_ComputableLayout: #{should_install_locally_ComputableLayout}"
 puts "\n"
 
-target 'IosUtilitiesExample' do
+target 'IosUtilitiesExampleV80' do
   config = use_native_modules!
 
   use_react_native!(
