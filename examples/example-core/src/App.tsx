@@ -6,10 +6,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { HomeScreen } from "./components/HomeScreen";
+import { AppMetadataCardContextProvider } from "./examples/AppMetadataCard";
 
-import { SHARED_ENV } from "./constants/SharedEnv";
+import { IS_USING_NEW_ARCH, SHARED_ENV } from "./constants/SharedEnv";
 import { ROUTE_ITEMS } from "./constants/Routes";
 import { ROUTE_KEYS } from "./constants/RouteKeys";
+
+import * as LibraryPackageConfig from '../../../package.json';
+import * as ExamplePackageConfig from '../package.json';
+
 
 const shouldEnableTabs =
   SHARED_ENV.enableReactNavigation && SHARED_ENV.enableTabNavigation;
@@ -28,9 +33,9 @@ function Tab1StackScreen() {
   }
 }
 
-export default function App() {
+function AppContent() {
   if(!SHARED_ENV.enableReactNavigation){
-    return(
+    return (
       <HomeScreen/>
     );
   };
@@ -83,6 +88,25 @@ export default function App() {
 
   return <HomeScreen />;
 }
+
+export default function App() {
+  return (
+    <AppMetadataCardContextProvider
+      value={{
+        metadataOverrideData: {
+          libraryName: LibraryPackageConfig.name,
+          exampleName: ExamplePackageConfig.name,
+          libraryVersion: LibraryPackageConfig.version,
+          IS_USING_NEW_ARCH,
+          __DEV__,
+          exampleDependencies: ExamplePackageConfig.devDependencies,
+        },
+      }}
+    >
+      <AppContent/>
+    </AppMetadataCardContextProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   navigationBarBannerImage: {
