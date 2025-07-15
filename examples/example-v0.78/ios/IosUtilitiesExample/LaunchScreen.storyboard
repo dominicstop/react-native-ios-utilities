@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="k2B-02-gnX">
+            <objects>
+                <viewController id="tae-Wg-siB" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LOA-g4-Ztx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RNIContextMenuExample" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="sQM-de-kDS">
+                                <rect key="frame" x="0.0" y="209" width="375" height="29"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by React Native" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="QKC-5o-Hz2">
+                                <rect key="frame" x="0.0" y="626" width="375" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PuzzleBoxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="AiI-V1-5uy" userLabel="PuzzleBoxIcon">
+                                <rect key="frame" x="75" y="283" width="225" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="Uwv-Jo-ccL"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gb3-47-roC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="gb3-47-roC" firstAttribute="bottom" secondItem="QKC-5o-Hz2" secondAttribute="bottom" constant="20" id="35Z-N7-bYI"/>
+                            <constraint firstItem="sQM-de-kDS" firstAttribute="centerY" secondItem="LOA-g4-Ztx" secondAttribute="bottom" multiplier="1/3" constant="1" id="H5U-9C-Y54"/>
+                            <constraint firstItem="gb3-47-roC" firstAttribute="centerX" secondItem="sQM-de-kDS" secondAttribute="centerX" id="MI9-0R-85J"/>
+                            <constraint firstItem="QKC-5o-Hz2" firstAttribute="leading" secondItem="gb3-47-roC" secondAttribute="leading" id="R30-sd-9xx"/>
+                            <constraint firstItem="gb3-47-roC" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AiI-V1-5uy" secondAttribute="trailing" constant="75" id="cQW-jl-1ch"/>
+                            <constraint firstItem="QKC-5o-Hz2" firstAttribute="centerX" secondItem="gb3-47-roC" secondAttribute="centerX" id="eeg-AD-Aag"/>
+                            <constraint firstItem="AiI-V1-5uy" firstAttribute="top" secondItem="sQM-de-kDS" secondAttribute="bottom" constant="45" id="jBX-6N-CUj"/>
+                            <constraint firstItem="sQM-de-kDS" firstAttribute="leading" secondItem="gb3-47-roC" secondAttribute="leading" symbolic="YES" id="kuD-fq-bIw"/>
+                            <constraint firstItem="AiI-V1-5uy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gb3-47-roC" secondAttribute="leading" constant="75" id="thv-Uv-xwv"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="okd-tf-pIB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="PuzzleBoxIcon" width="1024" height="1024"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
