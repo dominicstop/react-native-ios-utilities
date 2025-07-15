@@ -49,21 +49,13 @@ if [ $IS_NODE_BINARY_PATH_BAD == 1 ]; then
     IS_NVM_INSTALLED=1
 
     echo "Task: NVM loaded successfully."
-    echo "Task: NVM - Checking if stable is installed..."
-
-    # Use stable version, install if not present
-    if ! nvm ls stable | grep -q '->'; then
-      echo "Task: NVM - Stable Node.js version not found. Installing..."
-      nvm install stable
-
-    else
-      echo "Task: NVM - Stable Node.js version already installed. Skipping..."
-    fi
+    echo "Task: NVM - Installing stable..."
+    nvm install stable
 
     echo "Task: NVM - Setting node version to stable..."
     nvm use stable
 
-    NODE_BINARY_PATH=$(command -v node)
+    NODE_BINARY_PATH=$(nvm which stable)
     echo "Using NVM for NODE_BINARY_PATH: $NODE_BINARY_PATH"
   fi
 
