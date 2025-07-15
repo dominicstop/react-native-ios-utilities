@@ -13,9 +13,9 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "react-native-ios-utilities-example-core": ["../example-core/src"]
+      "*": ["src/*"]
     }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/**"]
+  "exclude": ["node_modules", "lib", "dist", "**/__tests__/**"]
 }
