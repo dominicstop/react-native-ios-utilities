@@ -111,7 +111,10 @@ run_tests(){
   append_build_status_to_build_log(){
     set_build_status
 
+    TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+
     BUILD_LOG+="\nBuild Results #$BUILD_LOG_COUNTER"
+    BUILD_LOG+="\nTimestamp: $TIMESTAMP"
     BUILD_LOG+="\n"
     BUILD_LOG+=$BUILD_STATUS
     BUILD_LOG+="\n"
@@ -258,3 +261,7 @@ done
 
 echo "All builds completed! Echoing BUILD_LOG:"
 echo $BUILD_LOG
+
+BUILD_LOG_FILE_NAME="log-test-build-ios-all.txt"
+echo "Writing BUILD_LOG to disk: $BUILD_LOG_FILE_NAME"
+echo -e "$BUILD_LOG" >> "$BUILD_LOG_FILE_NAME"
