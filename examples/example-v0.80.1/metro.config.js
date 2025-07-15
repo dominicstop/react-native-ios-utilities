@@ -6,11 +6,10 @@ const escape = require('escape-string-regexp');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 const rootLibraryPackage = require('../../package.json');
-
 const coreExamplePackage = require('../example-core/package.json');
-const coreExamplePath = path.resolve(__dirname, '../example-core');
 
-const root = path.resolve(__dirname, '../..');
+const rootLibraryPath = path.resolve(__dirname, '../..');
+const coreExamplePath = path.resolve(__dirname, '../example-core');
 
 const modules = Object.keys({ ...rootLibraryPackage.peerDependencies });
 modules.push(coreExamplePackage.name);
@@ -23,7 +22,7 @@ modules.push(coreExamplePackage.name);
  */
 const config = {
   watchFolders: [
-    root, 
+    rootLibraryPath, 
     coreExamplePath
   ], 
   // We need to make sure that only one version is loaded for peerDependencies
@@ -32,7 +31,7 @@ const config = {
     blacklistRE: exclusionList(
       modules.map(
         (m) =>
-          new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`)
+          new RegExp(`^${escape(path.join(rootLibraryPath, 'node_modules', m))}\\/.*$`)
       )
     ),
 
@@ -60,7 +59,7 @@ const config = {
 };
 
 const defaultConfig = getConfig(getDefaultConfig(__dirname), {
-  root,
+  root: rootLibraryPath,
   pkg: rootLibraryPackage,
   project: __dirname,
 });
