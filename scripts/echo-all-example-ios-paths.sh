@@ -27,6 +27,11 @@ if [ -d "examples" ]; then
     # skip if not a directory...
     [ -d "$dir" ] || continue
 
+    # skip: examples/example-core/
+    if [ "$dir" = "examples/example-core/" ]; then
+      continue
+    fi
+
     if [ -d "${dir}ios" ]; then
       IOS_DIR_ITEMS+=("${dir}ios")
     fi
