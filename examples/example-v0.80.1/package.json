@@ -43,6 +43,7 @@
     "react": "19.1.0",
     "react-native": "0.80.1",
     "react-native-codegen": "^0.70.7",
+    "react-native-ios-utilities-example-core": "*",
     "react-native-safe-area-context": "^5.3.0",
     "react-native-screens": "^4.9.2"
   },

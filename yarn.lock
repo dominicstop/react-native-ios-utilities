@@ -11099,7 +11099,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-ios-utilities-example-core@workspace:examples/example-core":
+"react-native-ios-utilities-example-core@*, react-native-ios-utilities-example-core@workspace:examples/example-core":
   version: 0.0.0-use.local
   resolution: "react-native-ios-utilities-example-core@workspace:examples/example-core"
   dependencies:
@@ -11165,6 +11165,7 @@ __metadata:
     react-native: 0.80.1
     react-native-builder-bob: ^0.37.0
     react-native-codegen: ^0.70.7
+    react-native-ios-utilities-example-core: "*"
     react-native-safe-area-context: ^5.3.0
     react-native-screens: ^4.9.2
     react-test-renderer: 19.1.0
