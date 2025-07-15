@@ -5,7 +5,6 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "source": "src/index",
-  "react-native": "index.js",
   "files": [
     "src",
     "index.js"
@@ -83,5 +82,9 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "react-native": {
+    "platforms": [],
+    "root": "index.js"
   }
 }
