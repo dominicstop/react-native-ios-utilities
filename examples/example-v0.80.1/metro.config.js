@@ -44,7 +44,7 @@ const config = {
 
       return {
         ...extraNodeModules,
-        'react-dom': require.resolve('react-native'),
+        'react-native': path.join(__dirname, 'node_modules/react-native'),
       };
     })(),
   },
