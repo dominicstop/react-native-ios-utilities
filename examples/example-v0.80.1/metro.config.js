@@ -5,15 +5,15 @@ const path = require('path');
 const escape = require('escape-string-regexp');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
 
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 
 
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '../..');
 const modules = Object.keys({ ...pkg.peerDependencies });
 
 /**
  * Metro configuration
- * https://reactnative.dev/docs/metro
+ * https://facebook.github.io/metro/docs/configuration
  *
  * @type {import('@react-native/metro-config').MetroConfig}
  */

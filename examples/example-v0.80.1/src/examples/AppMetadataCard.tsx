@@ -3,8 +3,9 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import * as LibraryPackageConfig from '../../../package.json';
+import * as LibraryPackageConfig from '../../../../package.json';
 import * as ExamplePackageConfig from '../../package.json';
+
 import { IS_USING_NEW_ARCH } from '../constants/SharedEnv';
 
 import { ExampleItemCard, ObjectPropertyDisplay, Colors } from 'react-native-ios-utilities';
