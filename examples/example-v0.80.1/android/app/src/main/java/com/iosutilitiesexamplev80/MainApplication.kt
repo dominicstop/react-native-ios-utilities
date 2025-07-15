@@ -1,4 +1,4 @@
-package com.iosutilitiesexample
+package com.iosutilitiesexamplev80
 
 import android.app.Application
 import com.facebook.react.PackageList
