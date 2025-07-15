@@ -278,7 +278,7 @@ prepend_metadata_to_build_log() {
 
   # build metadata string
   METADATA="Build Environment Metadata:"
-  BUILD_LOG+="\nTimestamp: $TIMESTAMP"
+  METADATA+="\nTimestamp: $TIMESTAMP"
   METADATA+="\nmacOS Version: $MACOS_VERSION"
   METADATA+="\nXcode Version: $XCODE_VERSION"
   METADATA+="\nRuby Version: $RUBY_VERSION"
@@ -306,4 +306,4 @@ BUILD_LOG_FILE_NAME="log-test-build-ios-all.txt"
 echo "Task - Writing BUILD_LOG to disk: $BUILD_LOG_FILE_NAME"
 
 prepend_metadata_to_build_log
-echo -e "$BUILD_LOG" >> "$BUILD_LOG_FILE_NAME"
+echo "$BUILD_LOG" >> "$BUILD_LOG_FILE_NAME"
