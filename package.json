@@ -124,6 +124,9 @@
     "examples/*",
     "packages/*"
   ],
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  },
   "packageManager": "yarn@3.6.1",
   "release-it": {
     "git": {

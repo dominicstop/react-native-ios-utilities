@@ -1642,8 +1642,8 @@ PODS:
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
-  - ComputableLayout (~> 0.7)
-  - DGSwiftUtilities (~> 0.46)
+  - ComputableLayout (from `/Users/dominicgo/Documents/Programming/ComputableLayout`)
+  - DGSwiftUtilities (from `/Users/dominicgo/Documents/Programming/DGSwiftUtilities/DGSwiftUtilities`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - fast_float (from `../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -1717,13 +1717,15 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - ComputableLayout
-    - DGSwiftUtilities
     - SocketRocket
 
 EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
+  ComputableLayout:
+    :path: "/Users/dominicgo/Documents/Programming/ComputableLayout"
+  DGSwiftUtilities:
+    :path: "/Users/dominicgo/Documents/Programming/DGSwiftUtilities/DGSwiftUtilities"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   fast_float:
