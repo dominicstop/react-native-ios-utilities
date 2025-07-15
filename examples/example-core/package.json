@@ -1,7 +1,14 @@
 {
-  "name": "react-native-ios-utilities-example",
+  "name": "react-native-ios-utilities-example-core",
   "version": "0.0.1",
   "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "index.js",
+  "files": [
+    "src",
+    "index.js"
+  ],
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -36,15 +43,12 @@
     "nuke:all": "yarn run nuke:example-pods && yarn run nuke:cache-js && yarn run nuke:derived-data && npm run nuke:node-modules",
     "update-dep:pods": "cd ios && bundle exec pod install --repo-update && bundle exec pod update DGSwiftUtilities ComputableLayout && yarn run build:update-version"
   },
-  "dependencies": {
-    "@react-navigation/bottom-tabs": "^7.2.1",
-    "@react-navigation/native": "^7.0.15",
-    "@react-navigation/native-stack": "^7.2.1",
-    "react": "18.3.1",
-    "react-native": "0.77.1",
-    "react-native-codegen": "^0.70.7",
-    "react-native-safe-area-context": "^5.3.0",
-    "react-native-screens": "^4.9.2"
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "resolutions": {
+    "@types/react": "^18.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -57,6 +61,9 @@
     "@react-native/eslint-config": "0.77.1",
     "@react-native/metro-config": "0.77.1",
     "@react-native/typescript-config": "0.77.1",
+    "@react-navigation/bottom-tabs": "^7.2.1",
+    "@react-navigation/native": "^7.0.15",
+    "@react-navigation/native-stack": "^7.2.1",
     "@types/jest": "^29.5.13",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
@@ -64,7 +71,12 @@
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
     "prettier": "2.8.8",
+    "react": "18.3.1",
+    "react-native": "0.77.1",
     "react-native-builder-bob": "^0.37.0",
+    "react-native-codegen": "^0.70.7",
+    "react-native-safe-area-context": "^5.3.0",
+    "react-native-screens": "^4.9.2",
     "react-test-renderer": "18.3.1",
     "typescript": "5.0.4"
   },
