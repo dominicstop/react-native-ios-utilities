@@ -5,11 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { HomeScreen } from "./components/HomeScreen";
-
-import { SHARED_ENV } from "./constants/SharedEnv";
-import { ROUTE_ITEMS } from "./constants/Routes";
-import { ROUTE_KEYS } from "./constants/RouteKeys";
+import { HomeScreen, SHARED_ENV, ROUTE_ITEMS, ROUTE_KEYS } from 'react-native-ios-utilities-example-core';
 
 const shouldEnableTabs =
   SHARED_ENV.enableReactNavigation && SHARED_ENV.enableTabNavigation;
