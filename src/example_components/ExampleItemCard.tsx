@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, type ViewStyle, type TextStyle } from 'react-native';
+import { StyleSheet, View, Text, type ViewStyle, type TextStyle, type StyleProp } from 'react-native';
 
 import { Colors } from '../misc/Colors';
 
@@ -11,7 +11,7 @@ export type ExampleItemCardProps = {
   subtitle?: string;
   description?: Array<string | undefined>;
 
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   extraContentContainerStyle?: ViewStyle;
   children?: JSX.Element | JSX.Element[];
 };

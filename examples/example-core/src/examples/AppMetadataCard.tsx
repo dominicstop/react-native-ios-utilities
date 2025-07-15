@@ -11,7 +11,11 @@ import { ExampleItemCard, ObjectPropertyDisplay, Colors } from 'react-native-ios
 import type { ExampleItemProps } from './SharedExampleTypes';
 
 
-export function AppMetadataCard(props: ExampleItemProps) {
+export type AppMetadataCardProps = ExampleItemProps & {
+  metadataOverrideData?: Record<string, unknown>;
+};
+
+export function AppMetadataCard(props: AppMetadataCardProps) {
 
   return (
     <ExampleItemCard
@@ -21,12 +25,12 @@ export function AppMetadataCard(props: ExampleItemProps) {
     >
       <ObjectPropertyDisplay
         recursiveStyle={styles.debugDisplayInner}
-        object={{
+        object={props.metadataOverrideData ?? {
           libraryName: LibraryPackageConfig.name,
           libraryVersion: LibraryPackageConfig.version,
           IS_USING_NEW_ARCH,
           __DEV__,
-          exampleDependencies: ExamplePackageConfig.dependencies,
+          exampleDependencies: ExamplePackageConfig.devDependencies,
         }}
       />
     </ExampleItemCard>

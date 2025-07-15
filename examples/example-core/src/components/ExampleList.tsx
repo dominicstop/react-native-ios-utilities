@@ -14,7 +14,7 @@ import { SHARED_ENV } from "../constants/SharedEnv";
 import { EXAMPLE_ITEMS, type ExampleListItem } from "../constants/ExampleCardItems";
 
 
-const EXAMPLE_LIST_ITEMS = EXAMPLE_ITEMS.map(
+export const EXAMPLE_LIST_ITEMS = EXAMPLE_ITEMS.map(
   (item, index) => {
     switch(item.type) {
       case 'screen':
