@@ -34,7 +34,8 @@ linkage = ENV['USE_FRAMEWORKS']
 reactNativeTargetVersionOverride = ENV['REACT_NATIVE_TARGET_VERSION']
 
 puts "\nreact-native-ios-utilities"
-puts " - reactNativeTargetVersion: #{reactNativeVersion}"
+puts " - reactNativeVersion: #{reactNativeVersion}"
+puts " - reactNativeTargetVersion: #{reactNativeTargetVersion}"
 puts " - reactNativeTargetVersionOverride: #{reactNativeTargetVersionOverride}"
 puts " - fabric_enabled: #{fabric_enabled}"
 puts " - linkage: #{linkage}"
@@ -101,9 +102,9 @@ Pod::Spec.new do |s|
     ])
 
     if reactNativeTargetVersion < 80
-      header_search_paths.concat[
+      header_search_paths.concat([
         '"${PODS_CONFIGURATION_BUILD_DIR}/React-jsinspector/jsinspector_modern.framework/Headers"',
-      ]
+      ])
     end
   end
 
