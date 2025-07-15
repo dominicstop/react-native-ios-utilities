@@ -260,7 +260,7 @@ done
 
 
 prepend_metadata_to_build_log() {
-  # Collect metadata
+  # collect metadata
   MACOS_VERSION=$(sw_vers)
   XCODE_VERSION=$(xcodebuild -version)
   RUBY_VERSION=$(ruby -v)
@@ -270,7 +270,13 @@ prepend_metadata_to_build_log() {
   GIT_VERSION=$(git --version)
   TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
-  # Build metadata string
+  # collect git-specific metadata
+  GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  GIT_COMMIT_HASH=$(git rev-parse HEAD)
+  GIT_COMMIT_DESC=$(git log -1 --pretty=%B)
+  GIT_COMMIT_DATE=$(git log -1 --date=iso --pretty=format:"%cd")
+
+  # build metadata string
   METADATA="Build Environment Metadata:"
   BUILD_LOG+="\nTimestamp: $TIMESTAMP"
   METADATA+="\nmacOS Version: $MACOS_VERSION"
@@ -280,8 +286,12 @@ prepend_metadata_to_build_log() {
   METADATA+="\nnpm Version: $NPM_VERSION"
   METADATA+="\nYarn Version: $YARN_VERSION"
   METADATA+="\nGit Version: $GIT_VERSION"
+  METADATA+="\nGit Branch: $GIT_BRANCH"
+  METADATA+="\nLast Commit Hash: $GIT_COMMIT_HASH"
+  METADATA+="\nLast Commit Description: $GIT_COMMIT_DESC"
+  METADATA+="\nLast Commit Date: $GIT_COMMIT_DATE"
 
-  # Prepend metadata to BUILD_LOG
+  # prepend metadata to BUILD_LOG
   BUILD_LOG="$METADATA\n$BUILD_LOG"
   BUILD_LOG+="\n"
   BUILD_LOG+="\n ------------------------------------------"
