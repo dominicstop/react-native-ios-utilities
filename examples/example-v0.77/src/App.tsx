@@ -1,20 +1,17 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { HomeScreen } from "./components/HomeScreen";
-import { AppMetadataCardContextProvider } from "./examples/AppMetadataCard";
-
-import { IS_USING_NEW_ARCH, SHARED_ENV } from "./constants/SharedEnv";
-import { ROUTE_ITEMS } from "./constants/Routes";
-import { ROUTE_KEYS } from "./constants/RouteKeys";
-
 import * as LibraryPackageConfig from '../../../package.json';
 import * as ExamplePackageConfig from '../package.json';
 
+import { HomeScreen, SHARED_ENV, ROUTE_ITEMS, ROUTE_KEYS, AppMetadataCardContextProvider, IS_USING_NEW_ARCH } from 'react-native-ios-utilities-example-core';
+
+// import * as Core from 'react-native-ios-utilities-example-core';
+// console.log('react-native-ios-utilities-example-core', Object.keys(Core));
 
 const shouldEnableTabs =
   SHARED_ENV.enableReactNavigation && SHARED_ENV.enableTabNavigation;
@@ -99,7 +96,7 @@ export default function App() {
           libraryVersion: LibraryPackageConfig.version,
           IS_USING_NEW_ARCH,
           __DEV__,
-          exampleDependencies: ExamplePackageConfig.devDependencies,
+          exampleDependencies: ExamplePackageConfig.dependencies,
         },
       }}
     >
