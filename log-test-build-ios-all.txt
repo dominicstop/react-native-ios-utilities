@@ -114,3 +114,53 @@ Build - OLD_ARCH_DYNAMIC: FAILED
 
  ------------------------------------------
 
+Build Environment Metadata:
+Timestamp: 2025-07-15 22:38:46
+macOS Version: ProductName:		macOS
+ProductVersion:		15.3
+BuildVersion:		24D60
+Xcode Version: Xcode 16.2
+Build version 16C5032a
+Ruby Version: ruby 3.1.7p261 (2025-03-26 revision 0a3704f218) [arm64-darwin24]
+Node.js Version: v16.11.1
+npm Version: 8.0.0
+Yarn Version: 3.6.1
+Git Version: git version 2.39.5 (Apple Git-154)
+Git Branch: refactor-to-support-multiple-examples-v2
+Last Commit Hash: fac99ea5e926c01a19d3a76e728784b541380ae9
+Last Commit Description: ⚙️ Chore: Update `echo-all-example-ios-paths.sh`
+Last Commit Date: 2025-07-15 22:06:03 +0800
+
+Build Results #0
+Timestamp: 2025-07-15 22:21:57
+BUILD_CURRENT_PATH: examples/example-v0.77/ios
+BUILD_MODE: quick
+Build - NEW_ARCH_STATIC_DEBUG: SUCCESS
+Build - OLD_ARCH_STATIC_DEBUG: SUCCESS
+Build - NEW_ARCH_STATIC_RELEASE: SUCCESS
+Build - OLD_ARCH_STATIC_RELEASE: SUCCESS
+Build - OLD_ARCH_DYNAMIC: SUCCESS
+
+Build Results #1
+Timestamp: 2025-07-15 22:22:26
+BUILD_CURRENT_PATH: examples/example-v0.78/ios
+BUILD_MODE: quick
+Build - NEW_ARCH_STATIC_DEBUG: FAILED
+Build - OLD_ARCH_STATIC_DEBUG: FAILED
+Build - NEW_ARCH_STATIC_RELEASE: FAILED
+Build - OLD_ARCH_STATIC_RELEASE: FAILED
+Build - OLD_ARCH_DYNAMIC: FAILED
+
+Build Results #2
+Timestamp: 2025-07-15 22:38:45
+BUILD_CURRENT_PATH: examples/example-v0.80.1/ios
+BUILD_MODE: quick
+Build - NEW_ARCH_STATIC_DEBUG: SUCCESS
+Build - OLD_ARCH_STATIC_DEBUG: FAILED
+Build - NEW_ARCH_STATIC_RELEASE: SUCCESS
+Build - OLD_ARCH_STATIC_RELEASE: FAILED
+Build - OLD_ARCH_DYNAMIC: FAILED
+
+
+ ------------------------------------------
+
