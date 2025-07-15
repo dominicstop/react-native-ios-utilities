@@ -259,9 +259,32 @@ for CURRENT_IOS_DIR_PATH in $EXAMPLE_IOS_DIR_PATHS; do
 done
 
 
+append_metadata_to_build_log(){
+  # Collect metadata
+  MACOS_VERSION=$(sw_vers)
+  XCODE_VERSION=$(xcodebuild -version)
+  RUBY_VERSION=$(ruby -v)
+  NODE_VERSION=$(node -v)
+  NPM_VERSION=$(npm -v)
+  YARN_VERSION=$(command -v yarn >/dev/null 2>&1 && yarn -v || echo "Yarn not installed")
+  GIT_VERSION=$(git --version)
+
+  # Append metadata to BUILD_LOG
+  BUILD_LOG+="\n\nBuild Environment Metadata:"
+  BUILD_LOG+="\nmacOS Version:\n$MACOS_VERSION"
+  BUILD_LOG+="\nXcode Version:\n$XCODE_VERSION"
+  BUILD_LOG+="\nRuby Version:\n$RUBY_VERSION"
+  BUILD_LOG+="\nNode.js Version:\n$NODE_VERSION"
+  BUILD_LOG+="\nnpm Version:\n$NPM_VERSION"
+  BUILD_LOG+="\nYarn Version:\n$YARN_VERSION"
+  BUILD_LOG+="\nGit Version:\n$GIT_VERSION"
+}
+
 echo "All builds completed! Echoing BUILD_LOG:"
 echo $BUILD_LOG
 
 BUILD_LOG_FILE_NAME="log-test-build-ios-all.txt"
 echo "Writing BUILD_LOG to disk: $BUILD_LOG_FILE_NAME"
+
+append_metadata_to_build_log
 echo -e "$BUILD_LOG" >> "$BUILD_LOG_FILE_NAME"
