@@ -72,3 +72,6 @@ const defaultConfig = getConfig(getDefaultConfig(__dirname), {
  * @type {import('metro-config').MetroConfig}
  */
 module.exports = mergeConfig(defaultConfig, config);
+
+// const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
+// module.exports = mergeConfig(getDefaultConfig(__dirname), config);
