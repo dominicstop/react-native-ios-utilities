@@ -5,11 +5,14 @@ const path = require('path');
 const escape = require('escape-string-regexp');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
 
-const pkg = require('../package.json');
+const rootLibraryPackage = require('../../package.json');
+const coreExamplePackage = require('../example-core/package.json');
 
+const rootLibraryPath = path.resolve(__dirname, '../..');
+const coreExamplePath = path.resolve(__dirname, '../example-core');
 
-const root = path.resolve(__dirname, '..');
-const modules = Object.keys({ ...pkg.peerDependencies });
+const modules = Object.keys({ ...rootLibraryPackage.peerDependencies });
+modules.push(coreExamplePackage.name);
 
 /**
  * Metro configuration
@@ -18,15 +21,17 @@ const modules = Object.keys({ ...pkg.peerDependencies });
  * @type {import('@react-native/metro-config').MetroConfig}
  */
 const config = {
-  watchFolders: [root],
-
+  watchFolders: [
+    rootLibraryPath, 
+    coreExamplePath
+  ], 
   // We need to make sure that only one version is loaded for peerDependencies
   // So we block them at the root, and alias them to the versions in example's node_modules
   resolver: {
     blacklistRE: exclusionList(
       modules.map(
         (m) =>
-          new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`)
+          new RegExp(`^${escape(path.join(rootLibraryPath, 'node_modules', m))}\\/.*$`)
       )
     ),
 
@@ -38,7 +43,7 @@ const config = {
 
       return {
         ...extraNodeModules,
-        'react-dom': require.resolve('react-native'),
+        'react-native': path.join(__dirname, 'node_modules/react-native'),
       };
     })(),
   },
@@ -54,8 +59,8 @@ const config = {
 };
 
 const defaultConfig = getConfig(getDefaultConfig(__dirname), {
-  root,
-  pkg,
+  root: rootLibraryPath,
+  pkg: rootLibraryPackage,
   project: __dirname,
 });
 
@@ -66,3 +71,6 @@ const defaultConfig = getConfig(getDefaultConfig(__dirname), {
  * @type {import('metro-config').MetroConfig}
  */
 module.exports = mergeConfig(defaultConfig, config);
+
+// const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
+// module.exports = mergeConfig(getDefaultConfig(__dirname), config);

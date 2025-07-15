@@ -1,5 +1,7 @@
 const path = require('path');
-const pkg = require('../package.json');
+
+const libraryPackage = require('../../package.json');
+const exampleCorePackage = require('../example-core/package.json');
 
 module.exports = {
   project: {
@@ -8,8 +10,17 @@ module.exports = {
     },
   },
   dependencies: {
-    [pkg.name]: {
-      root: path.join(__dirname, '..'),
+    [libraryPackage.name]: {
+      root: path.join(__dirname, '../..'),
+      platforms: {
+        // Codegen script incorrectly fails without this
+        // So we explicitly specify the platforms with empty object
+        ios: {},
+        android: {},
+      },
+    },
+    [exampleCorePackage.name]: {
+      root: path.join(__dirname, '../example-core'),
       platforms: {
         // Codegen script incorrectly fails without this
         // So we explicitly specify the platforms with empty object
