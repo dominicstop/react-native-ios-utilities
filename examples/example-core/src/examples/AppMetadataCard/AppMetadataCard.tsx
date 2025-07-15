@@ -3,20 +3,23 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import * as LibraryPackageConfig from '../../../../package.json';
-import * as ExamplePackageConfig from '../../package.json';
-import { IS_USING_NEW_ARCH } from '../constants/SharedEnv';
-
 import { ExampleItemCard, ObjectPropertyDisplay, Colors } from 'react-native-ios-utilities';
-import type { ExampleItemProps } from './SharedExampleTypes';
-
+import type { ExampleItemProps } from '../SharedExampleTypes';
+import { AppMetadataCardContext } from './AppMetadataCardContext';
 
 export type AppMetadataCardProps = ExampleItemProps & {
   metadataOverrideData?: Record<string, unknown>;
 };
 
 export function AppMetadataCard(props: AppMetadataCardProps) {
+  const context = React.useContext(AppMetadataCardContext);
 
+  const metadata = {
+    ...(props.metadataOverrideData ?? {}),
+    ...(context?.metadataOverrideData ?? {}),
+  };
+  
+  
   return (
     <ExampleItemCard
       style={props.style}
@@ -25,18 +28,11 @@ export function AppMetadataCard(props: AppMetadataCardProps) {
     >
       <ObjectPropertyDisplay
         recursiveStyle={styles.debugDisplayInner}
-        object={props.metadataOverrideData ?? {
-          libraryName: LibraryPackageConfig.name,
-          libraryVersion: LibraryPackageConfig.version,
-          IS_USING_NEW_ARCH,
-          __DEV__,
-          exampleDependencies: ExamplePackageConfig.devDependencies,
-        }}
+        object={metadata}
       />
     </ExampleItemCard>
   );
-};
-
+}
 const styles = StyleSheet.create({
   detachedView: {
   },
