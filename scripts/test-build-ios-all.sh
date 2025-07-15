@@ -259,7 +259,7 @@ for CURRENT_IOS_DIR_PATH in $EXAMPLE_IOS_DIR_PATHS; do
 done
 
 
-append_metadata_to_build_log(){
+prepend_metadata_to_build_log() {
   # Collect metadata
   MACOS_VERSION=$(sw_vers)
   XCODE_VERSION=$(xcodebuild -version)
@@ -268,23 +268,32 @@ append_metadata_to_build_log(){
   NPM_VERSION=$(npm -v)
   YARN_VERSION=$(command -v yarn >/dev/null 2>&1 && yarn -v || echo "Yarn not installed")
   GIT_VERSION=$(git --version)
+  TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
-  # Append metadata to BUILD_LOG
-  BUILD_LOG+="\n\nBuild Environment Metadata:"
-  BUILD_LOG+="\nmacOS Version:\n$MACOS_VERSION"
-  BUILD_LOG+="\nXcode Version:\n$XCODE_VERSION"
-  BUILD_LOG+="\nRuby Version:\n$RUBY_VERSION"
-  BUILD_LOG+="\nNode.js Version:\n$NODE_VERSION"
-  BUILD_LOG+="\nnpm Version:\n$NPM_VERSION"
-  BUILD_LOG+="\nYarn Version:\n$YARN_VERSION"
-  BUILD_LOG+="\nGit Version:\n$GIT_VERSION"
+  # Build metadata string
+  METADATA="Build Environment Metadata:"
+  BUILD_LOG+="\nTimestamp: $TIMESTAMP"
+  METADATA+="\nmacOS Version: $MACOS_VERSION"
+  METADATA+="\nXcode Version: $XCODE_VERSION"
+  METADATA+="\nRuby Version: $RUBY_VERSION"
+  METADATA+="\nNode.js Version: $NODE_VERSION"
+  METADATA+="\nnpm Version: $NPM_VERSION"
+  METADATA+="\nYarn Version: $YARN_VERSION"
+  METADATA+="\nGit Version: $GIT_VERSION"
+
+  # Prepend metadata to BUILD_LOG
+  BUILD_LOG="$METADATA\n$BUILD_LOG"
+  BUILD_LOG+="\n"
+  BUILD_LOG+="\n ------------------------------------------"
+  BUILD_LOG+="\n"
 }
+
 
 echo "All builds completed! Echoing BUILD_LOG:"
 echo $BUILD_LOG
 
 BUILD_LOG_FILE_NAME="log-test-build-ios-all.txt"
-echo "Writing BUILD_LOG to disk: $BUILD_LOG_FILE_NAME"
+echo "Task - Writing BUILD_LOG to disk: $BUILD_LOG_FILE_NAME"
 
-append_metadata_to_build_log
+prepend_metadata_to_build_log
 echo -e "$BUILD_LOG" >> "$BUILD_LOG_FILE_NAME"
