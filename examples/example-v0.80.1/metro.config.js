@@ -5,11 +5,15 @@ const path = require('path');
 const escape = require('escape-string-regexp');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
 
-const pkg = require('../../package.json');
+const rootLibraryPackage = require('../../package.json');
 
+const coreExamplePackage = require('../example-core/package.json');
+const coreExamplePath = path.resolve(__dirname, '../example-core');
 
 const root = path.resolve(__dirname, '../..');
-const modules = Object.keys({ ...pkg.peerDependencies });
+
+const modules = Object.keys({ ...rootLibraryPackage.peerDependencies });
+modules.push(coreExamplePackage.name);
 
 /**
  * Metro configuration
@@ -18,8 +22,10 @@ const modules = Object.keys({ ...pkg.peerDependencies });
  * @type {import('@react-native/metro-config').MetroConfig}
  */
 const config = {
-  watchFolders: [root],
-
+  watchFolders: [
+    root, 
+    coreExamplePath
+  ], 
   // We need to make sure that only one version is loaded for peerDependencies
   // So we block them at the root, and alias them to the versions in example's node_modules
   resolver: {
@@ -55,7 +61,7 @@ const config = {
 
 const defaultConfig = getConfig(getDefaultConfig(__dirname), {
   root,
-  pkg,
+  pkg: rootLibraryPackage,
   project: __dirname,
 });
 
