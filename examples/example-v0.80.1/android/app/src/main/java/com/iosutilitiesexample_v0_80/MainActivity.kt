@@ -1,4 +1,4 @@
-package com.iosutilitiesexamplev80
+package com.iosutilitiesexample
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -11,7 +11,7 @@ class MainActivity : ReactActivity() {
    * Returns the name of the main component registered from JavaScript. This is used to schedule
    * rendering of the component.
    */
-  override fun getMainComponentName(): String = "IosUtilitiesExampleV80"
+  override fun getMainComponentName(): String = "IosUtilitiesExample"
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
