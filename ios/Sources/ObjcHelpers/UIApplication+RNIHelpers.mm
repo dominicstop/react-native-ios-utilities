@@ -6,7 +6,18 @@
 //
 
 #import "UIApplication+RNIHelpers.h"
+
+// NOTE:
+// * Build error starting in RN 78 + Paper
+//
+// * When importing `RCTAppDelegate`, it also starts importing fabric-related
+//   stuff, e.g. `#include <jsinspector-modern/ReactCdp.h>`,
+//   `#import <ReactCommon/RCTHost.h`, etc.
+//
+#if REACT_NATIVE_TARGET_VERSION < 78 || RCT_NEW_ARCH_ENABLED || !defined(REACT_NATIVE_TARGET_VERSION)
+#define USE_RCT_APP_DELEGATE
 #import "RCTAppDelegate.h"
+#endif
 
 #import <React/RCTSurfacePresenter.h>
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
@@ -83,34 +94,42 @@
 {
   id<UIApplicationDelegate> appDelegate =
     [[UIApplication sharedApplication] delegate];
-    
+  
+  #ifdef USE_RCT_APP_DELEGATE
   if(![appDelegate isKindOfClass:[RCTAppDelegate class]]){
     return nil;
   };
   
   return (RCTAppDelegate *) appDelegate;
+  #else
+  NSString *appDelegateClassName = NSStringFromClass([appDelegate class]);
+  if([appDelegateClassName isEqualToString:@"RCTAppDelegate"]){
+    return (RCTAppDelegate *)appDelegate;
+  };
+  #endif
+  
+  return nil;
 }
 
 - (RCTSurfacePresenterBridgeAdapter *)reactBridgeAdapter
 {
+  #ifdef USE_RCT_APP_DELEGATE
   RCTAppDelegate *reactAppDelegate = [self reactAppDelegate];
   
   if(reactAppDelegate == nil){
-    return nil;
+    return [[UIApplication sharedApplication] reactBridgeAdapter];
   };
   
   return [reactAppDelegate bridgeAdapter];
+  #else
+  
+  return [[UIApplication sharedApplication] reactBridgeAdapter];
+  #endif
 }
 
 - (RCTRootViewFactory *)reactRootViewFactory
 {
-  RCTAppDelegate *reactAppDelegate = [self reactAppDelegate];
-  
-  if(reactAppDelegate == nil){
-    return nil;
-  };
-  
-  return [reactAppDelegate rootViewFactory];
+  return nil;
 }
 
 - (RCTSurfacePresenter *) reactSurfacePresenter
