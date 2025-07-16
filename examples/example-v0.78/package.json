@@ -29,7 +29,7 @@
     "pod-install:old-dynamic": "cd ios && RCT_NEW_ARCH_ENABLED=0 USE_FRAMEWORKS='dynamic' pod install && yarn run build:update-version && yarn run pod-install:set-env",
     "pod-install:set-env": "yarn run nuke:example-pods-env && sh ../../scripts/set-node-env.sh",
     "pod-install:reopen": "yarn run close:ios ; yarn run pod-install && yarn run open:ios",
-    "pod-install:reopen-old": "yarn run close:ios && yarn run pod-install:old && yarn run open:ios",
+    "pod-install:reopen-old": "yarn run close:ios ; yarn run pod-install:old && yarn run open:ios",
     "nuke:node-modules": "rm -rfv ./yarn.lock ./node_modules",
     "nuke:example-pods": "cd ios && pod cache clean --all && rm -rfv ./Pods ./build ./Podfile.lock",
     "nuke:example-pods-env": "cd ios && rm -rfv ./.xcode.env.local ./.xcode.env",
