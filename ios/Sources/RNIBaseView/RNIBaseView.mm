@@ -27,7 +27,7 @@
 
 #import "RCTFabricComponentsPlugins.h"
 
-#import <React/RCTFollyConvert.h>
+#import "RNIUtilitiesFollyConvert.h"
 #import <React/RCTSurfaceTouchHandler.h>
 
 #include <react/renderer/core/ConcreteComponentDescriptor.h>

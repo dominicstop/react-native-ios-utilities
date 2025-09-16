@@ -19,7 +19,7 @@
 #if __cplusplus
 #import <folly/dynamic.h>
 #import <React/RCTConversions.h>
-#import <React/RCTFollyConvert.h>
+#import "RNIUtilitiesFollyConvert.h"
 
 #include <react/renderer/core/LayoutMetrics.h>
 #include <react/renderer/graphics/Rect.h>
