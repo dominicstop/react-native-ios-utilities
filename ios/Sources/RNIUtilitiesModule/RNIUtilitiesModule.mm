@@ -19,7 +19,7 @@
 
 #import <folly/dynamic.h>
 #import <React/RCTConversions.h>
-#import <React/RCTFollyConvert.h>
+#import "RNIUtilitiesFollyConvert.h"
 
 #include <jsi/jsi.h>
 #include <string>
