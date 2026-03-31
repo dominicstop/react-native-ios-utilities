@@ -1,202 +1,64 @@
 require 'json'
 
-absolute_react_native_path = ''
-if !ENV['REACT_NATIVE_PATH'].nil?
-  absolute_react_native_path = File.expand_path(ENV['REACT_NATIVE_PATH'], Pod::Config.instance.project_root)
-else
-  absolute_react_native_path = File.dirname(`node --print "require.resolve('react-native/package.json')"`)
-end
-
-unless defined?(install_modules_dependencies)
-  # `install_modules_dependencies` and `add_dependency` are defined in react_native_pods.rb.
-  # When running with `pod ipc spec`, these methods are not defined and we have to require manually.
-  require File.join(absolute_react_native_path, "scripts/react_native_pods")
-end
-
-package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
-
-reactNativeVersion = '0.0.0'
-begin
-  reactNativeVersion = `node --print "require('#{absolute_react_native_path}/package.json').version"`
-rescue
-  reactNativeVersion = '0.0.0'
-end
-
-reactNativeTargetVersion = reactNativeVersion.split('.')[1].to_i
-
-use_hermes = ENV['USE_HERMES'] == nil || ENV['USE_HERMES'] == '1'
-fabric_enabled = ENV['RCT_NEW_ARCH_ENABLED'] == '1'
-
-folly_version = '2022.05.16.00'
-folly_compiler_flags = (get_folly_config()[:compiler_flags] || '').strip
-base_flags = "-DREACT_NATIVE_TARGET_VERSION=#{reactNativeTargetVersion}"
-
-compiler_flags = base_flags.dup
-
-
-linkage = ENV['USE_FRAMEWORKS']
-reactNativeTargetVersionOverride = ENV['REACT_NATIVE_TARGET_VERSION']
-
-puts "\nreact-native-ios-utilities"
-puts " - reactNativeVersion: #{reactNativeVersion}"
-puts " - reactNativeTargetVersion: #{reactNativeTargetVersion}"
-puts " - reactNativeTargetVersionOverride: #{reactNativeTargetVersionOverride}"
-puts " - fabric_enabled: #{fabric_enabled}"
-puts " - linkage: #{linkage}"
-puts " - hermes enabled: #{use_hermes}"
-puts "\n"
-
-if reactNativeTargetVersionOverride
-  reactNativeTargetVersion = reactNativeTargetVersionOverride.to_i
-end
-
-fabric_compiler_flags = '-DRN_FABRIC_ENABLED -DRCT_NEW_ARCH_ENABLED'
-if ENV['RCT_USE_RN_DEP'] != '1'
-  compiler_flags = [folly_compiler_flags, base_flags].reject(&:empty?).join(' ')
-end
-
-if use_hermes
-  compiler_flags << ' -DUSE_HERMES'
-end
-
-if fabric_enabled
-  compiler_flags << ' ' << fabric_compiler_flags
-end
+package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
 Pod::Spec.new do |s|
+  s.name                    = package["name"]
+  s.version                 = package['version']
+  s.summary                 = package["description"]
+  s.license                 = package["license"]
 
-  s.name           = "react-native-ios-utilities"
-  s.version        = package["version"]
-  s.summary        = package['description']
-  s.homepage       = package["homepage"]
-  s.license        = package["license"]
-  s.authors        = package["author"]
+  s.author                  = package["author"]
+  s.homepage                = package["homepage"]
 
-  s.platforms      = { :ios => min_ios_version_supported }
-  s.source         = { :git => "https://github.com/dominicstop/react-native-ios-utilities.git", :tag => "#{s.version}" }
+  s.ios.deployment_target   = '13.4'
+  s.tvos.deployment_target  = '13.0'
+  s.visionos.deployment_target = '1.0'
 
-  s.swift_version  = '5.4'
+  s.source                  = { :git => "https://github.com/dominicstop/react-native-ios-utilities.git", :tag => "v#{s.version}" }
+  s.source_files            = 'ios/**/*.{h,m,mm,swift,cpp}', 'common/cpp/**/*.{h,cpp}'
 
-  s.static_framework = true
-  s.header_dir       = 'react-native-ios-utilities'
+  s.swift_version           = '5.4'
 
-  header_search_paths = [
-    '"$(PODS_ROOT)/Headers/Private/React-Core"',
-    # '"$(PODS_ROOT)/boost"',
-    '"$(PODS_ROOT)/DoubleConversion"',
-    # '"$(PODS_ROOT)/RCT-Folly"',
-    # '"${PODS_ROOT}/Headers/Public/React-hermes"',
-    # '"${PODS_ROOT}/Headers/Public/hermes-engine"',
-    # '"$(PODS_ROOT)/Headers/Private/Yoga"',
-  ]
-
-  if fabric_enabled && ENV['USE_FRAMEWORKS']
-    header_search_paths.concat([
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-RuntimeApple/React_RuntimeApple.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-RuntimeCore/React_RuntimeCore.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-performancetimeline/React_performancetimeline.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-runtimescheduler/React_runtimescheduler.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-rendererconsistency/React_rendererconsistency.framework/Headers"',
-      '"$(PODS_ROOT)/Headers/Public/ReactCommon"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-jserrorhandler/React_jserrorhandler.framework/Headers"',
-
-      '"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/folly.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/fmt/fmt.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-utils/React_utils.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-debug/React_debug.framework/Headers"',
-      '"${PODS_CONFIGURATION_BUILD_DIR}/React-rendererdebug/React_rendererdebug.framework/Headers"',
-    ])
-
-    if reactNativeTargetVersion < 80
-      header_search_paths.concat([
-        '"${PODS_CONFIGURATION_BUILD_DIR}/React-jsinspector/jsinspector_modern.framework/Headers"',
-      ])
-    end
-  end
-
-
-  # Swift/Objective-C compatibility
-  s.pod_target_xcconfig = {
-    'USE_HEADERMAP' => 'YES',
-    'DEFINES_MODULE' => 'YES',
-    'CLANG_CXX_LANGUAGE_STANDARD' => 'c++20',
-    'SWIFT_COMPILATION_MODE' => 'wholemodule',
-    'OTHER_SWIFT_FLAGS' => "$(inherited) #{fabric_enabled ? fabric_compiler_flags : ''}",
-    'HEADER_SEARCH_PATHS' => header_search_paths.join(' '),
-    "FRAMEWORK_SEARCH_PATHS" => "\"${PODS_CONFIGURATION_BUILD_DIR}/React-hermes\"",
-  }
-
-  user_header_search_paths = [
-    '"${PODS_CONFIGURATION_BUILD_DIR}/react-native-ios-utilities/Swift\ Compatibility\ Header"',
-    '"$(PODS_ROOT)/Headers/Private/React-bridging/react/bridging"',
-    '"$(PODS_CONFIGURATION_BUILD_DIR)/React-bridging/react_bridging.framework/Headers"',
-    '"$(PODS_ROOT)/Headers/Private/Yoga"',
-  ]
-
-  if fabric_enabled && ENV['USE_FRAMEWORKS']
-    user_header_search_paths << "\"$(PODS_ROOT)/DoubleConversion\""
-    user_header_search_paths << "\"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers\""
-    user_header_search_paths << "\"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios\""
-    user_header_search_paths << "\"${PODS_CONFIGURATION_BUILD_DIR}/React-Fabric/React_Fabric.framework/Headers\""
-    user_header_search_paths << "\"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers\""
-    user_header_search_paths << "\"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers/react/nativemodule/core\""
-    user_header_search_paths << "\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTFabric/RCTFabric.framework/Headers\""
-  end
-
-  s.user_target_xcconfig = {
-    "HEADER_SEARCH_PATHS" => user_header_search_paths,
-  }
-
-  if use_hermes
-    s.dependency 'hermes-engine'
-  else
-    s.dependency 'React-jsc'
-  end
-
-  if use_hermes && reactNativeTargetVersion >= 78
-    add_dependency(s, "React-jsinspector", :framework_name => 'jsinspector_modern')
-    add_dependency(s, "React-jsinspectortracing", :framework_name => 'jsinspector_moderntracing')
-  end
-
-  if use_hermes && reactNativeTargetVersion >= 79
-    # bring in the new C-API runtime headers for React Native 0.79
-    add_dependency(s, "React-jsitooling", :framework_name => 'jsitooling')
-  end
-
-  s.dependency 'React-Core'
-  s.dependency 'ReactCommon/turbomodule/core'
-
-  s.dependency 'React-RCTAppDelegate' if reactNativeTargetVersion >= 71
-  s.dependency 'React-NativeModulesApple' if reactNativeTargetVersion >= 72
-
-  if fabric_enabled
-    s.dependency 'React-RCTFabric'
-    if ENV['RCT_USE_RN_DEP'] != '1'
-      s.dependency 'RCT-Folly', folly_version
-    end
-  end
-
+  # Swift dependencies
   s.dependency 'DGSwiftUtilities', '~> 0.46'
   s.dependency 'ComputableLayout', '~> 0.7'
 
-  exclude_files = ['ios/Tests/']
+  if defined?(install_modules_dependencies) then
+    Pod::UI.puts("[react-native-ios-utilities] Using install_modules_dependencies")
+    install_modules_dependencies(s)
 
-  if !fabric_enabled
-    exclude_files.append('ios/Fabric/')
-    exclude_files.append('common/cpp/fabric/')
+    # Exclude Fabric files when not using New Architecture
+    if !(ENV['RCT_NEW_ARCH_ENABLED'] == '1') then
+      s.exclude_files = 'ios/Fabric/**', 'ios/Tests/**', 'common/cpp/fabric/**'
+    else
+      s.exclude_files = 'ios/Tests/**'
+    end
+  else
+    Pod::UI.puts("[react-native-ios-utilities] Installing manually")
+
+    if ENV['RCT_NEW_ARCH_ENABLED'] == '1' then
+      folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'
+      s.compiler_flags = folly_compiler_flags + " -DRCT_NEW_ARCH_ENABLED=1"
+
+      s.pod_target_xcconfig = {
+        "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/boost\"",
+        "OTHER_CPLUSPLUSFLAGS" => "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1",
+        "CLANG_CXX_LANGUAGE_STANDARD" => "c++20",
+        "DEFINES_MODULE" => "YES",
+      }
+
+      s.dependency "React-RCTFabric"
+      s.dependency "React-Codegen"
+      s.dependency "RCT-Folly"
+      s.dependency "RCTRequired"
+      s.dependency "RCTTypeSafety"
+      s.dependency "ReactCommon/turbomodule/core"
+
+      s.exclude_files = 'ios/Tests/**'
+    else
+      s.dependency 'React-Core'
+      s.exclude_files = 'ios/Fabric/**', 'ios/Tests/**', 'common/cpp/fabric/**'
+    end
   end
-
-  if fabric_enabled && ENV['USE_FRAMEWORKS'] && reactNativeTargetVersion >= 80
-    add_dependency(s, "React-jsinspectorcdp", :framework_name => 'jsinspector_moderncdp')
-  end
-
-  install_modules_dependencies(s)
-
-  s.source_files = 'ios/**/*.{h,m,mm,swift,cpp}', 'common/cpp/**/*.{h,cpp}'
-  s.exclude_files = exclude_files
-  s.compiler_flags = compiler_flags
-
-  s.public_header_files = 'ios/**/*.h'
-  s.private_header_files = ['ios/**/*+Private.h', 'ios/**/Swift.h']
-
 end
