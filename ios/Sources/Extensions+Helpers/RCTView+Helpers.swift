@@ -5,6 +5,7 @@
 //  Created by Dominic Go on 11/2/23.
 //
 
+import Foundation
 import React
 
 public extension RCTView {
@@ -25,15 +26,21 @@ public extension RCTView {
     return rootView.recursivelyFindSubview(whereType: targetType);
   };
   
-  var closestParentReactContentView: RCTRootContentView? {
-    let targetType = RCTRootContentView.self;
+  var closestParentReactContentView: RCTView? {
+    guard let targetType = NSClassFromString("RCTRootContentView") else {
+      return nil;
+    };
   
-    if let match = self.recursivelyFindParentView(whereType: targetType) {
-      return match;
+    let parentMatch = self.recursivelyFindParentView(where: {
+      $0.isKind(of: targetType);
+    }) as? RCTView;
+
+    if let parentMatch {
+      return parentMatch;
     };
     
     guard let rootView = self.rootViewForCurrentWindow else { return nil };
-    return rootView.recursivelyFindSubview(whereType: targetType);
+    return rootView.recursivelyFindSubview(where: { $0.isKind(of: targetType) }) as? RCTView;
   };
   
   var reactTouchHandlers: [RCTTouchHandler]? {
