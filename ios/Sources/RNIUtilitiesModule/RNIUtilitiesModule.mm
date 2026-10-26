@@ -23,6 +23,10 @@
 
 #include <jsi/jsi.h>
 #include <string>
+#if __has_include(<ReactCommon/RCTTurboModuleWithJSIBindings.h>)
+#import <ReactCommon/RCTTurboModuleWithJSIBindings.h>
+#define RNI_HAS_JSI_BINDINGS 1
+#endif
 
 #if DEBUG
 #include <iostream>
@@ -34,6 +38,18 @@ using namespace RNIUtilities;
 #endif
 
 static BOOL SHOULD_LOG = NO;
+
+#if __cplusplus
+// Set by the JSI bindings hook; RN 0.88 removed RCTCxxBridge, so this is the
+// only way to reach the runtime when the legacy architecture is removed.
+static jsi::Runtime *RNIUtilitiesJSIRuntime = nullptr;
+void RNIObjcUtilsSetJSCallInvoker(std::shared_ptr<facebook::react::CallInvoker> callInvoker);
+#endif
+
+#ifdef RNI_HAS_JSI_BINDINGS
+@interface RNIUtilitiesModule () <RCTTurboModuleWithJSIBindings>
+@end
+#endif
 
 @implementation RNIUtilitiesModule {
   BOOL _didInstallHostObject;
@@ -75,15 +91,16 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
     return;
   };
   
-  RCTBridge *bridge = [RCTBridge currentBridge];
+  jsi::Runtime *jsiRuntime = RNIUtilitiesJSIRuntime;
   
-  RCTCxxBridge *cxxBridge = (RCTCxxBridge *)bridge;
-  if (cxxBridge == nil) {
-    return;
+  #ifndef RCT_REMOVE_LEGACY_ARCH
+  if (jsiRuntime == nullptr) {
+    RCTCxxBridge *cxxBridge = (RCTCxxBridge *)[RCTBridge currentBridge];
+    jsiRuntime = (jsi::Runtime *)cxxBridge.runtime;
   };
+  #endif
   
-  auto jsiRuntime = (jsi::Runtime *)cxxBridge.runtime;
-  if (jsiRuntime == nil) {
+  if (jsiRuntime == nullptr) {
     return;
   };
     
@@ -250,6 +267,22 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
   self->_didInstallHostObject = YES;
 }
 
+#ifdef RNI_HAS_JSI_BINDINGS
+// RN 0.88+ only calls this variant
+- (void)installJSIBindingsWithRuntime:(jsi::Runtime &)runtime
+                          callInvoker:(const std::shared_ptr<facebook::react::CallInvoker> &)callInvoker
+{
+  RNIObjcUtilsSetJSCallInvoker(callInvoker);
+  [self installJSIBindingsWithRuntime:runtime];
+}
+
+- (void)installJSIBindingsWithRuntime:(jsi::Runtime &)runtime
+{
+  RNIUtilitiesJSIRuntime = &runtime;
+  [self installHostObjectIfNeeded];
+}
+#endif
+
 // MARK: Module Commands
 // ---------------------
 
@@ -384,7 +417,11 @@ static RNIUtilitiesModule *RNIUtilitiesModuleShared = nil;
 /// Doesn't get called...
 - (std::shared_ptr<TurboModule>)getTurboModule:(const ObjCTurboModule::InitParams &)params
 {
+ // With the JSI bindings hook, install from there: it runs with the current
+ // runtime, while the stored pointer may still refer to a reloaded one here.
+ #ifndef RNI_HAS_JSI_BINDINGS
  [self installHostObjectIfNeeded];
+ #endif
  return std::make_shared<react::NativeRNIUtilitiesModuleSpecJSI>(params);
 }
 #endif

@@ -32,6 +32,14 @@
 
 static BOOL SHOULD_LOG = NO;
 
+#if __cplusplus
+// Set by RNIUtilitiesModule's JSI bindings hook
+static std::weak_ptr<facebook::react::CallInvoker> RNIJSCallInvoker;
+void RNIObjcUtilsSetJSCallInvoker(std::shared_ptr<facebook::react::CallInvoker> callInvoker) {
+  RNIJSCallInvoker = callInvoker;
+}
+#endif
+
 @implementation RNIObjcUtils
 #if __cplusplus
 + (std::string)convertToCxxStringForObjcString:(NSString *)string
@@ -266,10 +274,16 @@ static BOOL SHOULD_LOG = NO;
 + (void)dispatchToJSThreadViaCallInvokerForBlock:(void (^)(void))block
 {
 #if __cplusplus
-  RCTBridge *bridge = [RCTBridge currentBridge];
-  RCTBridgeProxy *bridgeProxy = (RCTBridgeProxy *)bridge;
+  std::shared_ptr<facebook::react::CallInvoker> jsCallInvoker = RNIJSCallInvoker.lock();
   
-  std::shared_ptr<facebook::react::CallInvoker> jsCallInvoker = [bridgeProxy jsCallInvoker];
+  if (jsCallInvoker == nullptr) {
+    RCTBridgeProxy *bridgeProxy = (RCTBridgeProxy *)[RCTBridge currentBridge];
+    jsCallInvoker = [bridgeProxy jsCallInvoker];
+  };
+  
+  if (jsCallInvoker == nullptr) {
+    return;
+  };
   
   #if REACT_NATIVE_TARGET_VERSION <= 74
   facebook::react::CallFunc dispatchBlock = [block]() {
