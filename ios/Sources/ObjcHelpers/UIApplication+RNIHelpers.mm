@@ -16,7 +16,11 @@
 //
 #if REACT_NATIVE_TARGET_VERSION < 78 || RCT_NEW_ARCH_ENABLED || !defined(REACT_NATIVE_TARGET_VERSION)
 #define USE_RCT_APP_DELEGATE
+#if __has_include(<React/RCTAppDelegate.h>)
+#import <React/RCTAppDelegate.h>
+#else
 #import "RCTAppDelegate.h"
+#endif
 #endif
 
 #import <React/RCTSurfacePresenter.h>
@@ -113,7 +117,10 @@
 
 - (RCTSurfacePresenterBridgeAdapter *)reactBridgeAdapter
 {
-  #ifdef USE_RCT_APP_DELEGATE
+  // The bridge adapter doesn't exist without the legacy architecture (RN 0.88+)
+  #ifdef RCT_REMOVE_LEGACY_ARCH
+  return nil;
+  #elif defined(USE_RCT_APP_DELEGATE)
   RCTAppDelegate *reactAppDelegate = [self reactAppDelegate];
   
   if(reactAppDelegate == nil){
@@ -134,6 +141,9 @@
 
 - (RCTSurfacePresenter *) reactSurfacePresenter
 {
+  #ifdef RCT_REMOVE_LEGACY_ARCH
+  return nil;
+  #else
   RCTSurfacePresenterBridgeAdapter *reactBridgeAdapter = [self reactBridgeAdapter];
   
   if(reactBridgeAdapter == nil){
@@ -141,6 +151,7 @@
   };
   
   return [reactBridgeAdapter surfacePresenter];
+  #endif
 }
 
 - (RCTMountingManager *)reactMountingManager

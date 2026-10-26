@@ -24,6 +24,7 @@
 #include <react/renderer/core/LayoutMetrics.h>
 #include <react/renderer/graphics/Rect.h>
 #include <react/renderer/graphics/RectangleEdges.h>
+#include <mutex>
 
 #import <React/RCTBridgeProxy.h>
 #import <React/RCTBridgeProxy+Cxx.h>
@@ -31,6 +32,16 @@
 
 
 static BOOL SHOULD_LOG = NO;
+
+#if __cplusplus
+// Set by RNIUtilitiesModule's JSI bindings hook (JS thread), read from any thread
+static std::mutex RNIJSCallInvokerMutex;
+static std::weak_ptr<facebook::react::CallInvoker> RNIJSCallInvoker;
+void RNIObjcUtilsSetJSCallInvoker(std::shared_ptr<facebook::react::CallInvoker> callInvoker) {
+  std::lock_guard<std::mutex> lock(RNIJSCallInvokerMutex);
+  RNIJSCallInvoker = callInvoker;
+}
+#endif
 
 @implementation RNIObjcUtils
 #if __cplusplus
@@ -266,10 +277,20 @@ static BOOL SHOULD_LOG = NO;
 + (void)dispatchToJSThreadViaCallInvokerForBlock:(void (^)(void))block
 {
 #if __cplusplus
-  RCTBridge *bridge = [RCTBridge currentBridge];
-  RCTBridgeProxy *bridgeProxy = (RCTBridgeProxy *)bridge;
+  std::shared_ptr<facebook::react::CallInvoker> jsCallInvoker;
+  {
+    std::lock_guard<std::mutex> lock(RNIJSCallInvokerMutex);
+    jsCallInvoker = RNIJSCallInvoker.lock();
+  }
   
-  std::shared_ptr<facebook::react::CallInvoker> jsCallInvoker = [bridgeProxy jsCallInvoker];
+  if (jsCallInvoker == nullptr) {
+    RCTBridgeProxy *bridgeProxy = (RCTBridgeProxy *)[RCTBridge currentBridge];
+    jsCallInvoker = [bridgeProxy jsCallInvoker];
+  };
+  
+  if (jsCallInvoker == nullptr) {
+    return;
+  };
   
   #if REACT_NATIVE_TARGET_VERSION <= 74
   facebook::react::CallFunc dispatchBlock = [block]() {

@@ -27,12 +27,14 @@
 - (RCTBridge *)reactGetPaperBridge
 {
   #if RCT_NEW_ARCH_ENABLED
+  #ifndef RCT_REMOVE_LEGACY_ARCH
   RCTSurfacePresenterBridgeAdapter *reactBridgeAdapter =
     [[UIApplication sharedApplication] reactBridgeAdapter];
     
   if(reactBridgeAdapter != nil){
     return reactBridgeAdapter.bridge;
   };
+  #endif
   #else
   RCTRootView *reactPaperRootView = [self reactGetPaperRootView];
   if(reactPaperRootView != nil){
